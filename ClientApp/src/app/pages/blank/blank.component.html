@@ -1,0 +1,15 @@
+
+<div class="row">
+  <button mat-flat-button color="primary" class="m-1">Add Account</button>
+  <div class="col-xl-12">
+    <ag-grid-angular style=" height: 535px;"
+                     class="ag-theme-alpine"
+                     [rowData]="accountList"
+                     [pagination]="true"
+                     [columnDefs]="columnDefs"
+                     [defaultColDef]="agGridOptions.defaultColDef"
+                     (cellClicked)="onGridClick($event)">
+    </ag-grid-angular>
+  </div>
+</div>
+

@@ -1,0 +1,50 @@
+<h2 class="heading">Add Transporter</h2> 
+<form [formGroup]="transporterForm" (ngSubmit)="onSubmit(transporterForm.value)" fxLayout="row wrap" class="user-form">
+    <div class="tab-party-details-parent">
+        <div fxFlex="100" fxFlex.gt-sm="25" fxFlex.sm="50">
+            <mat-form-field appearance="outline">
+                <mat-label>Name</mat-label>
+                <input matInput autocomplete="off" placeholder="Name" formControlName="Name" type="text">
+                <mat-error *ngIf="transporterForm.controls.Name.errors?.required">Name is required</mat-error>                
+            </mat-form-field> 
+        </div>
+        <div fxFlex="100" fxFlex.gt-sm="25" fxFlex.sm="50">
+            <mat-form-field appearance="outline">
+                <mat-label>Phone</mat-label>
+                <input matInput autocomplete="off" placeholder="Phone" formControlName="Phone" type="text">
+                <mat-error *ngIf="transporterForm.controls.Phone.errors?.required">Phone is required</mat-error>                
+            </mat-form-field> 
+        </div>
+        <div fxFlex="100" fxFlex.gt-sm="25" fxFlex.sm="50">
+            <mat-form-field appearance="outline">
+                <mat-label>Refrence</mat-label>
+                <input matInput autocomplete="off" placeholder="Refrence" formControlName="Refrence" type="text">
+                <mat-error *ngIf="transporterForm.controls.Refrence.errors?.required">Refrence is required</mat-error>                
+            </mat-form-field> 
+        </div>
+        <div fxFlex="100" fxFlex.gt-sm="25" fxFlex.sm="50">
+            <mat-form-field appearance="outline">
+                <mat-label>Email</mat-label>
+                <input matInput autocomplete="off" placeholder="Email" formControlName="Email" type="text">
+                <mat-error *ngIf="transporterForm.controls.Email.errors?.required">Email is required</mat-error>                
+            </mat-form-field> 
+        </div>
+        <div fxFlex="100" fxFlex.gt-sm="25" fxFlex.sm="50">
+            <mat-form-field appearance="outline">
+                <mat-label>City</mat-label>
+                <input matInput autocomplete="off" placeholder="City" formControlName="City" type="text">
+                <mat-error *ngIf="transporterForm.controls.City.errors?.required">City is required</mat-error>                
+            </mat-form-field> 
+        </div>
+        <div fxFlex="100">
+            <mat-form-field appearance="outline">
+                <mat-label>Address</mat-label> 
+                <textarea matInput placeholder="Enter address" formControlName="Address"></textarea> 
+            </mat-form-field>
+        </div>
+    </div>
+    <div fxFlex="100" class="mt-2 text-center space-between-btns">
+        <button mat-raised-button color="warn" (click)="close()">Cancel</button>            
+        <button mat-raised-button color="primary" class="uppercase" type="submit">Save</button> 
+    </div>
+</form>
