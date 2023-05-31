@@ -27,6 +27,10 @@ $material-icons-font-path: '~material-icons/iconfont/';
 @import "app/theme/styles/libs-override";
 @import "app/theme/styles/rtl";
 
+.ml-7 {
+    margin-left: 7px;
+}
+
 .flex-end {
     justify-content: flex-end;
 }
@@ -46,13 +50,41 @@ $material-icons-font-path: '~material-icons/iconfont/';
     padding: 0 !important;
 }
 
+.mat-tab-label-active {
+    opacity: 1 !important;
+    .mat-tab-label-content {
+        color: #00695c;
+    }
+}
+.app.teal-light 
+
 .user-form {
     .mat-tab-group {
         min-width: 100%;
         .mat-tab-body-wrapper {
-            margin: 0 -10px;
-            .tab-party-details-parent, .tab-bank-details-parent {
+            margin: 0;
+            .tab-party-details-parent, .tab-tax-details-parent {
                 flex-wrap: wrap;
+                .white-block {
+                    background: #fff;
+                    position: relative;
+                    margin: 30px 0 0 0;
+                    padding: 15px;
+                    border: 1px solid #ccc;
+                    -moz-border-radius: 7px;
+                    -webkit-border-radius: 7px;
+                    border-radius: 7px;
+                    flex-wrap: wrap;
+                    h3 {
+                        background: #fff;
+                        position: absolute;
+                        color: #00695c;
+                        font-size: 14px;
+                        padding: 5px;
+                        top: -15px;
+                        left: 15px;
+                    }
+                }
                 .mat-form-field {
                     width: 100%;
                     &.mat-form-field-appearance-outline {
@@ -61,12 +93,22 @@ $material-icons-font-path: '~material-icons/iconfont/';
                             padding: 10px;
                         }
                     }
+                    &.small {
+                        width: 50%;
+                    }
+                }
+                .mat-checkbox-checked {
+                    &.mat-accent {
+                        .mat-checkbox-background {
+                            background: #00695c;
+                        }
+                    }
                 }
             }
         }
     }
     .tab-party-details-parent, .tab-bank-details-parent {
-        margin: 0 -10px;
+        margin: 0;
         flex-wrap: wrap;
         .mat-form-field {
             width: 100%;

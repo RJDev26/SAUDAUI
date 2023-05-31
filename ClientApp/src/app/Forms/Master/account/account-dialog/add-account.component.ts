@@ -55,18 +55,23 @@ export class AddAccountComponent implements OnInit {
 
   bindFormControls() {
     this.personalForm = this.formBuilder.group({
+      'ShortCode': [],
       'Name': ['', Validators.required],
-      'Opbal': ['', Validators.required],
+      'OpeningBal': [],
+      'CityName' : [''],
+      'Email': ['', Validators.compose([Validators.required, emailValidator])],
+      'Panno' : [''],
+      'gstNo': [''],
+      'Phone': ['', Validators.required],
       'Type': [''],
       'ACGroup':[''],
-      'Email': ['', Validators.compose([Validators.required, emailValidator])],
-      'Phone': ['', Validators.required],
-      'Mobile': [''],
-      'StateName' : [''],
-      'CityName' : [''],
-      'gstNo': [''],
-      'Pin': [''],
       'Address' : [''],
+      'Telegram': [''],
+      'Telegramno': [''],
+      'BrokerName' : [''],
+      'TaxtypeName' : [''],
+      'ExchangeName' : [''],
+      'IntraDay' : [''],
       'accNo': [''],
       'accName': [''],
       'Branch': [''],
@@ -121,18 +126,14 @@ export class AddAccountComponent implements OnInit {
   bindValuesInEditMode(acGroup:ACGroup, optedState:State, optedCity?: City) {
     this.personalForm.setValue({
       'Name': this.user.name,
-      'Opbal': this.user.opbal,
       'Type': this.user.type,
       'ACGroup':acGroup?acGroup.name:'',
-      'Email': this.user.email,
-      'Phone': this.user.phoneO,
-      'Mobile': this.user.mobile,
-      'StateName' : optedState?optedState.name:'',
       'CityName' : optedCity?optedCity.item2:'',
-      'gstNo': this.user.gstNo,
-      'Pin': this.user.gstNo,
+      'Email': this.user.email,
       'Address' : this.user.add1,
       'accNo': this.user.acno,
+      'gstNo': this.user.gstNo,
+      'Phone': this.user.phoneO,
       'accName': this.user.acname,
       'Branch': this.user.branch,
       'Bank': this.user.bank,
@@ -180,18 +181,15 @@ export class AddAccountComponent implements OnInit {
               "ACGroup": this.getAcGroupId(this.acGroupCtrl.value),
               "Name": this.personalForm.get('Name').value,
               "Type":this.personalForm.get('Type').value,
-              "Opbal": Number(this.personalForm.get('Opbal').value),
-              "PhoneO ": this.personalForm.get('Phone').value,
-              "Mobile ": this.personalForm.get('Mobile').value,
               "Email": this.personalForm.get('Email').value,
+              "GstNo": this.personalForm.get('gstNo').value,
+              "PhoneO ": this.personalForm.get('Phone').value,
               "Add1": this.personalForm.get('Address').value,
-              "Pin": this.personalForm.get('Pin').value,
               "Acno": this.personalForm.get('accNo').value,
               "Acname": this.personalForm.get('accName').value,
               "Bank": this.personalForm.get('Bank').value,
               "Branch": this.personalForm.get('Branch').value,
               "Ifci": this.personalForm.get('ifsc').value,
-              "GstNo": this.personalForm.get('gstNo').value 
         }
         if(this.user.id){
           addFormData['id'] = this.user.id;
@@ -231,6 +229,7 @@ export class AddAccountComponent implements OnInit {
   }
 
 }
+
 
 export function emailValidator(control: UntypedFormControl): {[key: string]: any} {
   var emailRegexp = /[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$/;    
