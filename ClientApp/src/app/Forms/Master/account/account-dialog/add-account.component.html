@@ -1,4 +1,4 @@
-<h2 class="heading">Add Account</h2>     
+<h2 class="heading mb-10">Add Account</h2>     
 <form [formGroup]="personalForm" (ngSubmit)="onSubmit(personalForm.value)" fxLayout="row wrap" class="user-form">
     <mat-tab-group>
         <mat-tab label=" Details">
@@ -29,15 +29,15 @@
                             <mat-error *ngIf="personalForm.controls.Name.errors?.required">Name is required</mat-error>                
                         </mat-form-field> 
                     </div>
-                    <div fxFlex="100" fxFlex.gt-sm="25" fxFlex.sm="50">
+                    <div fxFlex="100" fxFlex.gt-sm="50" fxFlex.sm="50">
                         <mat-form-field appearance="outline" class="small">
                             <mat-label>Opening Bal</mat-label>
                             <input matInput autocomplete="off" placeholder="OpeningBal" formControlName="OpeningBal" type="text"> 
                             <mat-error *ngIf="personalForm.controls.OpeningBal.errors?.required">OpeningBal is required</mat-error>                
                         </mat-form-field> 
                         <mat-radio-group>
-                            <mat-radio-button value="1" class="mx-1">Dr.</mat-radio-button>
-                            <mat-radio-button value="2" class="ml-7">Cr.</mat-radio-button>
+                            <mat-radio-button value="1" class="mx-1 pl-10">Dr.</mat-radio-button>
+                            <mat-radio-button value="2" class="ml-15">Cr.</mat-radio-button>
                         </mat-radio-group>
                     </div>
                     <div fxFlex="100" fxFlex.gt-sm="25" fxFlex.sm="50">
@@ -57,6 +57,27 @@
                                 [value]="acGroupObj.name"
                                 [id]="acGroupObj.id">
                                 <span>{{acGroupObj.name}}</span>
+                            </mat-option>
+                            </mat-autocomplete>
+                        </mat-form-field>
+                    </div>
+                    <div fxFlex="100" fxFlex.gt-sm="25" fxFlex.sm="50">
+                        <mat-form-field class="example-full-width" appearance="outline">
+                            <mat-label>Account Head</mat-label>
+                            <input
+                            matInput
+                            aria-label="ACHead"
+                            [matAutocomplete]="auto1"
+                            [formControl]="acHeadCtrl"
+                            formControlName="ACHead"
+                            />
+                            <mat-error *ngIf="personalForm.controls.ACHead.errors?.required">Please select ACHead</mat-error>                
+                            <mat-autocomplete #auto1="matAutocomplete">
+                            <mat-option
+                                *ngFor="let acHeadObj of filteredacHead | async"
+                                [value]="acHeadObj.name"
+                                [id]="acHeadObj.id">
+                                <span>{{acHeadObj.name}}</span>
                             </mat-option>
                             </mat-autocomplete>
                         </mat-form-field>
@@ -85,10 +106,10 @@
                             </mat-autocomplete>
                         </mat-form-field>
                     </div>
-                    <div fxFlex="100" fxFlex.gt-sm="25" fxFlex.sm="50">
+                    <div fxFlex="100" fxFlex.gt-sm="50" fxFlex.sm="50">
                         <mat-form-field appearance="outline">
                             <mat-label>Address</mat-label> 
-                            <textarea matInput placeholder="Enter address" formControlName="Address"></textarea> 
+                            <textarea matInput placeholder="Enter address" formControlName="Address" rows="1"></textarea> 
                         </mat-form-field>
                     </div>
                     <div fxFlex="100" fxFlex.gt-sm="25" fxFlex.sm="50">
@@ -154,8 +175,8 @@
                             </mat-option>
                             </mat-autocomplete>
                         </mat-form-field>
-                        <mat-checkbox [(ngModel)]="future" class="mx-1">Apply Future Cut Brok</mat-checkbox>
-                        <mat-checkbox [(ngModel)]="option" class="mx-1">Apply Option Cut Brok</mat-checkbox>
+                        <mat-checkbox [(ngModel)]="future" class="pl-10">Apply Future Cut Brok</mat-checkbox>
+                        <mat-checkbox [(ngModel)]="option" class="pl-10 ml-7">Apply Option Cut Brok</mat-checkbox>
                     </div>
                 </div>
             </div>

@@ -65,6 +65,7 @@ export class AddAccountComponent implements OnInit {
       'Phone': ['', Validators.required],
       'Type': [''],
       'ACGroup':[''],
+      'ACHead':[''],
       'Address' : [''],
       'Telegram': [''],
       'Telegramno': [''],

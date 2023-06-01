@@ -30,6 +30,12 @@ $material-icons-font-path: '~material-icons/iconfont/';
 .ml-7 {
     margin-left: 7px;
 }
+.ml-15 {
+    margin-left: 15px;
+}
+.mb-10 {
+    margin-bottom: 10px !important;
+}
 
 .flex-end {
     justify-content: flex-end;
@@ -56,7 +62,31 @@ $material-icons-font-path: '~material-icons/iconfont/';
         color: #00695c;
     }
 }
-.app.teal-light 
+.mat-tab-label-content {
+    height: 40px;
+}
+.mat-checkbox {
+    .mat-checkbox-layout {
+        font-size: 13px;
+    }
+}
+
+.app {
+    &.teal-light {
+        .mat-radio-button{
+            &.mat-accent {
+                &.mat-radio-checked {
+                    .mat-radio-outer-circle {
+                        border-color: #00695c;
+                    }
+                }
+                .mat-radio-inner-circle {
+                    background-color: #00695c;
+                }
+            }
+        }
+    }
+}
 
 .user-form {
     .mat-tab-group {
@@ -88,9 +118,42 @@ $material-icons-font-path: '~material-icons/iconfont/';
                 .mat-form-field {
                     width: 100%;
                     &.mat-form-field-appearance-outline {
+                        .mat-form-field-label-wrapper {
+                            top: 0;
+                            margin-top: 0;
+                            padding-top: 0;
+                            .mat-form-field-label {
+                                font-size: 14px;
+                                top: 14px;
+                                margin-top: 0;
+                            }
+                        }
+                        .mat-form-field-infix {
+                            padding: 12px 0;
+                            border: 0;
+                        }
                         .mat-form-field-wrapper {
                             margin: 0;
-                            padding: 10px;
+                            padding: 5px 10px 15px 10px;
+                        }
+                        &.mat-form-field-can-float {
+                            &.mat-form-field-should-float {
+                                .mat-form-field-label {
+                                    font-size: 11px;
+                                    transform: translateY(-1.4em);
+                                }
+                            }
+                            .mat-input-server:focus + .mat-form-field-label-wrapper {
+                                .mat-form-field-label {
+                                    font-size: 11px;
+                                    transform: translateY(-1.4em);
+                                }
+                            }
+                        }
+                        .mat-form-field-subscript-wrapper {
+                            margin: 0;
+                            padding-left: 0;
+                            top: calc(100% - 0.75rem);
                         }
                     }
                     &.small {
