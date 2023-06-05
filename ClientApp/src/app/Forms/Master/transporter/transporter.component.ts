@@ -12,7 +12,7 @@ import { AddTransporterComponent } from "./transporter-dialog/add-transporter.co
   templateUrl: './transporter.component.html',
   styleUrls: ['./transporter.component.scss']
 })
-export class TransporterComponent implements OnInit {
+export class TransporterComponent implements OnInit { 
 
 @ViewChild(DatatableComponent) table: DatatableComponent;
   editing = {};

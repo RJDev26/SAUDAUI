@@ -9,6 +9,7 @@ import { ErrorComponent } from './pages/errors/error/error.component';
 import { AccountComponent } from './Forms/Master/account/account.component';
 import { ItemComponent } from './Forms/Master/item/item.component';
 import { TransporterComponent } from './Forms/Master/transporter/transporter.component';
+import { CompanyComponent } from './Forms/Master/company/company.component';
 
 export const routes: Routes = [
     { 
@@ -33,7 +34,8 @@ export const routes: Routes = [
             { path: 'search', component: SearchComponent, data: { breadcrumb: 'Search' } },
             { path: 'account', component: AccountComponent, data: { breadcrumb: 'Account' } },
             { path: 'item', component: ItemComponent, data: { breadcrumb: 'Item' } },
-            { path: 'transporter', component: TransporterComponent, data: { breadcrumb: 'Transporter' } }
+            { path: 'transporter', component: TransporterComponent, data: { breadcrumb: 'Transporter' } },
+            { path: 'company', component: CompanyComponent, data: { breadcrumb: 'company' } },
         ]
     },
     { path: 'landing', loadChildren: () => import('./pages/landing/landing.module').then(m => m.LandingModule) },

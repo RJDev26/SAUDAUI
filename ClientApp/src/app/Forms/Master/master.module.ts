@@ -9,12 +9,15 @@ import { AddTransporterComponent } from './transporter/transporter-dialog/add-tr
 import { AgGridModule } from 'ag-grid-angular';
 import { ItemComponent } from './item/item.component';
 import { TransporterComponent } from './transporter/transporter.component';
+import { CompanyComponent } from './company/company.component';
+import { AddCompanyComponent } from './company/company-dialog/add-company.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'account', pathMatch: 'full' },
   { path: 'account', component: AccountComponent, data: { breadcrumb: 'Account' } },
   { path: 'item', component: ItemComponent, data: { breadcrumb: 'Item' } },
   { path: 'transporter', component: TransporterComponent, data: { breadcrumb: 'Transporter' } },
+  { path: 'company', component: CompanyComponent, data: { breadcrumb: 'Company' } }
 ];
 
 @NgModule({
@@ -31,7 +34,9 @@ export const routes: Routes = [
     AddAccountComponent,
     AddTransporterComponent,
     ItemComponent,
-    TransporterComponent
+    TransporterComponent,
+    CompanyComponent,
+    AddCompanyComponent
   ],
 })
 export class MasterModule { }

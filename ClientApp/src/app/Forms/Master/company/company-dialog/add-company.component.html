@@ -1,0 +1,80 @@
+<h2 class="heading mb-10">Add Comapny</h2>
+<form [formGroup]="companyForm" (ngSubmit)="onSubmit(companyForm.value)" fxLayout="row wrap" class="user-form">
+    <div class="white-block pb-5">
+        <h3>Comapny Details</h3>
+        <div class="tab-party-details-parent">
+            <div fxFlex="100" fxFlex.gt-sm="20" fxFlex.sm="50">
+                <mat-form-field appearance="outline">
+                    <mat-label>Name</mat-label>
+                    <input matInput autocomplete="off" placeholder="Name" formControlName="CompanyName" type="text">
+                    <mat-error *ngIf="companyForm.controls.CompanyName.errors?.required">Name is required</mat-error>                
+                </mat-form-field> 
+            </div>
+            <div fxFlex="100" fxFlex.gt-sm="20" fxFlex.sm="50">
+                <mat-form-field appearance="outline">
+                    <mat-label>Add</mat-label>
+                    <input matInput autocomplete="off" placeholder="Add" formControlName="Add" type="text">
+                    <mat-error *ngIf="companyForm.controls.add.errors?.required">Add is required</mat-error>                
+                </mat-form-field> 
+            </div>
+            <div fxFlex="100" fxFlex.gt-sm="20" fxFlex.sm="50">
+                <mat-form-field class="example-full-width" appearance="outline">
+                    <mat-label>City</mat-label>
+                    <input
+                    matInput
+                    aria-label="CityObj"
+                    [matAutocomplete]="auto3"
+                    [formControl]="cityCtrl"
+                    formControlName="CityName"
+                    />
+                    <mat-error *ngIf="companyForm.controls.CityName.errors?.required">Please select ACGroup</mat-error>                
+                    <mat-autocomplete #auto3="matAutocomplete" (optionSelected)='getSelectedCity($event.option)'>
+                    <mat-option
+                        *ngFor="let cityObj of filteredCity | async"
+                        [value]="cityObj.item2"
+                        [id]="cityObj.item1">
+                        <span>{{cityObj.item2}}</span>
+                    </mat-option>
+                    </mat-autocomplete>
+                </mat-form-field>
+            </div>
+            <div fxFlex="100" fxFlex.gt-sm="20" fxFlex.sm="50">
+                <mat-form-field appearance="outline">
+                    <mat-label>Financial Year Begin</mat-label>
+                    <input matInput [matDatepicker]="picker1">
+                    <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                    <mat-datepicker #picker1></mat-datepicker>
+                </mat-form-field>                  
+            </div>
+            <div fxFlex="100" fxFlex.gt-sm="20" fxFlex.sm="50">
+                <mat-form-field appearance="outline">
+                    <mat-label>Financial Year End</mat-label>
+                    <input matInput [matDatepicker]="picker2">
+                    <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                    <mat-datepicker #picker1></mat-datepicker>
+                </mat-form-field>                  
+            </div>
+            <div fxFlex="100" fxFlex.gt-sm="20" fxFlex.sm="50">
+                <mat-form-field class="example-full-width" appearance="outline">
+                    <mat-label>State</mat-label>
+                    <input
+                    matInput
+                    aria-label="StateObj"
+                    [matAutocomplete]="auto3"
+                    [formControl]="StateCtrl"
+                    formControlName="StateName"
+                    />
+                    <mat-error *ngIf="companyForm.controls.StateName.errors?.required">Please select ACGroup</mat-error>                
+                    <mat-autocomplete #auto3="matAutocomplete" (optionSelected)='getSelectedState($event.option)'>
+                    <mat-option
+                        *ngFor="let StateObj of filteredState | async"
+                        [value]="StateObj.item2"
+                        [id]="StateObj.item1">
+                        <span>{{StateObj.item2}}</span>
+                    </mat-option>
+                    </mat-autocomplete>
+                </mat-form-field>
+            </div>
+        </div>        
+    </div>
+</form>
