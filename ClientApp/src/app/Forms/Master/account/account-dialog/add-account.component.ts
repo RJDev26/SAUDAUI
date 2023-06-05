@@ -22,6 +22,11 @@ export interface ACGroup {
   parentId: number;
 }
 
+export interface ACHead {
+  id: number;
+  name: string;
+}
+
 @Component({
   selector: 'app-account-dialog',
   templateUrl: './add-account.component.html',
@@ -39,7 +44,11 @@ export class AddAccountComponent implements OnInit {
   cityCtrl = new FormControl('');
   filteredCity: Observable<City[]>;
 
+  acHeadCtrl = new FormControl('');
+  filteredacHead: Observable<ACHead[]>;
+
   acGroupList: ACGroup[];
+  acHeadList: ACHead[];
   stateList: State[];
   cityList: City[];
 
@@ -73,6 +82,8 @@ export class AddAccountComponent implements OnInit {
       'TaxtypeName' : [''],
       'ExchangeName' : [''],
       'IntraDay' : [''],
+      'InsTypeName' : [''],
+      'DeliveryRate' : [''],
       'accNo': [''],
       'accName': [''],
       'Branch': [''],
@@ -95,13 +106,21 @@ export class AddAccountComponent implements OnInit {
         return acGroupObj ? this._filterACGroup(acGroupObj) : this.acGroupList.slice()
       }),
     );
+
+    this.filteredacHead = this.acHeadCtrl.valueChanges.pipe(
+      startWith(''),
+      map(acHeadObj =>{
+        return acHeadObj ? this._filterACHead(acHeadObj) : this.acHeadList.slice()
+      }),
+    );
   }
 
   initialApiCalls() {
-    forkJoin([this._appService.getState(), this._appService.getAcGoup()]).pipe(map(response=>{
+    forkJoin([this._appService.getState(), this._appService.getAcGoup(), this._appService.getAcHead()]).pipe(map(response=>{
       console.log(response);
       this.stateList = response[0];
       this.acGroupList = response[1];
+      this.acHeadList = response[2];
       this.bindFilterFntoList();
     })).subscribe(res=>{
       this.getValuesInEditMode();
@@ -109,26 +128,29 @@ export class AddAccountComponent implements OnInit {
   }
 
   getValuesInEditMode() {
+    var optedCity = null;
     if(this.user){
       const acGroup =  this.acGroupList.find((obj=>obj.id === this.user.acGroup));
+      const acHead =  this.acHeadList.find((obj=>obj.id === this.user.acHead));
       const optedState =  this.stateList.find((obj=>obj.id === this.user.stateId));
       if(optedState?.id){
         this.getSelectedState(optedState, ()=>{
-          const optedCity = this.cityList.find((obj=>obj.item1 === this.user.cityId));
-          this.bindValuesInEditMode(acGroup, optedState, optedCity);
+          optedCity = this.cityList.find((obj=>obj.item1 === this.user.cityId));
+          this.bindValuesInEditMode(acGroup, optedState, optedCity, acHead);
         });
       } else {
-        this.bindValuesInEditMode(acGroup, optedState);
+        this.bindValuesInEditMode(acGroup, optedState, optedCity, acHead);
       }
       console.log(this.user);
     }
   }
 
-  bindValuesInEditMode(acGroup:ACGroup, optedState:State, optedCity?: City) {
+  bindValuesInEditMode(acGroup:ACGroup, optedState:State, optedCity?: City, acHead?:ACHead) {
     this.personalForm.setValue({
       'Name': this.user.name,
       'Type': this.user.type,
       'ACGroup':acGroup?acGroup.name:'',
+      'ACHead':acHead?acHead.name:'',
       'CityName' : optedCity?optedCity.item2:'',
       'Email': this.user.email,
       'Address' : this.user.add1,
@@ -154,6 +176,11 @@ export class AddAccountComponent implements OnInit {
     return this.acGroupList.filter(state => state.name.toLowerCase().includes(filterValue));
   }
 
+  private _filterACHead(value: string): ACHead[] {
+    const filterValue = value.toLowerCase();
+    return this.acHeadList.filter(state => state.name.toLowerCase().includes(filterValue));
+  }
+
   private _filterStates(value: string): State[] {
     const filterValue = value.toLowerCase();
     return this.stateList.filter(state => state.name.toLowerCase().includes(filterValue));
@@ -173,6 +200,11 @@ export class AddAccountComponent implements OnInit {
     const cityObj = this.acGroupList.find((city)=>city.name.toLocaleLowerCase() === name.toLocaleLowerCase());
     return cityObj?.id;
   }
+  
+  private getAcHeadId(name:string) {
+    const cityObj = this.acHeadList.find((city)=>city.name.toLocaleLowerCase() === name.toLocaleLowerCase());
+    return cityObj?.id;
+  }
 
   public onSubmit(values:Object):void {
     console.log(values)
@@ -180,6 +212,7 @@ export class AddAccountComponent implements OnInit {
         let addFormData = {
               "CityId": this.getCityId(this.cityCtrl.value),
               "ACGroup": this.getAcGroupId(this.acGroupCtrl.value),
+              "ACHead": this.getAcHeadId(this.acHeadCtrl.value),
               "Name": this.personalForm.get('Name').value,
               "Type":this.personalForm.get('Type').value,
               "Email": this.personalForm.get('Email').value,

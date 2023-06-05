@@ -16,7 +16,7 @@ export class MasterService {
   constructor(private httpClient: HttpClient) { }
 
   getAccounts():Observable<any>{
-    return this.httpClient.get<any>(environment.apiBaseUrl + 'Customer/getCustomer',{headers:this.headers});
+    return this.httpClient.get<any>(environment.apiBaseUrl + 'Master/getAccountList',{headers:this.headers});
   }
 
   getState(): Observable<any>{
@@ -24,7 +24,11 @@ export class MasterService {
   }
 
   getAcGoup(): Observable<any>{
-    return this.httpClient.get<any>(environment.apiBaseUrl + 'Master/getAcGoup', {headers:this.headers});
+    return this.httpClient.get<any>(environment.apiBaseUrl + 'Master/getacgroup', {headers:this.headers});
+  }
+
+  getAcHead(): Observable<any>{
+    return this.httpClient.get<any>(environment.apiBaseUrl + 'Master/getAcHead', {headers:this.headers});
   }
 
   getCityListByStateId(id:number): Observable<any>{

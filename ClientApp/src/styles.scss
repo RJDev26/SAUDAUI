@@ -39,6 +39,9 @@ $material-icons-font-path: '~material-icons/iconfont/';
 .pb-5 {
     padding-bottom: 5px !important;
 }
+.pt-10 {
+    padding-top: 10px;
+}
 
 .flex-end {
     justify-content: flex-end;
@@ -88,6 +91,9 @@ $material-icons-font-path: '~material-icons/iconfont/';
                 }
             }
         }
+        .mat-dialog-container {
+            padding: 15px 24px 24px 24px;
+        }
     }
 }
 
@@ -102,7 +108,7 @@ $material-icons-font-path: '~material-icons/iconfont/';
                     background: #fff;
                     position: relative;
                     margin: 30px 0 0 0;
-                    padding: 15px;
+                    padding: 15px 10px;
                     border: 1px solid #ccc;
                     -moz-border-radius: 7px;
                     -webkit-border-radius: 7px;
@@ -118,8 +124,19 @@ $material-icons-font-path: '~material-icons/iconfont/';
                         left: 15px;
                     }
                 }
+                .mat-form-field:not(.mat-form-field-appearance-legacy) {
+                    .mat-form-field-prefix, .mat-form-field-suffix {
+                        .mat-icon-button {
+                            height: auto;
+                        }
+                    }
+                }
                 .mat-form-field {
                     width: 100%;
+                    .mat-form-field-wrapper {
+                        margin: 0;
+                        padding: 5px 10px 15px 10px;
+                    }
                     &.mat-form-field-appearance-outline {
                         .mat-form-field-label-wrapper {
                             top: 0;
@@ -130,6 +147,9 @@ $material-icons-font-path: '~material-icons/iconfont/';
                                 top: 14px;
                                 margin-top: 0;
                             }
+                        }
+                        .mat-form-field-flex {
+                            padding-right: 0;
                         }
                         .mat-form-field-infix {
                             padding: 12px 0;
@@ -157,6 +177,9 @@ $material-icons-font-path: '~material-icons/iconfont/';
                             margin: 0;
                             padding-left: 0;
                             top: calc(100% - 0.75rem);
+                        }
+                        .mat-form-field-suffix {
+                            top: 0.4rem;
                         }
                     }
                     &.small {

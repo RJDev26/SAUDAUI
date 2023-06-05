@@ -1,6 +1,7 @@
 export class Account {
     id: number;
     acGroup: number;
+    acHead: number;
     stateId:number;
     cityId: number;
     type: string;
