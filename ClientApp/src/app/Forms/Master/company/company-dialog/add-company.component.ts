@@ -44,7 +44,25 @@ export class AddCompanyComponent implements OnInit {
           'CompanyName': [],
           'add': [],
           'CityName' : [''],
-          'StateName' : ['']
+          'StateName' : [''],
+          'phone' : [''],
+          'email' : [''],
+          'pin' : [''],
+          'uniqueid' : [''],
+          'ApplyOptionsMTM' : [''],
+          'ApplyCashMTM' : [''],
+          'ApplyInvoice' : [''],
+          'ApplyOnlyBrokerage' : [''],
+          'ApplySubBrokerage' : [''],
+          'CheckRates' : [''],
+          'ShowLots' : [''],
+          'ApplySharing' : [''],
+          'ApplyDecimalQty' : [''],
+          'ApplyMargin' : [''],
+          'ApplyContractNote' : [''],
+          'RoundingOff' : [''],
+          'RateRangeEnable' : [''],
+          'SettlementPositing' : ['']
         });
     }
 

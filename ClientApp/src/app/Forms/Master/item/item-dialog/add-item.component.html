@@ -1,12 +1,74 @@
-<h1 mat-dialog-title><span *ngIf="!user.id">Add</span><span *ngIf="user.id">Edit</span> user</h1>
-<div mat-dialog-content>
-    <form [formGroup]="form" class="user-form">      
-        <mat-tab-group class="vertical-tabs">
-           
-        </mat-tab-group>
-    </form>
-</div>
-<div mat-dialog-actions fxLayout="row" fxLayoutAlign="space-between center">
-    <button mat-raised-button color="primary" [mat-dialog-close]="form.value" [disabled]="!form.valid"><span *ngIf="!user.id">Save</span><span *ngIf="user.id">Update</span></button>
-    <button mat-raised-button color="warn" (click)="close()">Cancel</button>
-</div>
+<h2 class="heading">Add Item</h2>
+<form [formGroup]="itemForm" (ngSubmit)="onSubmit(itemForm.value)" fxLayout="row wrap" class="user-form">
+    <div class="white-block pb-5">
+        <h3>Item</h3>
+        <div class="tab-party-details-parent">
+            <div fxFlex="100" fxFlex.gt-sm="20" fxFlex.sm="50">
+                <mat-form-field class="example-full-width" appearance="outline">
+                    <mat-label>Exchange</mat-label>
+                    <input
+                    matInput
+                    aria-label="ExchangeObj"
+                    [matAutocomplete]="auto"
+                    [formControl]="ExchangeCtrl"
+                    formControlName="ExchangeName"
+                    />
+                    <mat-error *ngIf="itemForm.controls.ExchangeName.errors?.required">Please select ACGroup</mat-error>                
+                    <mat-autocomplete #auto="matAutocomplete" (optionSelected)='getSelectedExchange($event.option)'>
+                    <mat-option
+                        *ngFor="let ExchangeObj of filteredExchange | async"
+                        [value]="ExchangeObj.item2"
+                        [id]="ExchangeObj.item1">
+                        <span>{{cityObj.item2}}</span>
+                    </mat-option>
+                    </mat-autocomplete>
+                </mat-form-field>
+            </div>
+            <div fxFlex="100" fxFlex.gt-sm="20" fxFlex.sm="50">
+                <mat-form-field appearance="outline">
+                    <mat-label>Item Code</mat-label>
+                    <input matInput autocomplete="off" placeholder="item Code" formControlName="itemCode" type="text">
+                    <mat-error *ngIf="itemForm.controls.itemCode.errors?.required">Item Code is required</mat-error>                
+                </mat-form-field> 
+            </div>
+            <div fxFlex="100" fxFlex.gt-sm="20" fxFlex.sm="50">
+                <mat-form-field appearance="outline">
+                    <mat-label>Item Name</mat-label>
+                    <input matInput autocomplete="off" placeholder="item Name" formControlName="itemName" type="text">
+                    <mat-error *ngIf="itemForm.controls.itemName.errors?.required">Item Name is required</mat-error>                
+                </mat-form-field> 
+            </div>
+            <div fxFlex="100" fxFlex.gt-sm="20" fxFlex.sm="50">
+                <mat-form-field appearance="outline">
+                    <mat-label>Exchange Symbol</mat-label>
+                    <input matInput autocomplete="off" placeholder="Exchange Symbol" formControlName="exchangeSymbol" type="text">
+                    <mat-error *ngIf="itemForm.controls.exchangeSymbol.errors?.required">Exchange Symbol is required</mat-error>                
+                </mat-form-field> 
+            </div>
+            <div fxFlex="100" fxFlex.gt-sm="20" fxFlex.sm="50">
+                <mat-form-field appearance="outline">
+                    <mat-label>lot size value multiplier</mat-label>
+                    <input matInput autocomplete="off" placeholder="lot size value multiplier" formControlName="lotSize" type="text">
+                    <mat-error *ngIf="itemForm.controls.lotSize.errors?.required">lot size value multiplier is required</mat-error>                
+                </mat-form-field> 
+            </div>
+            <div fxFlex="100" fxFlex.gt-sm="20" fxFlex.sm="50">
+                <mat-form-field appearance="outline">
+                    <mat-label>Isin code</mat-label>
+                    <input matInput autocomplete="off" placeholder="Isin code" formControlName="IsinCode" type="text">
+                    <mat-error *ngIf="itemForm.controls.IsinCode.errors?.required">Isin Code is required</mat-error>                
+                </mat-form-field> 
+            </div>
+            <div fxFlex="100" fxFlex.gt-sm="20" fxFlex.sm="50" class="pt-5 pb-5 pl-10">
+                <mat-checkbox formControlName="ApplyCtt">Apply Ctt</mat-checkbox>
+            </div>
+            <div fxFlex="100" fxFlex.gt-sm="20" fxFlex.sm="50" class="pt-5 pb-5 pl-10">
+                <mat-checkbox formControlName="ApplyRMF">Apply Risk Management Fees</mat-checkbox>
+            </div>
+        </div>
+    </div>
+    <div fxFlex="100" class="mt-2 text-center space-between-btns">
+        <button mat-raised-button color="warn" (click)="close()">Cancel</button>            
+        <button mat-raised-button color="primary" class="uppercase" type="submit">Save</button> 
+    </div>
+</form>

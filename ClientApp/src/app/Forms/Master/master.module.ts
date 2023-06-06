@@ -11,6 +11,7 @@ import { ItemComponent } from './item/item.component';
 import { TransporterComponent } from './transporter/transporter.component';
 import { CompanyComponent } from './company/company.component';
 import { AddCompanyComponent } from './company/company-dialog/add-company.component';
+import { AddItemComponent } from './item/item-dialog/add-item.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'account', pathMatch: 'full' },
@@ -34,6 +35,7 @@ export const routes: Routes = [
     AddAccountComponent,
     AddTransporterComponent,
     ItemComponent,
+    AddItemComponent,
     TransporterComponent,
     CompanyComponent,
     AddCompanyComponent

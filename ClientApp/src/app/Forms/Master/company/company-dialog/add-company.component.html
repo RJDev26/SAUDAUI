@@ -1,4 +1,4 @@
-<h2 class="heading mb-10">Add Comapny</h2>
+<h2 class="heading">Add Comapny</h2>
 <form [formGroup]="companyForm" (ngSubmit)="onSubmit(companyForm.value)" fxLayout="row wrap" class="user-form">
     <div class="white-block pb-5">
         <h3>Comapny Details</h3>
@@ -13,7 +13,7 @@
             <div fxFlex="100" fxFlex.gt-sm="20" fxFlex.sm="50">
                 <mat-form-field appearance="outline">
                     <mat-label>Add</mat-label>
-                    <input matInput autocomplete="off" placeholder="Add" formControlName="Add" type="text">
+                    <input matInput autocomplete="off" placeholder="Add" formControlName="add" type="text">
                     <mat-error *ngIf="companyForm.controls.add.errors?.required">Add is required</mat-error>                
                 </mat-form-field> 
             </div>
@@ -75,6 +75,89 @@
                     </mat-autocomplete>
                 </mat-form-field>
             </div>
+            <div fxFlex="100" fxFlex.gt-sm="20" fxFlex.sm="50">
+                <mat-form-field appearance="outline">
+                    <mat-label>Phone</mat-label>
+                    <input matInput autocomplete="off" placeholder="Phone" formControlName="phone" type="text">
+                    <mat-error *ngIf="companyForm.controls.phone.errors?.required">Add is required</mat-error>                
+                </mat-form-field> 
+            </div>
+            <div fxFlex="100" fxFlex.gt-sm="20" fxFlex.sm="50">
+                <mat-form-field appearance="outline">
+                    <mat-label>Email</mat-label>
+                    <input matInput autocomplete="off" placeholder="Email" formControlName="email" type="text">
+                    <mat-error *ngIf="companyForm.controls.email.errors?.required">Email is required</mat-error>                
+                </mat-form-field> 
+            </div>
+            <div fxFlex="100" fxFlex.gt-sm="20" fxFlex.sm="50">
+                <mat-form-field appearance="outline">
+                    <mat-label>Pin</mat-label>
+                    <input matInput autocomplete="off" placeholder="Pin" formControlName="pin" type="text">
+                    <mat-error *ngIf="companyForm.controls.pin.errors?.required">Pin is required</mat-error>                
+                </mat-form-field> 
+            </div>
+            <div fxFlex="100" fxFlex.gt-sm="20" fxFlex.sm="50">
+                <mat-form-field appearance="outline">
+                    <mat-label>Unique customer id</mat-label>
+                    <input matInput autocomplete="off" placeholder="Unique customer id" formControlName="uniqueid" type="text">
+                    <mat-error *ngIf="companyForm.controls.uniqueid.errors?.required">Unique customer id is required</mat-error>                
+                </mat-form-field> 
+            </div>
         </div>        
+    </div>
+    <div class="white-block">
+        <h3>Comapny Settings</h3>
+        <div class="tab-party-details-parent align-center">
+            <div fxFlex="100" fxFlex.gt-sm="20" fxFlex.sm="50" class="pt-5 pb-5 pl-10">
+                <mat-checkbox formControlName="ApplyOptionsMTM">ApplyOptionsMTM</mat-checkbox>
+            </div>
+            <div fxFlex="100" fxFlex.gt-sm="20" fxFlex.sm="50" class="pt-5 pb-5 pl-10">
+                <mat-checkbox formControlName="ApplyCashMTM">ApplyCashMTM</mat-checkbox>
+            </div>
+            <div fxFlex="100" fxFlex.gt-sm="20" fxFlex.sm="50" class="pt-5 pb-5 pl-10">
+                <mat-checkbox formControlName="ApplyInvoice">ApplyInvoice</mat-checkbox>
+            </div>
+            <div fxFlex="100" fxFlex.gt-sm="20" fxFlex.sm="50" class="pt-5 pb-5 pl-10">
+                <mat-checkbox formControlName="ApplyOnlyBrokerage">ApplyOnlyBrokerage</mat-checkbox>
+            </div>
+            <div fxFlex="100" fxFlex.gt-sm="20" fxFlex.sm="50" class="pt-5 pb-5 pl-10">
+                <mat-checkbox formControlName="ApplySubBrokerage">ApplySubBrokerage</mat-checkbox>
+            </div>
+            <div fxFlex="100" fxFlex.gt-sm="20" fxFlex.sm="50" class="pt-5 pb-5 pl-10">
+                <mat-checkbox formControlName="CheckRates">CheckRates</mat-checkbox>
+            </div>
+            <div fxFlex="100" fxFlex.gt-sm="20" fxFlex.sm="50" class="pt-5 pb-5 pl-10">
+                <mat-checkbox formControlName="ShowLots">ShowLots</mat-checkbox>
+            </div>
+            <div fxFlex="100" fxFlex.gt-sm="20" fxFlex.sm="50" class="pt-5 pb-5 pl-10">
+                <mat-checkbox formControlName="ApplySharing">ApplySharing</mat-checkbox>
+            </div>
+            <div fxFlex="100" fxFlex.gt-sm="20" fxFlex.sm="50" class="pt-5 pb-5 pl-10">
+                <mat-checkbox formControlName="ApplyDecimalQty">ApplyDecimalQty</mat-checkbox>
+            </div>
+            <div fxFlex="100" fxFlex.gt-sm="20" fxFlex.sm="50" class="pt-5 pb-5 pl-10">
+                <mat-checkbox formControlName="ApplyMargin">ApplyMargin</mat-checkbox>
+            </div>
+            <div fxFlex="100" fxFlex.gt-sm="20" fxFlex.sm="50" class="pt-5 pb-5 pl-10">
+                <mat-checkbox formControlName="ApplyContractNote">ApplyContractNote</mat-checkbox>
+            </div>
+            <div fxFlex="100" fxFlex.gt-sm="20" fxFlex.sm="50" class="pt-5 pb-5 pl-10">
+                <mat-checkbox formControlName="RoundingOff">RoundingOff</mat-checkbox>
+            </div>
+            <div fxFlex="100" fxFlex.gt-sm="20" fxFlex.sm="50" class="pt-5 pb-5 pl-10">
+                <mat-checkbox formControlName="RateRangeEnable">RateRangeEnable</mat-checkbox>
+            </div>
+            <div fxFlex="100" fxFlex.gt-sm="20" fxFlex.sm="50" class="pt-10">
+                <mat-form-field appearance="outline">
+                    <mat-label>Settlement Positing in %</mat-label>
+                    <input matInput autocomplete="off" placeholder="" formControlName="SettlementPositing" type="text">
+                    <mat-error *ngIf="companyForm.controls.SettlementPositing.errors?.required">Settlement Positing in % id is required</mat-error>                
+                </mat-form-field>
+            </div>
+        </div>
+    </div>
+    <div fxFlex="100" class="mt-2 text-center space-between-btns">
+        <button mat-raised-button color="warn" (click)="close()">Cancel</button>            
+        <button mat-raised-button color="primary" class="uppercase" type="submit">Save</button> 
     </div>
 </form>

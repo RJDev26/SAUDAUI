@@ -36,13 +36,21 @@ $material-icons-font-path: '~material-icons/iconfont/';
 .mb-10 {
     margin-bottom: 10px !important;
 }
+.pl-10 {
+    padding-left: 10px !important;
+}
+.pt-5 {
+    padding-top: 5px !important;
+}
 .pb-5 {
     padding-bottom: 5px !important;
 }
 .pt-10 {
     padding-top: 10px;
 }
-
+.align-center {
+    align-items: center !important;
+}
 .flex-end {
     justify-content: flex-end;
 }
@@ -97,6 +105,27 @@ $material-icons-font-path: '~material-icons/iconfont/';
     }
 }
 
+.white-block {
+    background: #fff;
+    position: relative;
+    margin: 30px 0 0 0;
+    padding: 15px 10px;
+    border: 1px solid #ccc;
+    -moz-border-radius: 7px;
+    -webkit-border-radius: 7px;
+    border-radius: 7px;
+    flex-wrap: wrap;
+    h3 {
+        background: #fff;
+        position: absolute;
+        color: #00695c;
+        font-size: 14px;
+        padding: 5px;
+        top: -15px;
+        left: 15px;
+    }
+}
+
 .user-form {
     .mat-tab-group {
         min-width: 100%;
@@ -104,26 +133,6 @@ $material-icons-font-path: '~material-icons/iconfont/';
             margin: 0;
             .tab-party-details-parent, .tab-tax-details-parent {
                 flex-wrap: wrap;
-                .white-block {
-                    background: #fff;
-                    position: relative;
-                    margin: 30px 0 0 0;
-                    padding: 15px 10px;
-                    border: 1px solid #ccc;
-                    -moz-border-radius: 7px;
-                    -webkit-border-radius: 7px;
-                    border-radius: 7px;
-                    flex-wrap: wrap;
-                    h3 {
-                        background: #fff;
-                        position: absolute;
-                        color: #00695c;
-                        font-size: 14px;
-                        padding: 5px;
-                        top: -15px;
-                        left: 15px;
-                    }
-                }
                 .mat-form-field:not(.mat-form-field-appearance-legacy) {
                     .mat-form-field-prefix, .mat-form-field-suffix {
                         .mat-icon-button {
@@ -199,12 +208,72 @@ $material-icons-font-path: '~material-icons/iconfont/';
     .tab-party-details-parent, .tab-bank-details-parent {
         margin: 0;
         flex-wrap: wrap;
+        .mat-form-field:not(.mat-form-field-appearance-legacy) {
+            .mat-form-field-prefix, .mat-form-field-suffix {
+                .mat-icon-button {
+                    height: auto;
+                }
+            }
+        }
         .mat-form-field {
             width: 100%;
+            .mat-form-field-wrapper {
+                margin: 0;
+                padding: 5px 10px 15px 10px;
+            }
             &.mat-form-field-appearance-outline {
+                .mat-form-field-label-wrapper {
+                    top: 0;
+                    margin-top: 0;
+                    padding-top: 0;
+                    .mat-form-field-label {
+                        font-size: 14px;
+                        top: 14px;
+                        margin-top: 0;
+                    }
+                }
+                .mat-form-field-flex {
+                    padding-right: 0;
+                }
+                .mat-form-field-infix {
+                    padding: 12px 0;
+                    border: 0;
+                }
                 .mat-form-field-wrapper {
                     margin: 0;
-                    padding: 10px;
+                    padding: 5px 10px 15px 10px;
+                }
+                &.mat-form-field-can-float {
+                    &.mat-form-field-should-float {
+                        .mat-form-field-label {
+                            font-size: 11px;
+                            transform: translateY(-1.4em);
+                        }
+                    }
+                    .mat-input-server:focus + .mat-form-field-label-wrapper {
+                        .mat-form-field-label {
+                            font-size: 11px;
+                            transform: translateY(-1.4em);
+                        }
+                    }
+                }
+                .mat-form-field-subscript-wrapper {
+                    margin: 0;
+                    padding-left: 0;
+                    top: calc(100% - 0.75rem);
+                }
+                .mat-form-field-suffix {
+                    top: 0.4rem;
+                }
+            }
+            &.small {
+                width: 50%;
+            }
+        }
+        .mat-checkbox-checked {
+            &.mat-accent {
+                .mat-checkbox-background {
+                    background: #00695c;
                 }
             }
         }
