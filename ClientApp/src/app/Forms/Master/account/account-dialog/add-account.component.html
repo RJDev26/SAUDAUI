@@ -1,286 +1,266 @@
 <h2 class="heading mb-10">Add Account</h2>     
 <form [formGroup]="personalForm" (ngSubmit)="onSubmit(personalForm.value)" fxLayout="row wrap" class="user-form">
-    <mat-tab-group>
-        <mat-tab label=" Details">
-            <div class="tab-party-details-parent">
-                <div class="white-block pb-5">
-                    <h3>Account</h3>
-                    <div fxFlex="100" fxFlex.gt-sm="12" fxFlex.sm="12">
-                        <mat-form-field appearance="outline">
-                            <mat-label>Short Code</mat-label>
-                            <input matInput autocomplete="off" placeholder="ShortCode" formControlName="ShortCode" type="text">
-                            <mat-error *ngIf="personalForm.controls.ShortCode.errors?.required">ShortCode is required</mat-error>                
-                        </mat-form-field> 
-                    </div>
-                    <div fxFlex="100" fxFlex.gt-sm="20" fxFlex.sm="50">
-                        <mat-form-field appearance="outline">
-                            <mat-label>Name</mat-label>
-                            <input matInput autocomplete="off" placeholder="Name" formControlName="Name" type="text">
-                            <mat-error *ngIf="personalForm.controls.Name.errors?.required">Name is required</mat-error>                
-                        </mat-form-field> 
-                    </div>
-                    <div fxFlex="100" fxFlex.gt-sm="28" fxFlex.sm="25">
-                        <mat-form-field appearance="outline" class="small">
-                            <mat-label>Opening Bal</mat-label>
-                            <input matInput autocomplete="off" placeholder="OpeningBal" formControlName="OpeningBal" type="text"> 
-                            <mat-error *ngIf="personalForm.controls.OpeningBal.errors?.required">OpeningBal is required</mat-error>                
-                        </mat-form-field> 
-                        <mat-radio-group>
-                            <mat-radio-button value="1" class="mx-1 pl-10">Dr.</mat-radio-button>
-                            <mat-radio-button value="2" class="ml-15">Cr.</mat-radio-button>
-                        </mat-radio-group>
-                    </div>
-                    <div fxFlex="100" fxFlex.gt-sm="15" fxFlex.sm="50">
-                        <mat-form-field class="example-full-width" appearance="outline">
-                            <mat-label>Account Group</mat-label>
-                            <input
-                            matInput
-                            aria-label="ACGroup"
-                            [matAutocomplete]="auto1"
-                            [formControl]="acGroupCtrl"
-                            formControlName="ACGroup"
-                            />
-                            <mat-error *ngIf="personalForm.controls.ACGroup.errors?.required">Please select ACGroup</mat-error>                
-                            <mat-autocomplete #auto1="matAutocomplete">
-                            <mat-option
-                                *ngFor="let acGroupObj of filteredacGroup | async"
-                                [value]="acGroupObj.name"
-                                [id]="acGroupObj.id">
-                                <span>{{acGroupObj.name}}</span>
-                            </mat-option>
-                            </mat-autocomplete>
-                        </mat-form-field>
-                    </div>
-                    <div fxFlex="100" fxFlex.gt-sm="15" fxFlex.sm="50">
-                        <mat-form-field class="example-full-width" appearance="outline">
-                            <mat-label>Account Head</mat-label>
-                            <input
-                            matInput
-                            aria-label="ACHead"
-                            [matAutocomplete]="auto2"
-                            [formControl]="acHeadCtrl"
-                            formControlName="ACHead"
-                            />
-                            <mat-error *ngIf="personalForm.controls.ACHead.errors?.required">Please select ACHead</mat-error>                
-                            <mat-autocomplete #auto2="matAutocomplete">
-                            <mat-option
-                                *ngFor="let acHeadObj of filteredacHead | async"
-                                [value]="acHeadObj.name"
-                                [id]="acHeadObj.id">
-                                <span>{{acHeadObj.name}}</span>
-                            </mat-option>
-                            </mat-autocomplete>
-                        </mat-form-field>
-                    </div>
-                    <div fxFlex="100" fxFlex.gt-sm="10" fxFlex.sm="50" class="pt-10">
-                        <mat-checkbox [(ngModel)]="checked" class="pl-10">Active</mat-checkbox>
-                    </div>
-                </div>
-                <div class="white-block">
-                    <h3>Details</h3>
-                    <div fxFlex="100" fxFlex.gt-sm="20" fxFlex.sm="50">
-                        <mat-form-field class="example-full-width" appearance="outline">
-                            <mat-label>City</mat-label>
-                            <input
-                            matInput
-                            aria-label="CityObj"
-                            [matAutocomplete]="auto3"
-                            [formControl]="cityCtrl"
-                            formControlName="CityName"
-                            />
-                            <mat-error *ngIf="personalForm.controls.CityName.errors?.required">Please select ACGroup</mat-error>                
-                            <mat-autocomplete #auto3="matAutocomplete" (optionSelected)='getSelectedCity($event.option)'>
-                            <mat-option
-                                *ngFor="let cityObj of filteredCity | async"
-                                [value]="cityObj.item2"
-                                [id]="cityObj.item1">
-                                <span>{{cityObj.item2}}</span>
-                            </mat-option>
-                            </mat-autocomplete>
-                        </mat-form-field>
-                    </div>
-                    <div fxFlex="100" fxFlex.gt-sm="40" fxFlex.sm="50">
-                        <mat-form-field appearance="outline">
-                            <mat-label>Address</mat-label> 
-                            <textarea matInput placeholder="Enter address" formControlName="Address" rows="1"></textarea> 
-                        </mat-form-field>
-                    </div>
-                    <div fxFlex="100" fxFlex.gt-sm="20" fxFlex.sm="50">
-                        <mat-form-field appearance="outline">
-                            <mat-label>Pan Number</mat-label>
-                            <input matInput autocomplete="off" placeholder="Pan Number" formControlName="Panno" type="text">
-                            <mat-error *ngIf="personalForm.controls.Panno.errors?.required">Pan number is required</mat-error>                
-                        </mat-form-field> 
-                    </div>
-                    <div fxFlex="100" fxFlex.gt-sm="20" fxFlex.sm="50">
-                        <mat-form-field appearance="outline">
-                            <mat-label>Email</mat-label>
-                            <input matInput autocomplete="off" placeholder="Email" formControlName="Email" type="text"> 
-                            <mat-error *ngIf="personalForm.controls.Email.errors?.required">Email is required</mat-error>                 
-                        </mat-form-field> 
-                    </div>
-                    <div fxFlex="100" fxFlex.gt-sm="20" fxFlex.sm="50">
-                        <mat-form-field appearance="outline">
-                            <mat-label>GST No</mat-label>
-                            <input matInput autocomplete="off" placeholder="GST No" formControlName="gstNo" type="text"> 
-                            <mat-error *ngIf="personalForm.controls.gstNo.errors?.required">GST No is required</mat-error>                 
-                        </mat-form-field> 
-                    </div>
-                    <div fxFlex="100" fxFlex.gt-sm="20" fxFlex.sm="50">
-                        <mat-form-field appearance="outline">
-                            <mat-label>Phone Number</mat-label>
-                            <input matInput autocomplete="off" placeholder="Phone Number" formControlName="Phone" type="text"> 
-                            <mat-error *ngIf="personalForm.controls.Phone.errors?.required">Phone is required</mat-error>                 
-                        </mat-form-field> 
-                    </div>
-                    <div fxFlex="100" fxFlex.gt-sm="20" fxFlex.sm="50">
-                        <mat-form-field appearance="outline">
-                            <mat-label>Telegram Id</mat-label>
-                            <input matInput autocomplete="off" placeholder="Telegram Id" formControlName="Telegram" type="text"> 
-                            <mat-error *ngIf="personalForm.controls.Telegram.errors?.required">Telegram is required</mat-error>                 
-                        </mat-form-field> 
-                    </div>
-                    <div fxFlex="100" fxFlex.gt-sm="20" fxFlex.sm="50">
-                        <mat-form-field appearance="outline">
-                            <mat-label>Telegram No</mat-label>
-                            <input matInput autocomplete="off" placeholder="Telegram No" formControlName="Telegramno" type="text"> 
-                            <mat-error *ngIf="personalForm.controls.Telegramno.errors?.required">Telegram number is required</mat-error>                 
-                        </mat-form-field> 
-                    </div>
-                    <div fxFlex="100" fxFlex.gt-sm="20" fxFlex.sm="50">
-                        <mat-form-field class="example-full-width" appearance="outline">
-                            <mat-label>Broker</mat-label>
-                            <input
-                            matInput
-                            aria-label="BrokerObj"
-                            [matAutocomplete]="auto3"
-                            [formControl]="BrokerCtrl"
-                            formControlName="BrokerName"
-                            />
-                            <mat-error *ngIf="personalForm.controls.BrokerName.errors?.required">Please select ACGroup</mat-error>                
-                            <mat-autocomplete #auto3="matAutocomplete" (optionSelected)='getSelectedBroker($event.option)'>
-                            <mat-option
-                                *ngFor="let BrokerObj of filteredBroker | async"
-                                [value]="BrokerObj.item2"
-                                [id]="BrokerObj.item1">
-                                <span>{{cityObj.item2}}</span>
-                            </mat-option>
-                            </mat-autocomplete>
-                        </mat-form-field>
-                    </div>
-                    <div fxFlex="100" fxFlex.gt-sm="20" fxFlex.sm="50">
-                        <mat-checkbox [(ngModel)]="checked" class="pl-10">Apply Tax</mat-checkbox>
-                    </div>
-                    <div fxFlex="100" fxFlex.gt-sm="40" fxFlex.sm="50">
-                        <mat-checkbox [(ngModel)]="future" class="pl-10">Apply Future Cut Brok</mat-checkbox>
-                        <mat-checkbox [(ngModel)]="option" class="pl-10 ml-7">Apply Option Cut Brok</mat-checkbox>
-                    </div>
-                </div>
-            </div>
-        </mat-tab>
-        <mat-tab label="Tax Details">
-            <div class="tab-tax-details-parent">
-                <div class="white-block">
-                    <h3>Tax Details</h3>
-                    <div fxFlex="100" fxFlex.gt-sm="20" fxFlex.sm="50">
-                        <mat-form-field class="example-full-width" appearance="outline">
-                            <mat-label>Tax type</mat-label>
-                            <input
-                            matInput
-                            aria-label="TaxtypeObj"
-                            [matAutocomplete]="auto3"
-                            [formControl]="TaxtypeCtrl"
-                            formControlName="TaxtypeName"
-                            />
-                            <mat-error *ngIf="personalForm.controls.TaxtypeName.errors?.required">Please select ACGroup</mat-error>                
-                            <mat-autocomplete #auto3="matAutocomplete" (optionSelected)='getSelectedTaxtype($event.option)'>
-                            <mat-option
-                                *ngFor="let TaxtypeObj of filteredTaxtype | async"
-                                [value]="TaxtypeObj.item2"
-                                [id]="TaxtypeObj.item1">
-                                <span>{{cityObj.item2}}</span>
-                            </mat-option>
-                            </mat-autocomplete>
-                        </mat-form-field>
-                    </div>
-                    <div fxFlex="100" fxFlex.gt-sm="20" fxFlex.sm="50">
-                        <mat-form-field class="example-full-width" appearance="outline">
-                            <mat-label>Exchange</mat-label>
-                            <input
-                            matInput
-                            aria-label="ExchangeObj"
-                            [matAutocomplete]="auto3"
-                            [formControl]="ExchangeCtrl"
-                            formControlName="ExchangeName"
-                            />
-                            <mat-error *ngIf="personalForm.controls.ExchangeName.errors?.required">Please select ACGroup</mat-error>                
-                            <mat-autocomplete #auto3="matAutocomplete" (optionSelected)='getSelectedExchange($event.option)'>
-                            <mat-option
-                                *ngFor="let ExchangeObj of filteredExchange | async"
-                                [value]="ExchangeObj.item2"
-                                [id]="ExchangeObj.item1">
-                                <span>{{cityObj.item2}}</span>
-                            </mat-option>
-                            </mat-autocomplete>
-                        </mat-form-field>
-                    </div>
-                    <div fxFlex="100" fxFlex.gt-sm="20" fxFlex.sm="50">
-                        <mat-form-field appearance="outline">
-                            <mat-label>Intraday Rate</mat-label>
-                            <input matInput autocomplete="off" placeholder="IntraDay" formControlName="IntraDay" type="text"> 
-                            <mat-error *ngIf="personalForm.controls.IntraDay.errors?.required">IntraDay is required</mat-error>                 
-                        </mat-form-field> 
-                    </div>
-                    <div fxFlex="100" fxFlex.gt-sm="15" fxFlex.sm="50">
-                        <mat-form-field appearance="outline">
-                            <mat-label>From</mat-label>
-                            <input matInput [matDatepicker]="picker1">
-                            <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
-                            <mat-datepicker #picker1></mat-datepicker>
-                        </mat-form-field>                  
-                    </div>
-                    <div fxFlex="100" fxFlex.gt-sm="15" fxFlex.sm="50">
-                        <mat-form-field appearance="outline">
-                            <input matInput [matDatepicker]="picker2" placeholder="To">
-                            <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
-                            <mat-datepicker #picker2></mat-datepicker>
-                        </mat-form-field>                  
-                    </div>
-                    <div fxFlex="100" fxFlex.gt-sm="20" fxFlex.sm="50">
-                        <mat-form-field class="example-full-width" appearance="outline">
-                            <mat-label>InsType</mat-label>
-                            <input
-                            matInput
-                            aria-label="InsTypeObj"
-                            [matAutocomplete]="auto3"
-                            [formControl]="InsTypeCtrl"
-                            formControlName="InsTypeName"
-                            />
-                            <mat-error *ngIf="personalForm.controls.InsTypeName.errors?.required">Please select ACGroup</mat-error>                
-                            <mat-autocomplete #auto3="matAutocomplete" (optionSelected)='getSelectedInsType($event.option)'>
-                            <mat-option
-                                *ngFor="let InsTypeObj of filteredInsType | async"
-                                [value]="InsTypeObj.item2"
-                                [id]="InsTypeObj.item1">
-                                <span>{{cityObj.item2}}</span>
-                            </mat-option>
-                            </mat-autocomplete>
-                        </mat-form-field>
-                    </div>
-                    <div fxFlex="100" fxFlex.gt-sm="20" fxFlex.sm="50">
-                        <mat-form-field appearance="outline">
-                            <mat-label>Delivery Rate</mat-label>
-                            <input matInput autocomplete="off" placeholder="DeliveryRate" formControlName="DeliveryRate" type="text"> 
-                            <mat-error *ngIf="personalForm.controls.DeliveryRate.errors?.required">DeliveryRate is required</mat-error>                 
-                        </mat-form-field> 
-                    </div>
-                </div>
-            </div>
-        </mat-tab>
-    </mat-tab-group>
+  <mat-tab-group>
+    <mat-tab label=" Details">
+      <div class="tab-party-details-parent">
+        <div class="white-block pb-5">
+          <h3>Account</h3>
+          <div fxFlex="100" fxFlex.gt-sm="12" fxFlex.sm="12">
+            <mat-form-field appearance="outline">
+              <mat-label>Short Code</mat-label>
+              <input matInput autocomplete="off" placeholder="ShortCode" formControlName="ShortCode" type="text">
+              <mat-error *ngIf="personalForm.controls.ShortCode.errors?.required">ShortCode is required</mat-error>
+            </mat-form-field>
+          </div>
+          <div fxFlex="100" fxFlex.gt-sm="20" fxFlex.sm="50">
+            <mat-form-field appearance="outline">
+              <mat-label>Name</mat-label>
+              <input matInput autocomplete="off" placeholder="Name" formControlName="Name" type="text">
+              <mat-error *ngIf="personalForm.controls.Name.errors?.required">Name is required</mat-error>
+            </mat-form-field>
+          </div>
+          <div fxFlex="100" fxFlex.gt-sm="28" fxFlex.sm="25">
+            <mat-form-field appearance="outline" class="small">
+              <mat-label>Opening Bal</mat-label>
+              <input matInput autocomplete="off" placeholder="OpeningBal" formControlName="OpeningBal" type="text">
+              <mat-error *ngIf="personalForm.controls.OpeningBal.errors?.required">OpeningBal is required</mat-error>
+            </mat-form-field>
+            <mat-radio-group>
+              <mat-radio-button value="1" class="mx-1 pl-10" checked>Dr.</mat-radio-button>
+              <mat-radio-button value="2" class="ml-15">Cr.</mat-radio-button>
+            </mat-radio-group>
+          </div>
+          <div fxFlex="100" fxFlex.gt-sm="15" fxFlex.sm="50">
+            <mat-form-field class="example-full-width" appearance="outline">
+              <mat-label>Account Group</mat-label>
+              <input matInput
+                     aria-label="ACGroup"
+                     [matAutocomplete]="auto1"
+                     [formControl]="acGroupCtrl"
+                     formControlName="ACGroup" />
+              <mat-error *ngIf="personalForm.controls.ACGroup.errors?.required">Please select ACGroup</mat-error>
+              <mat-autocomplete #auto1="matAutocomplete">
+                <mat-option *ngFor="let acGroupObj of filteredacGroup | async"
+                            [value]="acGroupObj.name"
+                            [id]="acGroupObj.id">
+                  <span>{{acGroupObj.name}}</span>
+                </mat-option>
+              </mat-autocomplete>
+            </mat-form-field>
+          </div>
+          <div fxFlex="100" fxFlex.gt-sm="15" fxFlex.sm="50">
+            <mat-form-field class="example-full-width" appearance="outline">
+              <mat-label>Account Head</mat-label>
+              <input matInput
+                     aria-label="ACHead"
+                     [matAutocomplete]="auto2"
+                     [formControl]="acHeadCtrl"
+                     formControlName="ACHead" />
+              <mat-error *ngIf="personalForm.controls.ACHead.errors?.required">Please select ACHead</mat-error>
+              <mat-autocomplete #auto2="matAutocomplete">
+                <mat-option *ngFor="let acHeadObj of filteredacHead | async"
+                            [value]="acHeadObj.name"
+                            [id]="acHeadObj.id">
+                  <span>{{acHeadObj.name}}</span>
+                </mat-option>
+              </mat-autocomplete>
+            </mat-form-field>
+          </div>
+          <div fxFlex="100" fxFlex.gt-sm="10" fxFlex.sm="50" class="pt-10">
+            <mat-checkbox class="pl-10" checked>Active</mat-checkbox>
+          </div>
+        </div>
+        <div class="white-block">
+          <h3>Details</h3>
+          <div fxFlex="100" fxFlex.gt-sm="20" fxFlex.sm="50">
+            <mat-form-field class="example-full-width" appearance="outline">
+              <mat-label>City</mat-label>
+              <input matInput
+                     aria-label="CityObj"
+                     [matAutocomplete]="auto3"
+                     [formControl]="cityCtrl"
+                     formControlName="CityName" />
+              <mat-error *ngIf="personalForm.controls.CityName.errors?.required">Please select ACGroup</mat-error>
+              <mat-autocomplete #auto3="matAutocomplete" (optionSelected)='getSelectedCity($event.option)'>
+                <mat-option *ngFor="let cityObj of filteredCity | async"
+                            [value]="cityObj.item2"
+                            [id]="cityObj.item1">
+                  <span>{{cityObj.item2}}</span>
+                </mat-option>
+              </mat-autocomplete>
+            </mat-form-field>
+          </div>
+          <div fxFlex="100" fxFlex.gt-sm="40" fxFlex.sm="50">
+            <mat-form-field appearance="outline">
+              <mat-label>Address</mat-label>
+              <textarea matInput placeholder="Enter address" formControlName="Address" rows="1"></textarea>
+            </mat-form-field>
+          </div>
+          <div fxFlex="100" fxFlex.gt-sm="20" fxFlex.sm="50">
+            <mat-form-field appearance="outline">
+              <mat-label>Pan Number</mat-label>
+              <input matInput autocomplete="off" placeholder="Pan Number" formControlName="Panno" type="text">
+              <mat-error *ngIf="personalForm.controls.Panno.errors?.required">Pan number is required</mat-error>
+            </mat-form-field>
+          </div>
+          <div fxFlex="100" fxFlex.gt-sm="20" fxFlex.sm="50">
+            <mat-form-field appearance="outline">
+              <mat-label>Email</mat-label>
+              <input matInput autocomplete="off" placeholder="Email" formControlName="Email" type="text">
+              <mat-error *ngIf="personalForm.controls.Email.errors?.required">Email is required</mat-error>
+            </mat-form-field>
+          </div>
+          <div fxFlex="100" fxFlex.gt-sm="20" fxFlex.sm="50">
+            <mat-form-field appearance="outline">
+              <mat-label>GST No</mat-label>
+              <input matInput autocomplete="off" placeholder="GST No" formControlName="gstNo" type="text">
+              <mat-error *ngIf="personalForm.controls.gstNo.errors?.required">GST No is required</mat-error>
+            </mat-form-field>
+          </div>
+          <div fxFlex="100" fxFlex.gt-sm="20" fxFlex.sm="50">
+            <mat-form-field appearance="outline">
+              <mat-label>Phone Number</mat-label>
+              <input matInput autocomplete="off" placeholder="Phone Number" formControlName="Phone" type="text">
+              <mat-error *ngIf="personalForm.controls.Phone.errors?.required">Phone is required</mat-error>
+            </mat-form-field>
+          </div>
+          <div fxFlex="100" fxFlex.gt-sm="20" fxFlex.sm="50">
+            <mat-form-field appearance="outline">
+              <mat-label>Telegram Id</mat-label>
+              <input matInput autocomplete="off" placeholder="Telegram Id" formControlName="Telegram" type="text">
+              <mat-error *ngIf="personalForm.controls.Telegram.errors?.required">Telegram is required</mat-error>
+            </mat-form-field>
+          </div>
+          <div fxFlex="100" fxFlex.gt-sm="20" fxFlex.sm="50">
+            <mat-form-field appearance="outline">
+              <mat-label>Telegram No</mat-label>
+              <input matInput autocomplete="off" placeholder="Telegram No" formControlName="Telegramno" type="text">
+              <mat-error *ngIf="personalForm.controls.Telegramno.errors?.required">Telegram number is required</mat-error>
+            </mat-form-field>
+          </div>
+          <div fxFlex="100" fxFlex.gt-sm="20" fxFlex.sm="50">
+            <mat-form-field class="example-full-width" appearance="outline">
+              <mat-label>Broker</mat-label>
+              <input matInput
+                     aria-label="BrokerObj"
+                     [matAutocomplete]="auto3"
+                     [formControl]="BrokerCtrl"
+                     formControlName="BrokerName" />
+              <mat-error *ngIf="personalForm.controls.BrokerName.errors?.required">Please select ACGroup</mat-error>
+              <mat-autocomplete #auto3="matAutocomplete" (optionSelected)='getSelectedBroker($event.option)'>
+                <mat-option *ngFor="let BrokerObj of filteredBroker | async"
+                            [value]="BrokerObj.item2"
+                            [id]="BrokerObj.item1">
+                  <span>{{cityObj.item2}}</span>
+                </mat-option>
+              </mat-autocomplete>
+            </mat-form-field>
+          </div>
+          <div fxFlex="100" fxFlex.gt-sm="20" fxFlex.sm="50">
+            <mat-checkbox class="pl-10">Apply Tax</mat-checkbox>
+          </div>
+          <div fxFlex="100" fxFlex.gt-sm="40" fxFlex.sm="50">
+            <mat-checkbox class="pl-10">Apply Future Cut Brok</mat-checkbox>
+            <mat-checkbox class="pl-10 ml-7">Apply Option Cut Brok</mat-checkbox>
+          </div>
+        </div>
+      </div>
+    </mat-tab>
+
+    <mat-tab label="Tax Details">
+      <div class="tab-tax-details-parent">
+        <div class="white-block">
+          <h3>Tax Details</h3>
+          <div fxFlex="100" fxFlex.gt-sm="20" fxFlex.sm="50">
+            <mat-form-field class="example-full-width" appearance="outline">
+              <mat-label>Tax type</mat-label>
+              <input matInput
+                     aria-label="TaxtypeObj"
+                     [matAutocomplete]="auto3"
+                     [formControl]="TaxtypeCtrl"
+                     formControlName="TaxtypeName" />
+              <mat-error *ngIf="personalForm.controls.TaxtypeName.errors?.required">Please select ACGroup</mat-error>
+              <mat-autocomplete #auto3="matAutocomplete" (optionSelected)='getSelectedTaxtype($event.option)'>
+                <mat-option *ngFor="let TaxtypeObj of filteredTaxtype | async"
+                            [value]="TaxtypeObj.item2"
+                            [id]="TaxtypeObj.item1">
+                  <span>{{cityObj.item2}}</span>
+                </mat-option>
+              </mat-autocomplete>
+            </mat-form-field>
+          </div>
+          <div fxFlex="100" fxFlex.gt-sm="20" fxFlex.sm="50">
+            <mat-form-field class="example-full-width" appearance="outline">
+              <mat-label>Exchange</mat-label>
+              <input matInput
+                     aria-label="ExchangeObj"
+                     [matAutocomplete]="auto3"
+                     [formControl]="ExchangeCtrl"
+                     formControlName="ExchangeName" />
+              <mat-error *ngIf="personalForm.controls.ExchangeName.errors?.required">Please select ACGroup</mat-error>
+              <mat-autocomplete #auto3="matAutocomplete" (optionSelected)='getSelectedExchange($event.option)'>
+                <mat-option *ngFor="let ExchangeObj of filteredExchange | async"
+                            [value]="ExchangeObj.item2"
+                            [id]="ExchangeObj.item1">
+                  <span>{{cityObj.item2}}</span>
+                </mat-option>
+              </mat-autocomplete>
+            </mat-form-field>
+          </div>
+          <div fxFlex="100" fxFlex.gt-sm="20" fxFlex.sm="50">
+            <mat-form-field appearance="outline">
+              <mat-label>Intraday Rate</mat-label>
+              <input matInput autocomplete="off" placeholder="IntraDay" formControlName="IntraDay" type="text">
+              <mat-error *ngIf="personalForm.controls.IntraDay.errors?.required">IntraDay is required</mat-error>
+            </mat-form-field>
+          </div>
+          <div fxFlex="100" fxFlex.gt-sm="15" fxFlex.sm="50">
+            <mat-form-field appearance="outline">
+              <mat-label>From</mat-label>
+              <input matInput [matDatepicker]="picker1">
+              <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+              <mat-datepicker #picker1></mat-datepicker>
+            </mat-form-field>
+          </div>
+          <div fxFlex="100" fxFlex.gt-sm="15" fxFlex.sm="50">
+            <mat-form-field appearance="outline">
+              <input matInput [matDatepicker]="picker2" placeholder="To">
+              <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+              <mat-datepicker #picker2></mat-datepicker>
+            </mat-form-field>
+          </div>
+          <div fxFlex="100" fxFlex.gt-sm="20" fxFlex.sm="50">
+            <mat-form-field class="example-full-width" appearance="outline">
+              <mat-label>InsType</mat-label>
+              <input matInput
+                     aria-label="InsTypeObj"
+                     [matAutocomplete]="auto3"
+                     [formControl]="InsTypeCtrl"
+                     formControlName="InsTypeName" />
+              <mat-error *ngIf="personalForm.controls.InsTypeName.errors?.required">Please select ACGroup</mat-error>
+              <mat-autocomplete #auto3="matAutocomplete" (optionSelected)='getSelectedInsType($event.option)'>
+                <mat-option *ngFor="let InsTypeObj of filteredInsType | async"
+                            [value]="InsTypeObj.item2"
+                            [id]="InsTypeObj.item1">
+                  <span>{{cityObj.item2}}</span>
+                </mat-option>
+              </mat-autocomplete>
+            </mat-form-field>
+          </div>
+          <div fxFlex="100" fxFlex.gt-sm="20" fxFlex.sm="50">
+            <mat-form-field appearance="outline">
+              <mat-label>Delivery Rate</mat-label>
+              <input matInput autocomplete="off" placeholder="DeliveryRate" formControlName="DeliveryRate" type="text">
+              <mat-error *ngIf="personalForm.controls.DeliveryRate.errors?.required">DeliveryRate is required</mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+    </mat-tab>
+
+  </mat-tab-group>
     <div fxFlex="100" class="mt-2 text-center space-between-btns">
         <button mat-raised-button color="warn" (click)="close()">Cancel</button>            
         <button mat-raised-button color="primary" class="uppercase" type="submit">Save</button> 
     </div>
 </form> 
- 

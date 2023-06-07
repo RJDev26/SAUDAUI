@@ -52,9 +52,15 @@ export class AccountComponent implements OnInit {
       headerName: 'Action', field: 'fileIcon', cellRenderer: this.actionCellRenderer, minWidth: 80,
       maxWidth: 110, resizable: true
     },
+    { headerName: 'Code', field: 'shortCode', filter: true, sorting: true, resizable: true },
     { headerName: 'Name', field: 'name', filter: true, sorting: true, resizable: true },
-    { headerName: 'Opbal', field: 'opbal', filter: true, sorting: true, resizable: true },
-    { headerName: 'Mobile', field: 'mobile', filter: true, sorting: true, resizable: true }
+    { headerName: 'Opbal', field: 'openingBal', filter: true, sorting: true, resizable: true },
+    { headerName: 'PhoneNo', field: 'PhoneNo', filter: true, sorting: true, resizable: true },
+    { headerName: 'Head', field: 'acHead', filter: true, sorting: true, resizable: true },
+    { headerName: 'Group', field: 'acGroup', filter: true, sorting: true, resizable: true },
+    { headerName: 'Email', field: 'email', filter: true, sorting: true, resizable: true },
+    { headerName: 'City', field: 'city', filter: true, sorting: true, resizable: true },
+    { headerName: 'Address', field: 'address', filter: true, sorting: true, resizable: true }
   ];
 
   onActivate(event) {
@@ -95,7 +101,8 @@ export class AccountComponent implements OnInit {
      }
   }
 
-  public openUserDialog(user) {
+  public openUserDialog(user)
+  {
     let dialogRef = this.dialog.open(AddAccountComponent, {
       data: user
     });

@@ -59,12 +59,12 @@ export class AddAccountComponent implements OnInit {
   ];
  
   constructor(private formBuilder: UntypedFormBuilder, public dialogRef: MatDialogRef<AddAccountComponent>, @Inject(MAT_DIALOG_DATA) public user: Account, private _appService: MasterService) {
-    console.log(this.dialogRef);
+    this.bindFormControls();
   }
 
   bindFormControls() {
     this.personalForm = this.formBuilder.group({
-      'ShortCode': [],
+      'ShortCode': ['', Validators.required],
       'Name': ['', Validators.required],
       'OpeningBal': [],
       'CityName' : [''],
@@ -73,8 +73,8 @@ export class AddAccountComponent implements OnInit {
       'gstNo': [''],
       'Phone': ['', Validators.required],
       'Type': [''],
-      'ACGroup':[''],
-      'ACHead':[''],
+      'ACGroup': ['', Validators.required],
+      'ACHead': ['', Validators.required],
       'Address' : [''],
       'Telegram': [''],
       'Telegramno': [''],
@@ -166,7 +166,7 @@ export class AddAccountComponent implements OnInit {
 
 
   ngOnInit() {
-    this.bindFormControls();
+   
     this.initialApiCalls();
   }
   
