@@ -87,12 +87,16 @@ export class AccountComponent implements OnInit {
   }
 
   onGridClick(params: any) {
-    if (params.event.target.dataset.action == "edit") { 
+    if (params.event.target.dataset.action == "edit")
+    { 
       this._masterService.getAccountById(params.data.id).subscribe((res)=>{
         console.log(res);
         this.openUserDialog(res);
       });
-     }
+
+      
+
+    }
     if (params.event.target.dataset.action == "delete") { 
       this._masterService.deleteAccountById(params.data.id).subscribe((res)=>{
         console.log(res);

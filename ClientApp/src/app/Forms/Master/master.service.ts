@@ -55,4 +55,18 @@ export class MasterService {
     return this.httpClient.post<any>(environment.apiBaseUrl + 'Master/saveTransporter', data, {headers:this.headers});
   }
 
+  getCityList(): Observable<any> {
+    return this.httpClient.get<any>(environment.apiBaseUrl + 'Master/getCityList', { headers: this.headers });
+  }
+
+  getTaxType(): Observable<any> {
+    return this.httpClient.get<any>(environment.apiBaseUrl + 'Master/getTaxName', { headers: this.headers });
+  }
+
+  getExchangeName(): Observable<any> {
+    return this.httpClient.get<any>(environment.apiBaseUrl + 'Master/getExchangeName', { headers: this.headers });
+  }
+
+  
+
 }

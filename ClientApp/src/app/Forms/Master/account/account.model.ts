@@ -1,27 +1,38 @@
 export class Account {
-    id: number;
-    acGroup: number;
-    acHead: number;
-    stateId:number;
-    cityId: number;
-    type: string;
-    name:string;
-    opbal: string;
-    phoneO: string;
-    mobile:string;
-    email:string;
-    add1 :string;
-    pin :string;
-    acno :string;
-    acname :string;
-    bank :string;
-    branch :string;
-    ifci :string;
-    vendorCode :string;
-    gstNo :string;
-    sacCode :string;
-    createdDate:string;
-    createdBy:string;
-    lastModifiedDate:string;
-    lastModifiedBy:string;
-  }
+  id: number;
+  acGroup: number;
+  acHead: number;
+  shortCode: number;
+  cityId: number;
+  accountHeadId: number
+  accountGroupId: number
+  name: string;
+  openingBal: string;
+  phone: string;
+  mobile: string;
+  email: string;
+  address: string;
+  pin: string;
+  panNo: string
+  gstinno: string;
+  drCr: string;
+  telegramNo: string
+  telegramId: string
+  applyFutureCutBrok: boolean
+  applyOptionCutBrok: boolean
+  applyTax: boolean
+  taxType: number
+  exchange: number
+  IntraDayRate: number
+  InsType: number
+  DeliveryRate: number
+  FromDT: Date
+  ToDT: Date
+ 
+
+
+  createdDate: string;
+  createdBy: string;
+  lastModifiedDate: string;
+  lastModifiedBy: string;
+}

@@ -1,8 +1,10 @@
-import { Component, OnInit, Inject } from '@angular/core';
-import { UntypedFormGroup, UntypedFormControl, UntypedFormBuilder, Validators, FormControl} from '@angular/forms';
+import { Component, OnInit, Inject, ViewChild, AfterViewInit, QueryList, ViewChildren } from '@angular/core';
+import { UntypedFormGroup, UntypedFormControl, UntypedFormBuilder, Validators, FormControl, FormGroup } from '@angular/forms';
+import { MatAutocompleteTrigger } from '@angular/material/autocomplete';
+import { MatOptionSelectionChange } from '@angular/material/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { combineLatest, forkJoin, Observable } from 'rxjs';
-import {map, startWith} from 'rxjs/operators';
+import { map, startWith } from 'rxjs/operators';
 import { MasterService } from '../../master.service';
 import { Account } from '../account.model';
 
@@ -12,8 +14,8 @@ export interface State {
 }
 
 export interface City {
-  item1: number;
-  item2: string;
+  id: number;
+  name: string;
 }
 
 export interface ACGroup {
@@ -32,14 +34,15 @@ export interface ACHead {
   templateUrl: './add-account.component.html',
   styleUrls: ['./add-account.component.scss']
 })
-export class AddAccountComponent implements OnInit {
-  public personalForm:UntypedFormGroup;
-
+export class AddAccountComponent implements OnInit, AfterViewInit {
+  public personalForm: UntypedFormGroup;
+  public taxForm: FormGroup;
+  subscription: any;
+  isAnythingEmitted: boolean = null;
+  emittedValue: any;
   acGroupCtrl = new FormControl('');
   filteredacGroup: Observable<ACGroup[]>;
 
-  stateCtrl = new FormControl('');
-  filteredStates: Observable<State[]>;
 
   cityCtrl = new FormControl('');
   filteredCity: Observable<City[]>;
@@ -49,127 +52,197 @@ export class AddAccountComponent implements OnInit {
 
   acGroupList: ACGroup[];
   acHeadList: ACHead[];
-  stateList: State[];
-  cityList: City[];
 
-  public types = [
-    {name: 'Trader' },
-    {name: 'Farmer' },
-    {name: 'Broker' } 
-  ];
- 
+  cityList: City[];
+  taxList: City[];
+  exchangeList: City[];
+
+  @ViewChildren(MatAutocompleteTrigger) triggerCollection: QueryList<MatAutocompleteTrigger>;
+
+
   constructor(private formBuilder: UntypedFormBuilder, public dialogRef: MatDialogRef<AddAccountComponent>, @Inject(MAT_DIALOG_DATA) public user: Account, private _appService: MasterService) {
     this.bindFormControls();
+    this.bindTaxFormControls();
+  }
+ 
+  ngAfterViewInit() {
+    if (this.subscription && !this.subscription.closed) {
+      this.subscription.unsubscribe();
+    }
+
+    for (var trigger of this.triggerCollection.toArray()) {
+      this.subscription = trigger.panelClosingActions
+        .subscribe(e => {
+          debugger
+          if (!e || !e.source) {
+            if (this.acGroupCtrl.dirty)
+            {
+              this.acGroupCtrl.setValue('');
+            }
+            if (this.acHeadCtrl.dirty) {
+              this.acHeadCtrl.setValue('');
+            }
+            if (this.cityCtrl.dirty) {
+              this.cityCtrl.setValue('');
+            }
+          }
+        });
+    }
   }
 
+  
   bindFormControls() {
     this.personalForm = this.formBuilder.group({
       'ShortCode': ['', Validators.required],
       'Name': ['', Validators.required],
       'OpeningBal': [],
-      'CityName' : [''],
+      'City': [''],
       'Email': ['', Validators.compose([Validators.required, emailValidator])],
-      'Panno' : [''],
-      'gstNo': [''],
+      'PanNo': [''],
+      'Gstinno': [''],
       'Phone': ['', Validators.required],
-      'Type': [''],
-      'ACGroup': ['', Validators.required],
-      'ACHead': ['', Validators.required],
-      'Address' : [''],
-      'Telegram': [''],
-      'Telegramno': [''],
-      'BrokerName' : [''],
-      'TaxtypeName' : [''],
-      'ExchangeName' : [''],
-      'IntraDay' : [''],
-      'InsTypeName' : [''],
-      'DeliveryRate' : [''],
-      'accNo': [''],
-      'accName': [''],
-      'Branch': [''],
-      'Bank': [''],
-      'ifsc': ['']
+      'AcGroup': ['', Validators.required],
+      'AcHead': ['', Validators.required],
+      'Address': [''],
+      'TelegramNo': [''],
+      'TelegramId': [''],
+      'Id': [''],
+      'DrCr': ['1', Validators.required],
+      'ApplyTax': [],
+      'ApplyFutureCutBrok': [],
+      'ApplyOptionCutBrok': [],
+     
+      
+     
+
     });
   }
 
-  bindFilterFntoList(){
-    this.filteredStates = this.stateCtrl.valueChanges.pipe(
+  bindTaxFormControls() {
+    this.taxForm = this.formBuilder.group({
+      'TaxType': [''],
+      'Exchange': [''],
+      'IntraDayRate': [''],
+      'InsType': [''],
+      'DeliveryRate': [''],
+      //'FromDT': [],
+      //'ToDT': [],
+
+    });
+  }
+
+
+  bindFilterFntoList()
+  {
+
+
+    this.filteredCity = this.cityCtrl.valueChanges.pipe(
       startWith(''),
-      map(stateObj =>{
-        return stateObj ? this._filterStates(stateObj) : this.stateList.slice()
+      map(cityObj => {
+        return cityObj ? this._filterCity(cityObj) : this.cityList.slice()
       }),
     );
 
+
+    
+
     this.filteredacGroup = this.acGroupCtrl.valueChanges.pipe(
       startWith(''),
-      map(acGroupObj =>{
+      map(acGroupObj => {
         return acGroupObj ? this._filterACGroup(acGroupObj) : this.acGroupList.slice()
       }),
     );
 
     this.filteredacHead = this.acHeadCtrl.valueChanges.pipe(
       startWith(''),
-      map(acHeadObj =>{
+      map(acHeadObj => {
         return acHeadObj ? this._filterACHead(acHeadObj) : this.acHeadList.slice()
       }),
     );
   }
 
   initialApiCalls() {
-    forkJoin([this._appService.getState(), this._appService.getAcGoup(), this._appService.getAcHead()]).pipe(map(response=>{
-      console.log(response);
-      this.stateList = response[0];
-      this.acGroupList = response[1];
-      this.acHeadList = response[2];
+    forkJoin([this._appService.getAcGoup(), this._appService.getAcHead(), this._appService.getCityList(),
+      this._appService.getTaxType(), this._appService.getExchangeName()]).pipe(map(response => {
+      debugger
+      this.acGroupList = response[0];
+      this.acHeadList = response[1];
+      this.cityList = response[2];
+        this.taxList = response[3];
+        this.exchangeList = response[4];
       this.bindFilterFntoList();
-    })).subscribe(res=>{
+    })).subscribe(res => {
       this.getValuesInEditMode();
     });
   }
 
   getValuesInEditMode() {
-    var optedCity = null;
-    if(this.user){
-      const acGroup =  this.acGroupList.find((obj=>obj.id === this.user.acGroup));
-      const acHead =  this.acHeadList.find((obj=>obj.id === this.user.acHead));
-      const optedState =  this.stateList.find((obj=>obj.id === this.user.stateId));
-      if(optedState?.id){
-        this.getSelectedState(optedState, ()=>{
-          optedCity = this.cityList.find((obj=>obj.item1 === this.user.cityId));
-          this.bindValuesInEditMode(acGroup, optedState, optedCity, acHead);
-        });
-      } else {
-        this.bindValuesInEditMode(acGroup, optedState, optedCity, acHead);
-      }
+    debugger
+    if (this.user) {
+      const acGroup = this.acGroupList.find((obj => obj.id === this.user.accountGroupId));
+      const acHead = this.acHeadList.find((obj => obj.id === this.user.accountHeadId));
+      const optedCity = this.cityList.find((obj => obj.id === this.user.cityId));
+      this.bindValuesInEditMode(acGroup, optedCity, acHead);
+      this.bindTaxFormControls();
       console.log(this.user);
     }
   }
 
-  bindValuesInEditMode(acGroup:ACGroup, optedState:State, optedCity?: City, acHead?:ACHead) {
+  bindValuesInEditMode(acGroup: ACGroup, optedCity?: City, acHead?: ACHead) {
     this.personalForm.setValue({
+      'ShortCode': this.user.shortCode,
       'Name': this.user.name,
-      'Type': this.user.type,
-      'ACGroup':acGroup?acGroup.name:'',
-      'ACHead':acHead?acHead.name:'',
-      'CityName' : optedCity?optedCity.item2:'',
+      'OpeningBal': this.user.openingBal,
+      'City': optedCity ? optedCity.name : '',
       'Email': this.user.email,
-      'Address' : this.user.add1,
-      'accNo': this.user.acno,
-      'gstNo': this.user.gstNo,
-      'Phone': this.user.phoneO,
-      'accName': this.user.acname,
-      'Branch': this.user.branch,
-      'Bank': this.user.bank,
-      'ifsc': this.user.ifci
+      'PanNo': this.user.panNo,
+      'Gstinno': this.user.gstinno,
+      'Phone': this.user.phone,
+      'AcGroup': acGroup ? acGroup.name : '',
+      'AcHead': acHead ? acHead.name : '',
+      'Address': this.user.address,
+      'TelegramNo': this.user.telegramNo,
+      'TelegramId': this.user.telegramId,
+      'Id': this.user.id,
+      'DrCr': this.user.drCr,
+      'ApplyTax': this.user.applyTax,
+      'ApplyFutureCutBrok': this.user.applyFutureCutBrok,
+      'ApplyOptionCutBrok': this.user.applyOptionCutBrok,
+     
+     
     });
+    this.acGroupCtrl.setValue(acGroup.name);
+    this.acHeadCtrl.setValue(acHead.name);
+    this.cityCtrl.setValue(optedCity.name);
   }
 
 
-  ngOnInit() {
+
+  bindTaxFormInEditMode() {
+    this.taxForm.setValue({
+      'TaxType': this.user.taxType,
+      'Exchange': this.user.exchange,
+      'IntraDayRate': this.user.IntraDayRate,
+      'InsType': this.user.InsType,
+      'DeliveryRate': this.user.DeliveryRate,
+    });
    
-    this.initialApiCalls();
+  }
+
+  onGroupChange(event)
+  {
+    debugger;
+    this.personalForm.controls['AcGroup'].setValue(this.acGroupCtrl.value);
+  }
+  onHeadChange(event) {
+    this.personalForm.controls['AcHead'].setValue(this.acHeadCtrl.value);
   }
   
+
+  ngOnInit() {
+    this.initialApiCalls();
+  }
+
 
   private _filterACGroup(value: string): ACGroup[] {
     const filterValue = value.toLowerCase();
@@ -181,93 +254,72 @@ export class AddAccountComponent implements OnInit {
     return this.acHeadList.filter(state => state.name.toLowerCase().includes(filterValue));
   }
 
-  private _filterStates(value: string): State[] {
-    const filterValue = value.toLowerCase();
-    return this.stateList.filter(state => state.name.toLowerCase().includes(filterValue));
-  }
+
 
   private _filterCity(value: string): City[] {
     const filterValue = value.toLowerCase();
-    return this.cityList.filter(state => state.item2.toLowerCase().includes(filterValue));
+    return this.cityList.filter(city => city.name.toLowerCase().includes(filterValue));
   }
 
-  private getCityId(name:string) {
-    const cityObj = this.cityList?.find((city)=>city.item2.toLocaleLowerCase() === name.toLocaleLowerCase());
-    return cityObj?.item1;
-  }
+ 
 
-  private getAcGroupId(name:string) {
-    const cityObj = this.acGroupList.find((city)=>city.name.toLocaleLowerCase() === name.toLocaleLowerCase());
+  private getAcGroupId(name: string) {
+    const cityObj = this.acGroupList.find((city) => city.name.toLocaleLowerCase() === name.toLocaleLowerCase());
     return cityObj?.id;
+  }
+  private getCityId(name: string) {
+    const cityObj = this.cityList.find((city) => city.name.toLocaleLowerCase() === name.toLocaleLowerCase());
+    return cityObj?.id;
+  }
+
+  private getAcHeadId(name: string) {
+    const cityObj = this.acHeadList.find((city) => city.name.toLocaleLowerCase() === name.toLocaleLowerCase());
+    return cityObj?.id;
+  }
+
+  public onSubmit(values: Object): void {
+    debugger;
+  
+    this.personalForm.controls['OpeningBal'].setValue(Number(this.personalForm.get('OpeningBal').value));
+    
+    var body = this.personalForm.value;
+    body.accountGroupId = this.getAcGroupId(this.acGroupCtrl.value);
+    body.accountHeadId = this.getAcHeadId(this.acHeadCtrl.value);
+    body.CityId = this.getCityId(this.cityCtrl.value);
+    
+    if (this.personalForm.valid) {
+      //const body = JSON.stringify(addFormData);
+      this._appService.saveAccount(body).subscribe(result => {
+        console.log("result", result);
+        this.dialogRef.close();
+      }, err => {
+        console.log(err);
+      });
+    }
+  }
+
+
+  public onSubmitTax(values: Object): void {
+   
   }
   
-  private getAcHeadId(name:string) {
-    const cityObj = this.acHeadList.find((city)=>city.name.toLocaleLowerCase() === name.toLocaleLowerCase());
-    return cityObj?.id;
-  }
 
-  public onSubmit(values:Object):void {
-    console.log(values)
-      if (this.personalForm.valid) {
-        let addFormData = {
-              "CityId": this.getCityId(this.cityCtrl.value),
-              "ACGroup": this.getAcGroupId(this.acGroupCtrl.value),
-              "ACHead": this.getAcHeadId(this.acHeadCtrl.value),
-              "Name": this.personalForm.get('Name').value,
-              "Type":this.personalForm.get('Type').value,
-              "Email": this.personalForm.get('Email').value,
-              "GstNo": this.personalForm.get('gstNo').value,
-              "PhoneO ": this.personalForm.get('Phone').value,
-              "Add1": this.personalForm.get('Address').value,
-              "Acno": this.personalForm.get('accNo').value,
-              "Acname": this.personalForm.get('accName').value,
-              "Bank": this.personalForm.get('Bank').value,
-              "Branch": this.personalForm.get('Branch').value,
-              "Ifci": this.personalForm.get('ifsc').value,
-        }
-        if(this.user.id){
-          addFormData['id'] = this.user.id;
-        }
-        const body = JSON.stringify(addFormData);
-        this._appService.saveAccount(body).subscribe(result => {
-          console.log("result", result);
-          this.dialogRef.close();
-        }, err=>{
-          console.log(err);
-        });
-      }
-  }
+
 
   close(): void {
     this.dialogRef.close();
   }
 
-  getSelectedCity(city){
-    this.personalForm.controls['cityId'].setValue(city.item1);
-    this.personalForm.controls['cityName'].setValue(city.item2);
-  }
 
-  getSelectedState(state, callbackFn){
-    this._appService.getCityListByStateId(state.id).subscribe((cityList)=>{
-      this.cityList = cityList;
-      if(callbackFn){
-        callbackFn();
-      }
-      this.filteredCity = this.cityCtrl.valueChanges.pipe(
-        startWith(''),
-        map(cityObj =>{
-          return cityObj ? this._filterCity(cityObj) : this.cityList.slice()
-        }),
-      );
-    });
-  }
 
 }
 
 
-export function emailValidator(control: UntypedFormControl): {[key: string]: any} {
-  var emailRegexp = /[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$/;    
+
+
+export function emailValidator(control: UntypedFormControl): { [key: string]: any } {
+  var emailRegexp = /[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$/;
   if (control.value && !emailRegexp.test(control.value)) {
-      return {invalidEmail: true};
+    return { invalidEmail: true };
   }
 }
