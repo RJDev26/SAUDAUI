@@ -12,13 +12,16 @@ import { TransporterComponent } from './transporter/transporter.component';
 import { CompanyComponent } from './company/company.component';
 import { AddCompanyComponent } from './company/company-dialog/add-company.component';
 import { AddItemComponent } from './item/item-dialog/add-item.component';
+import { SaudaComponent } from './sauda/sauda.component';
+import { AddSaudaComponent } from './sauda/sauda-dialog/add-sauda.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'account', pathMatch: 'full' },
   { path: 'account', component: AccountComponent, data: { breadcrumb: 'Account' } },
   { path: 'item', component: ItemComponent, data: { breadcrumb: 'Item' } },
   { path: 'transporter', component: TransporterComponent, data: { breadcrumb: 'Transporter' } },
-  { path: 'company', component: CompanyComponent, data: { breadcrumb: 'Company' } }
+  { path: 'company', component: CompanyComponent, data: { breadcrumb: 'Company' } },
+  { path: 'sauda', component: SaudaComponent, data: { breadcrumb: 'Sauda' } }
 ];
 
 @NgModule({
@@ -38,7 +41,9 @@ export const routes: Routes = [
     AddItemComponent,
     TransporterComponent,
     CompanyComponent,
-    AddCompanyComponent
+    AddCompanyComponent,
+    SaudaComponent,
+    AddSaudaComponent
   ],
 })
 export class MasterModule { }

@@ -2,8 +2,6 @@
 <mat-tab-group>
   <mat-tab label=" Details">
     <form [formGroup]="personalForm" (ngSubmit)="onSubmit(personalForm.value)" fxLayout="row wrap" class="user-form">
-
-
       <div class="tab-party-details-parent">
         <div class="white-block pb-5">
           <h3>Account</h3>
@@ -140,7 +138,6 @@
               <mat-error *ngIf="personalForm.controls.TelegramNo.errors?.required">Telegram number is required</mat-error>
             </mat-form-field>
           </div>
-
           <div fxFlex="100" fxFlex.gt-sm="20" fxFlex.sm="50">
             <mat-checkbox class="pl-10" formControlName="ApplyTax">Apply Tax</mat-checkbox>
           </div>
@@ -149,7 +146,6 @@
             <mat-checkbox class="pl-10 ml-7" formControlName="ApplyOptionCutBrok">Apply Option Cut Brok</mat-checkbox>
           </div>
         </div>
-
       </div>
       <div fxFlex="100" class="mt-2 text-center space-between-btns">
         <button mat-raised-button color="warn" type="button" (click)="close()">Cancel</button>
@@ -157,12 +153,9 @@
       </div>
     </form>
   </mat-tab>
-
-
   <mat-tab label="Tax Details">
     <form [formGroup]="taxForm" (ngSubmit)="onSubmitTax(taxForm.value)" fxLayout="row wrap" class="user-form">
-
-      <div class="tab-tax-details-parent">
+      <div class="tab-tax-details-parent tab-party-details-parent">
         <div class="white-block">
           <h3>Tax Details</h3>
           <div fxFlex="100" fxFlex.gt-sm="20" fxFlex.sm="50">
@@ -175,7 +168,6 @@
               </mat-select>
             </mat-form-field>
           </div>
-
           <div fxFlex="100" fxFlex.gt-sm="20" fxFlex.sm="50">
             <mat-form-field class="example-full-width" appearance="outline">
               <mat-label>Exchange </mat-label>
@@ -229,16 +221,15 @@
               <mat-error *ngIf="taxForm.controls.DeliveryRate.errors?.required">DeliveryRate is required</mat-error>
             </mat-form-field>
           </div>
-
-          <div fxFlex="100" class="mt-2 text-center space-between-btns">
-            <button mat-raised-button color="warn" type="button" (click)="close()">Cancel</button>
-            <button mat-raised-button color="primary" class="uppercase" [disabled]="!taxForm.valid" type="submit">Save</button>
-          </div>
+        </div>
+        <div fxFlex="100" class="mt-2 text-center space-between-btns">
+          <button mat-raised-button color="warn" type="button" (click)="close()">Cancel</button>
+          <button mat-raised-button color="primary" class="uppercase" [disabled]="!taxForm.valid" type="submit">Save</button>
         </div>
       </div>
     </form>
     <div class="col-xl-12 mt-2">
-      <ag-grid-angular style=" height: 520px;"
+      <ag-grid-angular style=" height: 300px;"
                        class="ag-theme-alpine"
                        [rowData]="accountList"
                        [pagination]="true"

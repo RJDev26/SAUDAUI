@@ -1,0 +1,29 @@
+<h2 class="heading mb-10">SaudaMaster</h2>
+<form [formGroup]="saudaForm" (ngSubmit)="onSubmit(saudaForm.value)" fxLayout="row wrap" class="user-form">
+    <div class="white-block pb-5">
+        <h3>SaudaMaster Details</h3>
+        <div class="tab-party-details-parent">
+            <div fxFlex="100" fxFlex.gt-sm="20" fxFlex.sm="50">
+                <mat-form-field class="example-full-width" appearance="outline">
+                    <mat-label>Item</mat-label>
+                    <input
+                    matInput
+                    aria-label="ItemObj"
+                    [matAutocomplete]="auto"
+                    [formControl]="itemCtrl"
+                    formControlName="itemName"
+                    />
+                    <mat-error *ngIf="saudaForm.controls.ItemName.errors?.required">Please select ACGroup</mat-error>                
+                    <mat-autocomplete #auto="matAutocomplete" (optionSelected)='getSelectedItem($event.option)'>
+                    <mat-option
+                        *ngFor="let itemObj of filteredItem | async"
+                        [value]="itemObj.item2"
+                        [id]="itemObj.item1">
+                        <span>{{itemObj.item2}}</span>
+                    </mat-option>
+                    </mat-autocomplete>
+                </mat-form-field>
+            </div>
+        </div>
+    </div>
+</form>

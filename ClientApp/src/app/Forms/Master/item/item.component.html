@@ -1,15 +1,11 @@
 
 <div class="row">
-
-  <div fxLayout="row">
-
-    <mat-button-toggle value="add" color="primary" class="m-1" (click)="openUserDialog(null)">
-      <mat-icon>person_add</mat-icon>
-    </mat-button-toggle>
-
-
+  <div fxLayout="row" class="mt-2 flex-end">
+    <button mat-raised-button color="accent" (click)="openUserDialog(null)">
+      <mat-icon>category</mat-icon> Add Item
+    </button>
   </div>
-  <div class="col-xl-12">
+  <div class="col-xl-12 mt-2">
     <ag-grid-angular style=" height: 535px;"
                      class="ag-theme-alpine"
                      [rowData]="itemList"
@@ -20,4 +16,3 @@
     </ag-grid-angular>
   </div>
 </div>
-

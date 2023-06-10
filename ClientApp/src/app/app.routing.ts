@@ -10,6 +10,7 @@ import { AccountComponent } from './Forms/Master/account/account.component';
 import { ItemComponent } from './Forms/Master/item/item.component';
 import { TransporterComponent } from './Forms/Master/transporter/transporter.component';
 import { CompanyComponent } from './Forms/Master/company/company.component';
+import { SaudaComponent } from './Forms/Master/sauda/sauda.component';
 
 export const routes: Routes = [
     { 
@@ -36,6 +37,7 @@ export const routes: Routes = [
             { path: 'item', component: ItemComponent, data: { breadcrumb: 'Item' } },
             { path: 'transporter', component: TransporterComponent, data: { breadcrumb: 'Transporter' } },
             { path: 'company', component: CompanyComponent, data: { breadcrumb: 'company' } },
+            { path: 'sauda', component: SaudaComponent, data: { breadcrumb: 'sauda' } },
         ]
     },
     { path: 'landing', loadChildren: () => import('./pages/landing/landing.module').then(m => m.LandingModule) },
