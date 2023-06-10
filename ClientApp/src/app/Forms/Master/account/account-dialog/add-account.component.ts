@@ -59,7 +59,6 @@ export class AddAccountComponent implements OnInit, AfterViewInit {
 
   @ViewChildren(MatAutocompleteTrigger) triggerCollection: QueryList<MatAutocompleteTrigger>;
 
-
   constructor(private formBuilder: UntypedFormBuilder, public dialogRef: MatDialogRef<AddAccountComponent>, @Inject(MAT_DIALOG_DATA) public user: Account, private _appService: MasterService) {
     this.bindFormControls();
     this.bindTaxFormControls();
@@ -90,6 +89,33 @@ export class AddAccountComponent implements OnInit, AfterViewInit {
     }
   }
 
+
+
+  agGridOptions: any = {
+    defaultColDef: {
+      filter: true,
+      flex: 1,
+      sortable: true,
+      wraptext: true,
+      resizable: true
+    }
+  }
+
+
+  columnDefs = [
+    {
+      headerName: 'Action', field: 'fileIcon', cellRenderer: this.actionCellRenderer, minWidth: 80,
+      maxWidth: 110, resizable: true
+    },
+    { headerName: 'TaxName', field: 'TaxName', filter: true, sorting: true, resizable: true },
+    { headerName: 'Exchange', field: 'Exchange', filter: true, sorting: true, resizable: true },
+    { headerName: 'FromDt', field: 'FromDt', filter: true, sorting: true, resizable: true },
+    { headerName: 'ToDt', field: 'ToDt', filter: true, sorting: true, resizable: true },
+    { headerName: 'InsType', field: 'InsType', filter: true, sorting: true, resizable: true },
+    { headerName: 'IntraDayRate', field: 'IntraDayRate', filter: true, sorting: true, resizable: true },
+    { headerName: 'DeliveryRate', field: 'DeliveryRate', filter: true, sorting: true, resizable: true },
+    
+  ];
   
   bindFormControls() {
     this.personalForm = this.formBuilder.group({
@@ -106,11 +132,11 @@ export class AddAccountComponent implements OnInit, AfterViewInit {
       'Address': [''],
       'TelegramNo': [''],
       'TelegramId': [''],
-      'Id': [''],
+      'Id': [0],
       'DrCr': ['1', Validators.required],
-      'ApplyTax': [],
-      'ApplyFutureCutBrok': [],
-      'ApplyOptionCutBrok': [],
+      'ApplyTax': [false],
+      'ApplyFutureCutBrok': [false],
+      'ApplyOptionCutBrok': [false],
      
       
      
@@ -310,7 +336,17 @@ export class AddAccountComponent implements OnInit, AfterViewInit {
     this.dialogRef.close();
   }
 
+  public actionCellRenderer(params: any) {
+    let eGui = document.createElement("div");
+    let editingCells = params.api.getEditingCells();
+    let isCurrentRowEditing = editingCells.some((cell: any) => {
+      return cell.rowIndex === params.node.rowIndex;
+    });
+    eGui.innerHTML = `<button class="material-icons action-button-edit " data-action="edit">edit </button>
+                      <button class="material-icons action-button-red" delete data-action="delete">delete</button>`;
 
+    return eGui;
+  }
 
 }
 
