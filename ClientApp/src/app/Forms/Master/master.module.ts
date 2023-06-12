@@ -14,6 +14,7 @@ import { AddCompanyComponent } from './company/company-dialog/add-company.compon
 import { AddItemComponent } from './item/item-dialog/add-item.component';
 import { SaudaComponent } from './sauda/sauda.component';
 import { AddSaudaComponent } from './sauda/sauda-dialog/add-sauda.component';
+import { ProductComponent } from './product/product.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'account', pathMatch: 'full' },
@@ -21,7 +22,8 @@ export const routes: Routes = [
   { path: 'item', component: ItemComponent, data: { breadcrumb: 'Item' } },
   { path: 'transporter', component: TransporterComponent, data: { breadcrumb: 'Transporter' } },
   { path: 'company', component: CompanyComponent, data: { breadcrumb: 'Company' } },
-  { path: 'sauda', component: SaudaComponent, data: { breadcrumb: 'Sauda' } }
+  { path: 'sauda', component: SaudaComponent, data: { breadcrumb: 'Sauda' } },
+  { path: 'product', component: ProductComponent, data: { breadcrumb: 'Product' } }
 ];
 
 @NgModule({
@@ -43,7 +45,8 @@ export const routes: Routes = [
     CompanyComponent,
     AddCompanyComponent,
     SaudaComponent,
-    AddSaudaComponent
+    AddSaudaComponent,
+    ProductComponent
   ],
 })
 export class MasterModule { }

@@ -19,12 +19,20 @@ export class AddSaudaComponent implements OnInit {
 
     bindFormControls() {
         this.saudaForm = this.formBuilder.group({
-            'itemName': [],
+            'ItemName': [],
+            'saudaCode': [],
+            'InstrumentName': [],
+            'OptionName': [],
+            'strikePrice': []
         });
     }
 
     ngOnInit() {
         this.bindFormControls();
+    }
+
+    close(): void {
+        this.dialogRef.close();
     }
 
 }
