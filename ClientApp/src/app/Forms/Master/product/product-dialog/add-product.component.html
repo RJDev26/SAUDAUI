@@ -1,0 +1,82 @@
+<h2 class="heading mb-0">Add Product</h2>
+<form [formGroup]="productForm" (ngSubmit)="onSubmit(productForm.value)" fxLayout="row wrap" class="user-form">
+    <div class="white-block pb-5">
+        <h3>Product</h3>
+        <div class="tab-party-details-parent">
+            <div fxFlex="100" fxFlex.gt-sm="20" fxFlex.sm="50">
+                <mat-form-field class="example-full-width" appearance="outline">
+                    <mat-label>Exchange</mat-label>
+                    <input
+                    matInput
+                    aria-label="ExchangeObj"
+                    [matAutocomplete]="auto3"
+                    [formControl]="exchangeCtrl"
+                    formControlName="*ExchangeName"
+                    />
+                    <mat-error *ngIf="productForm.controls.ExchangeName.errors?.required">Please select ACGroup</mat-error>                
+                    <mat-autocomplete #auto3="matAutocomplete" (optionSelected)='getSelectedExchange($event.option)'>
+                    <mat-option
+                        *ngFor="let exchangeObj of filteredExchange | async"
+                        [value]="exchangeObj.item2"
+                        [id]="exchangeObj.item1">
+                        <span>{{exchangeObj.item2}}</span>
+                    </mat-option>
+                    </mat-autocomplete>
+                </mat-form-field>
+            </div>
+            <div fxFlex="100" fxFlex.gt-sm="20" fxFlex.sm="50">
+                <mat-form-field appearance="outline">
+                    <mat-label>Symbol</mat-label>
+                    <input matInput autocomplete="off" placeholder="" formControlName="symbol" type="text">
+                    <mat-error *ngIf="productForm.controls.symbol.errors?.required">symbol is required</mat-error>                
+                </mat-form-field> 
+            </div>
+            <div fxFlex="100" fxFlex.gt-sm="20" fxFlex.sm="50">
+                <mat-form-field appearance="outline">
+                    <mat-label>Price Unit</mat-label>
+                    <input matInput autocomplete="off" placeholder="" formControlName="priceUnit" type="text">
+                    <mat-error *ngIf="productForm.controls.priceUnit.errors?.required">price unit is required</mat-error>                
+                </mat-form-field> 
+            </div>
+            <div fxFlex="100" fxFlex.gt-sm="40" fxFlex.sm="50">
+                <mat-form-field appearance="outline">
+                    <mat-label>Description</mat-label>
+                    <input matInput autocomplete="off" placeholder="" formControlName="description" type="text">
+                    <mat-error *ngIf="productForm.controls.description.errors?.required">price unit is required</mat-error>                
+                </mat-form-field> 
+            </div>
+            <div fxFlex="100" fxFlex.gt-sm="20" fxFlex.sm="50">
+                <mat-form-field appearance="outline">
+                    <mat-label>Lot Size</mat-label>
+                    <input matInput autocomplete="off" placeholder="" formControlName="lotSize" type="text">
+                    <mat-error *ngIf="productForm.controls.lotSize.errors?.required">lot size is required</mat-error>                
+                </mat-form-field> 
+            </div>
+            <div fxFlex="100" fxFlex.gt-sm="20" fxFlex.sm="50">
+                <mat-form-field appearance="outline">
+                    <mat-label>Isin Size</mat-label>
+                    <input matInput autocomplete="off" placeholder="" formControlName="isinSize" type="text">
+                    <mat-error *ngIf="productForm.controls.isinSize.errors?.required">isinSize is required</mat-error>                
+                </mat-form-field> 
+            </div>
+            <div fxFlex="100" fxFlex.gt-sm="20" fxFlex.sm="50">
+                <mat-form-field appearance="outline">
+                    <mat-label>Qty Unit</mat-label>
+                    <input matInput autocomplete="off" placeholder="" formControlName="qtyUnit" type="text">
+                    <mat-error *ngIf="productForm.controls.qtyUnit.errors?.required">Qty Unit is required</mat-error>                
+                </mat-form-field> 
+            </div>
+            <div fxFlex="100" fxFlex.gt-sm="20" fxFlex.sm="50">
+                <mat-form-field appearance="outline">
+                    <mat-label>Security Group</mat-label>
+                    <input matInput autocomplete="off" placeholder="" formControlName="securityGroup" type="text">
+                    <mat-error *ngIf="productForm.controls.securityGroup.errors?.required">security Group is required</mat-error>                
+                </mat-form-field> 
+            </div>
+        </div>
+    </div>
+    <div fxFlex="100" class="mt-2 text-center space-between-btns">
+        <button mat-raised-button color="warn" (click)="close()">Cancel</button>            
+        <button mat-raised-button color="primary" class="uppercase" type="submit">Save</button> 
+    </div>
+</form>
