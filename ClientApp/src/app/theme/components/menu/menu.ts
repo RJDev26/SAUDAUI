@@ -10,6 +10,7 @@ export const verticalMenuItems = [
   new Menu(3, 'Sauda', '/master/sauda', null, 'business', null, false, 2),
   new Menu(3, 'Product', '/master/product', null, 'inventory', null, false, 2),
   new Menu(3, 'Contract Master', '/master/contract-master', null, 'assignment', null, false, 2),
+  new Menu(3, 'Brokerage Slab', '/master/brokerage-slab', null, 'group', null, false, 2),
   new Menu(4, 'Users', '/users', null, 'supervisor_account', null, false, 0),
   new Menu(5, 'UI Features', null, null, 'computer', null, true, 0),
   new Menu(6, 'Buttons', '/ui/buttons', null, 'keyboard', null, false, 5),

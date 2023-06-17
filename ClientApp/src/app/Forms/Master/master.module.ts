@@ -18,6 +18,7 @@ import { ProductComponent } from './product/product.component';
 import { AddProductComponent } from './product/product-dialog/add-product.component';
 import { ContractMasterComponent } from './contract-master/contract-master.component';
 import { AddContractMasterComponent } from './contract-master/contract-master-dialog/add-contract-master.component';
+import { BrokerageSlabComponent } from './brokerage-slab/brokerage-slab.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'account', pathMatch: 'full' },
@@ -27,7 +28,8 @@ export const routes: Routes = [
   { path: 'company', component: CompanyComponent, data: { breadcrumb: 'Company' } },
   { path: 'sauda', component: SaudaComponent, data: { breadcrumb: 'Sauda' } },
   { path: 'product', component: ProductComponent, data: { breadcrumb: 'Product' } },
-  { path: 'contract-master', component: ContractMasterComponent, data: { breadcrumb: 'Contract Master' } }
+  { path: 'contract-master', component: ContractMasterComponent, data: { breadcrumb: 'Contract Master' } },
+  { path: 'brokerage-slab', component: BrokerageSlabComponent, data: { breadcrumb: 'Brokerage Slab' } }
 ];
 
 @NgModule({
@@ -53,7 +55,8 @@ export const routes: Routes = [
     ProductComponent,
     AddProductComponent,
     ContractMasterComponent,
-    AddContractMasterComponent
+    AddContractMasterComponent,
+    BrokerageSlabComponent
   ],
 })
 export class MasterModule { }
