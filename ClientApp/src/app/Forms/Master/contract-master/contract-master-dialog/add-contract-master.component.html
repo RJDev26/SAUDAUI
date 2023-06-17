@@ -1,0 +1,104 @@
+<h2 class="heading">Add Contract Master</h2>
+<form [formGroup]="contractForm" (ngSubmit)="onSubmit(contractForm.value)" fxLayout="row wrap" class="user-form">
+    <div class="white-block pb-5">
+        <h3>Contract Master</h3>
+        <div class="tab-party-details-parent">
+            <div fxFlex="100" fxFlex.gt-sm="20" fxFlex.sm="50">
+                <mat-form-field class="example-full-width" appearance="outline">
+                    <mat-label>Exchange</mat-label>
+                    <input
+                    matInput
+                    aria-label="ExchangeObj"
+                    [matAutocomplete]="auto1"
+                    [formControl]="exchangeCtrl"
+                    formControlName="*ExchangeName"
+                    />
+                    <mat-error *ngIf="contractForm.controls.ExchangeName.errors?.required">Please select Exchange Name</mat-error>                
+                    <mat-autocomplete #auto1="matAutocomplete" (optionSelected)='getSelectedExchange($event.option)'>
+                    <mat-option
+                        *ngFor="let exchangeObj of filteredExchange | async"
+                        [value]="exchangeObj.item2"
+                        [id]="exchangeObj.item1">
+                        <span>{{exchangeObj.item2}}</span>
+                    </mat-option>
+                    </mat-autocomplete>
+                </mat-form-field>
+            </div>
+            <div fxFlex="100" fxFlex.gt-sm="20" fxFlex.sm="50">
+                <mat-form-field appearance="outline">
+                    <mat-label>Symbol</mat-label>
+                    <input matInput autocomplete="off" placeholder="" formControlName="symbol" type="text">
+                    <mat-error *ngIf="contractForm.controls.symbol.errors?.required">symbol is required</mat-error>                
+                </mat-form-field> 
+            </div>
+            <div fxFlex="100" fxFlex.gt-sm="20" fxFlex.sm="50">
+                <mat-form-field appearance="outline">
+                    <mat-label>Strike Price</mat-label>
+                    <input matInput autocomplete="off" placeholder="" formControlName="strikePrice" type="text">
+                    <mat-error *ngIf="contractForm.controls.strikePrice.errors?.required">Strike Price is required</mat-error>                
+                </mat-form-field> 
+            </div>
+            <div fxFlex="100" fxFlex.gt-sm="20" fxFlex.sm="50">
+                <mat-form-field class="example-full-width" appearance="outline">
+                    <mat-label>Instrument Type</mat-label>
+                    <input
+                    matInput
+                    aria-label="InstrumentObj"
+                    [matAutocomplete]="auto2"
+                    [formControl]="instrumentCtrl"
+                    formControlName="*InstrumentName"
+                    />
+                    <mat-error *ngIf="contractForm.controls.InstrumentName.errors?.required">Please select instrument</mat-error>                
+                    <mat-autocomplete #auto2="matAutocomplete" (optionSelected)='getSelectedInstrument($event.option)'>
+                    <mat-option
+                        *ngFor="let instrumentObj of filteredInstrument | async"
+                        [value]="instrumentObj.item2"
+                        [id]="instrumentObj.item1">
+                        <span>{{instrumentObj.item2}}</span>
+                    </mat-option>
+                    </mat-autocomplete>
+                </mat-form-field>
+            </div>
+            <div fxFlex="100" fxFlex.gt-sm="20" fxFlex.sm="50">
+                <mat-form-field class="example-full-width" appearance="outline">
+                    <mat-label>Option Type</mat-label>
+                    <input
+                    matInput
+                    aria-label="OptionTypeObj"
+                    [matAutocomplete]="auto3"
+                    [formControl]="optionTypeCtrl"
+                    formControlName="*OptionTypeName"
+                    />
+                    <mat-error *ngIf="contractForm.controls.OptionTypeName.errors?.required">Please select optionType</mat-error>                
+                    <mat-autocomplete #auto3="matAutocomplete" (optionSelected)='getSelectedOptionType($event.option)'>
+                    <mat-option
+                        *ngFor="let optionTypeObj of filteredOptionType | async"
+                        [value]="optionTypeObj.item2"
+                        [id]="optionTypeObj.item1">
+                        <span>{{optionTypeObj.item2}}</span>
+                    </mat-option>
+                    </mat-autocomplete>
+                </mat-form-field>
+            </div>
+            <div fxFlex="100" fxFlex.gt-sm="20" fxFlex.sm="50">
+                <mat-form-field appearance="outline">
+                    <mat-label>Tradeable Lot</mat-label>
+                    <input matInput autocomplete="off" placeholder="" formControlName="TradeableLot" type="text">
+                    <mat-error *ngIf="contractForm.controls.TradeableLot.errors?.required">Tradeable Lot is required</mat-error>                
+                </mat-form-field> 
+            </div>
+            <div fxFlex="100" fxFlex.gt-sm="20" fxFlex.sm="50">
+                <mat-form-field appearance="outline">
+                    <mat-label>Maturity</mat-label>
+                    <input matInput [matDatepicker]="Maturity">
+                    <mat-datepicker-toggle matSuffix [for]="Maturity"></mat-datepicker-toggle>
+                    <mat-datepicker #Maturity></mat-datepicker>
+                </mat-form-field>                  
+            </div>
+        </div>
+    </div>
+    <div fxFlex="100" class="mt-2 text-center space-between-btns">
+        <button mat-raised-button color="warn" (click)="close()">Cancel</button>            
+        <button mat-raised-button color="primary" class="uppercase" type="submit">Save</button> 
+    </div>
+</form>

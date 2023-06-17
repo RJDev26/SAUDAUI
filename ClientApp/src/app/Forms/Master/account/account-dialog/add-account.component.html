@@ -156,9 +156,9 @@
   <mat-tab label="Tax Details">
     <form [formGroup]="taxForm" (ngSubmit)="onSubmitTax(taxForm.value)" fxLayout="row wrap" class="user-form">
       <div class="tab-tax-details-parent tab-party-details-parent">
-        <div class="white-block">
+        <div class="white-block pb-0">
           <h3>Tax Details</h3>
-          <div fxFlex="100" fxFlex.gt-sm="20" fxFlex.sm="50">
+          <div fxFlex="100" fxFlex.gt-sm="15" fxFlex.sm="50">
             <mat-form-field class="example-full-width" appearance="outline">
               <mat-label>Tax type</mat-label>
               <mat-select placeholder="Select Tax" formControlName="TaxType">
@@ -168,7 +168,7 @@
               </mat-select>
             </mat-form-field>
           </div>
-          <div fxFlex="100" fxFlex.gt-sm="20" fxFlex.sm="50">
+          <div fxFlex="100" fxFlex.gt-sm="15" fxFlex.sm="50">
             <mat-form-field class="example-full-width" appearance="outline">
               <mat-label>Exchange </mat-label>
               <mat-select placeholder="Select Exchange" formControlName="Exchange">
@@ -178,15 +178,14 @@
               </mat-select>
             </mat-form-field>
           </div>
-
-          <div fxFlex="100" fxFlex.gt-sm="20" fxFlex.sm="50">
+          <div fxFlex="100" fxFlex.gt-sm="15" fxFlex.sm="50">
             <mat-form-field appearance="outline">
               <mat-label>Intraday Rate</mat-label>
               <input matInput autocomplete="off" placeholder="IntraDay" formControlName="IntraDayRate" type="text">
               <mat-error *ngIf="taxForm.controls.IntraDayRate.errors?.required">IntraDay is required</mat-error>
             </mat-form-field>
           </div>
-          <div fxFlex="100" fxFlex.gt-sm="15" fxFlex.sm="50">
+          <div fxFlex="100" fxFlex.gt-sm="14" fxFlex.sm="50">
             <mat-form-field appearance="outline">
               <mat-label>From</mat-label>
               <input matInput [matDatepicker]="picker1">
@@ -194,14 +193,14 @@
               <mat-datepicker #picker1></mat-datepicker>
             </mat-form-field>
           </div>
-          <div fxFlex="100" fxFlex.gt-sm="15" fxFlex.sm="50">
+          <div fxFlex="100" fxFlex.gt-sm="14" fxFlex.sm="50">
             <mat-form-field appearance="outline">
               <input matInput [matDatepicker]="picker2" placeholder="To">
               <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
               <mat-datepicker #picker2></mat-datepicker>
             </mat-form-field>
           </div>
-          <div fxFlex="100" fxFlex.gt-sm="20" fxFlex.sm="50">
+          <div fxFlex="100" fxFlex.gt-sm="13" fxFlex.sm="50">
             <mat-form-field class="example-full-width" appearance="outline">
               <mat-label>InsType</mat-label>
               <mat-select placeholder="Select InsType" formControlName="InsType">
@@ -214,7 +213,7 @@
               </mat-select>
             </mat-form-field>
           </div>
-          <div fxFlex="100" fxFlex.gt-sm="20" fxFlex.sm="50">
+          <div fxFlex="100" fxFlex.gt-sm="14" fxFlex.sm="50">
             <mat-form-field appearance="outline">
               <mat-label>Delivery Rate</mat-label>
               <input matInput autocomplete="off" placeholder="DeliveryRate" formControlName="DeliveryRate" type="text">
@@ -229,7 +228,7 @@
       </div>
     </form>
     <div class="col-xl-12 mt-2">
-      <ag-grid-angular style=" height: 300px;"
+      <ag-grid-angular style=" height: 250px;"
                        class="ag-theme-alpine"
                        [rowData]="accountList"
                        [pagination]="true"

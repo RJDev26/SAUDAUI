@@ -12,6 +12,7 @@ import { TransporterComponent } from './Forms/Master/transporter/transporter.com
 import { CompanyComponent } from './Forms/Master/company/company.component';
 import { SaudaComponent } from './Forms/Master/sauda/sauda.component';
 import { ProductComponent } from './Forms/Master/product/product.component';
+import { ContractMasterComponent } from './Forms/Master/contract-master/contract-master.component';
 
 export const routes: Routes = [
     { 
@@ -39,7 +40,8 @@ export const routes: Routes = [
             { path: 'transporter', component: TransporterComponent, data: { breadcrumb: 'Transporter' } },
             { path: 'company', component: CompanyComponent, data: { breadcrumb: 'company' } },
             { path: 'sauda', component: SaudaComponent, data: { breadcrumb: 'sauda' } },
-            { path: 'product', component: ProductComponent, data: { breadcrumb: 'product' } }
+            { path: 'product', component: ProductComponent, data: { breadcrumb: 'product' } },
+            { path: 'contract-master', component: ContractMasterComponent, data: { breadcrumb: 'Contract Master' } }
         ]
     },
     { path: 'landing', loadChildren: () => import('./pages/landing/landing.module').then(m => m.LandingModule) },

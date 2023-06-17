@@ -42,6 +42,9 @@ $material-icons-font-path: '~material-icons/iconfont/';
 .pt-5 {
     padding-top: 5px !important;
 }
+.pb-0 {
+    padding-bottom: 0 !important;
+}
 .pb-5 {
     padding-bottom: 5px !important;
 }
@@ -152,8 +155,8 @@ $material-icons-font-path: '~material-icons/iconfont/';
                             margin-top: 0;
                             padding-top: 0;
                             .mat-form-field-label {
-                                font-size: 14px;
-                                top: 14px;
+                                font-size: 13px;
+                                top: 12px;
                                 margin-top: 0;
                             }
                         }
@@ -161,7 +164,8 @@ $material-icons-font-path: '~material-icons/iconfont/';
                             padding-right: 0;
                         }
                         .mat-form-field-infix {
-                            padding: 12px 0;
+                            font-size: 13px;
+                            padding: 12px 0 8px 0;
                             border: 0;
                         }
                         .mat-form-field-wrapper {
@@ -171,13 +175,13 @@ $material-icons-font-path: '~material-icons/iconfont/';
                         &.mat-form-field-can-float {
                             &.mat-form-field-should-float {
                                 .mat-form-field-label {
-                                    font-size: 11px;
+                                    font-size: 10px;
                                     transform: translateY(-1.4em);
                                 }
                             }
                             .mat-input-server:focus + .mat-form-field-label-wrapper {
                                 .mat-form-field-label {
-                                    font-size: 11px;
+                                    font-size: 10px;
                                     transform: translateY(-1.4em);
                                 }
                             }
@@ -227,8 +231,8 @@ $material-icons-font-path: '~material-icons/iconfont/';
                     margin-top: 0;
                     padding-top: 0;
                     .mat-form-field-label {
-                        font-size: 14px;
-                        top: 14px;
+                        font-size: 13px;
+                        top: 12px;
                         margin-top: 0;
                     }
                 }
@@ -236,7 +240,8 @@ $material-icons-font-path: '~material-icons/iconfont/';
                     padding-right: 0;
                 }
                 .mat-form-field-infix {
-                    padding: 12px 0;
+                    font-size: 13px;
+                    padding: 12px 0 8px 0;
                     border: 0;
                 }
                 .mat-form-field-wrapper {
@@ -246,13 +251,13 @@ $material-icons-font-path: '~material-icons/iconfont/';
                 &.mat-form-field-can-float {
                     &.mat-form-field-should-float {
                         .mat-form-field-label {
-                            font-size: 11px;
+                            font-size: 10px;
                             transform: translateY(-1.4em);
                         }
                     }
                     .mat-input-server:focus + .mat-form-field-label-wrapper {
                         .mat-form-field-label {
-                            font-size: 11px;
+                            font-size: 10px;
                             transform: translateY(-1.4em);
                         }
                     }
