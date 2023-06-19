@@ -169,9 +169,6 @@ export class AddAccountComponent implements OnInit, AfterViewInit {
       }),
     );
 
-
-    
-
     this.filteredacGroup = this.acGroupCtrl.valueChanges.pipe(
       startWith(''),
       map(acGroupObj => {

@@ -67,6 +67,16 @@ export class MasterService {
     return this.httpClient.get<any>(environment.apiBaseUrl + 'Master/getExchangeName', { headers: this.headers });
   }
 
+
+  saveItem(data): Observable<any> {
+    return this.httpClient.post<any>(environment.apiBaseUrl + 'Master/saveItem', data, { headers: this.headers });
+  }
+  getItemById(id: number): Observable<any> {
+    return this.httpClient.get<any>(environment.apiBaseUrl + 'master/getItemId/' + id, { headers: this.headers })
+  }
+  deleteItem(id: number): Observable<any> {
+    return this.httpClient.get<any>(environment.apiBaseUrl + 'master/deleteItem/' + id, { headers: this.headers })
+  }
   
 
 }

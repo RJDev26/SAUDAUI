@@ -89,23 +89,26 @@ $material-icons-font-path: '~material-icons/iconfont/';
 }
 
 .app {
-    &.teal-light {
-        .mat-radio-button{
-            &.mat-accent {
-                &.mat-radio-checked {
-                    .mat-radio-outer-circle {
-                        border-color: #00695c;
-                    }
-                }
-                .mat-radio-inner-circle {
-                    background-color: #00695c;
-                }
-            }
+  &.teal-light {
+    .mat-radio-button {
+      &.mat-accent {
+        &.mat-radio-checked {
+          .mat-radio-outer-circle {
+            border-color: #00695c;
+          }
         }
-        .mat-dialog-container {
-            padding: 15px 24px 24px 24px;
+
+        .mat-radio-inner-circle {
+          background-color: #00695c;
         }
+      }
     }
+
+    .mat-dialog-container {
+      //padding: 15px 24px 24px 24px;
+     padding: 10px 10px 10px 10px;
+    }
+  }
 }
 
 .white-block {

@@ -4,6 +4,7 @@ import { UntypedFormGroup, UntypedFormBuilder, Validators} from '@angular/forms'
 import { User, UserContacts, UserProfile, UserSettings, UserSocial, UserWork } from '../../../../pages/users/user.model';
 import { MasterService } from '../../master.service';
 import { Item } from '../item.model';
+import { forkJoin, map } from 'rxjs';
 
 
 @Component({
@@ -12,28 +13,97 @@ import { Item } from '../item.model';
   styleUrls: ['./add-item.component.scss']
 })
 export class AddItemComponent implements OnInit {
-  public itemForm:UntypedFormGroup;
+  public itemForm: UntypedFormGroup;
+  exchangeList: any;
+  selectedId: any;
 
-  constructor(private formBuilder: UntypedFormBuilder, public dialogRef: MatDialogRef<AddItemComponent>, @Inject(MAT_DIALOG_DATA) public user: Item, private _appService: MasterService) {
+  constructor(private formBuilder: UntypedFormBuilder, public dialogRef: MatDialogRef<AddItemComponent>, @Inject(MAT_DIALOG_DATA) public data: Item, private _appService: MasterService) {
     console.log(this.dialogRef);
+    this.selectedId = data.id;
+    if (data.id == null) { this.selectedId = 0; }
+   
   }
 
   bindFormControls() {
     this.itemForm = this.formBuilder.group({
-      'CompanyName': [],
-      'ExchangeName': [],
-      'itemCode': [],
-      'itemName': [],
+     
+      'ExId': ['', Validators.required],
+      'itemCode': ['', Validators.required],
+      'itemName': ['', Validators.required],
       'exchangeSymbol': [],
-      'lotSize': [],
+      'lotSizeValueMultiplier': [],
       'IsinCode': [],
       'ApplyCtt': [],
-      'ApplyRMF': []
+      'applyRiskManagementFees': [],
+      'id': []
     });
+   this.initialApiCalls();
 }
+
+
+  initialApiCalls() {
+    forkJoin([this._appService.getExchangeName()]).pipe(map(response => {
+      this.exchangeList = response[0];
+    })).subscribe(res => {
+    
+    });
+  }
+
+
+  getItemInfo()
+  {
+    this._appService.getItemById(this.selectedId).subscribe((res) => {
+      debugger
+      this.itemForm.get('itemCode').setValue(res.itemCode);
+      this.itemForm.get('itemName').setValue(res.itemName);
+      this.itemForm.get('exchangeSymbol').setValue(res.exchangeSymbol);
+      this.itemForm.get('ExId').setValue(res.exId);
+      this.itemForm.get('IsinCode').setValue(res.isinCode);
+
+      this.itemForm.get('lotSizeValueMultiplier').setValue(res.lotSizeValueMultiplier);
+      this.itemForm.get('ApplyCtt').setValue(res.applyCtt);
+      this.itemForm.get('applyRiskManagementFees').setValue(res.applyRiskManagementFees);
+      this.itemForm.get('id').setValue(res.id);
+
+      
+    });
+
+  }
+
+  public onSubmit(values: Object): void {
+
+    if ((this.itemForm.get('ApplyCtt').value) == null)
+    {
+      this.itemForm.controls['ApplyCtt'].setValue(false);
+    }
+    if ((this.itemForm.get('applyRiskManagementFees').value) == null) {
+      this.itemForm.controls['applyRiskManagementFees'].setValue(false);
+    }
+
+    this.itemForm.controls['lotSizeValueMultiplier'].setValue(Number(this.itemForm.get('lotSizeValueMultiplier').value));
+
+    var body = this.itemForm.value;
+    debugger;
+    //body.accountGroupId = this.getAcGroupId(this.acGroupCtrl.value);
+    //body.accountHeadId = this.getAcHeadId(this.acHeadCtrl.value);
+    //body.CityId = this.getCityId(this.cityCtrl.value);
+
+    if (this.itemForm.valid) {
+      //const body = JSON.stringify(addFormData);
+      this._appService.saveItem(body).subscribe(result => {
+        console.log("result", result);
+        this.dialogRef.close();
+      }, err => {
+        console.log(err);
+      });
+    }
+  }
 
   ngOnInit() {
     this.bindFormControls();
+    if (this.selectedId != 0) {
+      this.getItemInfo();
+    }
   }
 
   close(): void {
