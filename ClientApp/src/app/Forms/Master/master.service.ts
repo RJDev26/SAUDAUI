@@ -77,6 +77,32 @@ export class MasterService {
   deleteItem(id: number): Observable<any> {
     return this.httpClient.get<any>(environment.apiBaseUrl + 'master/deleteItem/' + id, { headers: this.headers })
   }
-  
+
+  getSaudaList(): Observable<any> {
+    return this.httpClient.get<any>(environment.apiBaseUrl + 'Master/getSaudaList', { headers: this.headers });
+  }
+
+  getItemListDrp(): Observable<any> {
+    return this.httpClient.get<any>(environment.apiBaseUrl + 'Master/getItemListDrp', { headers: this.headers });
+  }
+
+  getInstrumentList(): Observable<any> {
+    return this.httpClient.get<any>(environment.apiBaseUrl + 'Master/getInstrument', { headers: this.headers });
+  }
+
+  getOptionList(): Observable<any> {
+    return this.httpClient.get<any>(environment.apiBaseUrl + 'Master/getOption', { headers: this.headers });
+  }
+  saveSauda(data): Observable<any> {
+    return this.httpClient.post<any>(environment.apiBaseUrl + 'Master/saveSauda', data, { headers: this.headers });
+  }
+
+  getSaudaById(id: number): Observable<any> {
+    return this.httpClient.get<any>(environment.apiBaseUrl + 'master/getSaudaId/' + id, { headers: this.headers })
+  }
+  deleteSauda(id: number): Observable<any> {
+    return this.httpClient.get<any>(environment.apiBaseUrl + 'master/deleteSauda/' + id, { headers: this.headers })
+  }
+
 
 }

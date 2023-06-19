@@ -1,28 +1,19 @@
-<h2 class="heading mb-0">Sauda Master</h2>
+ <h2 class="heading mb-0">Sauda Master</h2>
 <form [formGroup]="saudaForm" (ngSubmit)="onSubmit(saudaForm.value)" fxLayout="row wrap" class="user-form">
     <div class="white-block pb-5">
         <h3>Sauda Master Details</h3>
         <div class="tab-party-details-parent">
             <div fxFlex="100" fxFlex.gt-sm="20" fxFlex.sm="50">
-                <mat-form-field class="example-full-width" appearance="outline">
-                    <mat-label>Item</mat-label>
-                    <input
-                    matInput
-                    aria-label="ItemObj"
-                    [matAutocomplete]="auto3"
-                    [formControl]="itemCtrl"
-                    formControlName="*ItemName"
-                    />
-                    <mat-error *ngIf="saudaForm.controls.ItemName.errors?.required">Please select ACGroup</mat-error>                
-                    <mat-autocomplete #auto3="matAutocomplete" (optionSelected)='getSelectedItem($event.option)'>
-                    <mat-option
-                        *ngFor="let itemObj of filteredItem | async"
-                        [value]="itemObj.item2"
-                        [id]="itemObj.item1">
-                        <span>{{itemObj.item2}}</span>
-                    </mat-option>
-                    </mat-autocomplete>
-                </mat-form-field>
+              <mat-form-field class="example-full-width" appearance="outline">
+                <mat-label>Item</mat-label>
+              
+                <mat-select placeholder="Select Item" formControlName="itemId">
+                  <!--<input (keyup)="onKey($event.target.value)">-->
+                  <mat-option *ngFor="let item of itemList" [value]="item.id">
+                    {{item.name}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
             </div>
             <div fxFlex="100" fxFlex.gt-sm="20" fxFlex.sm="50">
                 <mat-form-field appearance="outline">
@@ -34,64 +25,42 @@
             <div fxFlex="100" fxFlex.gt-sm="20" fxFlex.sm="50">
                 <mat-form-field appearance="outline">
                     <mat-label>Maturity</mat-label>
-                    <input matInput [matDatepicker]="Maturity">
+                    <input matInput [matDatepicker]="Maturity" formControlName="maturity" >
                     <mat-datepicker-toggle matSuffix [for]="Maturity"></mat-datepicker-toggle>
                     <mat-datepicker #Maturity></mat-datepicker>
                 </mat-form-field>                  
             </div>
             <div fxFlex="100" fxFlex.gt-sm="20" fxFlex.sm="50">
-                <mat-form-field class="example-full-width" appearance="outline">
-                    <mat-label>Instrument Type</mat-label>
-                    <input
-                    matInput
-                    aria-label="InstrumentObj"
-                    [matAutocomplete]="auto3"
-                    [formControl]="instrumentCtrl"
-                    formControlName="*InstrumentName"
-                    />
-                    <mat-error *ngIf="saudaForm.controls.InstrumentName.errors?.required">Please select ACGroup</mat-error>                
-                    <mat-autocomplete #auto3="matAutocomplete" (optionSelected)='getSelectedInstrument($event.option)'>
-                    <mat-option
-                        *ngFor="let instrumentObj of filteredInstrument | async"
-                        [value]="instrumentObj.item2"
-                        [id]="instrumentObj.item1">
-                        <span>{{instrumentObj.item2}}</span>
-                    </mat-option>
-                    </mat-autocomplete>
-                </mat-form-field>
+              <mat-form-field class="example-full-width" appearance="outline">
+                <mat-label>Instrument Type</mat-label>
+                <mat-select placeholder="Select InsType" formControlName="instrumentType">
+                  <mat-option *ngFor="let exchange of instrumentList" [value]="exchange.id">
+                    {{exchange.name}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
             </div>
             <div fxFlex="100" fxFlex.gt-sm="20" fxFlex.sm="50">
-                <mat-form-field class="example-full-width" appearance="outline">
-                    <mat-label>Option Type</mat-label>
-                    <input
-                    matInput
-                    aria-label="OptionObj"
-                    [matAutocomplete]="auto3"
-                    [formControl]="optionCtrl"
-                    formControlName="*OptionName"
-                    />
-                    <mat-error *ngIf="saudaForm.controls.OptionName.errors?.required">Please select ACGroup</mat-error>                
-                    <mat-autocomplete #auto3="matAutocomplete" (optionSelected)='getSelectedOption($event.option)'>
-                    <mat-option
-                        *ngFor="let optionObj of filteredOption | async"
-                        [value]="optionObj.item2"
-                        [id]="optionObj.item1">
-                        <span>{{optionObj.item2}}</span>
-                    </mat-option>
-                    </mat-autocomplete>
-                </mat-form-field>
+              <mat-form-field class="example-full-width" appearance="outline">
+                <mat-label>Option Type</mat-label>
+                <mat-select placeholder="Select Option" formControlName="optionType">
+                  <mat-option *ngFor="let option of optionType" [value]="option.id">
+                    {{option.name}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
             </div>
             <div fxFlex="100" fxFlex.gt-sm="20" fxFlex.sm="50">
                 <mat-form-field appearance="outline">
                     <mat-label>Strike Price</mat-label>
-                    <input matInput autocomplete="off" placeholder="" formControlName="strikePrice" type="text">
+                    <input matInput autocomplete="off" placeholder="" formControlName="strikePrice" type="number">
                     <mat-error *ngIf="saudaForm.controls.strikePrice.errors?.required">strikePrice is required</mat-error>                
                 </mat-form-field> 
             </div>
             <div fxFlex="100" fxFlex.gt-sm="20" fxFlex.sm="50">
                 <mat-form-field appearance="outline">
                     <mat-label>First Trading Date</mat-label>
-                    <input matInput [matDatepicker]="FirstTradingDate">
+                    <input matInput [matDatepicker]="FirstTradingDate" formControlName="firstTradingDate">
                     <mat-datepicker-toggle matSuffix [for]="FirstTradingDate"></mat-datepicker-toggle>
                     <mat-datepicker #FirstTradingDate></mat-datepicker>
                 </mat-form-field>                  
@@ -99,7 +68,7 @@
             <div fxFlex="100" fxFlex.gt-sm="20" fxFlex.sm="50">
                 <mat-form-field appearance="outline">
                     <mat-label>Last Trading Date</mat-label>
-                    <input matInput [matDatepicker]="LastTradingDate">
+                    <input matInput [matDatepicker]="LastTradingDate" formControlName="lastTradingDate" >
                     <mat-datepicker-toggle matSuffix [for]="LastTradingDate"></mat-datepicker-toggle>
                     <mat-datepicker #LastTradingDate></mat-datepicker>
                 </mat-form-field>                  
@@ -108,6 +77,6 @@
     </div>
     <div fxFlex="100" class="mt-2 text-center space-between-btns">
         <button mat-raised-button color="warn" (click)="close()">Cancel</button>            
-        <button mat-raised-button color="primary" class="uppercase" type="submit">Save</button> 
+        <button mat-raised-button color="primary" class="uppercase" [disabled]="!saudaForm.valid" type="submit">Save</button> 
     </div>
 </form>

@@ -17,8 +17,8 @@ export class AddItemComponent implements OnInit {
   exchangeList: any;
   selectedId: any;
 
-  constructor(private formBuilder: UntypedFormBuilder, public dialogRef: MatDialogRef<AddItemComponent>, @Inject(MAT_DIALOG_DATA) public data: Item, private _appService: MasterService) {
-    console.log(this.dialogRef);
+  constructor(private formBuilder: UntypedFormBuilder, public dialogRef: MatDialogRef<AddItemComponent>, @Inject(MAT_DIALOG_DATA) public data: any, private _appService: MasterService) {
+   
     this.selectedId = data.id;
     if (data.id == null) { this.selectedId = 0; }
    
@@ -103,6 +103,10 @@ export class AddItemComponent implements OnInit {
     this.bindFormControls();
     if (this.selectedId != 0) {
       this.getItemInfo();
+    }
+    else
+    {
+      this.itemForm.get('id').setValue(0);
     }
   }
 
