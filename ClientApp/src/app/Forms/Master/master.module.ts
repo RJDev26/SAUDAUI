@@ -20,6 +20,7 @@ import { ContractMasterComponent } from './contract-master/contract-master.compo
 import { AddContractMasterComponent } from './contract-master/contract-master-dialog/add-contract-master.component';
 import { BrokerageSlabComponent } from './brokerage-slab/brokerage-slab.component';
 import { ConfirmationDialog } from '../Dialog/confirmation-dialog/confirmation-dialog.component';
+import { ErrorDialog } from '../Dialog/confirmation-dialog/error-dialog.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'account', pathMatch: 'full' },
@@ -58,7 +59,8 @@ export const routes: Routes = [
     ContractMasterComponent,
     AddContractMasterComponent,
     BrokerageSlabComponent,
-    ConfirmationDialog
+    ConfirmationDialog,
+     ErrorDialog
   ],
 })
 export class MasterModule { }

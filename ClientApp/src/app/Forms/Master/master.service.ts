@@ -116,5 +116,20 @@ export class MasterService {
     return this.httpClient.post<any>(environment.apiBaseUrl + 'Master/SaveProduct', data, { headers: this.headers });
   }
 
+  getAccountTaxList(id: number): Observable<any> {
+    return this.httpClient.get<any>(environment.apiBaseUrl + 'Master/getAccountTaxList/' + id, { headers: this.headers });
+  }
+
+  saveAccountTax(data): Observable<any> {
+    return this.httpClient.post<any>(environment.apiBaseUrl + 'Master/saveAccountTax', data, { headers: this.headers });
+  }
+
+  getAccountTaxById(id: number): Observable<any> {
+    return this.httpClient.get<any>(environment.apiBaseUrl + 'master/getAccountTaxId/' + id, { headers: this.headers })
+  }
+  deleteAccountTax(id: number): Observable<any> {
+    return this.httpClient.get<any>(environment.apiBaseUrl + 'master/deleteAccountTax/' + id, { headers: this.headers })
+  }
+
 
 }
