@@ -104,5 +104,17 @@ export class MasterService {
     return this.httpClient.get<any>(environment.apiBaseUrl + 'master/deleteSauda/' + id, { headers: this.headers })
   }
 
+  getProductById(id: number): Observable<any> {
+    return this.httpClient.get<any>(environment.apiBaseUrl + 'master/getProductId/' + id, { headers: this.headers })
+  }
+
+  deleteProduct(id: number): Observable<any> {
+    return this.httpClient.get<any>(environment.apiBaseUrl + 'master/deleteProduct/' + id, { headers: this.headers })
+  }
+
+  saveProduct(data): Observable<any> {
+    return this.httpClient.post<any>(environment.apiBaseUrl + 'Master/SaveProduct', data, { headers: this.headers });
+  }
+
 
 }

@@ -37,4 +37,8 @@ export class AppService {
   saveAccount(data): Observable<any>{
     return this.httpClient.post<any>(environment.apiBaseUrl + 'Master/saveAccount', data, {headers:this.headers});
   }
+
+  getProduct():Observable<any>{
+    return this.httpClient.get<any>(environment.apiBaseUrl + 'Master/getProductList',{headers:this.headers});
+  }
 }

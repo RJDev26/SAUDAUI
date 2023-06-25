@@ -6,43 +6,32 @@
             <div fxFlex="100" fxFlex.gt-sm="20" fxFlex.sm="50">
                 <mat-form-field class="example-full-width" appearance="outline">
                     <mat-label>Exchange</mat-label>
-                    <input
-                    matInput
-                    aria-label="ExchangeObj"
-                    [matAutocomplete]="auto3"
-                    [formControl]="exchangeCtrl"
-                    formControlName="*ExchangeName"
-                    />
-                    <mat-error *ngIf="productForm.controls.ExchangeName.errors?.required">Please select ACGroup</mat-error>                
-                    <mat-autocomplete #auto3="matAutocomplete" (optionSelected)='getSelectedExchange($event.option)'>
-                    <mat-option
-                        *ngFor="let exchangeObj of filteredExchange | async"
-                        [value]="exchangeObj.item2"
-                        [id]="exchangeObj.item1">
-                        <span>{{exchangeObj.item2}}</span>
-                    </mat-option>
-                    </mat-autocomplete>
+                    <mat-select placeholder="" formControlName="ExId">
+                        <mat-option *ngFor="let exchange of exchangeList" [value]="exchange.id">
+                          {{exchange.name}}
+                        </mat-option>
+                    </mat-select>
                 </mat-form-field>
             </div>
             <div fxFlex="100" fxFlex.gt-sm="20" fxFlex.sm="50">
                 <mat-form-field appearance="outline">
                     <mat-label>Symbol</mat-label>
                     <input matInput autocomplete="off" placeholder="" formControlName="symbol" type="text">
-                    <mat-error *ngIf="productForm.controls.symbol.errors?.required">symbol is required</mat-error>                
+                    <mat-error *ngIf="productForm.controls.symbol.errors?.required">Symbol is required</mat-error>                
                 </mat-form-field> 
             </div>
             <div fxFlex="100" fxFlex.gt-sm="20" fxFlex.sm="50">
                 <mat-form-field appearance="outline">
                     <mat-label>Price Unit</mat-label>
                     <input matInput autocomplete="off" placeholder="" formControlName="priceUnit" type="text">
-                    <mat-error *ngIf="productForm.controls.priceUnit.errors?.required">price unit is required</mat-error>                
+                    <mat-error *ngIf="productForm.controls.priceUnit.errors?.required">Price unit is required</mat-error>                
                 </mat-form-field> 
             </div>
             <div fxFlex="100" fxFlex.gt-sm="40" fxFlex.sm="50">
                 <mat-form-field appearance="outline">
                     <mat-label>Description</mat-label>
                     <input matInput autocomplete="off" placeholder="" formControlName="description" type="text">
-                    <mat-error *ngIf="productForm.controls.description.errors?.required">price unit is required</mat-error>                
+                    <mat-error *ngIf="productForm.controls.description.errors?.required">Description is required</mat-error>                
                 </mat-form-field> 
             </div>
             <div fxFlex="100" fxFlex.gt-sm="20" fxFlex.sm="50">
