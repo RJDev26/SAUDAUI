@@ -21,6 +21,7 @@ import { AddContractMasterComponent } from './contract-master/contract-master-di
 import { BrokerageSlabComponent } from './brokerage-slab/brokerage-slab.component';
 import { ConfirmationDialog } from '../Dialog/confirmation-dialog/confirmation-dialog.component';
 import { ErrorDialog } from '../Dialog/confirmation-dialog/error-dialog.component';
+import { MAT_DATE_LOCALE } from '@angular/material/core';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'account', pathMatch: 'full' },
@@ -61,6 +62,9 @@ export const routes: Routes = [
     BrokerageSlabComponent,
     ConfirmationDialog,
      ErrorDialog
+  ],
+  providers: [
+    { provide: MAT_DATE_LOCALE, useValue: 'en-GB' }
   ],
 })
 export class MasterModule { }

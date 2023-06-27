@@ -122,8 +122,8 @@ export class AddAccountComponent implements OnInit, AfterViewInit {
     },
     { headerName: 'TaxName', field: 'taxName', filter: true, sorting: true, resizable: true },
     { headerName: 'Exchange', field: 'exName', filter: true, sorting: true, resizable: true },
-    { headerName: 'FromDt', field: 'fromDT', filter: true, sorting: true, resizable: true },
-    { headerName: 'ToDt', field: 'toDT', filter: true, sorting: true, resizable: true },
+    { headerName: 'FromDt', field: 'fromDt', filter: true, sorting: true, resizable: true },
+    { headerName: 'ToDt', field: 'toDt', filter: true, sorting: true, resizable: true },
     { headerName: 'InsType', field: 'insType', filter: true, sorting: true, resizable: true },
     { headerName: 'IntraDayRate', field: 'intraDayRate', filter: true, sorting: true, resizable: true },
     { headerName: 'DeliveryRate', field: 'deliveryRate', filter: true, sorting: true, resizable: true },
@@ -160,8 +160,8 @@ export class AddAccountComponent implements OnInit, AfterViewInit {
       'intraDayRate': ['', Validators.required],
       'insType': ['', Validators.required],
       'deliveryRate': ['', Validators.required],
-      'fromDT': ['', Validators.required],
-      'toDT': ['', Validators.required],
+      'fromDt': ['', Validators.required],
+      'toDt': ['', Validators.required],
       'id': [0],
       'accountId': [0],
 
@@ -249,6 +249,7 @@ export class AddAccountComponent implements OnInit, AfterViewInit {
     this.acGroupCtrl.setValue(acGroup.name);
     this.acHeadCtrl.setValue(acHead.name);
     this.cityCtrl.setValue(optedCity.name);
+    debugger
     this.selectedAccountId = this.user.id;
     this.getAccountTaxList();
   }

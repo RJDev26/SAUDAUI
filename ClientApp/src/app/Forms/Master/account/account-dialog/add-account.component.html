@@ -188,14 +188,14 @@
           <div fxFlex="100" fxFlex.gt-sm="14" fxFlex.sm="50">
             <mat-form-field appearance="outline">
               <mat-label>From</mat-label>
-              <input matInput [matDatepicker]="picker1" formControlName="fromDT">
+              <input matInput [matDatepicker]="picker1" formControlName="fromDt">
               <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
               <mat-datepicker #picker1></mat-datepicker>
             </mat-form-field>
           </div>
           <div fxFlex="100" fxFlex.gt-sm="14" fxFlex.sm="50">
             <mat-form-field appearance="outline">
-              <input matInput [matDatepicker]="picker2" placeholder="To" formControlName="toDT">
+              <input matInput [matDatepicker]="picker2" placeholder="To" formControlName="toDt">
               <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
               <mat-datepicker #picker2></mat-datepicker>
             </mat-form-field>
@@ -213,7 +213,7 @@
           <div fxFlex="100" fxFlex.gt-sm="14" fxFlex.sm="50">
             <mat-form-field appearance="outline">
               <mat-label>Delivery Rate</mat-label>
-              <input matInput autocomplete="off" placeholder="DeliveryRate" formControlName="deliveryRate" type="text">
+              <input matInput autocomplete="off" placeholder="DeliveryRate" formControlName="deliveryRate" type="number">
               <mat-error *ngIf="taxForm.controls.deliveryRate.errors?.required">DeliveryRate is required</mat-error>
             </mat-form-field>
           </div>
