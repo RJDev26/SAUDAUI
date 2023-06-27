@@ -24,15 +24,15 @@ export class AddProductComponent implements OnInit {
     bindFormControls() {
         this.productForm = this.formBuilder.group({
             'ExId': ['', Validators.required],
-            'ExchangeName': ['', Validators.required],
+           
             'symbol': ['', Validators.required],
             'priceUnit': ['', Validators.required],
             'description': ['', Validators.required],
             'lotSize': ['', Validators.required],
-            'isinSize': ['', Validators.required],
+            'isincode': ['', Validators.required],
             'qtyUnit': ['', Validators.required],
             'securityGroup': ['', Validators.required],
-            'id': []
+            'id': [0]
         });
         this.initialApiCalls();
     }
@@ -48,7 +48,6 @@ export class AddProductComponent implements OnInit {
 
     getProductInfo()
     {
-        debugger
         this._appService.getProductById(this.selectedId).subscribe((res) => {
         this.productForm.get('symbol').setValue(res.symbol);
         this.productForm.get('priceUnit').setValue(res.priceUnit);
@@ -67,8 +66,8 @@ export class AddProductComponent implements OnInit {
         this.productForm.controls['symbol'].setValue(String(this.productForm.get('symbol').value));
         this.productForm.controls['priceUnit'].setValue(String(this.productForm.get('priceUnit').value));
         this.productForm.controls['description'].setValue(String(this.productForm.get('description').value));
-        this.productForm.controls['lotSize'].setValue(String(this.productForm.get('lotSize').value));
-        this.productForm.controls['qtyUnit'].setValue(String(this.productForm.get('qtyUnit').value));
+        this.productForm.controls['lotSize'].setValue(Number(this.productForm.get('lotSize').value));
+        this.productForm.controls['qtyUnit'].setValue(Number(this.productForm.get('qtyUnit').value));
         this.productForm.controls['isincode'].setValue(String(this.productForm.get('isincode').value));
         this.productForm.controls['securityGroup'].setValue(String(this.productForm.get('securityGroup').value));
     
@@ -91,13 +90,10 @@ export class AddProductComponent implements OnInit {
 
     ngOnInit() {
         this.bindFormControls();
-        if (this.selectedId != 0) 
-        {
-            debugger
+        if (this.selectedId != 0) {
             this.getProductInfo();
         }
-        else
-        {
+        else {
             this.productForm.get('id').setValue(0);
         }
     }

@@ -31,7 +31,6 @@ export class ProductComponent implements OnInit {
     productList: any;
     constructor(public appSettings: AppSettings, private _appService: AppService, public dialog: MatDialog, private _masterService: MasterService) {
       this.settings = this.appSettings.settings;
-
     }
 
     ngOnInit() {
