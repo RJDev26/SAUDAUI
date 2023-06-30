@@ -21,10 +21,11 @@ export class AddContractMasterComponent implements OnInit {
 
     bindFormControls() {
         this.contractForm = this.formBuilder.group({
+            'ExId': [],
             'ExchangeName': [],
             'symbol': [],
             'strikePrice': [],
-            'InstrumentName': [],
+            'instrumentType': [],
             'OptionTypeName': [],
             'TradeableLot': []
         });

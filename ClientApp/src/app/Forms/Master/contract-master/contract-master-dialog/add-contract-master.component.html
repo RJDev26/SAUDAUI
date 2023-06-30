@@ -30,43 +30,21 @@
             <div fxFlex="100" fxFlex.gt-sm="20" fxFlex.sm="50">
                 <mat-form-field class="example-full-width" appearance="outline">
                     <mat-label>Instrument Type</mat-label>
-                    <input
-                    matInput
-                    aria-label="InstrumentObj"
-                    [matAutocomplete]="auto2"
-                    [formControl]="instrumentCtrl"
-                    formControlName="*InstrumentName"
-                    />
-                    <mat-error *ngIf="contractForm.controls.InstrumentName.errors?.required">Please select instrument</mat-error>                
-                    <mat-autocomplete #auto2="matAutocomplete" (optionSelected)='getSelectedInstrument($event.option)'>
-                    <mat-option
-                        *ngFor="let instrumentObj of filteredInstrument | async"
-                        [value]="instrumentObj.item2"
-                        [id]="instrumentObj.item1">
-                        <span>{{instrumentObj.item2}}</span>
-                    </mat-option>
-                    </mat-autocomplete>
+                    <mat-select placeholder="" formControlName="ExId">
+                        <mat-option *ngFor="let exchange of InstrumentTypeList" [value]="Instrument.id">
+                          {{InstrumentType.name}}
+                        </mat-option>
+                    </mat-select>
                 </mat-form-field>
             </div>
             <div fxFlex="100" fxFlex.gt-sm="20" fxFlex.sm="50">
                 <mat-form-field class="example-full-width" appearance="outline">
                     <mat-label>Option Type</mat-label>
-                    <input
-                    matInput
-                    aria-label="OptionTypeObj"
-                    [matAutocomplete]="auto3"
-                    [formControl]="optionTypeCtrl"
-                    formControlName="*OptionTypeName"
-                    />
-                    <mat-error *ngIf="contractForm.controls.OptionTypeName.errors?.required">Please select optionType</mat-error>                
-                    <mat-autocomplete #auto3="matAutocomplete" (optionSelected)='getSelectedOptionType($event.option)'>
-                    <mat-option
-                        *ngFor="let optionTypeObj of filteredOptionType | async"
-                        [value]="optionTypeObj.item2"
-                        [id]="optionTypeObj.item1">
-                        <span>{{optionTypeObj.item2}}</span>
-                    </mat-option>
-                    </mat-autocomplete>
+                    <mat-select placeholder="" formControlName="ExId">
+                        <mat-option *ngFor="let exchange of OptionTypeList" [value]="Option.id">
+                          {{OptionType.name}}
+                        </mat-option>
+                    </mat-select>
                 </mat-form-field>
             </div>
             <div fxFlex="100" fxFlex.gt-sm="20" fxFlex.sm="50">
