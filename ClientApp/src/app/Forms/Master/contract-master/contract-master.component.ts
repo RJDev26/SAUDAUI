@@ -53,12 +53,10 @@ export class ContractMasterComponent implements OnInit {
       },
       { headerName: 'Exchange', field: 'exName', filter: true, sorting: true, resizable: true },
       { headerName: 'Symbol', field: 'symbol', filter: true, sorting: true, resizable: true },
-      { headerName: 'PriceUnit', field: 'priceUnit', filter: true, sorting: true, resizable: true },
-      { headerName: 'Description', field: 'description', filter: true, sorting: true, resizable: true },    
-      { headerName: 'LotSize', field: 'lotSize', filter: true, sorting: true, resizable: true },
-      { headerName: 'QtyUnit', field: 'qtyUnit', filter: true, sorting: true, resizable: true },
-      { headerName: 'Isincode', field: 'isincode', filter: true, sorting: true, resizable: true },
-      { headerName: 'SecurityGroup', field: 'securityGroup', filter: true, sorting: true, resizable: true },
+      { headerName: 'Maturity', field: 'maturity', filter: true, sorting: true, resizable: true },
+      { headerName: 'OptionType', field: 'optionType', filter: true, sorting: true, resizable: true },  
+      { headerName: 'StrikePrice', field: 'strikePrice', filter: true, sorting: true, resizable: true },
+      { headerName: 'TradeableLot', field: 'tradeableLot', filter: true, sorting: true, resizable: true },
       { headerName: 'CreatedBy', field: 'createdBy', filter: true, sorting: true, resizable: true },
       { headerName: 'CreatedDate', field: 'createdDate', filter: true, sorting: true, resizable: true }
     ];

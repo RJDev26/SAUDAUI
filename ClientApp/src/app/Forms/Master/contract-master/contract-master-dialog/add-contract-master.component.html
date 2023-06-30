@@ -6,22 +6,11 @@
             <div fxFlex="100" fxFlex.gt-sm="20" fxFlex.sm="50">
                 <mat-form-field class="example-full-width" appearance="outline">
                     <mat-label>Exchange</mat-label>
-                    <input
-                    matInput
-                    aria-label="ExchangeObj"
-                    [matAutocomplete]="auto1"
-                    [formControl]="exchangeCtrl"
-                    formControlName="*ExchangeName"
-                    />
-                    <mat-error *ngIf="contractForm.controls.ExchangeName.errors?.required">Please select Exchange Name</mat-error>                
-                    <mat-autocomplete #auto1="matAutocomplete" (optionSelected)='getSelectedExchange($event.option)'>
-                    <mat-option
-                        *ngFor="let exchangeObj of filteredExchange | async"
-                        [value]="exchangeObj.item2"
-                        [id]="exchangeObj.item1">
-                        <span>{{exchangeObj.item2}}</span>
-                    </mat-option>
-                    </mat-autocomplete>
+                    <mat-select placeholder="" formControlName="ExId">
+                        <mat-option *ngFor="let exchange of exchangeList" [value]="exchange.id">
+                          {{exchange.name}}
+                        </mat-option>
+                    </mat-select>
                 </mat-form-field>
             </div>
             <div fxFlex="100" fxFlex.gt-sm="20" fxFlex.sm="50">

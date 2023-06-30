@@ -39,7 +39,6 @@ export class AddProductComponent implements OnInit {
 
     initialApiCalls() {
         forkJoin([this._appService.getExchangeName()]).pipe(map(response => {
-            debugger
           this.exchangeList = response[0];
         })).subscribe(res => {
         

@@ -3,6 +3,7 @@ import { FormControl, UntypedFormBuilder, UntypedFormGroup } from '@angular/form
 import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
 import { MasterService } from '../../master.service';
 import { ContractMaster } from '../contract-master.model';
+import { forkJoin, map } from 'rxjs';
 
 @Component({
     selector: 'app-contract-master-dialog',
@@ -12,6 +13,7 @@ import { ContractMaster } from '../contract-master.model';
 
 export class AddContractMasterComponent implements OnInit { 
     public contractForm:UntypedFormGroup;
+    exchangeList: any;
 
     constructor(private formBuilder: UntypedFormBuilder, public dialogRef: MatDialogRef<AddContractMasterComponent>, @Inject(MAT_DIALOG_DATA) public user: ContractMaster, private _appService: MasterService) {
         console.log(this.dialogRef);
@@ -25,6 +27,15 @@ export class AddContractMasterComponent implements OnInit {
             'InstrumentName': [],
             'OptionTypeName': [],
             'TradeableLot': []
+        });
+        this.initialApiCalls();
+    }
+
+    initialApiCalls() {
+        forkJoin([this._appService.getExchangeName()]).pipe(map(response => {
+          this.exchangeList = response[0];
+        })).subscribe(res => {
+        
         });
     }
 
