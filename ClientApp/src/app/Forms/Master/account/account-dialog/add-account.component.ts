@@ -122,10 +122,10 @@ export class AddAccountComponent implements OnInit, AfterViewInit {
     },
     { headerName: 'TaxName', field: 'taxName', filter: true, sorting: true, resizable: true },
     { headerName: 'Exchange', field: 'exName', filter: true, sorting: true, resizable: true },
-    { headerName: 'FromDt', field: 'fromDt', filter: true, sorting: true, resizable: true },
-    { headerName: 'ToDt', field: 'toDt', filter: true, sorting: true, resizable: true },
+    { headerName: 'FromDt', field: 'fromDtString', filter: true, sorting: true, resizable: true },
+    { headerName: 'ToDt', field: 'toDtString', filter: true, sorting: true, resizable: true },
     { headerName: 'InsType', field: 'insType', filter: true, sorting: true, resizable: true },
-    { headerName: 'IntraDayRate', field: 'intraDayRate', filter: true, sorting: true, resizable: true },
+    { headerName: 'IntraDayRate', field: 'intradayRate', filter: true, sorting: true, resizable: true },
     { headerName: 'DeliveryRate', field: 'deliveryRate', filter: true, sorting: true, resizable: true },
     
   ];
@@ -348,8 +348,8 @@ export class AddAccountComponent implements OnInit, AfterViewInit {
         data: {
           message: 'Please select or save account to save account tax',
           buttonText: {
-            ok: 'Yes',
-            cancel: 'No'
+            ok: 'Ok',
+            
           }
         }
 
