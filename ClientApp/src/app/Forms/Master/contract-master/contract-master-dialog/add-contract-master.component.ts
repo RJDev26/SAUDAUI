@@ -66,7 +66,7 @@ export class AddContractMasterComponent implements OnInit {
         this.contractForm.controls['instrumentType'].setValue(String(this.contractForm.get('instrumentType').value));
         this.contractForm.controls['optionType'].setValue(String(this.contractForm.get('optionType').value));
         this.contractForm.controls['tradeableLot'].setValue(Number(this.contractForm.get('tradeableLot').value));
-        this.contractForm.controls['maturity'].setValue(String(this.contractForm.get('maturity').value));
+        //this.contractForm.controls['maturity'].setValue(String(this.contractForm.get('maturity').value));
         var body = this.contractForm.value;
         if (this.contractForm.valid) {
             //const body = JSON.stringify(addFormData);

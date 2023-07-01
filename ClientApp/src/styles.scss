@@ -114,6 +114,18 @@ $material-icons-font-path: '~material-icons/iconfont/';
             min-height: auto;
             margin-bottom: 0;
         }
+        .error-message {
+            border: 1px solid #ff5252;
+            margin: -15px;
+            display: block;
+            h2 {
+                background: #ff5252;
+                color: #fff;
+                font-size: 18px;
+                padding: 10px 15px;;
+                font-weight: 400;
+            }
+        }
     }
   }
 }
