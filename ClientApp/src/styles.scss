@@ -115,15 +115,24 @@ $material-icons-font-path: '~material-icons/iconfont/';
             margin-bottom: 0;
         }
         .error-message {
-            border: 1px solid #ff5252;
+            min-width: 280px;
+            border: 1px solid #ffd740;
             margin: -15px;
             display: block;
             h2 {
-                background: #ff5252;
-                color: #fff;
+                background: #ffd740;
+                color: rgba(0, 0, 0, 0.75);
                 font-size: 18px;
                 padding: 10px 15px;;
                 font-weight: 400;
+                align-items: center;
+                display: flex;
+                .mat-icon {
+                    margin-right: 7px;
+                }
+            }
+            .content {
+                padding: 24px;
             }
         }
     }

@@ -100,7 +100,7 @@ export class ItemComponent implements OnInit {
     {
       const dialogRef = this.dialog.open(ConfirmationDialog, {
         data: {
-          message: 'Are you sure want to delete?',
+          message: 'Do you really want to delete this record?',
           buttonText: {
             ok: 'Yes',
             cancel: 'No'

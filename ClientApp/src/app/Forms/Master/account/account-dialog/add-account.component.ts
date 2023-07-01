@@ -348,7 +348,7 @@ export class AddAccountComponent implements OnInit, AfterViewInit {
         data: {
           message: 'Please select or save account to save account tax',
           buttonText: {
-            ok: 'Ok',
+            ok: 'OK',
             
           }
         }
