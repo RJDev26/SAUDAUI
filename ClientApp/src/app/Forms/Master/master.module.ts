@@ -22,6 +22,7 @@ import { BrokerageSlabComponent } from './brokerage-slab/brokerage-slab.componen
 import { ConfirmationDialog } from '../Dialog/confirmation-dialog/confirmation-dialog.component';
 import { ErrorDialog } from '../Dialog/confirmation-dialog/error-dialog.component';
 import { MAT_DATE_LOCALE } from '@angular/material/core';
+import { BrokerageSetupComponent } from './brokerage-setup/brokerage-setup.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'account', pathMatch: 'full' },
@@ -32,7 +33,8 @@ export const routes: Routes = [
   { path: 'sauda', component: SaudaComponent, data: { breadcrumb: 'Sauda' } },
   { path: 'product', component: ProductComponent, data: { breadcrumb: 'Product' } },
   { path: 'contract-master', component: ContractMasterComponent, data: { breadcrumb: 'Contract Master' } },
-  { path: 'brokerage-slab', component: BrokerageSlabComponent, data: { breadcrumb: 'Brokerage Slab' } }
+  { path: 'brokerage-slab', component: BrokerageSlabComponent, data: { breadcrumb: 'Brokerage Slab' } },
+  { path: 'brokerage-setup', component: BrokerageSetupComponent, data: { breadcrumb: 'Brokerage Setup' } }
 ];
 
 @NgModule({
@@ -61,7 +63,8 @@ export const routes: Routes = [
     AddContractMasterComponent,
     BrokerageSlabComponent,
     ConfirmationDialog,
-     ErrorDialog
+    ErrorDialog,
+    BrokerageSetupComponent,
   ],
   providers: [
     { provide: MAT_DATE_LOCALE, useValue: 'en-GB' }
