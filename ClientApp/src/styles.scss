@@ -105,7 +105,26 @@ $material-icons-font-path: '~material-icons/iconfont/';
     }
 
     .mat-dialog-container {
-        padding: 15px;
+        padding: 0;
+        .heading {
+            background: #ffd740;
+            color: rgba(0, 0, 0, 0.75);
+            font-size: 18px;
+            padding: 12px 15px;;
+            font-weight: 500;
+        }
+        .user-form {
+            padding: 15px;
+        }
+        .mat-tab-group {
+            padding: 15px;
+            .user-form {
+                padding: 0;
+            }
+            .mat-tab-header {
+                margin-bottom: 15px;
+            }
+        }
         .mat-dialog-content {
             margin: 0;
             padding: 0 0 15px 0;
@@ -117,9 +136,8 @@ $material-icons-font-path: '~material-icons/iconfont/';
         .error-message {
             min-width: 280px;
             border: 1px solid #ffd740;
-            margin: -15px;
             display: block;
-            h2 {
+            h1 {
                 background: #ffd740;
                 color: rgba(0, 0, 0, 0.75);
                 font-size: 18px;
@@ -149,6 +167,9 @@ $material-icons-font-path: '~material-icons/iconfont/';
     -webkit-border-radius: 7px;
     border-radius: 7px;
     flex-wrap: wrap;
+    &:first-child {
+        margin-top: 10px;
+    }
     h3 {
         background: #fff;
         position: absolute;
