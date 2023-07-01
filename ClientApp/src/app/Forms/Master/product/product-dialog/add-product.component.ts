@@ -23,8 +23,7 @@ export class AddProductComponent implements OnInit {
 
     bindFormControls() {
         this.productForm = this.formBuilder.group({
-            'ExId': ['', Validators.required],
-           
+            'ExId': ['', Validators.required],           
             'symbol': ['', Validators.required],
             'priceUnit': ['', Validators.required],
             'description': ['', Validators.required],

@@ -30,9 +30,9 @@
             <div fxFlex="100" fxFlex.gt-sm="20" fxFlex.sm="50">
                 <mat-form-field class="example-full-width" appearance="outline">
                     <mat-label>Instrument Type</mat-label>
-                    <mat-select placeholder="" formControlName="ExId">
-                        <mat-option *ngFor="let exchange of InstrumentTypeList" [value]="Instrument.id">
-                          {{InstrumentType.name}}
+                    <mat-select placeholder="" formControlName="instrumentType">
+                        <mat-option *ngFor="let instrumentType of InstrumentTypeList" [value]="instrumentType.id">
+                          {{instrumentType.name}}
                         </mat-option>
                     </mat-select>
                 </mat-form-field>
@@ -40,9 +40,9 @@
             <div fxFlex="100" fxFlex.gt-sm="20" fxFlex.sm="50">
                 <mat-form-field class="example-full-width" appearance="outline">
                     <mat-label>Option Type</mat-label>
-                    <mat-select placeholder="" formControlName="ExId">
-                        <mat-option *ngFor="let exchange of OptionTypeList" [value]="Option.id">
-                          {{OptionType.name}}
+                    <mat-select placeholder="" formControlName="optionType">
+                        <mat-option *ngFor="let optionType of OptionTypeList" [value]="optionType.id">
+                          {{optionType.name}}
                         </mat-option>
                     </mat-select>
                 </mat-form-field>
@@ -50,14 +50,14 @@
             <div fxFlex="100" fxFlex.gt-sm="20" fxFlex.sm="50">
                 <mat-form-field appearance="outline">
                     <mat-label>Tradeable Lot</mat-label>
-                    <input matInput autocomplete="off" placeholder="" formControlName="TradeableLot" type="text">
-                    <mat-error *ngIf="contractForm.controls.TradeableLot.errors?.required">Tradeable Lot is required</mat-error>                
+                    <input matInput autocomplete="off" placeholder="" formControlName="tradeableLot" type="text">
+                    <mat-error *ngIf="contractForm.controls.tradeableLot.errors?.required">Tradeable Lot is required</mat-error>                
                 </mat-form-field> 
             </div>
             <div fxFlex="100" fxFlex.gt-sm="20" fxFlex.sm="50">
                 <mat-form-field appearance="outline">
                     <mat-label>Maturity</mat-label>
-                    <input matInput [matDatepicker]="Maturity">
+                    <input matInput [matDatepicker]="Maturity" formControlName="maturity">
                     <mat-datepicker-toggle matSuffix [for]="Maturity"></mat-datepicker-toggle>
                     <mat-datepicker #Maturity></mat-datepicker>
                 </mat-form-field>                  

@@ -31,6 +31,14 @@ export class MasterService {
     return this.httpClient.get<any>(environment.apiBaseUrl + 'Master/getAcHead', {headers:this.headers});
   }
 
+  getInstrument(): Observable<any>{
+    return this.httpClient.get<any>(environment.apiBaseUrl + 'Master/getInstrument', {headers:this.headers});
+  }
+
+  getOption(): Observable<any>{
+    return this.httpClient.get<any>(environment.apiBaseUrl + 'Master/getOption', {headers:this.headers});
+  }
+
   getCityListByStateId(id:number): Observable<any>{
     return this.httpClient.get<any>(environment.apiBaseUrl + 'Master/getCity/' + id, {headers:this.headers})
   }
@@ -127,8 +135,21 @@ export class MasterService {
   getAccountTaxById(id: number): Observable<any> {
     return this.httpClient.get<any>(environment.apiBaseUrl + 'master/getAccountTaxId/' + id, { headers: this.headers })
   }
+
   deleteAccountTax(id: number): Observable<any> {
     return this.httpClient.get<any>(environment.apiBaseUrl + 'master/deleteAccountTax/' + id, { headers: this.headers })
+  }
+
+  saveContract(data): Observable<any> {
+    return this.httpClient.post<any>(environment.apiBaseUrl + 'Master/SaveContract', data, { headers: this.headers });
+  }
+
+  getContractById(id: number): Observable<any> {
+    return this.httpClient.get<any>(environment.apiBaseUrl + 'master/getContractId/' + id, { headers: this.headers })
+  }
+
+  deleteContract(id: number): Observable<any> {
+    return this.httpClient.get<any>(environment.apiBaseUrl + 'master/deleteContract/' + id, { headers: this.headers })
   }
 
 

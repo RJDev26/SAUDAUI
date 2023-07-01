@@ -6,6 +6,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { AddContractMasterComponent } from "./contract-master-dialog/add-contract-master.component";
 import { DatatableComponent } from "@swimlane/ngx-datatable";
 import { AppService } from "src/app/service/app.service";
+import { ConfirmationDialog } from "../../Dialog/confirmation-dialog/confirmation-dialog.component";
 
 @Component({
     selector: 'app-blank',
@@ -80,16 +81,46 @@ export class ContractMasterComponent implements OnInit {
       return eGui;
     }
 
+    onGridClick(params: any) {
+      debugger
+      if (params.event.target.dataset.action == "edit")
+      {
+        this.openCompanyDialog(params.data.id);
+      }
+      if (params.event.target.dataset.action == "delete")
+      {
+        const dialogRef = this.dialog.open(ConfirmationDialog, {
+          data: {
+            message: 'Are you sure want to delete?',
+            buttonText: {
+              ok: 'Yes',
+              cancel: 'No'
+            }
+          }
+        });
+  
+        dialogRef.afterClosed().subscribe((confirmed: boolean) => {
+          if (confirmed) {
+            this._masterService.deleteContract(params.data.id).subscribe((res) => {
+              this.getcontractList();
+            });
+          }
+        });
+  
+  
+      }
+    }
+
     public openCompanyDialog(user) {
         let dialogRef = this.dialog.open(AddContractMasterComponent, {
-          data: user
+          data: { id:user }
         });
       
         dialogRef.afterClosed().subscribe(user => {
-          //this.getAccountList();
+          this.getcontractList();
           if (user) {
             /* (user.id) ? this.updateUser(user) : this.addUser(user);*/
           }
         });
-      }
+    }
 }
