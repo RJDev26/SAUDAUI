@@ -45,4 +45,8 @@ export class AppService {
   getContract():Observable<any>{
     return this.httpClient.get<any>(environment.apiBaseUrl + 'Master/getContractList',{headers:this.headers});
   }
+
+  getCompany():Observable<any>{
+    return this.httpClient.get<any>(environment.apiBaseUrl + 'Master/getCompanyList',{headers:this.headers});
+  }
 }
