@@ -27,6 +27,10 @@ $material-icons-font-path: '~material-icons/iconfont/';
 @import "app/theme/styles/libs-override";
 @import "app/theme/styles/rtl";
 
+body {
+    font-family: 'Montserrat', sans-serif !important;
+}
+
 .ml-7 {
     margin-left: 7px;
 }
@@ -102,6 +106,16 @@ $material-icons-font-path: '~material-icons/iconfont/';
           background-color: #00695c;
         }
       }
+    }
+    .ag-theme-alpine {
+        .ag-header {
+            height: 34px !important;
+            min-height: 34px !important;
+        }
+        .ag-header-row {
+            background: #9d9d9d;
+            height: 34px !important;
+        }
     }
 
     .mat-dialog-container {
@@ -352,3 +366,41 @@ $material-icons-font-path: '~material-icons/iconfont/';
         }
     }
 }
+
+/* ----------------------- Brokerage slab ----------------------- */
+
+.dropdown-container {
+    display: flex;
+    align-items: flex-start;
+    .dropdown-wrapper {
+      margin-right: 8px; /* Adjust the margin to match the spacing between elements */
+        .mat-form-field {
+            .mat-form-field-wrapper {
+                margin: 0;
+                padding-bottom: 0;
+            }       
+        }
+        .mat-form-field-appearance-outline {
+            .mat-form-field-infix {
+                padding: 4px 0 10px 0;
+            }
+            .mat-form-field-label {
+                top: 19px;
+            }
+            &.mat-form-field-can-float {
+                &.mat-form-field-should-float {
+                    .mat-form-field-label {
+                        transform: translateY(-1em) scale(0.75) !important;
+                    }
+                }
+                .mat-input-server:focus + .mat-form-field-label-wrapper {
+                    .mat-form-field-label {
+                        transform: translateY(-1em) scale(0.75) !important;
+                    }
+                }
+            }
+        }
+    }
+}
+
+   
