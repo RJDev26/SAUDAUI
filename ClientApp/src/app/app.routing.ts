@@ -14,6 +14,7 @@ import { SaudaComponent } from './Forms/Master/sauda/sauda.component';
 import { ProductComponent } from './Forms/Master/product/product.component';
 import { ContractMasterComponent } from './Forms/Master/contract-master/contract-master.component';
 import { BrokerageSlabComponent } from './Forms/Master/brokerage-slab/brokerage-slab.component';
+import { BrokerageSetupComponent } from './Forms/Master/brokerage-setup/brokerage-setup.component';
 
 export const routes: Routes = [
     { 
@@ -43,7 +44,8 @@ export const routes: Routes = [
             { path: 'sauda', component: SaudaComponent, data: { breadcrumb: 'sauda' } },
             { path: 'product', component: ProductComponent, data: { breadcrumb: 'product' } },
             { path: 'contract-master', component: ContractMasterComponent, data: { breadcrumb: 'Contract Master' } },
-            { path: 'brokerage-slab', component: BrokerageSlabComponent, data: { breadcrumb: 'Brokerage Slab' } }
+            { path: 'brokerage-slab', component: BrokerageSlabComponent, data: { breadcrumb: 'Brokerage Slab' } },
+           
         ]
     },
     { path: 'landing', loadChildren: () => import('./pages/landing/landing.module').then(m => m.LandingModule) },

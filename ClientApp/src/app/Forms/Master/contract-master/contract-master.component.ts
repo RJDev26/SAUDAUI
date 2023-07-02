@@ -22,11 +22,7 @@ export class ContractMasterComponent implements OnInit {
     selected = [];
     loadingIndicator: boolean = true;
     reorderable: boolean = true;
-    columns = [
-      { prop: 'Name' },
-      { name: 'item' },
-      { name: 'name' }
-    ];
+   
     public settings: Settings;
     contractList: any;
     constructor(public appSettings: AppSettings, private _appService: AppService, public dialog: MatDialog, private _masterService: MasterService) {
@@ -55,12 +51,11 @@ export class ContractMasterComponent implements OnInit {
       { headerName: 'Exchange', field: 'exName', filter: true, sorting: true, resizable: true },
       { headerName: 'InstrumentType', field: 'instrumentType', filter: true, sorting: true, resizable: true },
       { headerName: 'Symbol', field: 'symbol', filter: true, sorting: true, resizable: true },
-      { headerName: 'Maturity', field: 'maturity', filter: true, sorting: true, resizable: true },
+      { headerName: 'Maturity', field: 'maturityDate', filter: true, sorting: true, resizable: true },
       { headerName: 'OptionType', field: 'optionType', filter: true, sorting: true, resizable: true },  
       { headerName: 'StrikePrice', field: 'strikePrice', filter: true, sorting: true, resizable: true },
       { headerName: 'TradeableLot', field: 'tradeableLot', filter: true, sorting: true, resizable: true },
-      { headerName: 'CreatedBy', field: 'createdBy', filter: true, sorting: true, resizable: true },
-      { headerName: 'CreatedDate', field: 'createdDate', filter: true, sorting: true, resizable: true }
+    
     ];
 
     getcontractList() {

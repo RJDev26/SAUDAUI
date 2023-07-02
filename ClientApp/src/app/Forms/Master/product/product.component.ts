@@ -22,11 +22,7 @@ export class ProductComponent implements OnInit {
     selected = [];
     loadingIndicator: boolean = true;
     reorderable: boolean = true;
-    columns = [
-      { prop: 'Name' },
-      { name: 'item' },
-      { name: 'name' }
-    ];
+   
     public settings: Settings;
     productList: any;
     constructor(public appSettings: AppSettings, private _appService: AppService, public dialog: MatDialog, private _masterService: MasterService) {
@@ -60,8 +56,7 @@ export class ProductComponent implements OnInit {
       { headerName: 'QtyUnit', field: 'qtyUnit', filter: true, sorting: true, resizable: true },
       { headerName: 'Isincode', field: 'isincode', filter: true, sorting: true, resizable: true },
       { headerName: 'SecurityGroup', field: 'securityGroup', filter: true, sorting: true, resizable: true },
-      { headerName: 'CreatedBy', field: 'createdBy', filter: true, sorting: true, resizable: true },
-      { headerName: 'CreatedDate', field: 'createdDate', filter: true, sorting: true, resizable: true }
+    
     ];
 
     getproductList() {
