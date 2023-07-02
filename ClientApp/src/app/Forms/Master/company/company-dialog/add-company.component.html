@@ -1,7 +1,7 @@
 <h2 class="heading">Add Comapny</h2>
 <form [formGroup]="companyForm" (ngSubmit)="onSubmit(companyForm.value)" fxLayout="row wrap" class="user-form">
     <div class="white-block pb-5">
-        <h3>Comapny Details</h3>
+        <h3><span>Comapny Details</span></h3>
         <div class="tab-party-details-parent">
             <div fxFlex="100" fxFlex.gt-sm="20" fxFlex.sm="50">
                 <mat-form-field appearance="outline">
@@ -106,7 +106,7 @@
         </div>        
     </div>
     <div class="white-block">
-        <h3>Comapny Settings</h3>
+        <h3><span>Comapny Settings</span></h3>
         <div class="tab-party-details-parent align-center">
             <div fxFlex="100" fxFlex.gt-sm="20" fxFlex.sm="50" class="pt-5 pb-5 pl-10">
                 <mat-checkbox formControlName="ApplyOptionsMTM">ApplyOptionsMTM</mat-checkbox>
