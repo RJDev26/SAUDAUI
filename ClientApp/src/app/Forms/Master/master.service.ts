@@ -166,6 +166,11 @@ export class MasterService {
   saveCompany(data): Observable<any> {
     return this.httpClient.post<any>(environment.apiBaseUrl + 'Master/SaveCompany', data, { headers: this.headers });
   }
-
+  getBranchList(): Observable<any> {
+    return this.httpClient.get<any>(environment.apiBaseUrl + 'master/getBranchDDL', { headers: this.headers })
+  }
+  getBranchAccounts(branchIds:any): Observable<any> {
+    return this.httpClient.get<any>(environment.apiBaseUrl + 'master/getBranchAccounts/' + branchIds, { headers: this.headers })
+  }
 
 }
