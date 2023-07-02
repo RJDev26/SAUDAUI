@@ -23,6 +23,8 @@ import { ConfirmationDialog } from '../Dialog/confirmation-dialog/confirmation-d
 import { ErrorDialog } from '../Dialog/confirmation-dialog/error-dialog.component';
 import { MAT_DATE_LOCALE } from '@angular/material/core';
 import { BrokerageSetupComponent } from './brokerage-setup/brokerage-setup.component';
+import { AddSlabDetailsComponent } from './brokerage-slab/add-slab-details/add-slab-details.component';
+import { AddSlabComponent } from './brokerage-slab/add-slab/add-slab.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'account', pathMatch: 'full' },
@@ -63,8 +65,10 @@ export const routes: Routes = [
     AddContractMasterComponent,
     BrokerageSlabComponent,
     ConfirmationDialog,
-    ErrorDialog,
     BrokerageSetupComponent,
+     ErrorDialog,
+     AddSlabDetailsComponent,
+     AddSlabComponent
   ],
   providers: [
     { provide: MAT_DATE_LOCALE, useValue: 'en-GB' }

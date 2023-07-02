@@ -1,0 +1,21 @@
+<h2 class="heading">Add Slab</h2>
+<form [formGroup]="slabForm" (ngSubmit)="onSubmit(slabForm.value)" fxLayout="row wrap" class="user-form">
+    <div class="white-block pb-5">
+        <h3>MasterSlab</h3>
+        <div class="tab-party-details-parent">
+            
+            <div fxFlex="100" fxFlex.gt-sm="20" fxFlex.sm="50">
+                <mat-form-field appearance="outline">
+                    <mat-label>Name</mat-label>
+                    <input matInput autocomplete="off" placeholder="item Name" formControlName="Name" type="text">
+                    <mat-error *ngIf="slabForm.controls.Name.errors?.required">Slab Name is required</mat-error>                
+                </mat-form-field> 
+            </div>
+            
+        </div>
+    </div>
+    <div fxFlex="100" class="mt-2 text-center space-between-btns">
+        <button mat-raised-button color="warn" (click)="close()">Cancel</button>            
+        <button mat-raised-button color="primary" class="uppercase" [disabled]="!slabForm.valid" type="submit">Save</button> 
+    </div>
+</form>

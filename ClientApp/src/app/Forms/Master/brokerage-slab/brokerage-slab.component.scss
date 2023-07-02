@@ -1,0 +1,28 @@
+.dropdown-container {
+    display: flex;
+    align-items: flex-start;
+  }
+  
+  .dropdown-wrapper {
+    height: 36px; /* Adjust the height to match the buttons */
+    margin-right: 8px; /* Adjust the margin to match the spacing between elements */
+  }
+  
+  .dropdown-wrapper select {
+    height: 100%;
+    width: 100%;
+  }
+  
+  .custom-select {
+    width: 200px; /* Set the desired width */
+    height: 36px; /* Set the desired height */
+  }
+
+  .delete-slab{
+    margin-left: 10px;
+    background-color: #bf0000 !important;
+  }
+  .custom-select-panel {
+    max-height: 250px; /* Set the desired max height for the select box */
+  }
+  
