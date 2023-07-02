@@ -151,6 +151,13 @@ export class MasterService {
   deleteContract(id: number): Observable<any> {
     return this.httpClient.get<any>(environment.apiBaseUrl + 'master/deleteContract/' + id, { headers: this.headers })
   }
+  getSlabDDL(): Observable<any> {
+    return this.httpClient.get<any>(environment.apiBaseUrl + 'master/getBrokeageSlabDDL/', { headers: this.headers })
+  }
+
+  getSlabList(slabId: number): Observable<any> {
+    return this.httpClient.get<any>(environment.apiBaseUrl + `master/getBrokeageSlabList/${slabId}`, { headers: this.headers })
+  }
 
 
 }

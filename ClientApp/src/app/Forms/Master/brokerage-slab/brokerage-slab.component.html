@@ -1,7 +1,37 @@
 <div class="row">
-    <div fxLayout="row" class="mt-2 flex-end">
-      <button mat-raised-button color="accent" (click)="openCompanyDialog(null)">
-        <mat-icon>group</mat-icon> Add Brokerage slab
+  <div fxLayout="row" fxLayoutAlign="space-between center" class="mt-2">
+    <div class="dropdown-container">
+      <div class="dropdown-wrapper">
+        <mat-form-field class="select-slab-mat" appearance="outline">
+          <mat-label>Select Slab</mat-label>
+          <mat-select [(ngModel)]="slabId" placeholder="Select Slab" (selectionChange)="onDropdownChange()" panelClass="custom-select-panel">
+            <mat-option *ngFor="let option of dropdownData" [value]="option.id">
+              {{ option.name }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <button mat-raised-button color="accent" (click)="openAddSlabDialog(null)">
+        Add Slab
+      </button>
+      <button mat-raised-button class="delete-slab" (click)="openCompanyDialog(null)">
+        Delete Slab
       </button>
     </div>
-</div>  
+    <div>
+      <button mat-raised-button color="accent" (click)="openCompanyDialog(null)">
+        Add Slab Details
+      </button>
+    </div>
+  </div>
+  <div class="col-xl-12 mt-2">
+    <ag-grid-angular style=" height: 535px;"
+                     class="ag-theme-alpine"
+                     [rowData]="slabList"
+                     [pagination]="true"
+                     [columnDefs]="columnDefs"
+                     [defaultColDef]="agGridOptions.defaultColDef"
+                     (cellClicked)="onGridClick($event)">
+    </ag-grid-angular>
+  </div>
+</div>
