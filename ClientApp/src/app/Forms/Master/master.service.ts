@@ -159,5 +159,13 @@ export class MasterService {
     return this.httpClient.get<any>(environment.apiBaseUrl + `master/getBrokeageSlabList/${slabId}`, { headers: this.headers })
   }
 
+  getCompanyById(id: number): Observable<any> {
+    return this.httpClient.get<any>(environment.apiBaseUrl + 'master/getCompanyId/' + id, { headers: this.headers })
+  }
+
+  saveCompany(data): Observable<any> {
+    return this.httpClient.post<any>(environment.apiBaseUrl + 'Master/SaveCompany', data, { headers: this.headers });
+  }
+
 
 }
