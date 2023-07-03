@@ -10,9 +10,10 @@
     height: 36px; /* Set the desired height */
   }
 
-  .delete-slab{
+  .delete-slab {
+    background: #dc3545 !important;
+    color: #fff !important;
     margin-left: 10px;
-    background-color: #bf0000 !important;
   }
   .custom-select-panel {
     max-height: 250px; /* Set the desired max height for the select box */

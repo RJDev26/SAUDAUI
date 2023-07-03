@@ -368,7 +368,15 @@ body {
 }
 
 /* ----------------------- Brokerage slab ----------------------- */
-
+.icon-btn {
+    .mat-button-wrapper {
+        align-items: center;
+        display: flex;
+        .mat-icon {
+            margin-right: 7px;
+        }
+    }
+}
 .dropdown-container {
     display: flex;
     align-items: flex-start;
