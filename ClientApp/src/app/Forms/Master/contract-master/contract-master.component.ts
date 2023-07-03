@@ -7,6 +7,7 @@ import { AddContractMasterComponent } from "./contract-master-dialog/add-contrac
 import { DatatableComponent } from "@swimlane/ngx-datatable";
 import { AppService } from "src/app/service/app.service";
 import { ConfirmationDialog } from "../../Dialog/confirmation-dialog/confirmation-dialog.component";
+import { CommonUtility } from "../../../shared/common-utility";
 
 @Component({
     selector: 'app-blank',
@@ -54,7 +55,7 @@ export class ContractMasterComponent implements OnInit {
       { headerName: 'Maturity', field: 'maturityDate', filter: true, sorting: true, resizable: true },
       { headerName: 'OptionType', field: 'optionType', filter: true, sorting: true, resizable: true },  
       { headerName: 'StrikePrice', field: 'strikePrice', filter: true, sorting: true, resizable: true },
-      { headerName: 'TradeableLot', field: 'tradeableLot', filter: true, sorting: true, resizable: true },
+      { headerName: 'TradeableLot', field: 'tradeableLot', filter: true, sorting: true, resizable: true, valueFormatter: params => CommonUtility.formatNumber(params.data.tradeableLot), type: 'rightAligned' },
     
     ];
 

@@ -5,6 +5,7 @@ import { DatatableComponent } from '@swimlane/ngx-datatable';
 import { AppSettings } from '../../../app.settings';
 import { Settings } from '../../../app.settings.model';
 import { AppService } from '../../../service/app.service';
+import { CommonUtility } from '../../../shared/common-utility';
 import { ConfirmationDialog } from '../../Dialog/confirmation-dialog/confirmation-dialog.component';
 import { MasterService } from '../master.service';
 import { AddItemComponent } from './item-dialog/add-item.component';
@@ -59,7 +60,7 @@ export class ItemComponent implements OnInit {
     { headerName: 'Item', field: 'itemName', filter: true, sorting: true, resizable: true },
     { headerName: 'ExSymbol', field: 'exchangeSymbol', filter: true, sorting: true, resizable: true },
     { headerName: 'Exchange', field: 'exName', filter: true, sorting: true, resizable: true },    
-    { headerName: 'LotSize', field: 'lotSizeValueMultiplier', filter: true, sorting: true, resizable: true },
+    { headerName: 'LotSize', field: 'lotSizeValueMultiplier', filter: true, sorting: true, resizable: true, valueFormatter: params => CommonUtility.formatNumber(params.data.lotSizeValueMultiplier), type: 'rightAligned' },
     { headerName: 'IsinCode', field: 'isinCode', filter: true, sorting: true, resizable: true },
     { headerName: 'ApplyCtt', field: 'applyCtt', filter: true, sorting: true, resizable: true },
     { headerName: 'ApplyRiskManagementFees', field: 'applyRiskManagementFees', filter: true, sorting: true, resizable: true }

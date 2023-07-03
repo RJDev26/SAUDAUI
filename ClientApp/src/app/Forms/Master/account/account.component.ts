@@ -4,6 +4,7 @@ import { DatatableComponent } from '@swimlane/ngx-datatable';
 
 import { AppSettings } from '../../../app.settings';
 import { Settings } from '../../../app.settings.model';
+import { CommonUtility } from '../../../shared/common-utility';
 import { MasterService } from '../master.service';
 import { AddAccountComponent } from './account-dialog/add-account.component';
 
@@ -54,7 +55,7 @@ export class AccountComponent implements OnInit {
     },
     { headerName: 'Code', field: 'shortCode', filter: true, sorting: true, resizable: true },
     { headerName: 'Name', field: 'name', filter: true, sorting: true, resizable: true },
-    { headerName: 'Opbal', field: 'openingBal', filter: true, sorting: true, resizable: true },
+    { headerName: 'Opbal', field: 'openingBal', filter: true, sorting: true, resizable: true, valueFormatter: params => CommonUtility.formatNumber(params.data.openingBal), type: 'rightAligned' },
     { headerName: 'PhoneNo', field: 'PhoneNo', filter: true, sorting: true, resizable: true },
     { headerName: 'Head', field: 'acHead', filter: true, sorting: true, resizable: true },
     { headerName: 'Group', field: 'acGroup', filter: true, sorting: true, resizable: true },

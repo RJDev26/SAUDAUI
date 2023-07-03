@@ -68,6 +68,17 @@ export class BrokerageSetupComponent implements OnInit {
 
   }
 
+
+  onKey(value) {
+    this.branchList = this.search(value);
+}
+
+
+  search(value: string) {
+  let filter = value.toLowerCase();
+  return this.branchList.filter(option => option.toLowerCase().startsWith(filter));
+}
+
   onBranchChange(event: any) {
   
     //event.source.options._results[1]._selected = true;

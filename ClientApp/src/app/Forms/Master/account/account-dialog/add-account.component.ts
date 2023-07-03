@@ -5,6 +5,7 @@ import { MatOptionSelectionChange } from '@angular/material/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { combineLatest, forkJoin, Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
+import { CommonUtility } from '../../../../shared/common-utility';
 import { ErrorDialog } from '../../../Dialog/confirmation-dialog/error-dialog.component';
 import { MasterService } from '../../master.service';
 import { Account } from '../account.model';
@@ -124,9 +125,9 @@ export class AddAccountComponent implements OnInit, AfterViewInit {
     { headerName: 'Exchange', field: 'exName', filter: true, sorting: true, resizable: true },
     { headerName: 'FromDt', field: 'fromDtString', filter: true, sorting: true, resizable: true },
     { headerName: 'ToDt', field: 'toDtString', filter: true, sorting: true, resizable: true },
-    { headerName: 'InsType', field: 'insType', filter: true, sorting: true, resizable: true },
-    { headerName: 'IntraDayRate', field: 'intradayRate', filter: true, sorting: true, resizable: true },
-    { headerName: 'DeliveryRate', field: 'deliveryRate', filter: true, sorting: true, resizable: true },
+    { headerName: 'InsType', field: 'insName', filter: true, sorting: true, resizable: true },
+    { headerName: 'IntraDayRate', field: 'intradayRate', filter: true, sorting: true, resizable: true, valueFormatter: params => CommonUtility.formatNumber(params.data.intradayRate), type: 'rightAligned' },
+    { headerName: 'DeliveryRate', field: 'deliveryRate', filter: true, sorting: true, resizable: true, valueFormatter: params => CommonUtility.formatNumber(params.data.deliveryRate), type: 'rightAligned' },
     
   ];
   
@@ -224,6 +225,7 @@ export class AddAccountComponent implements OnInit, AfterViewInit {
   }
 
   bindValuesInEditMode(acGroup: ACGroup, optedCity?: City, acHead?: ACHead) {
+    debugger
     this.personalForm.setValue({
       'ShortCode': this.user.shortCode,
       'Name': this.user.name,

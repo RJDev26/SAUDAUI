@@ -7,6 +7,7 @@ import { DatatableComponent } from '@swimlane/ngx-datatable';
 import { AddProductComponent } from "./product-dialog/add-product.component";
 import { AppService } from "src/app/service/app.service";
 import { ConfirmationDialog } from "../../Dialog/confirmation-dialog/confirmation-dialog.component";
+import { CommonUtility } from "../../../shared/common-utility";
 
 @Component({
     selector: 'app-blank',
@@ -52,7 +53,7 @@ export class ProductComponent implements OnInit {
       { headerName: 'Symbol', field: 'symbol', filter: true, sorting: true, resizable: true },
       { headerName: 'PriceUnit', field: 'priceUnit', filter: true, sorting: true, resizable: true },
       { headerName: 'Description', field: 'description', filter: true, sorting: true, resizable: true },    
-      { headerName: 'LotSize', field: 'lotSize', filter: true, sorting: true, resizable: true },
+      { headerName: 'LotSize', field: 'lotSize', filter: true, sorting: true, resizable: true, valueFormatter: params => CommonUtility.formatNumber(params.data.lotSize), type: 'rightAligned' },
       { headerName: 'QtyUnit', field: 'qtyUnit', filter: true, sorting: true, resizable: true },
       { headerName: 'Isincode', field: 'isincode', filter: true, sorting: true, resizable: true },
       { headerName: 'SecurityGroup', field: 'securityGroup', filter: true, sorting: true, resizable: true },

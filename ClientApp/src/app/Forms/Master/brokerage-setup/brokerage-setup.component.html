@@ -4,8 +4,8 @@
       <div class="dropdown-wrapper">
         <mat-form-field class="select-slab-mat" appearance="outline">
           <mat-label>Select Branch</mat-label>
-          <mat-select #select  [(ngModel)]="branchIds" multiple placeholder="Select Branch" (selectionChange)="onBranchChange($event)" panelClass="custom-select-panel">
-
+          <mat-select #select [(ngModel)]="branchIds" multiple placeholder="Select Branch" (selectionChange)="onBranchChange($event)" panelClass="custom-select-panel">
+            <input (keyup)="onKey($event.target.value)" >  
             <mat-option value=0 (click)="branchAllSelection()">Select All</mat-option>
             <mat-option *ngFor="let option of branchList" [value]="option.id">
               {{ option.name }}
