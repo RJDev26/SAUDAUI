@@ -4,6 +4,8 @@ import { Settings } from "src/app/app.settings.model";
 import { MasterService } from "../master.service";
 import { MatDialog } from '@angular/material/dialog';
 import { AddSlabComponent } from './add-slab/add-slab.component';
+import { ConfirmationDialog } from '../../Dialog/confirmation-dialog/confirmation-dialog.component';
+import { AddSlabDetailsComponent } from './add-slab-details/add-slab-details.component';
 
 @Component({
     selector: 'app-blank',
@@ -52,7 +54,11 @@ export class BrokerageSlabComponent implements OnInit {
     }
     
     fetchDropdownData() {
-        this._masterService.getSlabDDL().subscribe((response)=>{ this.dropdownData = response});
+        this._masterService.getSlabDDL().subscribe((response)=>{ 
+            this.dropdownData = response;
+            this.slabId = response[0].id;
+            this.onDropdownChange();
+        });
     }
 
     onDropdownChange() {
@@ -77,12 +83,78 @@ export class BrokerageSlabComponent implements OnInit {
         return eGui;
     }
 
-    public openAddSlabDialog(user) {
-        let dialogRef = this.dialog.open(AddSlabComponent, {
-            data: { id:user }
+    public openAddSlabDialog() {
+        let dialogRef = this.dialog.open(AddSlabComponent);
+        dialogRef.afterClosed().subscribe(user => {
+            this.fetchDropdownData();
+        });
+    }
+
+    public openSlabDetailsDialog(selectedSlabId) {
+        let dialogRef = this.dialog.open(AddSlabDetailsComponent, {
+            data: { 
+                selectedSlabId: selectedSlabId,
+                slabId: this.slabId
+            }
         });
 
         dialogRef.afterClosed().subscribe(user => {
+            this._masterService.getSlabList(this.slabId).subscribe(
+                response => {
+                    this.slabList = response;
+                }
+                );
         });
     }
+
+    public openDeleteSlabDialog() {
+        const dialogRef = this.dialog.open(ConfirmationDialog, {
+            data: {
+              message: 'Do you really want to delete this Slab?',
+              buttonText: {
+                ok: 'Yes',
+                cancel: 'No'
+              }
+            }
+          });
+    
+          dialogRef.afterClosed().subscribe((confirmed: boolean) => {
+            if (confirmed) {
+              this._masterService.deleteSlabMaster(this.slabId).subscribe((res) => {
+                this.fetchDropdownData();
+              });
+            }
+          });
+    }
+
+    onGridClick(params: any) {
+        if (params.event.target.dataset.action == "edit")
+        {
+          this.openSlabDetailsDialog(params.data.id);
+    
+        }
+        if (params.event.target.dataset.action == "delete")
+        {
+          const dialogRef = this.dialog.open(ConfirmationDialog, {
+            data: {
+              message: 'Do you really want to delete this record?',
+              buttonText: {
+                ok: 'Yes',
+                cancel: 'No'
+              }
+            }
+          });
+    
+          dialogRef.afterClosed().subscribe((confirmed: boolean) => {
+            if (confirmed) {
+              this._masterService.deleteSlabDetail(params.data.id).subscribe((res) => {
+                this.fetchDropdownData();
+              });
+            }
+          });
+    
+    
+        }
+      }
+      
 }

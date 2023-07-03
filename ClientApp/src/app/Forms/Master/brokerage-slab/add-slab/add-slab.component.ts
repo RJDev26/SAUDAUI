@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
+import { MasterService } from '../../master.service';
+import { MatDialogRef } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-add-slab',
@@ -9,7 +11,7 @@ import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms
 export class AddSlabComponent implements OnInit {
 
   public slabForm: UntypedFormGroup;
-  constructor(private formBuilder: UntypedFormBuilder) { }
+  constructor(private formBuilder: UntypedFormBuilder, private _masterService: MasterService, public dialogRef: MatDialogRef<AddSlabComponent>) { }
 
   ngOnInit(): void {
     this.bindFormControls();
@@ -26,13 +28,10 @@ export class AddSlabComponent implements OnInit {
     var body = this.slabForm.value;
     console.log(body);
     if (this.slabForm.valid) {
-      //const body = JSON.stringify(addFormData);
-      // this._appService.saveItem(body).subscribe(result => {
-      //   console.log("result", result);
-      //   this.dialogRef.close();
-      // }, err => {
-      //   console.log(err);
-      // });
+      this._masterService.saveBrokerageSlabName(body.Name).subscribe(result => {
+        console.log("result", result);
+        this.dialogRef.close();
+      });
     }
   }
 

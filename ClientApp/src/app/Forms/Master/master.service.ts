@@ -91,7 +91,15 @@ export class MasterService {
   }
 
   getItemListDrp(): Observable<any> {
-    return this.httpClient.get<any>(environment.apiBaseUrl + 'Master/getItemListDrp', { headers: this.headers });
+    return this.httpClient.get<any>(environment.apiBaseUrl + 'Master/getItemListDDL', { headers: this.headers });
+  }
+
+  getApplyOnQtyDDL(): Observable<any> {
+    return this.httpClient.get<any>(environment.apiBaseUrl + 'Master/getApplyOnQtyDDL', { headers: this.headers });
+  }
+
+  getApplyOnDDL(): Observable<any> {
+    return this.httpClient.get<any>(environment.apiBaseUrl + 'Master/getApplyOnDDL', { headers: this.headers });
   }
 
   getInstrumentList(): Observable<any> {
@@ -171,6 +179,25 @@ export class MasterService {
   }
   getBranchAccounts(branchIds:any): Observable<any> {
     return this.httpClient.get<any>(environment.apiBaseUrl + 'master/getBranchAccounts/' + branchIds, { headers: this.headers })
+  }
+  saveBrokerageSlabName(slabName: string): Observable<any> {
+    return this.httpClient.get<any>(environment.apiBaseUrl + `master/SaveBrokerageSlabName?name=${slabName}`, { headers: this.headers })
+  }
+
+  deleteSlabMaster(id: number): Observable<any> {
+    return this.httpClient.get<any>(environment.apiBaseUrl + 'master/deleteSlabMaster/' + id, { headers: this.headers })
+  }
+
+  deleteSlabDetail(id: number): Observable<any> {
+    return this.httpClient.get<any>(environment.apiBaseUrl + 'master/deleteSlabDetail/' + id, { headers: this.headers })
+  }
+
+  saveBrokerageSlab(data): Observable<any> {
+    return this.httpClient.post<any>(environment.apiBaseUrl + 'Master/SaveBrokerageSlab', data, { headers: this.headers });
+  }
+
+  getBrokerageSlabId(id: number): Observable<any> {
+    return this.httpClient.get<any>(environment.apiBaseUrl + 'master/getBrokerageSlabId/' + id, { headers: this.headers })
   }
 
 }

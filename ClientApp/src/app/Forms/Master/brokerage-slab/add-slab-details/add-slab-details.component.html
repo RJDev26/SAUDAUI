@@ -1,1 +1,101 @@
-<p>add-slab-details works!</p>
+<h2 class="heading">Add Item</h2>
+<form [formGroup]="itemForm" (ngSubmit)="onSubmit(itemForm.value)" fxLayout="row wrap" class="user-form">
+    <div class="white-block pb-5">
+        <h3><span>Item</span></h3>
+        <div class="tab-party-details-parent">
+            <div fxFlex="100" fxFlex.gt-sm="20" fxFlex.sm="50">
+              <mat-form-field class="example-full-width" appearance="outline">
+                <mat-label>Exchange</mat-label>
+                <mat-select placeholder="Select Tax" formControlName="exchangeId">
+                  <mat-option *ngFor="let exchange of exchangeList" [value]="exchange.id">
+                    {{exchange.name}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div fxFlex="100" fxFlex.gt-sm="20" fxFlex.sm="50">
+                <mat-form-field class="example-full-width" appearance="outline">
+                  <mat-label>Item</mat-label>
+                
+                  <mat-select placeholder="Select Item" formControlName="itemId">
+                    <!--<input (keyup)="onKey($event.target.value)">-->
+                    <mat-option *ngFor="let item of itemList" [value]="item.id">
+                      {{item.name}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+              <div fxFlex="100" fxFlex.gt-sm="20" fxFlex.sm="50">
+                <mat-form-field class="example-full-width" appearance="outline">
+                  <mat-label>ApplyOnQTY</mat-label>
+                
+                  <mat-select placeholder="Select Item" formControlName="applyOnQty">
+                    <!--<input (keyup)="onKey($event.target.value)">-->
+                    <mat-option *ngFor="let item of applyOnQtyList" [value]="item.id">
+                      {{item.name}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+              <div fxFlex="100" fxFlex.gt-sm="20" fxFlex.sm="50">
+                <mat-form-field class="example-full-width" appearance="outline">
+                  <mat-label>ApplyOn</mat-label>
+                
+                  <mat-select placeholder="Select Item" formControlName="applyOn">
+                    <!--<input (keyup)="onKey($event.target.value)">-->
+                    <mat-option *ngFor="let item of applyOnList" [value]="item.id">
+                      {{item.name}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+              <div fxFlex="100" fxFlex.gt-sm="20" fxFlex.sm="50">
+                <mat-form-field appearance="outline">
+                    <mat-label>IntraDayBrokeRate</mat-label>
+                    <input matInput autocomplete="off" placeholder="item Code" formControlName="intradayBrokRate" type="number">
+                    <mat-error *ngIf="itemForm.controls.intradayBrokRate.errors?.required">IntraDayBrokeRate is required</mat-error>                
+                </mat-form-field> 
+            </div>
+            <div fxFlex="100" fxFlex.gt-sm="20" fxFlex.sm="50">
+                <mat-form-field appearance="outline">
+                    <mat-label>DeliveryBrokeRate</mat-label>
+                    <input matInput autocomplete="off" placeholder="item Code" formControlName="deliveryBrokRate" type="number">
+                    <mat-error *ngIf="itemForm.controls.deliveryBrokRate.errors?.required">DeliveryBrokeRate is required</mat-error>                
+                </mat-form-field> 
+            </div>
+              <div fxFlex="100" fxFlex.gt-sm="20" fxFlex.sm="50">
+                <mat-form-field class="example-full-width" appearance="outline">
+                  <mat-label>Instrument Type</mat-label>
+                  <mat-select placeholder="Select InsType" formControlName="instrumentType">
+                    <mat-option *ngFor="let exchange of instrumentList" [value]="exchange.id">
+                      {{exchange.name}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+              <div fxFlex="100" fxFlex.gt-sm="20" fxFlex.sm="50">
+                <mat-form-field appearance="outline">
+                    <mat-label>Range1</mat-label>
+                    <input matInput autocomplete="off" placeholder="Range2" formControlName="rateRange1" type="number">
+                    <mat-error *ngIf="itemForm.controls.rateRange1.errors?.required">Range1 is required</mat-error>                
+                </mat-form-field> 
+            </div>
+
+            <div fxFlex="100" fxFlex.gt-sm="20" fxFlex.sm="50">
+                <mat-form-field appearance="outline">
+                    <mat-label>Range2</mat-label>
+                    <input matInput autocomplete="off" placeholder="Range" formControlName="rateRange2" type="number">
+                    <mat-error *ngIf="itemForm.controls.rateRange2.errors?.required">Range2 is required</mat-error>                
+                </mat-form-field> 
+            </div>
+            
+            <div fxFlex="100" fxFlex.gt-sm="20" fxFlex.sm="50" class="pt-5 pb-5 pl-10">
+                <mat-checkbox formControlName="intradaySingleSideonly">Intradaysingleside</mat-checkbox>
+            </div>
+        </div>
+    </div>
+    <div fxFlex="100" class="mt-2 text-center space-between-btns">
+        <button mat-raised-button color="warn" (click)="close()">Cancel</button>            
+        <button mat-raised-button color="primary" class="uppercase" [disabled]="!itemForm.valid" type="submit">Save</button> 
+    </div>
+</form>
