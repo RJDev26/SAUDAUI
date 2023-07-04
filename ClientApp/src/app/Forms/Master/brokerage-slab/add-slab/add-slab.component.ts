@@ -34,5 +34,8 @@ export class AddSlabComponent implements OnInit {
       });
     }
   }
+  close(): void {
+    this.dialogRef.close();
+}
 
 }

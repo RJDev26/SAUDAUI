@@ -7,6 +7,7 @@ import { MatSelect } from '@angular/material/select';
 import { MatOption } from '@angular/material/core';
 import { Item } from '../item/item.model';
 import parseJSON from 'date-fns/esm/parseJSON';
+import { AppService } from 'src/app/service/app.service';
 
 @Component({
   selector: 'app-brokerage-setup',
@@ -25,13 +26,66 @@ export class BrokerageSetupComponent implements OnInit {
   branchIds: any;
   accountIds: any;
   filteredProviders: any[];
+  brokeragesetupList: any
 
-    constructor(public appSettings: AppSettings, private _masterService: MasterService, public dialog: MatDialog) {
-        this.settings = this.appSettings.settings;
-    }
+  constructor(public appSettings: AppSettings, private _appService: AppService, public dialog: MatDialog, private _masterService: MasterService) {
+    this.settings = this.appSettings.settings;
+  }
 
   ngOnInit() {
     this.fetchDropdownData();
+    this.getBrokerageSetupList();
+  }
+
+  agGridOptions: any = {
+    defaultColDef: {
+      filter: true,
+      flex: 1,
+      sortable: true,
+      wraptext: true,
+      resizable: true
+    }
+  }
+
+  columnDefs = [
+    {
+      headerName: 'Action', field: 'fileIcon', cellRenderer: this.actionCellRenderer, minWidth: 80,
+      maxWidth: 110, resizable: true
+    },
+    { headerName: 'applyOn', field: 'applyOn', filter: true, sorting: true, resizable: true },
+    { headerName: 'applyOnQty', field: 'applyOnQty', filter: true, sorting: true, resizable: true },
+    { headerName: 'intradayBrokRate', field: 'intradayBrokRate', filter: true, sorting: true, resizable: true },
+    { headerName: 'deliveryBrokRate', field: 'deliveryBrokRate', filter: true, sorting: true, resizable: true },    
+    { headerName: 'higherSideOnly', field: 'higherSideOnly', filter: true, sorting: true, resizable: true },
+    { headerName: 'instrumentId', field: 'instrumentId', filter: true, sorting: true, resizable: true },
+    { headerName: 'rateRange1', field: 'rateRange1', filter: true, sorting: true, resizable: true },
+    { headerName: 'rateRange2', field: 'rateRange2', filter: true, sorting: true, resizable: true },
+    { headerName: 'exchange', field: 'exchange', filter: true, sorting: true, resizable: true },
+    { headerName: 'item', field: 'item', filter: true, sorting: true, resizable: true },
+    { headerName: 'intradaySingleSideOnly', field: 'intradaySingleSideOnly', filter: true, sorting: true, resizable: true },
+    { headerName: 'fromDT', field: 'fromDT', filter: true, sorting: true, resizable: true },
+    { headerName: 'toDT', field: 'toDT', filter: true, sorting: true, resizable: true },
+    { headerName: 'applyOnName', field: 'applyOnName', filter: true, sorting: true, resizable: true },
+    { headerName: 'applyOnQtyName', field: 'applyOnQtyName', filter: true, sorting: true, resizable: true },
+    { headerName: 'instrumentType', field: 'instrumentType', filter: true, sorting: true, resizable: true },
+  ];
+
+  getBrokerageSetupList() {
+    this._appService.getBrokerageSetupList().subscribe((results) => {
+     this.brokeragesetupList = results;       
+    });
+  }
+
+  public actionCellRenderer(params: any) {
+    let eGui = document.createElement("div");
+    let editingCells = params.api.getEditingCells();
+    let isCurrentRowEditing = editingCells.some((cell: any) => {
+      return cell.rowIndex === params.node.rowIndex;
+    });
+    eGui.innerHTML = `<button class="material-icons action-button-edit" data-action="edit">edit </button>
+                      <button class="material-icons action-button-red" delete data-action="delete">delete</button>`;
+
+    return eGui;
   }
 
   fetchDropdownData() {

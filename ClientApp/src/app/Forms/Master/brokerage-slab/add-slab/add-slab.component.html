@@ -1,10 +1,9 @@
 <h2 class="heading">Add Slab</h2>
 <form [formGroup]="slabForm" (ngSubmit)="onSubmit(slabForm.value)" fxLayout="row wrap" class="user-form">
     <div class="white-block pb-5">
-        <h3>MasterSlab</h3>
-        <div class="tab-party-details-parent">
-            
-            <div fxFlex="100" fxFlex.gt-sm="20" fxFlex.sm="50">
+        <h3><span>Master Slab</span></h3>
+        <div class="tab-party-details-parent">            
+            <div fxFlex="100">
                 <mat-form-field appearance="outline">
                     <mat-label>Name</mat-label>
                     <input matInput autocomplete="off" placeholder="item Name" formControlName="Name" type="text">
