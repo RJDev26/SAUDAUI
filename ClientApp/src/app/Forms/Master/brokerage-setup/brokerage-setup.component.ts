@@ -23,6 +23,7 @@ export class BrokerageSetupComponent implements OnInit {
   branchList: any[];
   branchIds: any;
   accountIds: any;
+  filteredProviders: any[];
 
     constructor(public appSettings: AppSettings, private _masterService: MasterService, public dialog: MatDialog) {
         this.settings = this.appSettings.settings;
@@ -34,10 +35,23 @@ export class BrokerageSetupComponent implements OnInit {
 
   fetchDropdownData() {
     this._masterService.getSlabDDL().subscribe((response) => { this.slabList = response });
-    this._masterService.getBranchList().subscribe((response) => { this.branchList = response });
+    this._masterService.getBranchList().subscribe((response) => { 
+      this.branchList = response;
+      this.filteredProviders = this.branchList;
+   });
 
     
   }
+
+  onInputChange(event: any) {
+    const searchInput = event.target.value.toLowerCase();
+
+    this.filteredProviders = this.branchList.filter((data) => {
+      const prov = data.name.toLowerCase();
+      return prov.includes(searchInput);
+    });
+  }
+
   branchAllSelection()
   {
     var isAllChecked = this.select.options.first.selected;
