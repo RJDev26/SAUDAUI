@@ -200,4 +200,8 @@ export class MasterService {
     return this.httpClient.get<any>(environment.apiBaseUrl + 'master/getBrokerageSlabId/' + id, { headers: this.headers })
   }
 
+  applySlab(data): Observable<any> {
+    return this.httpClient.post<any>(environment.apiBaseUrl + 'Master/applyBrokerageSlab', data, { headers: this.headers });
+  }
+
 }

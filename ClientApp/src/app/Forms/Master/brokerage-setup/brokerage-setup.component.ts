@@ -6,6 +6,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatSelect } from '@angular/material/select';
 import { MatOption } from '@angular/material/core';
 import { Item } from '../item/item.model';
+import parseJSON from 'date-fns/esm/parseJSON';
 
 @Component({
   selector: 'app-brokerage-setup',
@@ -107,6 +108,19 @@ export class BrokerageSetupComponent implements OnInit {
   }
 
   applySlab(event: any)
-  { }
+  {
+    const model = { SlabId: this.slabId, Accounts: this.accountIds }
+
+    this._masterService.applySlab(model).subscribe(result => {
+      console.log("result", result);
+     
+    }, err => {
+      console.log(err);
+    });
+
+   
+
+
+  }
   addBrokerage(event: any) { }
 }
