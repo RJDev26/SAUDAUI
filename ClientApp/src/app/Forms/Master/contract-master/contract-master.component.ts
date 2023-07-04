@@ -54,7 +54,7 @@ export class ContractMasterComponent implements OnInit {
       { headerName: 'Symbol', field: 'symbol', filter: true, sorting: true, resizable: true },
       { headerName: 'Maturity', field: 'maturityDate', filter: true, sorting: true, resizable: true },
       { headerName: 'OptionType', field: 'optionType', filter: true, sorting: true, resizable: true },  
-      { headerName: 'StrikePrice', field: 'strikePrice', filter: true, sorting: true, resizable: true },
+      { headerName: 'StrikePrice', field: 'strikePrice', filter: true, sorting: true, resizable: true, valueFormatter: params => CommonUtility.formatNumber(params.data.strikePrice), type: 'rightAligned' },
       { headerName: 'TradeableLot', field: 'tradeableLot', filter: true, sorting: true, resizable: true, valueFormatter: params => CommonUtility.formatNumber(params.data.tradeableLot), type: 'rightAligned' },
     
     ];

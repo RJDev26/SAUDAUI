@@ -5,6 +5,7 @@ import { AppSettings } from "src/app/app.settings";
 import { Settings } from "src/app/app.settings.model";
 import { MasterService } from '../master.service';
 import { ConfirmationDialog } from '../../Dialog/confirmation-dialog/confirmation-dialog.component';
+import { CommonUtility } from '../../../shared/common-utility';
 
 @Component({
     selector: 'app-blank',
@@ -57,7 +58,7 @@ export class SaudaComponent implements OnInit {
     { headerName: 'Maturity', field: 'maturityDate', filter: true, sorting: true, resizable: true },
     { headerName: 'InsType', field: 'insName', filter: true, sorting: true, resizable: true },
     { headerName: 'OptionType', field: 'optionType', filter: true, sorting: true, resizable: true },
-    { headerName: 'StrikePrice', field: 'strikePrice', filter: true, sorting: true, resizable: true },
+    { headerName: 'StrikePrice', field: 'strikePrice', filter: true, sorting: true, resizable: true, valueFormatter: params => CommonUtility.formatNumber(params.data.strikePrice), type: 'rightAligned' },
     { headerName: 'FirstTradingDate', field: 'firstTradingDt', filter: true, sorting: true, resizable: true },
     { headerName: 'LastTradingDate', field: 'lastTradingDt', filter: true, sorting: true, resizable: true }
 
