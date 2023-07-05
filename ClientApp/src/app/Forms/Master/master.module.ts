@@ -25,6 +25,7 @@ import { MAT_DATE_LOCALE } from '@angular/material/core';
 import { BrokerageSetupComponent } from './brokerage-setup/brokerage-setup.component';
 import { AddSlabDetailsComponent } from './brokerage-slab/add-slab-details/add-slab-details.component';
 import { AddSlabComponent } from './brokerage-slab/add-slab/add-slab.component';
+import { AddSetupDetailsComponent } from './brokerage-setup/add-setup-details/add-setup-details.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'account', pathMatch: 'full' },
@@ -68,7 +69,8 @@ export const routes: Routes = [
     BrokerageSetupComponent,
      ErrorDialog,
      AddSlabDetailsComponent,
-     AddSlabComponent
+     AddSlabComponent,
+     AddSetupDetailsComponent
   ],
   providers: [
     { provide: MAT_DATE_LOCALE, useValue: 'en-GB' }

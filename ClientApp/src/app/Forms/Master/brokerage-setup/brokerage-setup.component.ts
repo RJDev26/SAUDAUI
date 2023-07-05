@@ -8,6 +8,8 @@ import { MatOption } from '@angular/material/core';
 import { Item } from '../item/item.model';
 import parseJSON from 'date-fns/esm/parseJSON';
 import { AppService } from 'src/app/service/app.service';
+import { AddSetupDetailsComponent } from './add-setup-details/add-setup-details.component';
+import { ConfirmationDialog } from '../../Dialog/confirmation-dialog/confirmation-dialog.component';
 
 @Component({
   selector: 'app-brokerage-setup',
@@ -26,7 +28,7 @@ export class BrokerageSetupComponent implements OnInit {
   branchIds: any;
   accountIds: any;
   filteredProviders: any[];
-  brokeragesetupList: any
+  brokeragesetupList: any;
 
   constructor(public appSettings: AppSettings, private _appService: AppService, public dialog: MatDialog, private _masterService: MasterService) {
     this.settings = this.appSettings.settings;
@@ -76,6 +78,16 @@ export class BrokerageSetupComponent implements OnInit {
     });
   }
 
+  fetchDropdownData() {
+    this._masterService.getBrokeageSetupList().subscribe((response) => { this.slabList = response });
+    this._masterService.getBranchList().subscribe((response) => { 
+      this.branchList = response;
+      this.filteredProviders = this.branchList;
+   });
+
+    
+  }
+
   public actionCellRenderer(params: any) {
     let eGui = document.createElement("div");
     let editingCells = params.api.getEditingCells();
@@ -86,17 +98,7 @@ export class BrokerageSetupComponent implements OnInit {
                       <button class="material-icons action-button-red" delete data-action="delete">delete</button>`;
 
     return eGui;
-  }
-
-  fetchDropdownData() {
-    this._masterService.getSlabDDL().subscribe((response) => { this.slabList = response });
-    this._masterService.getBranchList().subscribe((response) => { 
-      this.branchList = response;
-      this.filteredProviders = this.branchList;
-   });
-
-    
-  }
+}
 
   onInputChange(event: any) {
     const searchInput = event.target.value.toLowerCase();
@@ -177,4 +179,47 @@ export class BrokerageSetupComponent implements OnInit {
 
   }
   addBrokerage(event: any) { }
+
+  public openSlabDetailsDialog(selectedSlabId) {
+    let dialogRef = this.dialog.open(AddSetupDetailsComponent, {
+        data: { 
+            selectedSlabId: selectedSlabId,
+        }
+    });
+
+    dialogRef.afterClosed().subscribe(user => {
+      this.getBrokerageSetupList();
+    });
+}
+
+onGridClick(params: any) {
+  if (params.event.target.dataset.action == "edit")
+  {
+    this.openSlabDetailsDialog(params.data.id);
+
+  }
+  if (params.event.target.dataset.action == "delete")
+  {
+    const dialogRef = this.dialog.open(ConfirmationDialog, {
+      data: {
+        message: 'Do you really want to delete this record?',
+        buttonText: {
+          ok: 'Yes',
+          cancel: 'No'
+        }
+      }
+    });
+
+    dialogRef.afterClosed().subscribe((confirmed: boolean) => {
+      if (confirmed) {
+        this._masterService.deleteBrokerageSetup(params.data.id).subscribe((res) => {
+          this.getBrokerageSetupList();
+        });
+      }
+    });
+
+
+  }
+}
+
 }

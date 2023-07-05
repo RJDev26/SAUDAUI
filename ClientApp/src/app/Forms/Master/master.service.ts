@@ -192,6 +192,10 @@ export class MasterService {
     return this.httpClient.get<any>(environment.apiBaseUrl + 'master/deleteSlabDetail/' + id, { headers: this.headers })
   }
 
+  deleteBrokerageSetup(id: number): Observable<any> {
+    return this.httpClient.get<any>(environment.apiBaseUrl + 'master/deleteBrokerageSetup/' + id, { headers: this.headers })
+  }
+
   saveBrokerageSlab(data): Observable<any> {
     return this.httpClient.post<any>(environment.apiBaseUrl + 'Master/SaveBrokerageSlab', data, { headers: this.headers });
   }
@@ -202,6 +206,22 @@ export class MasterService {
 
   applySlab(data): Observable<any> {
     return this.httpClient.post<any>(environment.apiBaseUrl + 'Master/applyBrokerageSlab', data, { headers: this.headers });
+  }
+
+  getAccount(): Observable<any> {
+    return this.httpClient.get<any>(environment.apiBaseUrl + 'Master/getAccount', { headers: this.headers });
+  }
+
+  saveBrokerageSetup(data): Observable<any> {
+    return this.httpClient.post<any>(environment.apiBaseUrl + 'Master/SaveBrokerageSetup', data, { headers: this.headers });
+  }
+
+  getBrokeageSetupList(): Observable<any> {
+    return this.httpClient.get<any>(environment.apiBaseUrl + 'master/getBrokeageSetupList/', { headers: this.headers })
+  }
+
+  getBrokerageSetupId(id: number): Observable<any> {
+    return this.httpClient.get<any>(environment.apiBaseUrl + 'master/getBrokerageSetupId/' + id, { headers: this.headers })
   }
 
 }
