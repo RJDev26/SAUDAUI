@@ -6,6 +6,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { AddSlabComponent } from './add-slab/add-slab.component';
 import { ConfirmationDialog } from '../../Dialog/confirmation-dialog/confirmation-dialog.component';
 import { AddSlabDetailsComponent } from './add-slab-details/add-slab-details.component';
+import { CommonUtility } from 'src/app/shared/common-utility';
 
 @Component({
     selector: 'app-blank',
@@ -32,9 +33,9 @@ export class BrokerageSlabComponent implements OnInit {
             headerName: 'Action', field: 'fileIcon', cellRenderer: this.actionCellRenderer, minWidth: 80,
             maxWidth: 110, resizable: true
         },
-        { field: 'applyOn', headerName: 'ApplyOn', filter: true, sorting: true, resizable: true },
-        { field: 'applyOnQty', headerName: 'ApplyOnQty', filter: true, sorting: true, resizable: true },
-        { field: 'intradayBrokRate', headerName: 'IntradayBrokRate', filter: true, sorting: true, resizable: true },
+        { field: 'applyOnName', headerName: 'ApplyOn', filter: true, sorting: true, resizable: true },
+        { field: 'applyOnQtyName', headerName: 'ApplyOnQty', filter: true, sorting: true, resizable: true },
+        { field: 'intradayBrokRate', headerName: 'IntradayBrokRate', filter: true, sorting: true, resizable: true, valueFormatter: params => CommonUtility.formatNumber(params.data.intradayBrokRate), type: 'rightAligned'  },
         { field: 'deliveryBrokRate', headerName: 'DeliveryBroRate', filter: true, sorting: true, resizable: true },
         { field: 'higherSideOnly', headerName: 'HigherSideOnly', cellRenderer: 'booleanCellRenderer', filter: true, sorting: true, resizable: true },
         { field: 'intradaySingleSideOnly', headerName: 'IntradaySingleSide', cellRenderer: 'booleanCellRenderer', filter: true, sorting: true, resizable: true },

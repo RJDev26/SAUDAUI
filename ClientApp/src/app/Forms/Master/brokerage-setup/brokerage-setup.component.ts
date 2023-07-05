@@ -10,6 +10,7 @@ import parseJSON from 'date-fns/esm/parseJSON';
 import { AppService } from 'src/app/service/app.service';
 import { AddSetupDetailsComponent } from './add-setup-details/add-setup-details.component';
 import { ConfirmationDialog } from '../../Dialog/confirmation-dialog/confirmation-dialog.component';
+import { CommonUtility } from 'src/app/shared/common-utility';
 
 @Component({
   selector: 'app-brokerage-setup',
@@ -54,12 +55,12 @@ export class BrokerageSetupComponent implements OnInit {
       headerName: 'Action', field: 'fileIcon', cellRenderer: this.actionCellRenderer, minWidth: 80,
       maxWidth: 110, resizable: true
     },
-    { headerName: 'applyOn', field: 'applyOn', filter: true, sorting: true, resizable: true },
-    { headerName: 'applyOnQty', field: 'applyOnQty', filter: true, sorting: true, resizable: true },
-    { headerName: 'intradayBrokRate', field: 'intradayBrokRate', filter: true, sorting: true, resizable: true },
+    { headerName: 'applyOn', field: 'applyOnName', filter: true, sorting: true, resizable: true },
+    { headerName: 'applyOnQty', field: 'applyOnQtyName', filter: true, sorting: true, resizable: true },
+    { field: 'intradayBrokRate', headerName: 'IntradayBrokRate', filter: true, sorting: true, resizable: true, valueFormatter: params => CommonUtility.formatNumber(params.data.intradayBrokRate), type: 'rightAligned'  },
     { headerName: 'deliveryBrokRate', field: 'deliveryBrokRate', filter: true, sorting: true, resizable: true },    
     { headerName: 'higherSideOnly', field: 'higherSideOnly', filter: true, sorting: true, resizable: true },
-    { headerName: 'instrumentId', field: 'instrumentId', filter: true, sorting: true, resizable: true },
+    { headerName: 'instrumentId', field: 'instrumentType', filter: true, sorting: true, resizable: true },
     { headerName: 'rateRange1', field: 'rateRange1', filter: true, sorting: true, resizable: true },
     { headerName: 'rateRange2', field: 'rateRange2', filter: true, sorting: true, resizable: true },
     { headerName: 'exchange', field: 'exchange', filter: true, sorting: true, resizable: true },
