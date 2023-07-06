@@ -43,34 +43,38 @@ export class BrokerageSetupComponent implements OnInit {
   agGridOptions: any = {
     defaultColDef: {
       filter: true,
-      flex: 1,
+       flex:1,
       sortable: true,
       wraptext: true,
-      resizable: true
-    }
+      resizable: true,
+      minWidth: 100,
+    
+    },
+    suppressRowHoverHighlight: true,
+   
+    //suppressSizeToFit: true,
+    
   }
+  onGridReady(event) { }
 
   columnDefs = [
     {
-      headerName: 'Action', field: 'fileIcon', cellRenderer: this.actionCellRenderer, minWidth: 80,
-      maxWidth: 110, resizable: true
+      headerName: 'Action', field: 'fileIcon', cellRenderer: this.actionCellRenderer, resizable: true
     },
-    { headerName: 'applyOn', field: 'applyOnName', filter: true, sorting: true, resizable: true },
-    { headerName: 'applyOnQty', field: 'applyOnQtyName', filter: true, sorting: true, resizable: true },
-    { field: 'intradayBrokRate', headerName: 'IntradayBrokRate', filter: true, sorting: true, resizable: true, valueFormatter: params => CommonUtility.formatNumber(params.data.intradayBrokRate), type: 'rightAligned'  },
-    { headerName: 'deliveryBrokRate', field: 'deliveryBrokRate', filter: true, sorting: true, resizable: true },    
-    { headerName: 'higherSideOnly', field: 'higherSideOnly', filter: true, sorting: true, resizable: true },
-    { headerName: 'instrumentId', field: 'instrumentType', filter: true, sorting: true, resizable: true },
-    { headerName: 'rateRange1', field: 'rateRange1', filter: true, sorting: true, resizable: true },
-    { headerName: 'rateRange2', field: 'rateRange2', filter: true, sorting: true, resizable: true },
-    { headerName: 'exchange', field: 'exchange', filter: true, sorting: true, resizable: true },
-    { headerName: 'item', field: 'item', filter: true, sorting: true, resizable: true },
-    { headerName: 'intradaySingleSideOnly', field: 'intradaySingleSideOnly', filter: true, sorting: true, resizable: true },
-    { headerName: 'fromDT', field: 'fromDT', filter: true, sorting: true, resizable: true },
-    { headerName: 'toDT', field: 'toDT', filter: true, sorting: true, resizable: true },
-    { headerName: 'applyOnName', field: 'applyOnName', filter: true, sorting: true, resizable: true },
-    { headerName: 'applyOnQtyName', field: 'applyOnQtyName', filter: true, sorting: true, resizable: true },
-    { headerName: 'instrumentType', field: 'instrumentType', filter: true, sorting: true, resizable: true },
+    { headerName: 'ApplyOn',  field: 'applyOnName', filter: true, sorting: true, resizable: true },
+    { headerName: 'Apply OnQty',  field: 'applyOnQtyName', filter: true, sorting: true, resizable: true },
+    { field: 'Intraday BrokRate',   headerName: 'IntradayBrokRate', filter: true, sorting: true, resizable: true, valueFormatter: params => CommonUtility.formatNumber(params.data.intradayBrokRate), type: 'rightAligned'  },
+    { headerName: 'Delivery BrokRate',   field: 'deliveryBrokRate', filter: true, sorting: true, resizable: true },    
+    /*{ headerName: 'HigherSide Only', minWidth: 120, maxWidth: 120, field: 'higherSideOnly', filter: true, sorting: true, resizable: true },*/
+    { headerName: 'Instrument',   field: 'instrumentType', filter: true, sorting: true, resizable: true },
+    { headerName: 'RateRange1',   field: 'rateRange1', filter: true, sorting: true, resizable: true },
+    { headerName: 'RateRange2',   field: 'rateRange2', filter: true, sorting: true, resizable: true },
+    { headerName: 'Exchange',  field: 'exchange', filter: true, sorting: true, resizable: true },
+    { headerName: 'Item',  field: 'item', filter: true, sorting: true, resizable: true },
+/*    { headerName: 'IntradaySingleSideOnly', field: 'intradaySingleSideOnly', filter: true, sorting: true, resizable: true },*/
+    { headerName: 'FromDT', field: 'fromDT',   filter: true, sorting: true, resizable: true },
+    { headerName: 'ToDT', field: 'toDT',  filter: true, sorting: true, resizable: true },
+    
   ];
 
   getBrokerageSetupList() {

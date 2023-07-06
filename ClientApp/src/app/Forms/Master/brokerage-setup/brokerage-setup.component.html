@@ -54,12 +54,14 @@
     </div>
     <div class="col-xl-12 mt-2">
       <ag-grid-angular style=" height: 535px;"
-                       class="ag-theme-alpine"
+                       class="ag-theme-material"
                        [rowData]="brokeragesetupList"
                        [pagination]="true"
+                       [rowHeight]="35"
                        [columnDefs]="columnDefs"
                        [defaultColDef]="agGridOptions.defaultColDef"
-                       (cellClicked)="onGridClick($event)">
+                       (cellClicked)="onGridClick($event)"
+                       (gridReady)="onGridReady($event)">
       </ag-grid-angular>
     </div>
   </div>  

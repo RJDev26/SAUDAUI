@@ -3,6 +3,10 @@ $roboto-font-path: "~roboto-fontface/fonts" !default;
 
 @import "~ag-grid-community/styles//ag-grid.css";
 @import "~ag-grid-community/styles//ag-theme-alpine.css";
+@import '~ag-grid-community/styles//ag-theme-material.css';
+@import '~ag-grid-community/styles//ag-theme-balham.css';
+
+
 @import "~roboto-fontface/css/roboto/sass/roboto-fontface";
 
 // for npm material-icons package (to load local files)
@@ -411,4 +415,12 @@ body {
     }
 }
 
-   
+.ag-header-cell-label .ag-header-cell-text
+{
+    white-space:normal!important;
+
+}
+
+
+
+//ag-row-no-focus ag-row ag-row-level-0 ag-row-position-absolute ag-row-last

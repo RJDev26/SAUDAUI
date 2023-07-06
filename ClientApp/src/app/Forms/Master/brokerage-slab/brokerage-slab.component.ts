@@ -33,7 +33,7 @@ export class BrokerageSlabComponent implements OnInit {
             headerName: 'Action', field: 'fileIcon', cellRenderer: this.actionCellRenderer, minWidth: 80,
             maxWidth: 110, resizable: true
         },
-        { field: 'applyOnName', headerName: 'ApplyOn', filter: true, sorting: true, resizable: true },
+        { field: 'applyOnName', headerName: 'Apply On', filter: true, sorting: true, resizable: true },
         { field: 'applyOnQtyName', headerName: 'ApplyOnQty', filter: true, sorting: true, resizable: true },
         { field: 'intradayBrokRate', headerName: 'IntradayBrokRate', filter: true, sorting: true, resizable: true, valueFormatter: params => CommonUtility.formatNumber(params.data.intradayBrokRate), type: 'rightAligned'  },
         { field: 'deliveryBrokRate', headerName: 'DeliveryBroRate', filter: true, sorting: true, resizable: true },
