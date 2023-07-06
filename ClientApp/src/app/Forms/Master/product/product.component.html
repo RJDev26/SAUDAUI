@@ -6,7 +6,8 @@
   </div>
   <div class="col-xl-12 mt-2">
     <ag-grid-angular style=" height: 535px;"
-                     class="ag-theme-alpine"
+                     class="ag-theme-material"
+                       [rowHeight]="31"
                      [rowData]="productList"
                      [pagination]="true"
                      [columnDefs]="columnDefs"

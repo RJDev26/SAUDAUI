@@ -9,6 +9,7 @@
                      class="ag-theme-material"
                      [rowData]="contractList"
                      [pagination]="true"
+                      [rowHeight]="31"
                      [columnDefs]="columnDefs"
                      [defaultColDef]="agGridOptions.defaultColDef"
                      (cellClicked)="onGridClick($event)">

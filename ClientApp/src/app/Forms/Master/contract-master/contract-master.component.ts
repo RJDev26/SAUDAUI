@@ -50,7 +50,7 @@ export class ContractMasterComponent implements OnInit {
         maxWidth: 110, resizable: true
       },
       { headerName: 'Exchange', field: 'exName', filter: true, sorting: true, resizable: true },
-      { headerName: 'InstrumentType', field: 'instrumentType', filter: true, sorting: true, resizable: true },
+      { headerName: 'InstrumentType', field: 'insName', filter: true, sorting: true, resizable: true },
       { headerName: 'Symbol', field: 'symbol', filter: true, sorting: true, resizable: true },
       { headerName: 'Maturity', field: 'maturityDate', filter: true, sorting: true, resizable: true },
       { headerName: 'OptionType', field: 'optionType', filter: true, sorting: true, resizable: true },  

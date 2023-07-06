@@ -226,9 +226,10 @@
     </form>
     <div class="col-xl-12 mt-2">
       <ag-grid-angular style=" height: 250px;"
-                       class="ag-theme-alpine"
+                       class="ag-theme-material"
                        [rowData]="accountTaxList"
                        [pagination]="true"
+                         [rowHeight]="31"
                        [columnDefs]="columnDefs"
                        [defaultColDef]="agGridOptions.defaultColDef"
                        (cellClicked)="onGridClick($event)">
