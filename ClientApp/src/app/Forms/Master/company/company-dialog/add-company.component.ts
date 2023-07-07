@@ -129,7 +129,8 @@ export class AddCompanyComponent implements OnInit {
         else {
             this.companyForm.get('id').setValue(0);
         }  
-    }
+  }
+  onSubmit(event: any) { }
 
     private _filterCity(value: string): City[] {
         const filterValue = value.toLowerCase();
