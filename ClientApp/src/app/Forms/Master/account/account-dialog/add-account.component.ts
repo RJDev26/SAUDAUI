@@ -200,7 +200,7 @@ export class AddAccountComponent implements OnInit, AfterViewInit {
   initialApiCalls() {
     forkJoin([this._appService.getAcGoup(), this._appService.getAcHead(), this._appService.getCityList(),
       this._appService.getTaxType(), this._appService.getExchangeName(), this._appService.getInstrumentList()]).pipe(map(response => {
-      
+        debugger
       this.acGroupList = response[0];
       this.acHeadList = response[1];
       this.cityList = response[2];
