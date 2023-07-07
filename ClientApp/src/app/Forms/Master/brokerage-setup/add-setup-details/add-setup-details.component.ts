@@ -95,6 +95,10 @@ initialApiCalls() {
     });
   }
 
+  close(): void {
+    this.dialogRef.close();
+  }
+
   public onSubmit(values: object) {
     console.log(values);
     var body = this.itemForm.value;
