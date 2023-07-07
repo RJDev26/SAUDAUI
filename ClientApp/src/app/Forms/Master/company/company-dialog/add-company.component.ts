@@ -81,7 +81,8 @@ export class AddCompanyComponent implements OnInit {
     }
 
     getCompanyInfo() {
-        this._appService.getCompanyById(this.selectedId).subscribe((res) => {
+      this._appService.getCompanyById(this.selectedId).subscribe((res) => {
+          debugger
         this.companyForm.get('name').setValue(res.name);
         this.companyForm.get('address').setValue(res.address);
         this.companyForm.get('city').setValue(res.city);

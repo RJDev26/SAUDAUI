@@ -6,6 +6,7 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dial
 import { combineLatest, forkJoin, Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 import { CommonUtility } from '../../../../shared/common-utility';
+import { ConfirmationDialog } from '../../../Dialog/confirmation-dialog/confirmation-dialog.component';
 import { ErrorDialog } from '../../../Dialog/confirmation-dialog/error-dialog.component';
 import { MasterService } from '../../master.service';
 import { Account } from '../account.model';
@@ -80,7 +81,7 @@ export class AddAccountComponent implements OnInit, AfterViewInit {
     for (var trigger of this.triggerCollection.toArray()) {
       this.subscription = trigger.panelClosingActions
         .subscribe(e => {
-          debugger
+          
           if (!e || !e.source) {
             if (this.acGroupCtrl.dirty)
             {
@@ -199,7 +200,7 @@ export class AddAccountComponent implements OnInit, AfterViewInit {
   initialApiCalls() {
     forkJoin([this._appService.getAcGoup(), this._appService.getAcHead(), this._appService.getCityList(),
       this._appService.getTaxType(), this._appService.getExchangeName(), this._appService.getInstrumentList()]).pipe(map(response => {
-      debugger
+      
       this.acGroupList = response[0];
       this.acHeadList = response[1];
       this.cityList = response[2];
@@ -213,7 +214,7 @@ export class AddAccountComponent implements OnInit, AfterViewInit {
   }
 
   getValuesInEditMode() {
-    debugger
+    
     if (this.user) {
       const acGroup = this.acGroupList.find((obj => obj.id === this.user.accountGroupId));
       const acHead = this.acHeadList.find((obj => obj.id === this.user.accountHeadId));
@@ -229,7 +230,7 @@ export class AddAccountComponent implements OnInit, AfterViewInit {
     this.personalForm.setValue({
       'ShortCode': this.user.shortCode,
       'Name': this.user.name,
-      'OpeningBal': this.user.openingBal,
+      'OpeningBal': CommonUtility.formatNumber(this.user.openingBal),
       'City': optedCity ? optedCity.name : '',
       'Email': this.user.email,
       'PanNo': this.user.panNo,
@@ -251,27 +252,32 @@ export class AddAccountComponent implements OnInit, AfterViewInit {
     this.acGroupCtrl.setValue(acGroup.name);
     this.acHeadCtrl.setValue(acHead.name);
     this.cityCtrl.setValue(optedCity.name);
-    debugger
+    
     this.selectedAccountId = this.user.id;
     this.getAccountTaxList();
   }
 
 
 
-  bindTaxFormInEditMode() {
+  bindTaxFormInEditMode(res) {
+    debugger
     this.taxForm.setValue({
-      'TaxType': this.user.taxType,
-      'Exchange': this.user.exchange,
-      'IntraDayRate': this.user.IntraDayRate,
-      'InsType': this.user.InsType,
-      'DeliveryRate': this.user.DeliveryRate,
+      'taxId': res.taxId,
+      'exId': res.exId,
+      'intraDayRate': CommonUtility.formatNumber(res.intradayRate),
+      'fromDt': res.fromDt,
+      'toDt': res.toDt,
+      'id': res.id,
+      'insType': res.insType,
+      'deliveryRate': CommonUtility.formatNumber(res.deliveryRate),
+      'accountId': res.accountId
     });
    
   }
 
   onGroupChange(event)
   {
-    debugger;
+    ;
     this.personalForm.controls['AcGroup'].setValue(this.acGroupCtrl.value);
   }
   onHeadChange(event) {
@@ -319,7 +325,7 @@ export class AddAccountComponent implements OnInit, AfterViewInit {
 
   public onSubmit(values: Object): void
   {
-    debugger;
+    
   
     this.personalForm.controls['OpeningBal'].setValue(Number(this.personalForm.get('OpeningBal').value));
     
@@ -339,7 +345,39 @@ export class AddAccountComponent implements OnInit, AfterViewInit {
     }
   }
 
+  onGridClick(params: any) {
+    debugger
+    if (params.event.target.dataset.action == "edit") {
+      this._appService.getAccountTaxById(params.data.id).subscribe((res) => {
+        this.bindTaxFormInEditMode(res);
+      });
+    }
+    if (params.event.target.dataset.action == "delete") {
+      const dialogRef = this.dialog.open(ConfirmationDialog, {
+        data: {
+          message: 'Do you really want to delete this record?',
+          buttonText: {
+            ok: 'Yes',
+            cancel: 'No'
+          }
+        }
+      });
 
+      dialogRef.afterClosed().subscribe((confirmed: boolean) => {
+        if (confirmed) {
+          this._appService.deleteAccountTax(params.data.id).subscribe((res) => {
+            this.getAccountTaxList();
+          });
+        }
+      });
+
+
+    }
+
+
+
+
+  }
 
 
   public onSubmitTax(values: Object): void {
@@ -364,7 +402,7 @@ export class AddAccountComponent implements OnInit, AfterViewInit {
       this.taxForm.controls['deliveryRate'].setValue(Number(this.taxForm.get('deliveryRate').value));
       this.taxForm.controls['accountId'].setValue(this.selectedAccountId);
       var body = this.taxForm.value;
-      debugger;
+      ;
       //body.accountGroupId = this.getAcGroupId(this.acGroupCtrl.value);
       //body.accountHeadId = this.getAcHeadId(this.acHeadCtrl.value);
       //body.CityId = this.getCityId(this.cityCtrl.value);
