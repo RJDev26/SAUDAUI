@@ -47,7 +47,15 @@
 
       </div>
       <div>
-        <button mat-raised-button color="accent" (click)="openSlabDetailsDialog(null)" class="icon-btn">
+        <button mat-raised-button color="primary" class="delete-slab icon-btn" (click)="openDeleteSlabDialog()">
+          <mat-icon>
+            <span class="material-icons-outlined">        
+              file_download
+            </span>
+          </mat-icon> 
+          Export
+        </button>
+        <button mat-raised-button color="accent" (click)="openSlabDetailsDialog(null)" class="icon-btn ml-15">
           <mat-icon>add</mat-icon> Add Brokerage
         </button>
       </div>
