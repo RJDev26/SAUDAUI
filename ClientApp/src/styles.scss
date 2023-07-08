@@ -36,10 +36,10 @@ body {
 }
 
 .ml-7 {
-    margin-left: 7px;
+    margin-left: 7px !important;
 }
 .ml-15 {
-    margin-left: 15px;
+    margin-left: 15px !important;
 }
 .mb-10 {
     margin-bottom: 10px !important;
@@ -94,6 +94,44 @@ body {
     .mat-checkbox-layout {
         font-size: 13px;
     }
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+  text-align: right;
+}
+
+input[type=number]::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+    float: left;
+}
+input[type=number]::-moz-placeholder { /* Firefox 19+ */
+    float: left;
+}
+input[type=number]:-ms-input-placeholder { /* IE 10+ */
+    float: left;
+}
+input[type=number]:-moz-placeholder { /* Firefox 18- */
+    float: left;
+}
+
+#main .options-icon {
+    top: 58px;
+}
+#main .inner-sidenav-content {
+    padding: 5px 12px 12px 12px;
+}
+
+.mat-raised-button {
+    -moz-border-radius: 20px !important;
+    -webkit-border-radius: 20px !important;
+    border-radius: 20px !important;
 }
 
 .app {
@@ -345,9 +383,9 @@ body {
                         margin-top: 0;
                     }
                 }
-                .mat-form-field-flex {
-                    padding-right: 0;
-                }
+                // .mat-form-field-flex {
+                //     padding-right: 0;
+                // }
                 .mat-form-field-infix {
                     font-size: 13px;
                     padding: 12px 0 8px 0;
