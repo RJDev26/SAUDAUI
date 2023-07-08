@@ -26,6 +26,7 @@ import { BrokerageSetupComponent } from './brokerage-setup/brokerage-setup.compo
 import { AddSlabDetailsComponent } from './brokerage-slab/add-slab-details/add-slab-details.component';
 import { AddSlabComponent } from './brokerage-slab/add-slab/add-slab.component';
 import { AddSetupDetailsComponent } from './brokerage-setup/add-setup-details/add-setup-details.component';
+import { BranchComponent } from './branch/branch.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'account', pathMatch: 'full' },
@@ -37,7 +38,8 @@ export const routes: Routes = [
   { path: 'product', component: ProductComponent, data: { breadcrumb: 'Product' } },
   { path: 'contract-master', component: ContractMasterComponent, data: { breadcrumb: 'Contract Master' } },
   { path: 'brokerage-slab', component: BrokerageSlabComponent, data: { breadcrumb: 'Brokerage Slab' } },
-  { path: 'brokerage-setup', component: BrokerageSetupComponent, data: { breadcrumb: 'Brokerage Setup' } }
+  { path: 'brokerage-setup', component: BrokerageSetupComponent, data: { breadcrumb: 'Brokerage Setup' } },
+  { path: 'branch', component: BranchComponent, data: { breadcrumb: 'Branch' } }
 ];
 
 @NgModule({
@@ -70,7 +72,8 @@ export const routes: Routes = [
      ErrorDialog,
      AddSlabDetailsComponent,
      AddSlabComponent,
-     AddSetupDetailsComponent
+     AddSetupDetailsComponent,
+     BranchComponent
   ],
   providers: [
     { provide: MAT_DATE_LOCALE, useValue: 'en-GB' }
