@@ -5,8 +5,8 @@
         <mat-form-field class="select-slab-mat" appearance="outline">
           <mat-label>Select Branch</mat-label>
           <mat-select #select  [(ngModel)]="branchIds" multiple placeholder="Select Branch" (selectionChange)="onBranchChange($event)" panelClass="custom-select-panel">
-            <input class="milti-search-box" #multiUserSearch type="text" autocomplete="off" matInput placeholder="Search By Provider" (input)="onInputChange($event)"/>
-            <mat-option value=0 (click)="branchAllSelection()">Select All</mat-option>
+            <input class="milti-search-box" #multiUserSearch type="text" autocomplete="off" matInput placeholder="Search Branch" (input)="onInputChange($event)"/>
+            <mat-option value=-1 (click)="branchAllSelection()">Select All</mat-option>
             <mat-option *ngFor="let option of filteredProviders" [value]="option.id">
               {{ option.name }}
             </mat-option>
@@ -19,9 +19,10 @@
           <mat-label>Select Account</mat-label>
           
           <mat-select #selectAccount [(ngModel)]="accountIds" multiple placeholder="Select Account" panelClass="custom-select-panel">
+            <input class="milti-search-box" #multiUserSearch type="text" autocomplete="off" matInput placeholder="Search Account" (input)="onInputAccountListChange($event)"/>
             <mat-option value=0 (click)="accountAllSelection()">Select All</mat-option>
 
-            <mat-option *ngFor="let option of accountList" [value]="option.id">
+            <mat-option *ngFor="let option of filteredAccountList" [value]="option.id">
               {{ option.name }}
             </mat-option>
           </mat-select>

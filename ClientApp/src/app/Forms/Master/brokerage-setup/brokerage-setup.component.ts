@@ -26,10 +26,12 @@ export class BrokerageSetupComponent implements OnInit {
   slabList: any[];
   accountList: any[];
   branchList: any[];
-  branchIds: any;
+  branchIds: Array<string>;
   accountIds: any;
   filteredProviders: any[];
+  filteredAccountList: any[];
   brokeragesetupList: any;
+  branchAllSellected: boolean = false;
 
   constructor(public appSettings: AppSettings, private _appService: AppService, public dialog: MatDialog, private _masterService: MasterService) {
     this.settings = this.appSettings.settings;
@@ -84,7 +86,7 @@ export class BrokerageSetupComponent implements OnInit {
   }
 
   fetchDropdownData() {
-    this._masterService.getBrokeageSetupList().subscribe((response) => { this.slabList = response });
+    this._masterService.getSlabDDL().subscribe((response) => { this.slabList = response });
     this._masterService.getBranchList().subscribe((response) => { 
       this.branchList = response;
       this.filteredProviders = this.branchList;
@@ -114,15 +116,28 @@ export class BrokerageSetupComponent implements OnInit {
     });
   }
 
+  onInputAccountListChange(event: any) {
+    const searchInput = event.target.value.toLowerCase();
+
+    this.filteredAccountList = this.accountList.filter((data) => {
+      const prov = data.name.toLowerCase();
+      return prov.includes(searchInput);
+    });
+  }
+
   branchAllSelection()
   {
+    this.branchAllSellected = true;
     var isAllChecked = this.select.options.first.selected;
     this.select.options.forEach(
-      (item: MatOption) =>
+      (item: MatOption, index) =>
       {
       
         if (isAllChecked) { item.select(); }
           else { item.deselect() }
+          if(index === this.select.options.length -1){
+            this.onBranchChange([], true);
+          }
       }
      
     );
@@ -155,14 +170,20 @@ export class BrokerageSetupComponent implements OnInit {
   return this.branchList.filter(option => option.toLowerCase().startsWith(filter));
 }
 
-  onBranchChange(event: any) {
-  
+  onBranchChange(event: any, isLastIndex?: boolean) {
+    if(this.branchAllSellected && !isLastIndex){
+      return;
+    }
+    if(this.branchIds.length < 2 && this.branchIds[0] == '-1'){
+      return;
+    }
     //event.source.options._results[1]._selected = true;
     //event.source.options._results[1]._active = true;
     if (this.branchIds) {
       this._masterService.getBranchAccounts(this.branchIds).subscribe(
         response => {
           this.accountList = response;
+          this.filteredAccountList = this.accountList;
         }
       );
     }
