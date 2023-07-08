@@ -7,7 +7,7 @@ export class Account {
   accountHeadId: number
   accountGroupId: number
   name: string;
-  openingBal: string;
+  openingBal: number;
   phone: string;
   mobile: string;
   email: string;

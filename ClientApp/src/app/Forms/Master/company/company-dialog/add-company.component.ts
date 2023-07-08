@@ -81,7 +81,8 @@ export class AddCompanyComponent implements OnInit {
     }
 
     getCompanyInfo() {
-        this._appService.getCompanyById(this.selectedId).subscribe((res) => {
+      this._appService.getCompanyById(this.selectedId).subscribe((res) => {
+          debugger
         this.companyForm.get('name').setValue(res.name);
         this.companyForm.get('address').setValue(res.address);
         this.companyForm.get('city').setValue(res.city);
@@ -128,7 +129,8 @@ export class AddCompanyComponent implements OnInit {
         else {
             this.companyForm.get('id').setValue(0);
         }  
-    }
+  }
+  onSubmit(event: any) { }
 
     private _filterCity(value: string): City[] {
         const filterValue = value.toLowerCase();

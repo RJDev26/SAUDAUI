@@ -91,10 +91,9 @@ export class BrokerageSlabComponent implements OnInit {
         });
     }
 
-    public openSlabDetailsDialog(selectedSlabId) {
+    public openSlabDetailsDialog() {
         let dialogRef = this.dialog.open(AddSlabDetailsComponent, {
             data: { 
-                selectedSlabId: selectedSlabId,
                 slabId: this.slabId
             }
         });
@@ -131,7 +130,8 @@ export class BrokerageSlabComponent implements OnInit {
     onGridClick(params: any) {
         if (params.event.target.dataset.action == "edit")
         {
-          this.openSlabDetailsDialog(params.data.id);
+          this.slabId = params.data.id;
+          this.openSlabDetailsDialog();
     
         }
         if (params.event.target.dataset.action == "delete")

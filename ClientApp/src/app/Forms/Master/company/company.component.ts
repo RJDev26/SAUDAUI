@@ -22,11 +22,7 @@ export class CompanyComponent implements OnInit {
   selected = [];
   loadingIndicator: boolean = true;
   reorderable: boolean = true;
-  columns = [
-    { prop: 'Name' },
-    { name: 'item' },
-    { name: 'name' }
-  ];
+ 
   public settings: Settings;
   companyList: any;
   constructor(public appSettings: AppSettings, private _appService: AppService, public dialog: MatDialog, private _masterService: MasterService) {
@@ -43,14 +39,15 @@ export class CompanyComponent implements OnInit {
       flex: 1,
       sortable: true,
       wraptext: true,
-      resizable: true
+      resizable: true,
+      minWidth: 100,
     }
   }
 
   columnDefs = [
     {
-      headerName: 'Action', field: 'fileIcon', cellRenderer: this.actionCellRenderer, minWidth: 80,
-      maxWidth: 110, resizable: true
+      headerName: 'Action', field: 'fileIcon', cellRenderer: this.actionCellRenderer, minWidth: 60,
+      maxWidth: 80, resizable: false, filter: false
     },
     { headerName: 'Name', field: 'name', filter: true, sorting: true, resizable: true },
     { headerName: 'Address', field: 'address', filter: true, sorting: true, resizable: true },
@@ -59,9 +56,9 @@ export class CompanyComponent implements OnInit {
     { headerName: 'State', field: 'state', filter: true, sorting: true, resizable: true },
     { headerName: 'Phone', field: 'phone', filter: true, sorting: true, resizable: true },
     { headerName: 'Email', field: 'email', filter: true, sorting: true, resizable: true },
-    { headerName: 'Financial Begin Date', field: 'finBeginDt', filter: true, sorting: true, resizable: true },
-    { headerName: 'Financial End Date', field: 'finEndDt', filter: true, sorting: true, resizable: true },
-    { headerName: 'Unique customer id', field: 'uniqcusomerId', filter: true, sorting: true, resizable: true }
+    { headerName: 'FinBegin Date', field: 'finBeginDtString', filter: true, sorting: true, resizable: true },
+    { headerName: 'FinEnd Date', field: 'finEndDtString', filter: true, sorting: true, resizable: true },
+    { headerName: 'UniqueCusId', field: 'uniqcusomerId', filter: true, sorting: true, resizable: true }
   ];
 
   getcompanyList() {

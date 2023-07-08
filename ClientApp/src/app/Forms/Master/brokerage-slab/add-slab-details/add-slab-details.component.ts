@@ -40,7 +40,10 @@ export class AddSlabDetailsComponent implements OnInit {
      'intradaySingleSideonly': [false],
     });
    this.initialApiCalls();
-}
+  }
+  close(): void {
+    this.dialogRef.close();
+  }
 
 initialApiCalls() {
   forkJoin([this._appService.getExchangeName(), this._appService.getInstrumentList(), this._appService.getItemListDrp(),
