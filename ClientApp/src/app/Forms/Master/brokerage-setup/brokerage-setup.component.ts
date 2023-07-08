@@ -66,11 +66,11 @@ export class BrokerageSetupComponent implements OnInit {
     { headerName: 'ApplyOn',  field: 'applyOnName', filter: true, sorting: true, resizable: true },
     { headerName: 'Apply OnQty',  field: 'applyOnQtyName', filter: true, sorting: true, resizable: true },
     { field: 'Intraday BrokRate',   headerName: 'IntradayBrokRate', filter: true, sorting: true, resizable: true, valueFormatter: params => CommonUtility.formatNumber(params.data.intradayBrokRate), type: 'rightAligned'  },
-    { headerName: 'Delivery BrokRate',   field: 'deliveryBrokRate', filter: true, sorting: true, resizable: true },    
+    { headerName: 'Delivery BrokRate', field: 'deliveryBrokRate', filter: true, sorting: true, resizable: true, valueFormatter: params => CommonUtility.formatNumber(params.data.deliveryBrokRate), type: 'rightAligned' },    
     /*{ headerName: 'HigherSide Only', minWidth: 120, maxWidth: 120, field: 'higherSideOnly', filter: true, sorting: true, resizable: true },*/
     { headerName: 'Instrument',   field: 'instrumentType', filter: true, sorting: true, resizable: true },
-    { headerName: 'RateRange1',   field: 'rateRange1', filter: true, sorting: true, resizable: true },
-    { headerName: 'RateRange2',   field: 'rateRange2', filter: true, sorting: true, resizable: true },
+    { headerName: 'RateRange1', field: 'rateRange1', filter: true, sorting: true, resizable: true, valueFormatter: params => CommonUtility.formatNumber(params.data.rateRange1), type: 'rightAligned' },
+    { headerName: 'RateRange2', field: 'rateRange2', filter: true, sorting: true, resizable: true, valueFormatter: params => CommonUtility.formatNumber(params.data.rateRange2), type: 'rightAligned' },
     { headerName: 'Exchange',  field: 'exchange', filter: true, sorting: true, resizable: true },
     { headerName: 'Item',  field: 'item', filter: true, sorting: true, resizable: true },
 /*    { headerName: 'IntradaySingleSideOnly', field: 'intradaySingleSideOnly', filter: true, sorting: true, resizable: true },*/

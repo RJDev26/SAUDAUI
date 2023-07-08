@@ -36,14 +36,14 @@ export class BrokerageSlabComponent implements OnInit {
         { field: 'applyOnName', headerName: 'Apply On', filter: true, sorting: true, resizable: true },
         { field: 'applyOnQtyName', headerName: 'ApplyOnQty', filter: true, sorting: true, resizable: true },
         { field: 'intradayBrokRate', headerName: 'IntradayBrokRate', filter: true, sorting: true, resizable: true, valueFormatter: params => CommonUtility.formatNumber(params.data.intradayBrokRate), type: 'rightAligned'  },
-        { field: 'deliveryBrokRate', headerName: 'DeliveryBroRate', filter: true, sorting: true, resizable: true },
+      { field: 'deliveryBrokRate', headerName: 'DeliveryBroRate', filter: true, sorting: true, resizable: true, valueFormatter: params => CommonUtility.formatNumber(params.data.deliveryBrokRate), type: 'rightAligned' },
         { field: 'higherSideOnly', headerName: 'HigherSideOnly', cellRenderer: 'booleanCellRenderer', filter: true, sorting: true, resizable: true },
         { field: 'intradaySingleSideOnly', headerName: 'IntradaySingleSide', cellRenderer: 'booleanCellRenderer', filter: true, sorting: true, resizable: true },
         { field: 'instrumentType', headerName: 'InstrumentType', filter: true, sorting: true, resizable: true },
         { field: 'exchange', headerName: 'Exchange', filter: true, sorting: true, resizable: true },
         { field: 'item', headerName: 'Item', filter: true, sorting: true, resizable: true },
-        { field: 'rateRange1', headerName: 'Range1', filter: true, sorting: true, resizable: true },
-        { field: 'rateRange2', headerName: 'Range2', filter: true, sorting: true, resizable: true }
+      { field: 'rateRange1', headerName: 'Range1', filter: true, sorting: true, resizable: true, valueFormatter: params => CommonUtility.formatNumber(params.data.rateRange1), type: 'rightAligned' },
+      { field: 'rateRange2', headerName: 'Range2', filter: true, sorting: true, resizable: true, valueFormatter: params => CommonUtility.formatNumber(params.data.rateRange2), type: 'rightAligned' }
       ];
       
     constructor(public appSettings: AppSettings, private _masterService: MasterService, public dialog: MatDialog) {
