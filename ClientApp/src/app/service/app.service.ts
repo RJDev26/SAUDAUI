@@ -53,4 +53,8 @@ export class AppService {
   getBrokerageSetupList():Observable<any>{
     return this.httpClient.get<any>(environment.apiBaseUrl + 'Master/getBrokeageSetupList',{headers:this.headers});
   }
+
+  getTax():Observable<any>{
+    return this.httpClient.get<any>(environment.apiBaseUrl + 'MasterSecond/getTaxList',{headers:this.headers});
+  }
 }

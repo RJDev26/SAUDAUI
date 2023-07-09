@@ -1,0 +1,47 @@
+<h2 class="heading mb-0">Add Tax</h2>
+<mat-tab-group>
+    <mat-tab label="Tax">
+        <form [formGroup]="taxForm" (ngSubmit)="onSubmit(taxForm.value)" fxLayout="row wrap" class="user-form">
+            <div class="tab-party-details-parent">
+                <div class="white-block pb-5">
+                    <h3><span>Tax Details</span></h3>
+                    <div fxFlex="100" fxFlex.gt-sm="33.33" fxFlex.sm="33.33">
+                        <mat-form-field appearance="outline">
+                          <mat-label>Name</mat-label>
+                          <input matInput autocomplete="off" placeholder="name" formControlName="name" type="text">
+                          <mat-error *ngIf="taxForm.controls.name.errors?.required">Name is required</mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div fxFlex="100" fxFlex.gt-sm="33.33" fxFlex.sm="33.33">
+                        <mat-form-field class="example-full-width" appearance="outline">
+                            <mat-label>ApplyOn</mat-label>
+                            <mat-select placeholder="" formControlName="ApplyOn">
+                                <mat-option *ngFor="let apply of applyOn" [value]="apply.id">
+                                  {{apply.name}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                    <div fxFlex="100" fxFlex.gt-sm="33.33" fxFlex.sm="33.33">
+                        <mat-form-field appearance="outline">
+                          <mat-label>Type</mat-label>
+                          <input matInput autocomplete="off" placeholder="type" formControlName="type" type="text">
+                          <mat-error *ngIf="taxForm.controls.type.errors?.required">Type is required</mat-error>
+                        </mat-form-field>
+                    </div>
+                </div>
+            </div>
+            <div fxFlex="100" class="mt-2 text-center space-between-btns">
+                <button mat-raised-button color="warn" type="button" (click)="close()">Cancel</button>
+                <button mat-raised-button color="primary" class="uppercase" type="submit">Save</button>
+            </div>
+        </form>
+    </mat-tab>
+    <mat-tab label="Account Tax">
+        <form [formGroup]="taxForm" (ngSubmit)="onSubmit(taxForm.value)" fxLayout="row wrap" class="user-form">
+            <div class="tab-party-details-parent">
+                <div class="white-block pb-5"></div>
+            </div>
+        </form>
+    </mat-tab>
+</mat-tab-group>

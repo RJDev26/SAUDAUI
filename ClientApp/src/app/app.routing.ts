@@ -15,6 +15,7 @@ import { ProductComponent } from './Forms/Master/product/product.component';
 import { ContractMasterComponent } from './Forms/Master/contract-master/contract-master.component';
 import { BrokerageSlabComponent } from './Forms/Master/brokerage-slab/brokerage-slab.component';
 import { BrokerageSetupComponent } from './Forms/Master/brokerage-setup/brokerage-setup.component';
+import { TaxComponent } from './Forms/Master/tax-master/tax-master.component';
 
 export const routes: Routes = [
     { 
@@ -45,6 +46,7 @@ export const routes: Routes = [
             { path: 'product', component: ProductComponent, data: { breadcrumb: 'product' } },
             { path: 'contract-master', component: ContractMasterComponent, data: { breadcrumb: 'Contract Master' } },
             { path: 'brokerage-slab', component: BrokerageSlabComponent, data: { breadcrumb: 'Brokerage Slab' } },
+            { path: 'tax', component: TaxComponent, data: { breadcrumb: 'Tax' } }
            
         ]
     },

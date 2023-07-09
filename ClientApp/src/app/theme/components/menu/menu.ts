@@ -12,6 +12,7 @@ export const verticalMenuItems = [
   new Menu(3, 'Brokerage Slab', '/master/brokerage-slab', null, 'segment', null, false, 2),
   new Menu(3, 'Brokerage Setup', '/master/brokerage-setup', null, 'manage_accounts', null, false, 2),
   new Menu(3, 'Branch', '/master/branch', null, 'manage_accounts', null, false, 2),
+  new Menu(3, 'Tax', '/master/tax', null, 'manage_accounts', null, false, 2),
   new Menu(4, 'Users', '/users', null, 'supervisor_account', null, false, 0),
   new Menu(5, 'Entries', null, null, 'card_membership', null, true, 0),
 

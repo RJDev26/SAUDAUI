@@ -224,4 +224,8 @@ export class MasterService {
     return this.httpClient.get<any>(environment.apiBaseUrl + 'master/getBrokerageSetupId/' + id, { headers: this.headers })
   }
 
+  getApplyOn(): Observable<any> {
+    return this.httpClient.get<any>(environment.apiBaseUrl + 'Common/getApplyOnTaxDDL', { headers: this.headers });
+  }
+
 }

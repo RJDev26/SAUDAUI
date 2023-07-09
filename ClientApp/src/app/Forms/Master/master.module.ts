@@ -27,6 +27,8 @@ import { AddSlabDetailsComponent } from './brokerage-slab/add-slab-details/add-s
 import { AddSlabComponent } from './brokerage-slab/add-slab/add-slab.component';
 import { AddSetupDetailsComponent } from './brokerage-setup/add-setup-details/add-setup-details.component';
 import { BranchComponent } from './branch/branch.component';
+import { TaxComponent } from './tax-master/tax-master.component';
+import { AddTaxComponent } from './tax-master/tax-dialog/add-tax-master.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'account', pathMatch: 'full' },
@@ -39,7 +41,8 @@ export const routes: Routes = [
   { path: 'contract-master', component: ContractMasterComponent, data: { breadcrumb: 'Contract Master' } },
   { path: 'brokerage-slab', component: BrokerageSlabComponent, data: { breadcrumb: 'Brokerage Slab' } },
   { path: 'brokerage-setup', component: BrokerageSetupComponent, data: { breadcrumb: 'Brokerage Setup' } },
-  { path: 'branch', component: BranchComponent, data: { breadcrumb: 'Branch' } }
+  { path: 'branch', component: BranchComponent, data: { breadcrumb: 'Branch' } },
+  { path: 'tax', component: TaxComponent, data: { breadcrumb: 'Tax' } }
 ];
 
 @NgModule({
@@ -73,7 +76,9 @@ export const routes: Routes = [
      AddSlabDetailsComponent,
      AddSlabComponent,
      AddSetupDetailsComponent,
-     BranchComponent
+     BranchComponent,
+     TaxComponent,
+     AddTaxComponent
   ],
   providers: [
     { provide: MAT_DATE_LOCALE, useValue: 'en-GB' }
