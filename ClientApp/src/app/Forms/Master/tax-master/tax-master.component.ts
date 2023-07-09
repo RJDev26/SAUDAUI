@@ -6,6 +6,7 @@ import { Settings } from "src/app/app.settings.model";
 import { AppService } from "src/app/service/app.service";
 import { MasterService } from "../master.service";
 import { AddTaxComponent } from "./tax-dialog/add-tax-master.component";
+import { ConfirmationDialog } from "../../Dialog/confirmation-dialog/confirmation-dialog.component";
 
 @Component({
     selector: 'app-blank',
@@ -48,8 +49,7 @@ export class TaxComponent implements OnInit {
           maxWidth: 110, resizable: true
         },
         { headerName: 'Name', field: 'name', filter: true, sorting: true, resizable: true },
-        { headerName: 'AppliedOn', field: 'appliedOn', filter: true, sorting: true, resizable: true },
-        { headerName: 'type', field: 'Type', filter: true, sorting: true, resizable: true }    
+        { headerName: 'AppliedOn', field: 'appliedOn', filter: true, sorting: true, resizable: true }  
     ];
 
     gettaxList() {
@@ -65,9 +65,37 @@ export class TaxComponent implements OnInit {
           return cell.rowIndex === params.node.rowIndex;
         });
         eGui.innerHTML = `<button class="material-icons action-button-edit" data-action="edit">edit </button>
-                          <button class="material-icons action-button-red" delete data-action="delete">delete</button>`;
-    
+                          <button class="material-icons action-button-red" delete data-action="delete">delete</button>`;    
         return eGui;
+    }
+
+    onGridClick(params: any) {
+      if (params.event.target.dataset.action == "edit")
+      {
+        this.openTaxDialog(params.data.id);
+      }
+      if (params.event.target.dataset.action == "delete")
+      {
+        const dialogRef = this.dialog.open(ConfirmationDialog, {
+          data: {
+            message: 'Do you really want to delete this record?',
+            buttonText: {
+              ok: 'Yes',
+              cancel: 'No'
+            }
+          }
+        });
+  
+        dialogRef.afterClosed().subscribe((confirmed: boolean) => {
+          if (confirmed) {
+            this._masterService.deleteTax(params.data.id).subscribe((res) => {
+              this.gettaxList();
+            });
+          }
+        });
+  
+  
+      }
     }
 
     public openTaxDialog(user) {

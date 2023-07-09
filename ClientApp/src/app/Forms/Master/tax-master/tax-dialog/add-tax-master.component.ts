@@ -11,8 +11,8 @@ import { forkJoin, map } from 'rxjs';
 })
 
 export class AddTaxComponent implements OnInit {
-    public taxForm: UntypedFormGroup;
-    applyOn: any;
+    public taxMasterForm: UntypedFormGroup;
+    applyOnList: any;
     selectedId: any;
 
     constructor(private formBuilder: UntypedFormBuilder, public dialogRef: MatDialogRef<AddTaxComponent>, @Inject(MAT_DIALOG_DATA) public data: any, private _appService: MasterService) {
@@ -21,10 +21,9 @@ export class AddTaxComponent implements OnInit {
     }
 
     bindFormControls() {
-        this.taxForm = this.formBuilder.group({
+        this.taxMasterForm = this.formBuilder.group({
             'name': ['', Validators.required], 
-            'ApplyOn': ['', Validators.required],  
-            'type': ['', Validators.required],     
+            'appliedOn': ['', Validators.required],    
             'id': [0]
         });
         this.initialApiCalls();
@@ -32,15 +31,48 @@ export class AddTaxComponent implements OnInit {
 
     initialApiCalls() {
         forkJoin([this._appService.getApplyOn()]).pipe(map(response => {
-          this.applyOn = response[0];
+          this.applyOnList = response[0];
         })).subscribe(res => {
         
         });
     }
 
+    getTaxInfo()
+    {
+        this._appService.getTaxById(this.selectedId).subscribe((res) => {
+        this.taxMasterForm.get('name').setValue(res.name);
+        this.taxMasterForm.get('appliedOn').setValue(res.appliedOn);
+        this.taxMasterForm.get('id').setValue(res.id);   
+        });
+    } 
     
+    public onSubmit(values: Object): void {
+    
+        this.taxMasterForm.controls['name'].setValue(String(this.taxMasterForm.get('name').value));
+        this.taxMasterForm.controls['appliedOn'].setValue(String(this.taxMasterForm.get('appliedOn').value));
+    
+        var body = this.taxMasterForm.value;
+    
+        if (this.taxMasterForm.valid) {
+          this._appService.saveTax(body).subscribe(result => {
+            this.dialogRef.close();
+          }, err => {
+            console.log(err);
+          });
+        }
+    }
 
     ngOnInit() {
         this.bindFormControls();
+        if (this.selectedId != 0) {
+            this.getTaxInfo();
+        }
+        else {
+            this.taxMasterForm.get('id').setValue(0);
+        }
+    }
+
+    close(): void {
+        this.dialogRef.close();
     }
 }

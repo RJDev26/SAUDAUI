@@ -1,32 +1,25 @@
-<h2 class="heading mb-0">Add Tax</h2>
+<h2 class="heading mb-10">Add Tax</h2>
 <mat-tab-group>
     <mat-tab label="Tax">
-        <form [formGroup]="taxForm" (ngSubmit)="onSubmit(taxForm.value)" fxLayout="row wrap" class="user-form">
+        <form [formGroup]="taxMasterForm" (ngSubmit)="onSubmit(taxMasterForm.value)" fxLayout="row wrap" class="user-form">
             <div class="tab-party-details-parent">
                 <div class="white-block pb-5">
                     <h3><span>Tax Details</span></h3>
-                    <div fxFlex="100" fxFlex.gt-sm="33.33" fxFlex.sm="33.33">
+                    <div fxFlex="100" fxFlex.gt-sm="50" fxFlex.sm="50">
                         <mat-form-field appearance="outline">
                           <mat-label>Name</mat-label>
                           <input matInput autocomplete="off" placeholder="name" formControlName="name" type="text">
-                          <mat-error *ngIf="taxForm.controls.name.errors?.required">Name is required</mat-error>
+                          <mat-error *ngIf="taxMasterForm.controls.name.errors?.required">Name is required</mat-error>
                         </mat-form-field>
                     </div>
-                    <div fxFlex="100" fxFlex.gt-sm="33.33" fxFlex.sm="33.33">
+                    <div fxFlex="100" fxFlex.gt-sm="50" fxFlex.sm="50">
                         <mat-form-field class="example-full-width" appearance="outline">
                             <mat-label>ApplyOn</mat-label>
-                            <mat-select placeholder="" formControlName="ApplyOn">
-                                <mat-option *ngFor="let apply of applyOn" [value]="apply.id">
+                            <mat-select placeholder="" formControlName="appliedOn">
+                                <mat-option *ngFor="let apply of applyOnList" [value]="apply.id">
                                   {{apply.name}}
                                 </mat-option>
                             </mat-select>
-                        </mat-form-field>
-                    </div>
-                    <div fxFlex="100" fxFlex.gt-sm="33.33" fxFlex.sm="33.33">
-                        <mat-form-field appearance="outline">
-                          <mat-label>Type</mat-label>
-                          <input matInput autocomplete="off" placeholder="type" formControlName="type" type="text">
-                          <mat-error *ngIf="taxForm.controls.type.errors?.required">Type is required</mat-error>
                         </mat-form-field>
                     </div>
                 </div>
@@ -38,10 +31,10 @@
         </form>
     </mat-tab>
     <mat-tab label="Account Tax">
-        <form [formGroup]="taxForm" (ngSubmit)="onSubmit(taxForm.value)" fxLayout="row wrap" class="user-form">
+        <!-- <form [formGroup]="taxForm" (ngSubmit)="onSubmit(taxForm.value)" fxLayout="row wrap" class="user-form">
             <div class="tab-party-details-parent">
                 <div class="white-block pb-5"></div>
             </div>
-        </form>
+        </form> -->
     </mat-tab>
 </mat-tab-group>

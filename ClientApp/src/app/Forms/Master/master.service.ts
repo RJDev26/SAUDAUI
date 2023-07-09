@@ -228,4 +228,15 @@ export class MasterService {
     return this.httpClient.get<any>(environment.apiBaseUrl + 'Common/getApplyOnTaxDDL', { headers: this.headers });
   }
 
+  getTaxById(id: number): Observable<any> {
+    return this.httpClient.get<any>(environment.apiBaseUrl + 'MasterSecond/getTaxId/' + id, { headers: this.headers })
+  }
+
+  saveTax(data): Observable<any> {
+    return this.httpClient.post<any>(environment.apiBaseUrl + 'MasterSecond/SaveTax', data, { headers: this.headers });
+  }
+
+  deleteTax(id: number): Observable<any> {
+    return this.httpClient.get<any>(environment.apiBaseUrl + 'MasterSecond/deleteTax/' + id, { headers: this.headers })
+  }
 }
