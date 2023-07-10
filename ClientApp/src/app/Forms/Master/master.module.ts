@@ -29,6 +29,7 @@ import { AddSetupDetailsComponent } from './brokerage-setup/add-setup-details/ad
 import { BranchComponent } from './branch/branch.component';
 import { TaxComponent } from './tax-master/tax-master.component';
 import { AddTaxComponent } from './tax-master/tax-dialog/add-tax-master.component';
+import { AddBranchAccountComponent } from './branch/add-branch-account/add-branch-account.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'account', pathMatch: 'full' },
@@ -75,10 +76,12 @@ export const routes: Routes = [
      ErrorDialog,
      AddSlabDetailsComponent,
      AddSlabComponent,
+     AddAccountComponent,
      AddSetupDetailsComponent,
      BranchComponent,
      TaxComponent,
-     AddTaxComponent
+     AddTaxComponent,
+     AddBranchAccountComponent
   ],
   providers: [
     { provide: MAT_DATE_LOCALE, useValue: 'en-GB' }
