@@ -31,10 +31,40 @@
         </form>
     </mat-tab>
     <mat-tab label="Account Tax">
-        <form [formGroup]="accountTaxForm" (ngSubmit)="onSubmit(accountTaxForm.value)" fxLayout="row wrap" class="user-form">
+        <form [formGroup]="taxForm" (ngSubmit)="onSubmit(taxForm.value)" fxLayout="row wrap" class="user-form">
             <div class="tab-party-details-parent">
                 <div class="white-block">
                     <h3><span>Account Tax</span></h3>
+                    <div fxFlex="100" fxFlex.gt-sm="33" fxFlex.sm="33">
+                        <div class="dropdown-wrapper">
+                            <mat-form-field class="select-slab-mat" appearance="outline">
+                              <mat-label>Select Account</mat-label>
+                              <mat-select #select [(ngModel)]="accountIds" multiple placeholder="Select Account" panelClass="custom-select-panel">
+                                <input class="milti-search-box" #multiUserSearch type="text" autocomplete="off" matInput placeholder="Search Account" />
+                                <mat-option value=-1 (click)="accountAllSelection()">Select All</mat-option>
+                                <mat-option *ngFor="let option of filteredProviders" [value]="option.id">
+                                  {{ option.name }}
+                                </mat-option>
+                              </mat-select>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div fxFlex="100" fxFlex.gt-sm="33" fxFlex.sm="33">
+                        <mat-form-field class="example-full-width" appearance="outline">
+                            <mat-label>Tax</mat-label>
+                            <mat-select placeholder="Select Tax" formControlName="taxId">
+                              <mat-option *ngFor="let tax of taxList" [value]="tax.id">
+                                {{tax.name}}
+                              </mat-option>
+                            </mat-select>
+                          </mat-form-field>
+                    </div>
+                    <div fxFlex="100" fxFlex.gt-sm="33" fxFlex.sm="33">
+                        <mat-radio-group formControlName="YesNo" class="pt-5">
+                            <mat-radio-button value="Y" class="mx-1 pl-10" checked>Yes</mat-radio-button>
+                            <mat-radio-button value="N" class="ml-15">No</mat-radio-button>
+                        </mat-radio-group>
+                    </div>
                 </div>
             </div>
         </form>

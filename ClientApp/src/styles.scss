@@ -257,6 +257,13 @@ input[type=number]:-moz-placeholder { /* Firefox 18- */
     }
 }
 
+input {
+    &.milti-search-box{
+        padding: 10px;
+        box-sizing: border-box;
+    }
+}
+
 .ag-theme-material {
     border: 1px solid #ddd;
     .ag-root-wrapper-body {
