@@ -224,7 +224,10 @@ export class MasterService {
     return this.httpClient.get<any>(environment.apiBaseUrl + 'master/getBrokerageSetupId/' + id, { headers: this.headers })
   }
 
-<<<<<<< Updated upstream
+  deleteBranch(id: number): Observable<any> {
+    return this.httpClient.get<any>(environment.apiBaseUrl + 'master/deleteBranch/' + id, { headers: this.headers })
+  }
+
   getApplyOn(): Observable<any> {
     return this.httpClient.get<any>(environment.apiBaseUrl + 'Common/getApplyOnTaxDDL', { headers: this.headers });
   }
@@ -239,11 +242,6 @@ export class MasterService {
 
   deleteTax(id: number): Observable<any> {
     return this.httpClient.get<any>(environment.apiBaseUrl + 'MasterSecond/deleteTax/' + id, { headers: this.headers })
-  }
-}
-=======
-  deleteBranch(id: number): Observable<any> {
-    return this.httpClient.get<any>(environment.apiBaseUrl + 'master/deleteBranch/' + id, { headers: this.headers })
   }
   
 
@@ -272,4 +270,3 @@ export class MasterService {
   }
 
 }
->>>>>>> Stashed changes
