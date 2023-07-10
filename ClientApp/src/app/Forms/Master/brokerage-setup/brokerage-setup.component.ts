@@ -21,7 +21,7 @@ import { CommonUtility } from 'src/app/shared/common-utility';
 export class BrokerageSetupComponent implements OnInit {
   @ViewChild('select') select: MatSelect;
   @ViewChild('selectAccount') selectAccount: MatSelect;
-  public settings: Settings
+  public settings: Settings;
   slabId: number;
   slabList: any[];
   accountList: any[];
@@ -87,7 +87,7 @@ export class BrokerageSetupComponent implements OnInit {
 
   fetchDropdownData() {
     this._masterService.getSlabDDL().subscribe((response) => { this.slabList = response });
-    this._masterService.getBranchList().subscribe((response) => { 
+    this._masterService.getBranchDDLList().subscribe((response) => { 
       this.branchList = response;
       this.filteredProviders = this.branchList;
    });

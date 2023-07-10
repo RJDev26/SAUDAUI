@@ -174,7 +174,7 @@ export class MasterService {
   saveCompany(data): Observable<any> {
     return this.httpClient.post<any>(environment.apiBaseUrl + 'Master/SaveCompany', data, { headers: this.headers });
   }
-  getBranchList(): Observable<any> {
+  getBranchDDLList(): Observable<any> {
     return this.httpClient.get<any>(environment.apiBaseUrl + 'master/getBranchDDL', { headers: this.headers })
   }
   getBranchAccounts(branchIds:any): Observable<any> {
@@ -224,6 +224,7 @@ export class MasterService {
     return this.httpClient.get<any>(environment.apiBaseUrl + 'master/getBrokerageSetupId/' + id, { headers: this.headers })
   }
 
+<<<<<<< Updated upstream
   getApplyOn(): Observable<any> {
     return this.httpClient.get<any>(environment.apiBaseUrl + 'Common/getApplyOnTaxDDL', { headers: this.headers });
   }
@@ -240,3 +241,35 @@ export class MasterService {
     return this.httpClient.get<any>(environment.apiBaseUrl + 'MasterSecond/deleteTax/' + id, { headers: this.headers })
   }
 }
+=======
+  deleteBranch(id: number): Observable<any> {
+    return this.httpClient.get<any>(environment.apiBaseUrl + 'master/deleteBranch/' + id, { headers: this.headers })
+  }
+  
+
+  savebranch(data): Observable<any> {
+    return this.httpClient.post<any>(environment.apiBaseUrl + 'Master/savebranch', data, { headers: this.headers });
+  }
+
+  getBranchList(): Observable<any> {
+    return this.httpClient.get<any>(environment.apiBaseUrl + 'master/getBranchList', { headers: this.headers })
+  }
+
+  getBranchId(id: number): Observable<any> {
+    return this.httpClient.get<any>(environment.apiBaseUrl + 'master/getBranchId/' + id, { headers: this.headers })
+  }
+
+  getBranchAccountsID(id: number): Observable<any> {
+    return this.httpClient.get<any>(environment.apiBaseUrl + 'master/getBranchAccounts/' + id, { headers: this.headers })
+  }
+
+  addBranchAccount(data): Observable<any> {
+    return this.httpClient.post<any>(environment.apiBaseUrl + 'Master/AddBranchAccount', data, { headers: this.headers });
+  }
+
+  deleteBranchAccount(data): Observable<any> {
+    return this.httpClient.post<any>(environment.apiBaseUrl + 'Master/deleteBranchAccount', data, { headers: this.headers });
+  }
+
+}
+>>>>>>> Stashed changes

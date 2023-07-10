@@ -27,8 +27,12 @@ import { AddSlabDetailsComponent } from './brokerage-slab/add-slab-details/add-s
 import { AddSlabComponent } from './brokerage-slab/add-slab/add-slab.component';
 import { AddSetupDetailsComponent } from './brokerage-setup/add-setup-details/add-setup-details.component';
 import { BranchComponent } from './branch/branch.component';
+<<<<<<< Updated upstream
 import { TaxComponent } from './tax-master/tax-master.component';
 import { AddTaxComponent } from './tax-master/tax-dialog/add-tax-master.component';
+=======
+import { AddBranchAccountComponent } from './branch/add-branch-account/add-branch-account.component';
+>>>>>>> Stashed changes
 
 export const routes: Routes = [
   { path: '', redirectTo: 'account', pathMatch: 'full' },
@@ -75,10 +79,15 @@ export const routes: Routes = [
      ErrorDialog,
      AddSlabDetailsComponent,
      AddSlabComponent,
+     AddAccountComponent,
      AddSetupDetailsComponent,
      BranchComponent,
+<<<<<<< Updated upstream
      TaxComponent,
      AddTaxComponent
+=======
+     AddBranchAccountComponent,
+>>>>>>> Stashed changes
   ],
   providers: [
     { provide: MAT_DATE_LOCALE, useValue: 'en-GB' }
