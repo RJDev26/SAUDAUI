@@ -86,6 +86,11 @@ onGridClick(params: any) {
   }
 }
 onGridReady(event) { }
+getBranchAccountIDs() {
+  this._masterService.getBranchAccountsID(this.selectedBranchID).subscribe((res)=>{
+    this.branchIDAccountList = res;
+  });
+}
   getApiData() {
     if(this.selectedBranchID){
       this._masterService.getBranchId(this.selectedBranchID).subscribe((res)=>{
@@ -93,9 +98,7 @@ onGridReady(event) { }
           name: res.name
         });
       });
-      this._masterService.getBranchAccountsID(this.selectedBranchID).subscribe((res)=>{
-        this.branchIDAccountList = res;
-      });
+      this.getBranchAccountIDs();
     }
     this._masterService.getAccount().subscribe((response) => { this.accountList = response;
     this.filteredAccountList = response;
@@ -131,14 +134,17 @@ onGridReady(event) { }
     var body = this.branchForm.value;
     console.log(body);
     if (this.branchForm.valid) {
-      this._masterService.savebranch(body).subscribe(result => {
+      this._masterService.saveBranch(body).subscribe(result => {
         console.log("result", result);
         this.selectedBranchID = result.id;
       });
     }
   }
   public onAccountSubmit(values: Object): void {
-
+    if( !this.selectedBranchID){
+      alert('Please save branch');
+      return;
+    }
     var body = this.accountForm.value;
     console.log(body);
     const reqObj = {
@@ -148,6 +154,7 @@ onGridReady(event) { }
     if (this.accountForm.valid) {
       this._masterService.addBranchAccount(reqObj).subscribe(result => {
         console.log("result", result);
+        this.getBranchAccountIDs();
       });
     }
   }

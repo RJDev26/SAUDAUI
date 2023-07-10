@@ -245,8 +245,8 @@ export class MasterService {
   }
   
 
-  savebranch(data): Observable<any> {
-    return this.httpClient.post<any>(environment.apiBaseUrl + 'Master/savebranch', data, { headers: this.headers });
+  saveBranch(data): Observable<any> {
+    return this.httpClient.post<any>(environment.apiBaseUrl + 'Master/saveBranch', data, { headers: this.headers });
   }
 
   getBranchList(): Observable<any> {
