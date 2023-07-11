@@ -29,6 +29,10 @@ export class BranchComponent implements OnInit {
     suppressRowHoverHighlight: true,
   }
   columnDefs = [
+   
+  
+   
+
     {
       headerName: 'Action', field: 'fileIcon', cellRenderer: this.actionCellRenderer, resizable: true
     },

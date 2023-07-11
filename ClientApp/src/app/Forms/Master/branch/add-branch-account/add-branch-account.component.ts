@@ -17,6 +17,7 @@ export class AddBranchAccountComponent implements OnInit {
   public accountForm: UntypedFormGroup;
   selectedBranchID: any;
   branchIDAccountList: any[];
+  gridApi: any;
   agGridOptions: any = {
     defaultColDef: {
       filter: true,
@@ -25,14 +26,18 @@ export class AddBranchAccountComponent implements OnInit {
       wraptext: true,
       resizable: true,
       minWidth: 100,
-    
+     
     },
     suppressRowHoverHighlight: true,
   }
   columnDefs = [
+
     {
-      headerName: 'Action', field: 'fileIcon', cellRenderer: this.actionCellRenderer, resizable: true
+      headerName: '', editable: false, width: 45,maxwidth:80, resizable: true, checkboxSelection: true, headerCheckboxSelection: true,
     },
+    //{
+    //  headerName: 'Action', field: 'fileIcon', cellRenderer: this.actionCellRenderer, resizable: true
+    //},
     { headerName: 'Name',  field: 'name', filter: true, sorting: true, resizable: true },
   ];
   constructor(private formBuilder: UntypedFormBuilder, public dialog: MatDialog,  @Inject(MAT_DIALOG_DATA) public data: any, private _masterService: MasterService, public dialogRef: MatDialogRef<AddBranchAccountComponent>) { 
@@ -84,8 +89,8 @@ onGridClick(params: any) {
 
 
   }
-}
-onGridReady(event) { }
+  }
+  onGridReady(event) { this.gridApi = event.api; }
 getBranchAccountIDs() {
   this._masterService.getBranchAccountsID(this.selectedBranchID).subscribe((res)=>{
     this.branchIDAccountList = res;
@@ -131,6 +136,8 @@ getBranchAccountIDs() {
 
   public onSubmit(values: Object): void {
 
+    debugger;
+    var h = this.gridApi.getSelectedRows();
     var body = this.branchForm.value;
     console.log(body);
     if (this.branchForm.valid) {
