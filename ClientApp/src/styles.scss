@@ -121,6 +121,12 @@ input[type=number]:-moz-placeholder { /* Firefox 18- */
     float: left;
 }
 
+.delete-btn {
+    background: #dc3545 !important;
+    color: #fff !important;
+    margin-left: 10px;
+  }
+
 #main .options-icon {
     top: 58px;
 }
