@@ -18,6 +18,7 @@ export class AddBranchAccountComponent implements OnInit {
   selectedBranchID: any;
   branchIDAccountList: any[];
   gridApi: any;
+  isRowSelected: boolean = false;
   agGridOptions: any = {
     defaultColDef: {
       filter: true,
@@ -30,15 +31,19 @@ export class AddBranchAccountComponent implements OnInit {
     },
     suppressRowHoverHighlight: true,
   }
-  columnDefs = [
+  columnDefs = [{
+    headerName: 'Added account list',
+    children: [
 
-    {
-      headerName: '', editable: false, width: 45,maxwidth:80, resizable: true, checkboxSelection: true, headerCheckboxSelection: true,
-    },
-    //{
-    //  headerName: 'Action', field: 'fileIcon', cellRenderer: this.actionCellRenderer, resizable: true
-    //},
-    { headerName: 'Name',  field: 'name', filter: true, sorting: true, resizable: true },
+      {
+        headerName: '', editable: false, width: 45, maxwidth: 80, resizable: true, checkboxSelection: true, headerCheckboxSelection: true,
+      },
+      //{
+      //  headerName: 'Action', field: 'fileIcon', cellRenderer: this.actionCellRenderer, resizable: true
+      //},
+      { headerName: 'Name', field: 'name', filter: true, sorting: true, resizable: true },
+    ]
+  }
   ];
   constructor(private formBuilder: UntypedFormBuilder, public dialog: MatDialog,  @Inject(MAT_DIALOG_DATA) public data: any, private _masterService: MasterService, public dialogRef: MatDialogRef<AddBranchAccountComponent>) { 
     this.selectedBranchID = data.branchID;
@@ -111,10 +116,12 @@ getBranchAccountIDs() {
   });
   }
 
-  // patchAccountIds() {
-  //   const accountIds = this.accountList.map(account => account.id);
-  //   this.accountForm.get('accountIds').patchValue(accountIds);
-  // }
+  checkSelectedRow(event: any)
+  {
+    var selectedRow = this.gridApi.getSelectedRows();
+    if (selectedRow.length > 0) { this.isRowSelected = true; }
+    else { this.isRowSelected = false; }
+  }
 
   onInputAccountListChange(event: any) {
     const searchInput = event.target.value.toLowerCase();
