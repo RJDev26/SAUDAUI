@@ -3,7 +3,7 @@
   <mat-tab label="Branch">
     <form [formGroup]="branchForm" (ngSubmit)="onSubmit(branchForm.value)" fxLayout="row wrap" class="user-form">
         <div class="tab-party-details-parent">
-          <div class="white-block pb-5">
+          <div class="white-block pb-0">
             <h3><span>Branch</span></h3>
             <div fxFlex="100">
               <mat-form-field appearance="outline">
@@ -23,7 +23,7 @@
   <mat-tab label="Account">
     <form [formGroup]="accountForm" (ngSubmit)="onAccountSubmit(accountForm.value)" fxLayout="row wrap" class="user-form">
       <div class="tab-party-details-parent">
-        <div class="white-block pb-5">
+        <div class="white-block pb-0">
           <h3><span>Account</span></h3>
           <div fxFlex="100">
             <div class="dropdown-wrapper">
@@ -50,7 +50,7 @@
       <span class="material-symbols-outlined delete-icon">
         <mat-icon>delete_sweep</mat-icon>
       </span>
-      <ag-grid-angular style=" height: 350px;"
+      <ag-grid-angular style=" height: 240px;"
                     class="ag-theme-material mt-2"
                     [rowData]="branchIDAccountList"
                     [pagination]="true"

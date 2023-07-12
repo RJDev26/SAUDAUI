@@ -3,7 +3,7 @@
     <mat-tab label="Tax">
         <form [formGroup]="taxMasterForm" (ngSubmit)="onSubmit(taxMasterForm.value)" fxLayout="row wrap" class="user-form">
             <div class="tab-party-details-parent">
-                <div class="white-block pb-5">
+                <div class="white-block pb-0">
                     <h3><span>Tax Details</span></h3>
                     <div fxFlex="100" fxFlex.gt-sm="50" fxFlex.sm="50">
                         <mat-form-field appearance="outline">
@@ -33,9 +33,9 @@
     <mat-tab label="Account Tax">
         <form [formGroup]="taxForm" (ngSubmit)="onSubmit(taxForm.value)" fxLayout="row wrap" class="user-form">
             <div class="tab-party-details-parent">
-                <div class="white-block">
+                <div class="white-block pb-0">
                     <h3><span>Account Tax</span></h3>
-                    <div fxFlex="100" fxFlex.gt-sm="33" fxFlex.sm="33">
+                    <div fxFlex="100" fxFlex.gt-sm="40" fxFlex.sm="40">
                         <div class="dropdown-wrapper">
                             <mat-form-field class="select-slab-mat" appearance="outline">
                               <mat-label>Select Account</mat-label>
@@ -59,13 +59,17 @@
                             </mat-select>
                           </mat-form-field>
                     </div>
-                    <div fxFlex="100" fxFlex.gt-sm="33" fxFlex.sm="33">
-                        <mat-radio-group formControlName="YesNo" class="pt-5">
+                    <div fxFlex="100" fxFlex.gt-sm="24" fxFlex.sm="24" class="pt-8">
+                        <mat-radio-group formControlName="YesNo">
                             <mat-radio-button value="Y" class="mx-1 pl-10" checked>Yes</mat-radio-button>
                             <mat-radio-button value="N" class="ml-15">No</mat-radio-button>
                         </mat-radio-group>
                     </div>
                 </div>
+            </div>
+            <div fxFlex="100" class="mt-2 text-center space-between-btns">
+                <button mat-raised-button color="warn" type="button" (click)="close()">Cancel</button>
+                <button mat-raised-button color="primary" class="uppercase" type="submit">Save</button>
             </div>
         </form>
     </mat-tab>
