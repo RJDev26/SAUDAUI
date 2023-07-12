@@ -71,6 +71,16 @@ body {
 .flex-end {
     justify-content: flex-end;
 }
+.position-relative {
+    position: relative;
+}
+.delete-icon {
+    color: #dc3545;
+    position: absolute;
+    top: 7px;
+    right: 10px;
+    z-index: 1;
+}
 .action-button-edit, .action-button-red {
     background: transparent;
     border: none;

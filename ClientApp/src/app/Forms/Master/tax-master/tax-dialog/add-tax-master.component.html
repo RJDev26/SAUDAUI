@@ -69,8 +69,27 @@
             </div>
             <div fxFlex="100" class="mt-2 text-center space-between-btns">
                 <button mat-raised-button color="warn" type="button" (click)="close()">Cancel</button>
-                <button mat-raised-button color="primary" class="uppercase" type="submit">Save</button>
+                <button mat-raised-button color="primary" class="uppercase" type="submit">Add Account</button>
             </div>
         </form>
+        <div class="col-xl-12 mt-2 position-relative">
+            <span class="material-symbols-outlined delete-icon">
+              <mat-icon>delete_sweep</mat-icon>
+            </span>
+            <ag-grid-angular style=" height: 240px;"
+                          class="ag-theme-material mt-2"
+                          [rowData]="accountTaxList"
+                          [pagination]="true"
+                          [rowHeight]="31"
+                          [columnDefs]="columnDefs"
+                          [rowSelection]="'multiple'"
+                          [rowMultiSelectWithClick]="true"
+                          [defaultColDef]="agGridOptions.defaultColDef"
+                          (cellClicked)="onGridClick($event)"
+                          (gridReady)="onGridReady($event)"
+                          (selectionChanged)="checkSelectedRow($event)"
+                          headerHeight="34">
+            </ag-grid-angular>
+        </div>
     </mat-tab>
 </mat-tab-group>

@@ -32,6 +32,33 @@ export class AddTaxComponent implements OnInit {
     taxList: Tax[];
     filteredAccountList: any[];
     accountAllSellected: boolean = false;
+    accountTaxList: any[];
+    gridApi: any;
+    isRowSelected: boolean = false;
+    agGridOptions: any = {
+        defaultColDef: {
+        filter: true,
+        flex:1,
+        sortable: true,
+        wraptext: true,
+        resizable: true,
+        minWidth: 100,
+        
+        },
+        suppressRowHoverHighlight: true,
+    }
+
+    columnDefs = [{
+        headerName: 'Added account tax list',
+        children: [
+    
+          {
+            headerName: '', editable: false, width: 45, maxwidth: 80, resizable: true, checkboxSelection: true, headerCheckboxSelection: true,
+          },
+          { headerName: 'Account', field: 'account', filter: true, sorting: true, resizable: true },
+          { headerName: 'Tax', field: 'tax', filter: true, sorting: true, resizable: true },
+        ]
+      }];
 
     constructor(public appSettings: AppSettings, private _appService: MasterService, private formBuilder: UntypedFormBuilder, public dialogRef: MatDialogRef<AddTaxComponent>, @Inject(MAT_DIALOG_DATA) public data: any, private _masterService: MasterService) {
         this.selectedId = data.id;
