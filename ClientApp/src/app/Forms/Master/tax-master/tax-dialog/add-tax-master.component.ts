@@ -33,6 +33,7 @@ export class AddTaxComponent implements OnInit {
     filteredAccountList: any[];
     accountAllSellected: boolean = false;
     accountTaxList: any[];
+    accountDDLList: any[];
     gridApi: any;
     isRowSelected: boolean = false;
     agGridOptions: any = {
@@ -93,7 +94,7 @@ export class AddTaxComponent implements OnInit {
     bindAccountTaxControls() {
         this.taxForm = this.formBuilder.group({
             'taxId': ['', Validators.required],
-            'YesNo': ['1', Validators.required],    
+            'accountDDL': ['1', Validators.required],    
             'id': [0]
         });
         this.initialApiCalls();
@@ -125,9 +126,10 @@ export class AddTaxComponent implements OnInit {
    }
 
     initialApiCalls() {
-        forkJoin([this._appService.getApplyOn(), this._appService.getTaxType()]).pipe(map(response => {
+        forkJoin([this._appService.getApplyOn(), this._appService.getTaxType(), this._appService.getaccountDDLList()]).pipe(map(response => {
           this.applyOnList = response[0];
           this.taxList = response[1];
+          this.accountDDLList = response[2];
         })).subscribe(res => {
         
         });

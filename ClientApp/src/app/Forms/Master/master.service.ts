@@ -269,4 +269,8 @@ export class MasterService {
     return this.httpClient.post<any>(environment.apiBaseUrl + 'Master/deleteBranchAccount', data, { headers: this.headers });
   }
 
+  getaccountDDLList(): Observable<any> {
+    return this.httpClient.get<any>(environment.apiBaseUrl + 'Common/getApplyOnTaxAccountDDL', { headers: this.headers });
+  }
+
 }
