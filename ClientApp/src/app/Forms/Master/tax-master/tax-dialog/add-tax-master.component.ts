@@ -23,7 +23,7 @@ export interface Tax {
 export class AddTaxComponent implements OnInit {
     @ViewChild('select') select: MatSelect;
     public taxMasterForm: UntypedFormGroup;
-    public taxForm: FormGroup;
+    public taxForm: UntypedFormGroup;
     applyOnList: any;
     selectedId: any;
     accountList: any[];
@@ -52,7 +52,10 @@ export class AddTaxComponent implements OnInit {
     columnDefs = [{
         headerName: 'Added account tax list',
         children: [
-    
+          {
+            headerName: 'Action', field: 'fileIcon', cellRenderer: this.actionCellRenderer, minWidth: 80,
+            maxWidth: 110, resizable: true
+          },
           {
             headerName: '', editable: false, width: 45, maxwidth: 80, resizable: true, checkboxSelection: true, headerCheckboxSelection: true,
           },
@@ -64,6 +67,17 @@ export class AddTaxComponent implements OnInit {
     constructor(public appSettings: AppSettings, private _appService: MasterService, private formBuilder: UntypedFormBuilder, public dialogRef: MatDialogRef<AddTaxComponent>, @Inject(MAT_DIALOG_DATA) public data: any, private _masterService: MasterService) {
         this.selectedId = data.id;
         if (data.id == null) { this.selectedId = 0; }
+    }
+
+    public actionCellRenderer(params: any) {
+      let eGui = document.createElement("div");
+      let editingCells = params.api.getEditingCells();
+      let isCurrentRowEditing = editingCells.some((cell: any) => {
+        return cell.rowIndex === params.node.rowIndex;
+      });
+      eGui.innerHTML = `<button class="material-icons action-button-edit" data-action="edit">edit </button>
+                        <button class="material-icons action-button-red" delete data-action="delete">delete</button>`;    
+      return eGui;
     }
 
     fetchDropdownData() {
@@ -107,7 +121,9 @@ export class AddTaxComponent implements OnInit {
         if(this.accountIds.length < 2 && this.accountIds[0] == '-1'){
           return;
         }
-      }
+    }
+
+    onGridReady(event) { this.gridApi = event.api; }
 
     accountAllSelection() {
         this.accountAllSellected = true;
@@ -144,31 +160,62 @@ export class AddTaxComponent implements OnInit {
         });
     } 
     
-    public onSubmit(values: Object): void {
-    
-        this.taxMasterForm.controls['name'].setValue(String(this.taxMasterForm.get('name').value));
-        this.taxMasterForm.controls['appliedOn'].setValue(String(this.taxMasterForm.get('appliedOn').value));
-    
-        var body = this.taxMasterForm.value;
-    
-        if (this.taxMasterForm.valid) {
-          this._appService.saveTax(body).subscribe(result => {
+    public onSubmit(values: Object): void {    
+      this.taxMasterForm.controls['name'].setValue(String(this.taxMasterForm.get('name').value));
+      this.taxMasterForm.controls['appliedOn'].setValue(String(this.taxMasterForm.get('appliedOn').value));    
+       var body = this.taxMasterForm.value;    
+      if (this.taxMasterForm.valid) {
+        this._appService.saveTax(body).subscribe(result => {
             this.dialogRef.close();
-          }, err => {
-            console.log(err);
+        }, err => {
+          console.log(err);
+        });
+      }
+    }
+
+    getAccountTaxIDs() {
+      this._masterService.getAccountTaxId(this.selectedId).subscribe((res)=>{
+        this.accountTaxList = res;
+      });
+    }
+    getApiData() {
+        if(this.selectedId){
+          this._masterService.getAccountId(this.selectedId).subscribe((res)=>{
+            this.taxMasterForm.patchValue({
+              name: res.name
+            });
           });
+          this.getAccountTaxIDs();
         }
+        this._masterService.getAccount().subscribe((response) => { this.accountList = response;
+        this.filteredAccountList = response;
+        // this.patchAccountIds()
+      });
+    }
+
+    public onAccountTaxSubmit(values: Object): void {
+      var body = this.taxForm.value;
+      const reqObj = {
+        "applyOn": this.selectedId,
+        "taxName": this.selectedId
+      }
+      if (this.taxForm.valid) {
+        this._masterService.addAccountTax(reqObj).subscribe(result => {
+          this.getAccountTaxIDs();
+        });
+      }
     }
 
     ngOnInit() {
-        this.bindFormControls();
-        this.fetchDropdownData();
-        if (this.selectedId != 0) {
-            this.getTaxInfo();
-        }
-        else {
-            this.taxMasterForm.get('id').setValue(0);
-        }
+      this.bindFormControls();
+      this.bindAccountTaxControls();
+      this.fetchDropdownData();
+      if (this.selectedId != 0) {
+          this.getTaxInfo();
+      }
+      else {
+          this.taxMasterForm.get('id').setValue(0);
+      }
     }
 
     close(): void {
