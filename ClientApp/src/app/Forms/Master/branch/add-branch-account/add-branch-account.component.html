@@ -49,10 +49,9 @@
       </div>
     </form>-->
 
-    <div class="row">
 
-      <div class="col-xl-6 mt-2 position-relative">
-        
+    <div class="row">
+      <div fxFlex="40">        
         <ag-grid-angular style=" height: 240px;"
                          class="ag-theme-material mt-2"
                          [rowData]="branchIDAccountList"
@@ -68,8 +67,25 @@
                          headerHeight="34">
         </ag-grid-angular>
       </div>
-
-      <div class="col-xl-6 mt-2 position-relative">
+      <div fxFlex="20" class="text-center">
+        <div class="pt-10 mb-10">
+          <button mat-raised-button color="primary" type="button">
+            <mat-icon>
+              <span class="material-symbols-outlined">
+                arrow_forward_ios
+              </span>
+            </mat-icon>
+          </button>
+        </div>
+        <button mat-raised-button color="warn" type="button">
+          <mat-icon>
+            <span class="material-symbols-outlined">
+              arrow_back_ios
+            </span>
+          </mat-icon>
+        </button>
+      </div>
+      <div fxFlex="40">
         <span class="material-symbols-outlined delete-icon">
           <mat-icon>delete_sweep</mat-icon>
         </span>
@@ -88,8 +104,10 @@
                          headerHeight="34">
         </ag-grid-angular>
       </div>
-
     </div>
+      
+      
+
 
   </mat-tab>
 </mat-tab-group>        
