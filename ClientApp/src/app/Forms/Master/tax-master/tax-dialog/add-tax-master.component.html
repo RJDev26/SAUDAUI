@@ -31,7 +31,7 @@
         </form>
     </mat-tab>
     <mat-tab label="Account Tax">
-        <form [formGroup]="taxForm" (ngSubmit)="onSubmit(taxForm.value)" fxLayout="row wrap" class="user-form">
+        <form [formGroup]="taxForm" (ngSubmit)="onAccountTaxSubmit(taxForm.value)" fxLayout="row wrap" class="user-form">
             <div class="tab-party-details-parent">
                 <div class="white-block pb-0">
                     <h3><span>Account Tax</span></h3>
@@ -39,7 +39,7 @@
                         <div class="dropdown-wrapper">
                             <mat-form-field class="select-slab-mat" appearance="outline">
                               <mat-label>Select Account</mat-label>
-                              <mat-select #select [(ngModel)]="accountIds" multiple placeholder="Select Account" panelClass="custom-select-panel">
+                              <mat-select #select multiple placeholder="Select Account" panelClass="custom-select-panel">
                                 <input class="milti-search-box" #multiUserSearch type="text" autocomplete="off" matInput placeholder="Search Account" />
                                 <mat-option value=-1 (click)="accountAllSelection()">Select All</mat-option>
                                 <mat-option *ngFor="let option of filteredProviders" [value]="option.id">
