@@ -54,22 +54,22 @@
       <div fxFlex="40">        
         <ag-grid-angular style=" height: 240px;"
                          class="ag-theme-material mt-2"
-                         [rowData]="branchIDAccountList"
+                         [rowData]="accountList"
                          [pagination]="true"
                          [rowHeight]="31"
-                         [columnDefs]="columnDefs"
+                         [columnDefs]="columnDefsSelectAc"
                          [rowSelection]="'multiple'"
                          [rowMultiSelectWithClick]="true"
                          [defaultColDef]="agGridOptions.defaultColDef"
-                         (cellClicked)="onGridClick($event)"
-                         (gridReady)="onGridReady($event)"
-                         (selectionChanged)="checkSelectedRow($event)"
+                        
+                         (gridReady)="onGridReadySelectAc($event)"
+                         (selectionChanged)="checkSelectedRowSelectAc($event)"
                          headerHeight="34">
         </ag-grid-angular>
       </div>
       <div fxFlex="20" class="text-center">
         <div class="pt-10 mb-10">
-          <button mat-raised-button color="primary" type="button">
+          <button mat-raised-button (click)="selectAccounts()" color="primary" type="button">
             <mat-icon>
               <span class="material-symbols-outlined">
                 arrow_forward_ios
@@ -77,7 +77,7 @@
             </mat-icon>
           </button>
         </div>
-        <button mat-raised-button color="warn" type="button">
+        <button mat-raised-button color="warn" (click)="removeAccounts()" type="button">
           <mat-icon>
             <span class="material-symbols-outlined">
               arrow_back_ios
@@ -86,9 +86,9 @@
         </button>
       </div>
       <div fxFlex="40">
-        <span class="material-symbols-outlined delete-icon">
+        <!--<span class="material-symbols-outlined delete-icon">
           <mat-icon>delete_sweep</mat-icon>
-        </span>
+        </span>-->
         <ag-grid-angular style=" height: 240px;"
                          class="ag-theme-material mt-2"
                          [rowData]="branchIDAccountList"
@@ -98,7 +98,6 @@
                          [rowSelection]="'multiple'"
                          [rowMultiSelectWithClick]="true"
                          [defaultColDef]="agGridOptions.defaultColDef"
-                         (cellClicked)="onGridClick($event)"
                          (gridReady)="onGridReady($event)"
                          (selectionChanged)="checkSelectedRow($event)"
                          headerHeight="34">

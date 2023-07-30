@@ -285,4 +285,11 @@ export class MasterService {
     return this.httpClient.post<any>(environment.apiBaseUrl + 'MasterSecond/SaveAccountTax', data, { headers: this.headers });
   }
 
+  getAccountsForBranch(id: number): Observable<any> {
+    return this.httpClient.get<any>(environment.apiBaseUrl + 'master/getAccountsForBranch/' + id, { headers: this.headers })
+  }
+  getAccountsAddedinBranch(id: number): Observable<any> {
+    return this.httpClient.get<any>(environment.apiBaseUrl + 'master/getBranchAccountList/' + id, { headers: this.headers })
+  }
+
 }

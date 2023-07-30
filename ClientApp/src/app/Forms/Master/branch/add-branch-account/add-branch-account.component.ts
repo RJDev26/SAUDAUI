@@ -18,30 +18,48 @@ export class AddBranchAccountComponent implements OnInit {
   selectedBranchID: any;
   branchIDAccountList: any[];
   gridApi: any;
+  gridApiSelectAc: any;
   isRowSelected: boolean = false;
   agGridOptions: any = {
-    defaultColDef: {
-      filter: true,
-       flex:1,
-      sortable: true,
-      wraptext: true,
-      resizable: true,
-      minWidth: 100,
+    //defaultColDef: {
+    //  filter: true,
+    //   flex:1,
+    //  sortable: true,
+    //  wraptext: true,
+    //  resizable: true,
+      
      
-    },
+    //},
     suppressRowHoverHighlight: true,
   }
+
+
+  columnDefsSelectAc = [{
+    headerName: 'Select account ',
+    children: [
+
+      {
+        headerName: '', editable: false, width: 5, minwidth: 5, maxwidth: 5, resizable: false, checkboxSelection: true, headerCheckboxSelection: true,
+      },
+      //{
+      //  headerName: 'Action', field: 'fileIcon', cellRenderer: this.actionCellRenderer, resizable: true
+      //},
+      { headerName: 'Name', field: 'name', filter: true, sorting: true, resizable: true, flex: 1 },
+    ]
+  }
+  ];
+
   columnDefs = [{
     headerName: 'Added account list',
     children: [
 
       {
-        headerName: '', editable: false, width: 45, maxwidth: 80, resizable: true, checkboxSelection: true, headerCheckboxSelection: true,
+        headerName: '', editable: false,width:5, minwidth: 5, maxwidth: 5, resizable: false, checkboxSelection: true, headerCheckboxSelection: true,
       },
       //{
       //  headerName: 'Action', field: 'fileIcon', cellRenderer: this.actionCellRenderer, resizable: true
       //},
-      { headerName: 'Name', field: 'name', filter: true, sorting: true, resizable: true },
+      { headerName: 'Account', field: 'account', filter: true, sorting: true, resizable: true, flex: 1 },
     ]
   }
   ];
@@ -51,6 +69,9 @@ export class AddBranchAccountComponent implements OnInit {
 
   ngOnInit(): void {
     this.bindFormControls();
+    //this.getApiData();
+    this.getBranchAccountIDs();
+    this.getAccounts();
     this.getApiData();
   }
 
@@ -65,55 +86,76 @@ export class AddBranchAccountComponent implements OnInit {
     return eGui;
 }
 
-onGridClick(params: any) {
-  if (params.event.target.dataset.action == "delete")
-  {
-    const dialogRef = this.dialog.open(ConfirmationDialog, {
-      data: {
-        message: 'Do you really want to delete this record?',
-        buttonText: {
-          ok: 'Yes',
-          cancel: 'No'
-        }
-      }
-    });
+//onGridClick(params: any) {
+//  if (params.event.target.dataset.action == "delete")
+//  {
+//    const dialogRef = this.dialog.open(ConfirmationDialog, {
+//      data: {
+//        message: 'Do you really want to delete this record?',
+//        buttonText: {
+//          ok: 'Yes',
+//          cancel: 'No'
+//        }
+//      }
+//    });
 
-    dialogRef.afterClosed().subscribe((confirmed: boolean) => {
-      if (confirmed) {
-        const reqObj = {
-          "id": 0,
-          "branchId": this.selectedBranchID,
-          "accountId": 0,
-          "accountIds": params.data.id
-        }
-        this._masterService.deleteBranchAccount(reqObj).subscribe((res) => {
+//    dialogRef.afterClosed().subscribe((confirmed: boolean) => {
+//      if (confirmed) {
+//        const reqObj = {
+//          "id": 0,
+//          "branchId": this.selectedBranchID,
+//          "accountId": 0,
+//          "accountIds": params.data.id
+//        }
+//        this._masterService.deleteBranchAccount(reqObj).subscribe((res) => {
 
-        });
-      }
-    });
+//        });
+//      }
+//    });
 
 
-  }
-  }
+//  }
+//  }
+
+
   onGridReady(event) { this.gridApi = event.api; }
-getBranchAccountIDs() {
-  this._masterService.getBranchAccountsID(this.selectedBranchID).subscribe((res)=>{
+
+  onGridReadySelectAc(event) { this.gridApiSelectAc = event.api; }
+
+  getBranchAccountIDs()
+  {
+    this._masterService.getAccountsAddedinBranch(this.selectedBranchID).subscribe((res) => {
     this.branchIDAccountList = res;
   });
-}
+  }
+
+  getAccounts() {
+    this._masterService.getAccountsForBranch(this.selectedBranchID).subscribe((res) => {
+      this.accountList = res;
+    });
+  }
+
   getApiData() {
-    if(this.selectedBranchID){
-      this._masterService.getBranchId(this.selectedBranchID).subscribe((res)=>{
+    if (this.selectedBranchID) {
+      this._masterService.getBranchId(this.selectedBranchID).subscribe((res) => {
         this.branchForm.patchValue({
           name: res.name
         });
       });
       this.getBranchAccountIDs();
     }
-    this._masterService.getAccount().subscribe((response) => { this.accountList = response;
-    this.filteredAccountList = response;
-    // this.patchAccountIds()
-  });
+    //this._masterService.getAccountsForBranch(this.selectedBranchID).subscribe((response) => {
+    //  this.accountList = response;
+    //  this.filteredAccountList = response;
+    //});
+  }
+
+
+  checkSelectedRowSelectAc(event: any) {
+    debugger
+    var selectedRow = this.gridApiSelectAc.getSelectedRows();
+    if (selectedRow.length > 0) { this.isRowSelected = true; }
+    else { this.isRowSelected = false; }
   }
 
   checkSelectedRow(event: any)
@@ -123,14 +165,39 @@ getBranchAccountIDs() {
     else { this.isRowSelected = false; }
   }
 
-  onInputAccountListChange(event: any) {
-    const searchInput = event.target.value.toLowerCase();
+  selectAccounts()
+  {
+    var selectAccount = this.gridApiSelectAc.getSelectedRows();
+    const body = {
+      dropDownVMs: selectAccount,
+      BranchId: this.selectedBranchID
+      
+    };
 
-    this.filteredAccountList = this.accountList.filter((data) => {
-      const prov = data.name.toLowerCase();
-      return prov.includes(searchInput);
-    });
+    this._masterService.addBranchAccount(body).subscribe(result => {
+     /* this.selectedBranchID = result.id;*/
+      this.getBranchAccountIDs();
+      });
+    
+
   }
+  removeAccounts() {
+    var selectAccount = this.gridApi.getSelectedRows();
+    const body = {
+      dropDownVMs: selectAccount,
+      BranchId: this.selectedBranchID
+
+    };
+
+    this._masterService.deleteBranchAccount(body).subscribe(result => {
+      /* this.selectedBranchID = result.id;*/
+      this.getBranchAccountIDs();
+    });
+
+
+  }
+
+
 
   bindFormControls() {
     this.branchForm = this.formBuilder.group({
