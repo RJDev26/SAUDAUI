@@ -7,6 +7,7 @@ import { AppService } from "src/app/service/app.service";
 import { MasterService } from "../master.service";
 import { AddTaxComponent } from "./tax-dialog/add-tax-master.component";
 import { ConfirmationDialog } from "../../Dialog/confirmation-dialog/confirmation-dialog.component";
+import { MasterSecondService } from "../master-second.service";
 
 @Component({
     selector: 'app-blank',
@@ -25,7 +26,8 @@ export class TaxComponent implements OnInit {
    
     public settings: Settings;
     taxList: any;
-    constructor(public appSettings: AppSettings, private _appService: AppService, public dialog: MatDialog, private _masterService: MasterService) {
+  constructor(public appSettings: AppSettings,
+    public dialog: MatDialog, private _masterService: MasterService, private _masterSecondService: MasterSecondService) {
         this.settings = this.appSettings.settings;
       }
 
@@ -49,11 +51,11 @@ export class TaxComponent implements OnInit {
           maxWidth: 110, resizable: true
         },
         { headerName: 'Name', field: 'name', filter: true, sorting: true, resizable: true },
-        { headerName: 'AppliedOn', field: 'appliedOn', filter: true, sorting: true, resizable: true }  
+      { headerName: 'AppliedOn', field: 'applyOnName', filter: true, sorting: true, resizable: true }  
     ];
 
-    gettaxList() {
-        this._appService.getTax().subscribe((results) => {
+  gettaxList() {
+    this._masterSecondService.getTax().subscribe((results) => {
          this.taxList = results;       
         });
     }
@@ -88,7 +90,7 @@ export class TaxComponent implements OnInit {
   
         dialogRef.afterClosed().subscribe((confirmed: boolean) => {
           if (confirmed) {
-            this._masterService.deleteTax(params.data.id).subscribe((res) => {
+            this._masterSecondService.deleteTax(params.data.id).subscribe((res) => {
               this.gettaxList();
             });
           }

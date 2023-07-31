@@ -26,44 +26,36 @@
             </div>
             <div fxFlex="100" class="mt-2 text-center space-between-btns">
                 <button mat-raised-button color="warn" type="button" (click)="close()">Cancel</button>
-                <button mat-raised-button color="primary" class="uppercase" type="submit">Save</button>
+                <button mat-raised-button color="primary" class="uppercase" [disabled]="!taxMasterForm.valid" type="submit">Save</button>
             </div>
         </form>
     </mat-tab>
-    <mat-tab label="Account Tax">
+    <mat-tab label="Account Tax " (click)="checkTaxSelect()">
         <form [formGroup]="taxForm" (ngSubmit)="onAccountTaxSubmit(taxForm.value)" fxLayout="row wrap" class="user-form">
             <div class="tab-party-details-parent">
                 <div class="white-block pb-0">
-                    <h3><span>Account Tax</span></h3>
+                    <h3><span>{{selectedName}} Tax</span></h3>
                     <div fxFlex="100" fxFlex.gt-sm="33.33" fxFlex.sm="33.33">
                         <div class="dropdown-wrapper">
                             <mat-form-field class="select-slab-mat" appearance="outline">
                               <mat-label>Select Account</mat-label>
-                              <mat-select #select multiple placeholder="Select Account" panelClass="custom-select-panel">
-                                <input class="milti-search-box" #multiUserSearch type="text" autocomplete="off" matInput placeholder="Search Account" />
+
+                              <mat-select #select multiple placeholder="Select Account" panelClass="custom-select-panel" formControlName="accounts">
+                                <input class="milti-search-box" #multiUserSearch type="text" autocomplete="off" matInput placeholder="Search Account" (input)="onInputChange($event)" />
                                 <mat-option value=-1 (click)="accountAllSelection()">Select All</mat-option>
-                                <mat-option *ngFor="let option of filteredProviders" [value]="option.id">
+                                <mat-option *ngFor="let option of accountList" [value]="option.id">
                                   {{ option.name }}
                                 </mat-option>
                               </mat-select>
                             </mat-form-field>
                         </div>
                     </div>
+                    
                     <div fxFlex="100" fxFlex.gt-sm="33.33" fxFlex.sm="33.33">
                         <mat-form-field class="example-full-width" appearance="outline">
-                            <mat-label>Tax</mat-label>
-                            <mat-select placeholder="Select Tax" formControlName="taxId">
-                              <mat-option *ngFor="let tax of taxList" [value]="tax.id">
-                                {{tax.name}}
-                              </mat-option>
-                            </mat-select>
-                          </mat-form-field>
-                    </div>
-                    <div fxFlex="100" fxFlex.gt-sm="33.33" fxFlex.sm="33.33">
-                        <mat-form-field class="example-full-width" appearance="outline">
-                            <mat-label>Account DDL</mat-label>
-                            <mat-select placeholder="Select account DDL" formControlName="accountDDL">
-                              <mat-option *ngFor="let DDL of accountDDLList" [value]="DDL.id">
+                            <mat-label>Apply On</mat-label>
+                            <mat-select placeholder="Select ApplyOn" formControlName="applyOn">
+                              <mat-option *ngFor="let DDL of accountApplyOnList" [value]="DDL.id">
                                 {{DDL.name}}
                               </mat-option>
                             </mat-select>
@@ -73,11 +65,11 @@
             </div>
             <div fxFlex="100" class="mt-2 text-center space-between-btns">
                 <button mat-raised-button color="warn" type="button" (click)="close()">Cancel</button>
-                <button mat-raised-button color="primary" class="uppercase" type="submit">Save</button>
+                <button mat-raised-button color="primary" class="uppercase" [disabled]="!taxForm.valid" type="submit">Save</button>
             </div>
         </form>
         <div class="col-xl-12 mt-2 position-relative">
-            <span class="material-symbols-outlined delete-icon">
+            <span class="material-symbols-outlined delete-icon" (click)="deleteAccountTax()">
               <mat-icon>delete_sweep</mat-icon>
             </span>
             <ag-grid-angular style=" height: 240px;"
