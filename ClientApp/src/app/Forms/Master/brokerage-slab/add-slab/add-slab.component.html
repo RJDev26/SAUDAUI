@@ -1,4 +1,9 @@
 <h2 class="heading">Add Slab</h2>
+<a (click)="close()" class="close-btn">
+    <span class="material-symbols-outlined">
+      <mat-icon>close</mat-icon>
+    </span>
+</a>
 <form [formGroup]="slabForm" (ngSubmit)="onSubmit(slabForm.value)" fxLayout="row wrap" class="user-form">
     <div class="white-block pb-5">
         <h3><span>Master Slab</span></h3>

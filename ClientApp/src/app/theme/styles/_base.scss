@@ -445,7 +445,7 @@ a{
 
 //default scrollbar
 ::-webkit-scrollbar {
-  width: 8px;
+  width: 7px;
   height: 8px;
 }
 ::-webkit-scrollbar-button {
@@ -453,25 +453,25 @@ a{
   height: 0px;
 }
 ::-webkit-scrollbar-thumb {
-    background: #e1e1e1;
+    background: #048676;
     border: 0px none #ffffff;
     border-radius: 0px;
     &:hover{
-        background: #cccccc;
+        background: #00695c;
     }
     &:active{
-        background: #888888; 
+        background: #00695c; 
     }
 }
 ::-webkit-scrollbar-track {
-    background: #666666;
+    background: #eeeeee;
     border: 0px none #ffffff;
     border-radius: 0px;
     &:hover{
-        background: #666666;
+        background: #eeeeee;
     }
     &:active{
-        background: #333333; 
+        background: #eeeeee; 
     }
 }
 ::-webkit-scrollbar-corner {

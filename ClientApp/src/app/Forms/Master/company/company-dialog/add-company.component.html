@@ -1,4 +1,9 @@
 <h2 class="heading">Add Comapny</h2>
+<a (click)="close()" class="close-btn">
+    <span class="material-symbols-outlined">
+      <mat-icon>close</mat-icon>
+    </span>
+</a>
 <form [formGroup]="companyForm" (ngSubmit)="onSubmit(companyForm.value)" fxLayout="row wrap" class="user-form">
     <div class="white-block pb-5">
         <h3><span>Comapny Details</span></h3>

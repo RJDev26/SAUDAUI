@@ -1,6 +1,11 @@
 <h2 class="heading mb-10">Add Account</h2>
+<a (click)="close()" class="close-btn">
+  <span class="material-symbols-outlined">
+    <mat-icon>close</mat-icon>
+  </span>
+</a>
 <mat-tab-group>
-  <mat-tab label=" Details">
+  <mat-tab label="Details">
     <form [formGroup]="personalForm" (ngSubmit)="onSubmit(personalForm.value)" fxLayout="row wrap" class="user-form">
       <div class="tab-party-details-parent">
         <div class="white-block">

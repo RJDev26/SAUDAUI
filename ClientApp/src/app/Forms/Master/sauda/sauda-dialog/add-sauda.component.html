@@ -1,4 +1,9 @@
  <h2 class="heading mb-0">Sauda Master</h2>
+ <a (click)="close()" class="close-btn">
+  <span class="material-symbols-outlined">
+    <mat-icon>close</mat-icon>
+  </span>
+</a>
 <form [formGroup]="saudaForm" (ngSubmit)="onSubmit(saudaForm.value)" fxLayout="row wrap" class="user-form">
     <div class="white-block pb-5">
         <h3><span>Sauda Master Details</span></h3>

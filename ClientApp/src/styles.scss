@@ -141,7 +141,7 @@ input[type=number]:-moz-placeholder { /* Firefox 18- */
     background: #dc3545 !important;
     color: #fff !important;
     margin-left: 10px;
-  }
+}
 
 #main .options-icon {
     top: 58px;
@@ -154,6 +154,22 @@ input[type=number]:-moz-placeholder { /* Firefox 18- */
     -moz-border-radius: 20px !important;
     -webkit-border-radius: 20px !important;
     border-radius: 20px !important;
+}
+
+.close-btn {
+    position: absolute;
+    top: 7px;
+    right: 10px;
+    color: #fff;
+    cursor: pointer;
+}
+
+.ag-checkbox-input-wrapper {
+    &.ag-checked {
+        &::after {
+            color: #00695c;
+        }
+    }
 }
 
 .app {
@@ -185,11 +201,12 @@ input[type=number]:-moz-placeholder { /* Firefox 18- */
     .mat-dialog-container {
         background: #fcfcfc;
         padding: 0;
+        position: relative;
         .heading {
             background: #00695c;
             color: #fff;
             font-size: 16px;
-            padding: 12px 15px;
+            padding: 8px 15px;
             font-weight: 500;
         }
         .user-form {

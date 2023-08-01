@@ -1,4 +1,9 @@
 <h2 class="heading mb-10">Add Exchange</h2>
+<a (click)="close()" class="close-btn">
+    <span class="material-symbols-outlined">
+      <mat-icon>close</mat-icon>
+    </span>
+</a>
 <mat-tab-group>
     <mat-tab label="Details">
         <form [formGroup]="exchangeMasterForm" (ngSubmit)="onSubmit(exchangeMasterForm.value)" fxLayout="row wrap" class="user-form">

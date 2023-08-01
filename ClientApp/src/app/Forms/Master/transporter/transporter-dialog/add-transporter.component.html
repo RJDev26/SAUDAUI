@@ -1,4 +1,9 @@
 <h2 class="heading">Add Transporter</h2> 
+<a (click)="close()" class="close-btn">
+    <span class="material-symbols-outlined">
+      <mat-icon>close</mat-icon>
+    </span>
+</a>
 <form [formGroup]="transporterForm" (ngSubmit)="onSubmit(transporterForm.value)" fxLayout="row wrap" class="user-form">
     <div class="tab-party-details-parent">
         <div fxFlex="100" fxFlex.gt-sm="25" fxFlex.sm="50">
