@@ -1,0 +1,44 @@
+<h2 class="heading mb-10">Add Exchange</h2>
+<mat-tab-group>
+    <mat-tab label="Details">
+        <form [formGroup]="exchangeMasterForm" (ngSubmit)="onSubmit(exchangeMasterForm.value)" fxLayout="row wrap" class="user-form">
+            <div class="tab-party-details-parent">
+                <div class="white-block pb-0">
+                    <h3><span>Exchange</span></h3>
+                    <div fxFlex="100" fxFlex.gt-sm="50" fxFlex.sm="50">
+                        <mat-form-field appearance="outline">
+                          <mat-label>Name</mat-label>
+                          <input matInput autocomplete="off" placeholder="name" formControlName="name" type="text">
+                          <mat-error *ngIf="exchangeMasterForm.controls.name.errors?.required">Name is required</mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div fxFlex="100" fxFlex.gt-sm="50" fxFlex.sm="50">
+                        <mat-form-field appearance="outline">
+                          <mat-label>FMCCode</mat-label>
+                          <input matInput autocomplete="off" placeholder="FMCCode" formControlName="fmccode" type="text">
+                          <mat-error *ngIf="exchangeMasterForm.controls.fmccode.errors?.required">FMCCode is required</mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div fxFlex="100" fxFlex.gt-sm="50" fxFlex.sm="50">
+                        <mat-form-field appearance="outline">
+                          <mat-label>MemberId</mat-label>
+                          <input matInput autocomplete="off" placeholder="MemberId" formControlName="memberId" type="text">
+                          <mat-error *ngIf="exchangeMasterForm.controls.memberId.errors?.required">MemberId is required</mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div fxFlex="100" fxFlex.gt-sm="20" fxFlex.sm="50">
+                        <mat-checkbox class="pl-10" formControlName="future">Future</mat-checkbox>
+                        <mat-checkbox class="pl-10" formControlName="convertCurrency">ConvertCurrency</mat-checkbox>
+                        <mat-checkbox class="pl-10" formControlName="lotwise">Lotwise</mat-checkbox>
+                        <mat-checkbox class="pl-10" formControlName="options">Options</mat-checkbox>
+                        <mat-checkbox class="pl-10" formControlName="cash">Cash</mat-checkbox>
+                      </div>
+                </div>
+            </div>
+            <div fxFlex="100" class="mt-2 text-center space-between-btns">
+                <button mat-raised-button color="warn" type="button" (click)="close()">Cancel</button>
+                <button mat-raised-button color="primary" class="uppercase" [disabled]="!exchangeMasterForm.valid" type="submit">Save</button>
+            </div>
+        </form>
+    </mat-tab>
+</mat-tab-group>

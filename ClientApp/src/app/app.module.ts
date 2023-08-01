@@ -41,6 +41,7 @@ import { UserMenuComponent } from './theme/components/user-menu/user-menu.compon
 
 import { AgGridModule } from 'ag-grid-angular';
 import { HttpClientModule } from '@angular/common/http';
+import { ExchangeComponent } from './Forms/Master/exchange/exchange.component';
 /*import { AccountComponent } from './Forms/Master/account/account.component';*/
 
 @NgModule({
@@ -79,6 +80,7 @@ import { HttpClientModule } from '@angular/common/http';
     ApplicationsComponent,
     MessagesComponent,
     UserMenuComponent,
+    ExchangeComponent,
     //AccountComponent,
 
   ],
