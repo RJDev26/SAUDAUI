@@ -32,6 +32,7 @@ import { AddTaxComponent } from './tax-master/tax-dialog/add-tax-master.componen
 import { AddBranchAccountComponent } from './branch/add-branch-account/add-branch-account.component';
 import { ExchangeComponent } from './exchange/exchange.component';
 import { AddExchangeComponent } from './exchange/add-exchange/add-exchange.component';
+import { AccountHeadComponent } from './account-head/account-head.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'account', pathMatch: 'full' },
@@ -46,7 +47,8 @@ export const routes: Routes = [
   { path: 'brokerage-setup', component: BrokerageSetupComponent, data: { breadcrumb: 'Brokerage Setup' } },
   { path: 'branch', component: BranchComponent, data: { breadcrumb: 'Branch' } },
   { path: 'tax', component: TaxComponent, data: { breadcrumb: 'Tax' } },
-  { path: 'exchange', component: ExchangeComponent, data: { breadcrumb: 'Exchange' } }
+  { path: 'exchange', component: ExchangeComponent, data: { breadcrumb: 'Exchange' } },
+  { path: 'account-head', component: AccountHeadComponent, data: { breadcrumb: 'Account Head' } }
 ];
 
 @NgModule({
@@ -86,6 +88,7 @@ export const routes: Routes = [
      AddTaxComponent,
      AddBranchAccountComponent,
      AddExchangeComponent,
+     AccountHeadComponent
   ],
   providers: [
     { provide: MAT_DATE_LOCALE, useValue: 'en-GB' }

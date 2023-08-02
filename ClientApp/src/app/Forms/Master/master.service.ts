@@ -232,9 +232,11 @@ export class MasterService {
     return this.httpClient.get<any>(environment.apiBaseUrl + 'Common/getApplyOnTaxDDL', { headers: this.headers });
   }
 
-  
 
-  
+  getAccountHead():Observable<any>{
+    return this.httpClient.get<any>(environment.apiBaseUrl + 'Master/getAcHead',{headers:this.headers});
+  }
+
 
  
   

@@ -1,0 +1,23 @@
+<div class="row">
+    <div fxLayout="row" fxLayoutAlign="space-between end" class="mt-2">
+        <div class="dropdown-container">
+            <div class="dropdown-wrapper"></div>
+        </div>
+        <button mat-raised-button color="accent" (click)="openAccountDialog(null)" class="icon-btn ml-15">
+            <mat-icon>add</mat-icon> Add Acoount Head
+        </button>
+    </div>
+    <div class="col-xl-12 mt-2">
+        <ag-grid-angular style=" height: 535px;"
+                         class="ag-theme-material"
+                         [rowData]="accountHeadList"
+                         [pagination]="true"
+                         [rowHeight]="31"
+                         [columnDefs]="columnDefs"
+                         [defaultColDef]="agGridOptions.defaultColDef"
+                         (cellClicked)="onGridClick($event)"
+                         (gridReady)="onGridReady($event)"
+                          headerHeight="34">
+        </ag-grid-angular>
+    </div>
+</div> 
