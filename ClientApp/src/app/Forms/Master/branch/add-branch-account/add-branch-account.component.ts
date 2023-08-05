@@ -201,7 +201,8 @@ export class AddBranchAccountComponent implements OnInit {
 
   bindFormControls() {
     this.branchForm = this.formBuilder.group({
-      'name': ['', Validators.required]
+      'name': ['', Validators.required],
+      'id': [this.selectedBranchID, Validators.required]
     });
     this.accountForm = this.formBuilder.group({
       'accountIds': ['', Validators.required]
