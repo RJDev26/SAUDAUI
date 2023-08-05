@@ -13,6 +13,8 @@ export class AddAccountHeadComponent implements OnInit {
 
     public accountForm: UntypedFormGroup;
     selectedAccountHeadID: any
+    gridApi: any;
+    gridApiSelectAc: any;
     agGridOptions: any = {
         suppressRowHoverHighlight: true,
     }
@@ -23,11 +25,33 @@ export class AddAccountHeadComponent implements OnInit {
 
     bindFormControls() {
         this.accountForm = this.formBuilder.group({
-          'account': ['', Validators.required]
+          'account': ['', Validators.required],
+          //'id': [this.selectedAccountHeadID, Validators.required]
         });
     }
 
     ngOnInit() {
         this.bindFormControls();
+    }
+    
+    onGridReady(event) { this.gridApi = event.api; }
+
+    onGridReadySelectAc(event) { this.gridApiSelectAc = event.api; }
+
+
+    public onSubmit(values: Object): void {
+        //this.accountForm.controls['account'].setValue(String(this.accountForm.get('account').value));
+        var body = this.accountForm.value;
+        if (this.accountForm.valid) {
+          this._masterService.saveAccountHead(body).subscribe(result => {
+            this.dialogRef.close();
+          }, err => {
+            console.log(err);
+          });
+        }
+    }
+
+    close(): void {
+        this.dialogRef.close();
     }
 }

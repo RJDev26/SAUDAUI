@@ -60,7 +60,7 @@ export class AccountHeadComponent implements OnInit {
       //   this.getLoadData();
       // });
     }
-
+    onGridReady(event) { }
     ngOnInit(): void {
         this.getAccountHeadList();
     }

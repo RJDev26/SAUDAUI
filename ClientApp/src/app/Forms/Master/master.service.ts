@@ -237,7 +237,9 @@ export class MasterService {
     return this.httpClient.get<any>(environment.apiBaseUrl + 'Master/getAcHead',{headers:this.headers});
   }
 
-
+  saveAccountHead(data): Observable<any> {
+    return this.httpClient.post<any>(environment.apiBaseUrl + 'Master/SaveAcHead', data, { headers: this.headers });
+  }
  
   
 
