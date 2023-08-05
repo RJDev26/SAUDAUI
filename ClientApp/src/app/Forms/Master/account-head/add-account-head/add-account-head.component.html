@@ -1,0 +1,80 @@
+<h2 class="heading mb-10">Account Head</h2>
+<a (click)="close()" class="close-btn">
+    <span class="material-symbols-outlined">
+      <mat-icon>close</mat-icon>
+    </span>
+</a>
+<mat-tab-group>
+  <mat-tab label="Account">
+    <form [formGroup]="accountForm" (ngSubmit)="onSubmit(accountForm.value)" fxLayout="row wrap" class="user-form">
+      <div class="tab-party-details-parent">
+        <div class="white-block pb-0">
+          <h3><span>Account</span></h3>
+          <div fxFlex="100">
+            <mat-form-field appearance="outline">
+              <mat-label>Account</mat-label>
+              <input matInput autocomplete="off" placeholder="item Name" formControlName="account" type="text">
+              <mat-error *ngIf="accountForm.controls.account.errors?.required">Account is required</mat-error>
+            </mat-form-field>
+          </div>
+        </div>  
+        <div fxFlex="100" class="mt-2 text-center space-between-btns">
+          <button mat-raised-button color="warn" type="button" (click)="close()">Cancel</button>
+          <button mat-raised-button color="primary" class="uppercase" [disabled]="!accountForm.valid" type="submit">Save</button>
+        </div>        
+      </div>
+    </form>
+  </mat-tab>
+  <mat-tab label="Account Head">
+    <div class="row account-head">
+      <div fxFlex="40">        
+        <ag-grid-angular style=" height: 240px;"
+                          class="ag-theme-material mt-2"
+                          [rowData]="accountList"
+                          [pagination]="true"
+                          [rowHeight]="31"
+                          [columnDefs]="columnDefsSelectAc"
+                          [rowSelection]="'multiple'"
+                          [rowMultiSelectWithClick]="true"
+                          [defaultColDef]="agGridOptions.defaultColDef"                          
+                          (gridReady)="onGridReadySelectAc($event)"
+                          (selectionChanged)="checkSelectedRowSelectAc($event)"
+                          headerHeight="34">
+        </ag-grid-angular>
+      </div>
+      <div fxFlex="15" class="text-center">
+        <div class="pt-10 mb-10">
+          <button mat-raised-button (click)="selectAccounts()" color="primary" type="button">
+            <mat-icon>
+              <span class="material-symbols-outlined">
+                arrow_forward_ios
+              </span>
+            </mat-icon>
+          </button>
+        </div>
+        <button mat-raised-button color="warn" (click)="removeAccounts()" type="button">
+          <mat-icon>
+            <span class="material-symbols-outlined">
+              arrow_back_ios
+            </span>
+          </mat-icon>
+        </button>
+      </div>
+      <div fxFlex="45">
+        <ag-grid-angular style=" height: 240px;"
+                         class="ag-theme-material mt-2"
+                         [rowData]="branchIDAccountList"
+                         [pagination]="true"
+                         [rowHeight]="31"
+                         [columnDefs]="columnDefs"
+                         [rowSelection]="'multiple'"
+                         [rowMultiSelectWithClick]="true"
+                         [defaultColDef]="agGridOptions.defaultColDef"
+                         (gridReady)="onGridReady($event)"
+                         (selectionChanged)="checkSelectedRow($event)"
+                         headerHeight="34">
+        </ag-grid-angular>
+      </div>
+    </div>
+  </mat-tab>
+</mat-tab-group>

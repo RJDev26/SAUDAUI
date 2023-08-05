@@ -33,6 +33,7 @@ import { AddBranchAccountComponent } from './branch/add-branch-account/add-branc
 import { ExchangeComponent } from './exchange/exchange.component';
 import { AddExchangeComponent } from './exchange/add-exchange/add-exchange.component';
 import { AccountHeadComponent } from './account-head/account-head.component';
+import { AddAccountHeadComponent } from './account-head/add-account-head/add-account-head.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'account', pathMatch: 'full' },
@@ -88,7 +89,8 @@ export const routes: Routes = [
      AddTaxComponent,
      AddBranchAccountComponent,
      AddExchangeComponent,
-     AccountHeadComponent
+     AccountHeadComponent,
+     AddAccountHeadComponent
   ],
   providers: [
     { provide: MAT_DATE_LOCALE, useValue: 'en-GB' }

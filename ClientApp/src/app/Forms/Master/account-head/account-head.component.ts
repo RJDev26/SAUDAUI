@@ -4,6 +4,7 @@ import { AppSettings } from 'src/app/app.settings';
 import { MasterService } from '../master.service';
 import { MatDialog } from '@angular/material/dialog';
 import { Settings } from 'src/app/app.settings.model';
+import { AddAccountHeadComponent } from './add-account-head/add-account-head.component';
 
 @Component({
     selector: 'app-branch',
@@ -46,6 +47,18 @@ export class AccountHeadComponent implements OnInit {
         eGui.innerHTML = `<button class="material-icons action-button-edit" data-action="edit">edit</button>
                           <button class="material-icons action-button-red" delete data-action="delete">delete</button>`;    
         return eGui;
+    }
+
+    public openAccountHeadDialog(selectedAccountHeadId) {
+      let dialogRef = this.dialog.open(AddAccountHeadComponent, {
+          data: { 
+            branchID: selectedAccountHeadId,
+          }
+      });
+    
+      // dialogRef.afterClosed().subscribe(user => {
+      //   this.getLoadData();
+      // });
     }
 
     ngOnInit(): void {
