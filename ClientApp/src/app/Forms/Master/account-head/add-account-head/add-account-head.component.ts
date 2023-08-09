@@ -11,7 +11,7 @@ import { MasterService } from '../../master.service';
 
 export class AddAccountHeadComponent implements OnInit {
 
-    public accountForm: UntypedFormGroup;
+    public nameForm: UntypedFormGroup;
     selectedAccountHeadID: any
     gridApi: any;
     gridApiSelectAc: any;
@@ -24,14 +24,14 @@ export class AddAccountHeadComponent implements OnInit {
     }
 
     bindFormControls() {
-        this.accountForm = this.formBuilder.group({
-          'account': ['', Validators.required],
+        this.nameForm = this.formBuilder.group({
+          'name': ['', Validators.required],
           //'id': [this.selectedAccountHeadID, Validators.required]
         });
     }
 
     ngOnInit() {
-        this.bindFormControls();
+      this.bindFormControls();
     }
     
     onGridReady(event) { this.gridApi = event.api; }
@@ -40,9 +40,9 @@ export class AddAccountHeadComponent implements OnInit {
 
 
     public onSubmit(values: Object): void {
-        //this.accountForm.controls['account'].setValue(String(this.accountForm.get('account').value));
-        var body = this.accountForm.value;
-        if (this.accountForm.valid) {
+        this.nameForm.controls['name'].setValue(String(this.nameForm.get('name').value));
+        var body = this.nameForm.value;
+        if (this.nameForm.valid) {
           this._masterService.saveAccountHead(body).subscribe(result => {
             this.dialogRef.close();
           }, err => {

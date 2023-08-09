@@ -5,6 +5,7 @@ import { MasterService } from '../master.service';
 import { MatDialog } from '@angular/material/dialog';
 import { Settings } from 'src/app/app.settings.model';
 import { AddAccountHeadComponent } from './add-account-head/add-account-head.component';
+import { ConfirmationDialog } from '../../Dialog/confirmation-dialog/confirmation-dialog.component';
 
 @Component({
     selector: 'app-branch',
@@ -56,9 +57,9 @@ export class AccountHeadComponent implements OnInit {
           }
       });
     
-      // dialogRef.afterClosed().subscribe(user => {
-      //   this.getLoadData();
-      // });
+      dialogRef.afterClosed().subscribe(user => {
+        this.getAccountHeadList();
+      });
     }
     onGridReady(event) { }
     ngOnInit(): void {
@@ -66,8 +67,38 @@ export class AccountHeadComponent implements OnInit {
     }
 
     getAccountHeadList() {
-        this._masterService.getAccountHead().subscribe((results) => {
-          this.accountHeadList = results;
+      this._masterService.getAccountHead().subscribe((results) => {
+        this.accountHeadList = results;
+      });
+    }
+
+    onGridClick(params: any) {
+      if (params.event.target.dataset.action == "edit")
+      {
+        this.openAccountHeadDialog(params.data.id);
+    
+      }
+      if (params.event.target.dataset.action == "delete")
+      {
+        const dialogRef = this.dialog.open(ConfirmationDialog, {
+          data: {
+            message: 'Do you really want to delete this record?',
+            buttonText: {
+              ok: 'Yes',
+              cancel: 'No'
+            }
+          }
         });
+    
+        dialogRef.afterClosed().subscribe((confirmed: boolean) => {
+          if (confirmed) {
+            this._masterService.deleteAcHead(params.data.id).subscribe((res) => {
+              this.getAccountHeadList();
+            });
+          }
+        });
+    
+    
+      }
     }
 }

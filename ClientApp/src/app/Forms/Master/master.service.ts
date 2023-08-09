@@ -228,6 +228,10 @@ export class MasterService {
     return this.httpClient.get<any>(environment.apiBaseUrl + 'master/deleteBranch/' + id, { headers: this.headers })
   }
 
+  deleteAcHead(id: number): Observable<any> {
+    return this.httpClient.get<any>(environment.apiBaseUrl + 'Master/deleteAcHead/' + id, { headers: this.headers })
+  }
+
   getApplyOn(): Observable<any> {
     return this.httpClient.get<any>(environment.apiBaseUrl + 'Common/getApplyOnTaxDDL', { headers: this.headers });
   }
@@ -240,7 +244,6 @@ export class MasterService {
   saveAccountHead(data): Observable<any> {
     return this.httpClient.post<any>(environment.apiBaseUrl + 'Master/SaveAcHead', data, { headers: this.headers });
   }
- 
   
 
   saveBranch(data): Observable<any> {

@@ -6,21 +6,21 @@
 </a>
 <mat-tab-group>
   <mat-tab label="Account">
-    <form [formGroup]="accountForm" (ngSubmit)="onSubmit(accountForm.value)" fxLayout="row wrap" class="user-form">
+    <form [formGroup]="nameForm" (ngSubmit)="onSubmit(nameForm.value)" fxLayout="row wrap" class="user-form">
       <div class="tab-party-details-parent">
         <div class="white-block pb-0">
           <h3><span>Account</span></h3>
           <div fxFlex="100">
             <mat-form-field appearance="outline">
-              <mat-label>Account</mat-label>
-              <input matInput autocomplete="off" placeholder="Account" formControlName="account" type="text">
-              <mat-error *ngIf="accountForm.controls.account.errors?.required">Account is required</mat-error>
+              <mat-label>Name</mat-label>
+              <input matInput autocomplete="off" placeholder="Name" formControlName="name" type="text">
+              <mat-error *ngIf="nameForm.controls.name.errors?.required">Name is required</mat-error>
             </mat-form-field>
           </div>
         </div>  
         <div fxFlex="100" class="mt-2 text-center space-between-btns">
           <button mat-raised-button color="warn" type="button" (click)="close()">Cancel</button>
-          <button mat-raised-button color="primary" class="uppercase" [disabled]="!accountForm.valid" type="submit">Save</button>
+          <button mat-raised-button color="primary" class="uppercase" [disabled]="!nameForm.valid" type="submit">Save</button>
         </div>        
       </div>
     </form>
@@ -28,7 +28,7 @@
   <mat-tab label="Account Head">
     <div class="row account-head">
       <div fxFlex="40">        
-        <!-- <ag-grid-angular style=" height: 240px;"
+        <ag-grid-angular style=" height: 240px;"
                           class="ag-theme-material mt-2"
                           [rowData]="accountList"
                           [pagination]="true"
@@ -40,7 +40,7 @@
                           (gridReady)="onGridReadySelectAc($event)"
                           (selectionChanged)="checkSelectedRowSelectAc($event)"
                           headerHeight="34">
-        </ag-grid-angular> -->
+        </ag-grid-angular>
       </div>
       <div fxFlex="15" class="text-center">
         <div class="pt-10 mb-10">
@@ -61,7 +61,7 @@
         </button>
       </div>
       <div fxFlex="45">
-        <!-- <ag-grid-angular style=" height: 240px;"
+        <ag-grid-angular style=" height: 240px;"
                          class="ag-theme-material mt-2"
                          [rowData]="branchIDAccountList"
                          [pagination]="true"
@@ -73,7 +73,7 @@
                          (gridReady)="onGridReady($event)"
                          (selectionChanged)="checkSelectedRow($event)"
                          headerHeight="34">
-        </ag-grid-angular> -->
+        </ag-grid-angular>
       </div>
     </div>
   </mat-tab>
