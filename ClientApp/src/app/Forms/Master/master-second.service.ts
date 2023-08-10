@@ -24,12 +24,27 @@ export class MasterSecondService {
     return this.httpClient.get<any>(environment.apiBaseUrl + 'MasterSecond/deleteExchange/' + id, { headers: this.headers })
   }
 
+  deleteExchangeTax(id: number): Observable<any> {
+    return this.httpClient.get<any>(environment.apiBaseUrl + 'MasterSecond/deleteExchangeTax/' + id, { headers: this.headers })
+  }
+
+  deleteExchangeAccount(id: number): Observable<any> {
+    return this.httpClient.get<any>(environment.apiBaseUrl + 'MasterSecond/deleteExchangeAccount/' + id, { headers: this.headers })
+  }
+
   getApplyOnTaxAccountDDL(): Observable<any> {
     return this.httpClient.get<any>(environment.apiBaseUrl + 'Common/getApplyOnTaxAccountDDL', { headers: this.headers });
   }
 
   addAccountTax(data): Observable<any> {
     return this.httpClient.post<any>(environment.apiBaseUrl + 'MasterSecond/SaveAccountTax', data, { headers: this.headers });
+  }
+
+  saveExchangeAccount(data): Observable<any> {
+    return this.httpClient.post<any>(environment.apiBaseUrl + 'MasterSecond/SaveExchangeAccount', data, { headers: this.headers });
+  }
+  saveExchangeTax(data): Observable<any> {
+    return this.httpClient.post<any>(environment.apiBaseUrl + 'MasterSecond/SaveExchangeTax', data, { headers: this.headers });
   }
   saveTax(data): Observable<any> {
     return this.httpClient.post<any>(environment.apiBaseUrl + 'MasterSecond/SaveTax', data, { headers: this.headers });
@@ -51,6 +66,14 @@ export class MasterSecondService {
   }
   getTaxAccountList(id: number): Observable<any> {
     return this.httpClient.get<any>(environment.apiBaseUrl + 'MasterSecond/getAccountTaxList/' + id, { headers: this.headers })
+  }
+
+  getExchangeAccountList(id: number): Observable<any> {
+    return this.httpClient.get<any>(environment.apiBaseUrl + 'MasterSecond/getExchangeAccountList/' + id, { headers: this.headers })
+  }
+  
+  getExchangeTaxList(id: number): Observable<any> {
+    return this.httpClient.get<any>(environment.apiBaseUrl + 'MasterSecond/getExchangeTaxList/' + id, { headers: this.headers })
   }
 
   getTaxAccountId(id: number): Observable<any> {

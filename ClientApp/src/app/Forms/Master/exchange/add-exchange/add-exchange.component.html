@@ -46,4 +46,128 @@
             </div>
         </form>
     </mat-tab>
+    <mat-tab label="Accounts">
+      <form [formGroup]="exchangeForm" (ngSubmit)="onAccountExchangeSubmit(exchangeForm.value)" fxLayout="row wrap" class="user-form">
+        <div class="tab-party-details-parent">
+            <div class="white-block pb-0">
+                <h3><span>{{selectedName}} Exchange</span></h3>
+                <div fxFlex="100" fxFlex.gt-sm="33.33" fxFlex.sm="33.33">
+                    <div class="dropdown-wrapper">
+                        <mat-form-field class="select-slab-mat" appearance="outline">
+                          <mat-label>Select Account</mat-label>
+
+                          <mat-select #select placeholder="Select Account" panelClass="custom-select-panel" formControlName="accountId">
+                            <input class="milti-search-box" #multiUserSearch type="text" autocomplete="off" matInput placeholder="Search Account" (input)="onInputChange($event)" />
+                            <mat-option *ngFor="let option of accountList" [value]="option.id">
+                              {{ option.name }}
+                            </mat-option>
+                          </mat-select>
+                        </mat-form-field>
+                    </div>
+                </div>
+                
+                <div fxFlex="100" fxFlex.gt-sm="33.33" fxFlex.sm="33.33">
+                    <mat-form-field class="example-full-width" appearance="outline">
+                        <mat-label>Tax Type</mat-label>
+                        <mat-select placeholder="Select Tax Type" formControlName="taxId">
+                          <mat-option *ngFor="let DDL of accountApplyOnList" [value]="DDL.id">
+                            {{DDL.name}}
+                          </mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                </div>
+            </div>
+        </div>
+        <div fxFlex="100" class="mt-2 text-center space-between-btns">
+            <button mat-raised-button color="warn" type="button" (click)="close()">Cancel</button>
+            <button mat-raised-button color="primary" class="uppercase" [disabled]="!exchangeForm.valid" type="submit">Save</button>
+        </div>
+      </form>
+      <div class="col-xl-12 mt-2 position-relative">
+          <ag-grid-angular style=" height: 240px;"
+                        class="ag-theme-material"
+                        [rowData]="accountExchangeList"
+                        [pagination]="true"
+                        [rowHeight]="31"
+                        [columnDefs]="columnDefs"
+                        [defaultColDef]="agGridOptions.defaultColDef"
+                        (cellClicked)="onGridAccountClick($event)"
+                        headerHeight="34">
+          </ag-grid-angular>
+      </div>
+    </mat-tab>
+    <mat-tab label="Tax Details">
+      <form [formGroup]="exchangeDetailsForm" (ngSubmit)="onSubmitExchangeTax(exchangeDetailsForm.value)" fxLayout="row wrap" class="user-form">
+        <div class="tab-tax-details-parent tab-party-details-parent">
+          <div class="white-block pb-0">
+            <h3><span>Tax Details</span></h3>
+            <div fxFlex="100" fxFlex.gt-sm="15" fxFlex.sm="50">
+              <mat-form-field class="example-full-width" appearance="outline">
+                <mat-label>Tax type</mat-label>
+                <mat-select placeholder="Select Tax" formControlName="taxId">
+                  <mat-option *ngFor="let tax of accountApplyOnList" [value]="tax.id">
+                    {{tax.name}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div fxFlex="100" fxFlex.gt-sm="15" fxFlex.sm="50">
+              <mat-form-field appearance="outline">
+                <mat-label>Rate</mat-label>
+                <input matInput autocomplete="off" placeholder="IntraDay" formControlName="rate" type="number">
+                <mat-error *ngIf="exchangeDetailsForm.controls.rate.errors?.required">Rate is required</mat-error>
+              </mat-form-field>
+            </div>
+            <div fxFlex="100" fxFlex.gt-sm="14" fxFlex.sm="50">
+              <mat-form-field appearance="outline">
+                <mat-label>Delivery Rate</mat-label>
+                <input matInput autocomplete="off" placeholder="DeliveryRate" formControlName="rateDelivery" type="number">
+                <mat-error *ngIf="exchangeDetailsForm.controls.rateDelivery.errors?.required">DeliveryRate is required</mat-error>
+              </mat-form-field>
+            </div>
+            <div fxFlex="100" fxFlex.gt-sm="14" fxFlex.sm="50">
+              <mat-form-field appearance="outline">
+                <mat-label>From</mat-label>
+                <input matInput [matDatepicker]="picker1" formControlName="fromDt">
+                <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                <mat-datepicker #picker1></mat-datepicker>
+              </mat-form-field>
+            </div>
+            <div fxFlex="100" fxFlex.gt-sm="14" fxFlex.sm="50">
+              <mat-form-field appearance="outline">
+                <input matInput [matDatepicker]="picker2" placeholder="To" formControlName="toDt">
+                <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                <mat-datepicker #picker2></mat-datepicker>
+              </mat-form-field>
+            </div>
+            <div fxFlex="100" fxFlex.gt-sm="13" fxFlex.sm="50">
+              <mat-form-field class="example-full-width" appearance="outline">
+                <mat-label>InsType</mat-label>
+                <mat-select placeholder="Select InsType" formControlName="instrumentType">
+                  <mat-option *ngFor="let exchange of instrumentList" [value]="exchange.id">
+                    {{exchange.name}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          </div>
+          <div fxFlex="100" class="mt-2 text-center space-between-btns">
+            <button mat-raised-button color="warn" type="button" (click)="close()">Cancel</button>
+            <button mat-raised-button color="primary" class="uppercase" [disabled]="!exchangeDetailsForm.valid" type="submit">Save</button>
+          </div>
+        </div>
+      </form>
+      <div class="col-xl-12 mt-2">
+        <ag-grid-angular style=" height: 250px;"
+                         class="ag-theme-material"
+                         [rowData]="exchangeTaxList"
+                         [pagination]="true"
+                           [rowHeight]="31"
+                         [columnDefs]="taxDetailsColumnDefs"
+                         [defaultColDef]="agGridOptions.defaultColDef"
+                         (cellClicked)="onGridClick($event)"
+                         headerHeight="34">
+        </ag-grid-angular>
+      </div>
+    </mat-tab>
 </mat-tab-group>
