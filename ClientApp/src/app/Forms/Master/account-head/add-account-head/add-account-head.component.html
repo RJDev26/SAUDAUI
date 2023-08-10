@@ -28,7 +28,7 @@
   <mat-tab label="Account Head">
     <div class="row account-head">
       <div fxFlex="40">        
-        <ag-grid-angular style=" height: 240px;"
+        <ag-grid-angular style=" height: 300px;"
                           class="ag-theme-material mt-2"
                           [rowData]="accountList"
                           [pagination]="true"
@@ -61,9 +61,9 @@
         </button>
       </div>
       <div fxFlex="45">
-        <ag-grid-angular style=" height: 240px;"
+        <ag-grid-angular style=" height: 300px;"
                          class="ag-theme-material mt-2"
-                         [rowData]="branchIDAccountList"
+                         [rowData]="AcHeadAccountList"
                          [pagination]="true"
                          [rowHeight]="31"
                          [columnDefs]="columnDefs"

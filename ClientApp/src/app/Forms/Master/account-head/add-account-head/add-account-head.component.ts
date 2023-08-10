@@ -11,16 +11,136 @@ import { MasterService } from '../../master.service';
 
 export class AddAccountHeadComponent implements OnInit {
 
+    accountList: any[];  
     public nameForm: UntypedFormGroup;
     selectedAccountHeadID: any
     gridApi: any;
-    gridApiSelectAc: any;
+    gridApiSelectAc: any;    
+    AcHeadAccountList: any[];
+    selectedAcHeadID: any;
     agGridOptions: any = {
         suppressRowHoverHighlight: true,
     }
+    isRowSelected: boolean = false;
+
+    columnDefsSelectAc = [{
+      headerName: 'Select account',
+      children: [
+  
+        {
+          headerName: '', editable: false, width: 5, minwidth: 5, maxwidth: 5, resizable: false, checkboxSelection: true, headerCheckboxSelection: true,
+        },
+        //{
+        //  headerName: 'Action', field: 'fileIcon', cellRenderer: this.actionCellRenderer, resizable: true
+        //},
+        { headerName: 'Name', field: 'name', filter: true, sorting: true, resizable: true, flex: 1 },
+      ]
+    }];
+
+    columnDefs = [{
+      headerName: 'Added account list',
+      children: [
+  
+        {
+          headerName: '', editable: false,width:5, minwidth: 5, maxwidth: 5, resizable: false, checkboxSelection: true, headerCheckboxSelection: true,
+        },
+        //{
+        //  headerName: 'Action', field: 'fileIcon', cellRenderer: this.actionCellRenderer, resizable: true
+        //},
+        { headerName: 'Account', field: 'account', filter: true, sorting: true, resizable: true, flex: 1 },
+      ]
+    }];
 
     constructor(private formBuilder: UntypedFormBuilder, public dialog: MatDialog,  @Inject(MAT_DIALOG_DATA) public data: any, private _masterService: MasterService, public dialogRef: MatDialogRef<AddAccountHeadComponent>) { 
-        this.selectedAccountHeadID = data.branchID;
+      this.selectedAccountHeadID = data.branchID;
+    }
+
+    ngOnInit(): void {
+      this.bindFormControls();
+      this.getAccounts();
+      this.getAcHeadAccountList()
+      this.getApiData()
+    }
+
+    public actionCellRenderer(params: any) {
+      let eGui = document.createElement("div");
+      let editingCells = params.api.getEditingCells();
+      let isCurrentRowEditing = editingCells.some((cell: any) => {
+        return cell.rowIndex === params.node.rowIndex;
+      });
+      eGui.innerHTML = `<button class="material-icons action-button-red" delete data-action="delete">delete</button>`;
+  
+      return eGui;
+    }
+
+    onGridReady(event) { this.gridApi = event.api; }
+
+    onGridReadySelectAc(event) { this.gridApiSelectAc = event.api; }
+
+    getAcHeadAccountList() {
+        this._masterService.getAccountsAddedinAcHead(this.selectedAccountHeadID).subscribe((res) => {
+        this.AcHeadAccountList = res;
+      });
+    }
+
+    getAccounts() {
+      this._masterService.getAccountsForBranch(this.selectedAccountHeadID).subscribe((res) => {
+        this.accountList = res;
+      });
+    }
+
+    getApiData() {
+      if (this.selectedAccountHeadID) {
+        this._masterService.getAcHeadId(this.selectedAccountHeadID).subscribe((res) => {
+          this.nameForm.patchValue({
+            name: res.name
+          });
+        });
+        this.getAcHeadAccountList();
+      }
+      //this._masterService.getAccountsForBranch(this.selectedBranchID).subscribe((response) => {
+      //  this.accountList = response;
+      //  this.filteredAccountList = response;
+      //});
+    }
+
+    checkSelectedRowSelectAc(event: any) {
+      var selectedRow = this.gridApiSelectAc.getSelectedRows();
+      if (selectedRow.length > 0) { this.isRowSelected = true; }
+      else { this.isRowSelected = false; }
+    }
+  
+    checkSelectedRow(event: any) {
+      var selectedRow = this.gridApi.getSelectedRows();
+      if (selectedRow.length > 0) { this.isRowSelected = true; }
+      else { this.isRowSelected = false; }
+    }
+
+    selectAccounts() {
+      var selectAccount = this.gridApiSelectAc.getSelectedRows();
+      const body = {
+        dropDownVMs: selectAccount,
+        AcHeadId: this.selectedAccountHeadID
+        
+      };
+
+      this._masterService.addAcHead(body).subscribe(result => {
+        this.getAcHeadAccountList();
+      });
+    }   
+    
+    removeAccounts() {
+      var selectAccount = this.gridApi.getSelectedRows();
+      const body = {
+        dropDownVMs: selectAccount,
+        AcHeadId: this.selectedAccountHeadID
+  
+      };
+  
+      this._masterService.deleteAcHeadAccount(body).subscribe(result => {
+        /* this.selectedBranchID = result.id;*/
+        this.getAcHeadAccountList();
+      });   
     }
 
     bindFormControls() {
@@ -28,19 +148,10 @@ export class AddAccountHeadComponent implements OnInit {
           'name': ['', Validators.required],
           //'id': [this.selectedAccountHeadID, Validators.required]
         });
-    }
-
-    ngOnInit() {
-      this.bindFormControls();
-    }
-    
-    onGridReady(event) { this.gridApi = event.api; }
-
-    onGridReadySelectAc(event) { this.gridApiSelectAc = event.api; }
-
+    }          
 
     public onSubmit(values: Object): void {
-        this.nameForm.controls['name'].setValue(String(this.nameForm.get('name').value));
+        var h = this.gridApi.getSelectedRows();
         var body = this.nameForm.value;
         if (this.nameForm.valid) {
           this._masterService.saveAccountHead(body).subscribe(result => {

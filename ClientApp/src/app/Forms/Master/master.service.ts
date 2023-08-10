@@ -274,13 +274,27 @@ export class MasterService {
     return this.httpClient.get<any>(environment.apiBaseUrl + 'Common/getApplyOnTaxAccountDDL', { headers: this.headers });
   }
 
-
-
   getAccountsForBranch(id: number): Observable<any> {
     return this.httpClient.get<any>(environment.apiBaseUrl + 'master/getAccountsForBranch/' + id, { headers: this.headers })
   }
   getAccountsAddedinBranch(id: number): Observable<any> {
     return this.httpClient.get<any>(environment.apiBaseUrl + 'master/getBranchAccountList/' + id, { headers: this.headers })
+  }
+
+  getAccountsAddedinAcHead(id: number): Observable<any> {
+    return this.httpClient.get<any>(environment.apiBaseUrl + 'Master/getHeadAccountList/' + id, { headers: this.headers })
+  }
+
+  getAcHeadId(id: number): Observable<any> {
+    return this.httpClient.get<any>(environment.apiBaseUrl + 'master/getAcHeadId/' + id, { headers: this.headers })
+  }
+
+  addAcHead(data): Observable<any> {
+    return this.httpClient.post<any>(environment.apiBaseUrl + 'Master/AddHeadAccount', data, { headers: this.headers });
+  }
+
+  deleteAcHeadAccount(data): Observable<any> {
+    return this.httpClient.post<any>(environment.apiBaseUrl + 'Master/deleteHeadAccount', data, { headers: this.headers });
   }
 
 }
