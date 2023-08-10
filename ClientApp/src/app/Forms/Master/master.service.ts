@@ -281,8 +281,8 @@ export class MasterService {
     return this.httpClient.get<any>(environment.apiBaseUrl + 'master/getBranchAccountList/' + id, { headers: this.headers })
   }
 
-  getAccountsAddedinAcHead(id: number): Observable<any> {
-    return this.httpClient.get<any>(environment.apiBaseUrl + 'Master/getHeadAccountList/' + id, { headers: this.headers })
+  getAccountsAddedinAcHead(headId): Observable<any> {
+    return this.httpClient.get<any>(environment.apiBaseUrl + 'Master/getHeadAccountList/' + headId, { headers: this.headers })
   }
 
   getAcHeadId(id: number): Observable<any> {

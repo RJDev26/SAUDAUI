@@ -47,7 +47,7 @@ export class AddAccountHeadComponent implements OnInit {
         //{
         //  headerName: 'Action', field: 'fileIcon', cellRenderer: this.actionCellRenderer, resizable: true
         //},
-        { headerName: 'Account', field: 'account', filter: true, sorting: true, resizable: true, flex: 1 },
+        { headerName: 'Account', field: 'name', filter: true, sorting: true, resizable: true, flex: 1 },
       ]
     }];
 
@@ -133,11 +133,11 @@ export class AddAccountHeadComponent implements OnInit {
       var selectAccount = this.gridApi.getSelectedRows();
       const body = {
         dropDownVMs: selectAccount,
-        AcHeadId: this.selectedAccountHeadID
-  
+        AcHeadId: this.selectedAccountHeadID  
       };
   
       this._masterService.deleteAcHeadAccount(body).subscribe(result => {
+        console.log("Hi")
         /* this.selectedBranchID = result.id;*/
         this.getAcHeadAccountList();
       });   
