@@ -18,8 +18,17 @@ export class AccountHeadComponent implements OnInit {
     @ViewChild(DatatableComponent) table: DatatableComponent;
     accountHeadList: any;
     public settings: Settings;
-    constructor(public appSettings: AppSettings, private _masterService: MasterService, public dialog: MatDialog) {
-        this.settings = this.appSettings.settings;
+    agGridOptions: any = {
+      defaultColDef: {
+        filter: true,
+         flex:1,
+        sortable: true,
+        wraptext: true,
+        resizable: true,
+        minWidth: 100,
+      
+      },
+      suppressRowHoverHighlight: true,
     }
     
     columnDefs = [
@@ -29,14 +38,18 @@ export class AccountHeadComponent implements OnInit {
         { headerName: 'Name',  field: 'name', filter: true, sorting: true, resizable: true },
     ];
 
-    agGridOptions: any = {
-        defaultColDef: {
-          filter: true,
-          flex: 1,
-          sortable: true,
-          wraptext: true,
-          resizable: true
-        }
+    constructor(public appSettings: AppSettings, private _masterService: MasterService, public dialog: MatDialog) {
+      this.settings = this.appSettings.settings;
+    }
+
+    ngOnInit(): void {
+      this.getAccountHeadList();
+    }
+
+    getAccountHeadList() {
+      this._masterService.getAccountHead().subscribe((results) => {
+        this.accountHeadList = results;
+      });
     }
 
     public actionCellRenderer(params: any) {
@@ -61,16 +74,7 @@ export class AccountHeadComponent implements OnInit {
         this.getAccountHeadList();
       });
     }
-    onGridReady(event) { }
-    ngOnInit(): void {
-        this.getAccountHeadList();
-    }
-
-    getAccountHeadList() {
-      this._masterService.getAccountHead().subscribe((results) => {
-        this.accountHeadList = results;
-      });
-    }
+    onGridReady(event) { }    
 
     onGridClick(params: any) {
       if (params.event.target.dataset.action == "edit")
