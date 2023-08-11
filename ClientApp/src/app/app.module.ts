@@ -42,8 +42,6 @@ import { UserMenuComponent } from './theme/components/user-menu/user-menu.compon
 import { AgGridModule } from 'ag-grid-angular';
 import { HttpClientModule } from '@angular/common/http';
 import { ExchangeComponent } from './Forms/Master/exchange/exchange.component';
-import { MultiSelectComponent } from './common/multi-select/multi-select.component';
-/*import { AccountComponent } from './Forms/Master/account/account.component';*/
 
 @NgModule({
   imports: [
@@ -82,7 +80,6 @@ import { MultiSelectComponent } from './common/multi-select/multi-select.compone
     MessagesComponent,
     UserMenuComponent,
     ExchangeComponent,
-    MultiSelectComponent,
     //AccountComponent,
 
   ],
