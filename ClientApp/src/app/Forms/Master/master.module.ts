@@ -34,6 +34,8 @@ import { ExchangeComponent } from './exchange/exchange.component';
 import { AddExchangeComponent } from './exchange/add-exchange/add-exchange.component';
 import { AccountHeadComponent } from './account-head/account-head.component';
 import { AddAccountHeadComponent } from './account-head/add-account-head/add-account-head.component';
+import { InterestMasterComponent } from './interest-master/interest-master.component';
+import { AddInterestMasterComponent } from './interest-master/add-interest-master/add-interest-master.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'account', pathMatch: 'full' },
@@ -49,6 +51,7 @@ export const routes: Routes = [
   { path: 'branch', component: BranchComponent, data: { breadcrumb: 'Branch' } },
   { path: 'tax', component: TaxComponent, data: { breadcrumb: 'Tax' } },
   { path: 'exchange', component: ExchangeComponent, data: { breadcrumb: 'Exchange' } },
+  { path: 'interest-master', component: InterestMasterComponent, data: { breadcrumb: 'Interest Master' } },
   { path: 'account-head', component: AccountHeadComponent, data: { breadcrumb: 'Account Head' } }
 ];
 
@@ -90,7 +93,9 @@ export const routes: Routes = [
      AddBranchAccountComponent,
      AddExchangeComponent,
      AccountHeadComponent,
-     AddAccountHeadComponent
+     AddAccountHeadComponent,
+     InterestMasterComponent,
+     AddInterestMasterComponent
   ],
   providers: [
     { provide: MAT_DATE_LOCALE, useValue: 'en-GB' }

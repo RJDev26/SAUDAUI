@@ -57,4 +57,15 @@ export class AppService {
   getTax():Observable<any>{
     return this.httpClient.get<any>(environment.apiBaseUrl + 'MasterSecond/getTaxList',{headers:this.headers});
   }
+
+  getIntrestApplyOnDDL(): Observable<any> {
+    return this.httpClient.get<any>(environment.apiBaseUrl + 'Common/getIntrestApplyOnDDL', { headers: this.headers });
+  }
+  getIntrestTypeDLL(): Observable<any> {
+    return this.httpClient.get<any>(environment.apiBaseUrl + 'Common/getIntrestTypeDLL', { headers: this.headers });
+  }
+
+  getPostVoucherDLL(): Observable<any> {
+    return this.httpClient.get<any>(environment.apiBaseUrl + 'Common/getPostVoucherDLL', { headers: this.headers });
+  }
 }

@@ -24,6 +24,10 @@ export class MasterSecondService {
     return this.httpClient.get<any>(environment.apiBaseUrl + 'MasterSecond/deleteExchange/' + id, { headers: this.headers })
   }
 
+  deleteInterest(id: number): Observable<any> {
+    return this.httpClient.get<any>(environment.apiBaseUrl + 'MasterSecond/deleteInterest/' + id, { headers: this.headers })
+  }
+
   deleteExchangeTax(id: number): Observable<any> {
     return this.httpClient.get<any>(environment.apiBaseUrl + 'MasterSecond/deleteExchangeTax/' + id, { headers: this.headers })
   }
@@ -43,6 +47,11 @@ export class MasterSecondService {
   saveExchangeAccount(data): Observable<any> {
     return this.httpClient.post<any>(environment.apiBaseUrl + 'MasterSecond/SaveExchangeAccount', data, { headers: this.headers });
   }
+
+  saveInterest(data): Observable<any> {
+    return this.httpClient.post<any>(environment.apiBaseUrl + 'MasterSecond/SaveInterest', data, { headers: this.headers });
+  }
+
   saveExchangeTax(data): Observable<any> {
     return this.httpClient.post<any>(environment.apiBaseUrl + 'MasterSecond/SaveExchangeTax', data, { headers: this.headers });
   }
@@ -55,6 +64,9 @@ export class MasterSecondService {
   getTaxById(id: number): Observable<any> {
     return this.httpClient.get<any>(environment.apiBaseUrl + 'MasterSecond/getTaxId/' + id, { headers: this.headers })
   }
+  getInterestId(id: number): Observable<any> {
+    return this.httpClient.get<any>(environment.apiBaseUrl + 'MasterSecond/getInterestId/' + id, { headers: this.headers })
+  }
   getExchangeId(id: number): Observable<any> {
     return this.httpClient.get<any>(environment.apiBaseUrl + 'MasterSecond/getExchangeId/' + id, { headers: this.headers })
   }
@@ -63,6 +75,10 @@ export class MasterSecondService {
   }
   getExchangeList(): Observable<any> {
     return this.httpClient.get<any>(environment.apiBaseUrl + 'MasterSecond/getExchangeList', { headers: this.headers });
+  }
+
+  getInterestList(): Observable<any> {
+    return this.httpClient.get<any>(environment.apiBaseUrl + 'MasterSecond/getInterestList', { headers: this.headers });
   }
   getTaxAccountList(id: number): Observable<any> {
     return this.httpClient.get<any>(environment.apiBaseUrl + 'MasterSecond/getAccountTaxList/' + id, { headers: this.headers })
