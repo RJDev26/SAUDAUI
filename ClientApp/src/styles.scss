@@ -186,6 +186,16 @@ input[type=number]:-moz-placeholder { /* Firefox 18- */
     background: rgb(0 105 92 / 81%);
 }
 
+.ag-theme-material {
+    .ag-header-container {
+        .ag-header-row {
+            &.ag-header-row-column-group {
+                background: #054b42 !important;
+            }
+        }
+    }
+}
+
 .app {
   &.teal-light {
     .mat-radio-button {
