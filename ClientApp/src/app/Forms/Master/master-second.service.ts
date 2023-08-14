@@ -24,6 +24,10 @@ export class MasterSecondService {
     return this.httpClient.get<any>(environment.apiBaseUrl + 'MasterSecond/deleteExchange/' + id, { headers: this.headers })
   }
 
+  deleteSymbolMapping(id: number): Observable<any> {
+    return this.httpClient.get<any>(environment.apiBaseUrl + 'MasterSecond/deleteSymbolMapping/' + id, { headers: this.headers })
+  }
+
   deleteInterest(id: number): Observable<any> {
     return this.httpClient.get<any>(environment.apiBaseUrl + 'MasterSecond/deleteInterest/' + id, { headers: this.headers })
   }
@@ -51,6 +55,9 @@ export class MasterSecondService {
   saveInterest(data): Observable<any> {
     return this.httpClient.post<any>(environment.apiBaseUrl + 'MasterSecond/SaveInterest', data, { headers: this.headers });
   }
+  saveSymbolMapping(data): Observable<any> {
+    return this.httpClient.post<any>(environment.apiBaseUrl + 'MasterSecond/saveSymbolMapping', data, { headers: this.headers });
+  }
 
   saveExchangeTax(data): Observable<any> {
     return this.httpClient.post<any>(environment.apiBaseUrl + 'MasterSecond/SaveExchangeTax', data, { headers: this.headers });
@@ -67,6 +74,10 @@ export class MasterSecondService {
   getInterestId(id: number): Observable<any> {
     return this.httpClient.get<any>(environment.apiBaseUrl + 'MasterSecond/getInterestId/' + id, { headers: this.headers })
   }
+
+  getSymbolMappingId(id: number): Observable<any> {
+    return this.httpClient.get<any>(environment.apiBaseUrl + 'MasterSecond/getSymbolMappingId/' + id, { headers: this.headers })
+  }
   getExchangeId(id: number): Observable<any> {
     return this.httpClient.get<any>(environment.apiBaseUrl + 'MasterSecond/getExchangeId/' + id, { headers: this.headers })
   }
@@ -75,6 +86,10 @@ export class MasterSecondService {
   }
   getExchangeList(): Observable<any> {
     return this.httpClient.get<any>(environment.apiBaseUrl + 'MasterSecond/getExchangeList', { headers: this.headers });
+  }
+
+  getSymbolMappingList(): Observable<any> {
+    return this.httpClient.get<any>(environment.apiBaseUrl + 'MasterSecond/getSymbolMappingList', { headers: this.headers });
   }
 
   getInterestList(): Observable<any> {

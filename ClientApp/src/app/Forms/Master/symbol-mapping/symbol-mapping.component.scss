@@ -1,0 +1,12 @@
+.symbol-mapping{
+    flex-direction: column !important;
+    .white-block {
+        width: 100%;
+        justify-content: center;
+        align-items: center;
+        display: flex;
+        button{
+            height: 42px;
+        }
+    } 
+}

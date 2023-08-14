@@ -16,6 +16,7 @@ export const verticalMenuItems = [
   new Menu(3, 'Exchange', '/master/exchange', null, 'payments', null, false, 2),
   new Menu(3, 'Interest Master', '/master/interest-master', null, 'payments', null, false, 2),
   new Menu(3, 'Account Head', '/master/account-head', null, 'account_circle', null, false, 2),
+  new Menu(3, 'Symbol Mapping', '/master/symbol-mapping', null, 'account_circle', null, false, 2),
   new Menu(4, 'Users', '/users', null, 'supervisor_account', null, false, 0),
   new Menu(5, 'Entries', null, null, 'card_membership', null, true, 0),
 

@@ -36,6 +36,7 @@ import { AccountHeadComponent } from './account-head/account-head.component';
 import { AddAccountHeadComponent } from './account-head/add-account-head/add-account-head.component';
 import { InterestMasterComponent } from './interest-master/interest-master.component';
 import { AddInterestMasterComponent } from './interest-master/add-interest-master/add-interest-master.component';
+import { SymbolMappingComponent } from './symbol-mapping/symbol-mapping.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'account', pathMatch: 'full' },
@@ -52,7 +53,8 @@ export const routes: Routes = [
   { path: 'tax', component: TaxComponent, data: { breadcrumb: 'Tax' } },
   { path: 'exchange', component: ExchangeComponent, data: { breadcrumb: 'Exchange' } },
   { path: 'interest-master', component: InterestMasterComponent, data: { breadcrumb: 'Interest Master' } },
-  { path: 'account-head', component: AccountHeadComponent, data: { breadcrumb: 'Account Head' } }
+  { path: 'account-head', component: AccountHeadComponent, data: { breadcrumb: 'Account Head' } },
+  { path: 'symbol-mapping', component: SymbolMappingComponent, data: { breadcrumb: 'Symbol Mapping' } }
 ];
 
 @NgModule({
@@ -95,7 +97,8 @@ export const routes: Routes = [
      AccountHeadComponent,
      AddAccountHeadComponent,
      InterestMasterComponent,
-     AddInterestMasterComponent
+     AddInterestMasterComponent,
+     SymbolMappingComponent
   ],
   providers: [
     { provide: MAT_DATE_LOCALE, useValue: 'en-GB' }
