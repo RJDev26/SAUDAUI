@@ -99,4 +99,9 @@ export class MasterSecondService {
     return this.httpClient.post<any>(environment.apiBaseUrl + 'MasterSecond/deleteAccountTax', data, { headers: this.headers });
   }
 
+  
+
+  getApplyOnFileShareDDL(): Observable<any> {
+    return this.httpClient.get<any>(environment.apiBaseUrl + 'MasterSecond/getApplyOnFileShareDDL', { headers: this.headers })
+  }
 }

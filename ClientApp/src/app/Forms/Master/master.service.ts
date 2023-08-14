@@ -297,4 +297,23 @@ export class MasterService {
     return this.httpClient.post<any>(environment.apiBaseUrl + 'Master/deleteHeadAccount', data, { headers: this.headers });
   }
 
+  getApplyOnFileShareDDL(): Observable<any> {
+    return this.httpClient.get<any>(environment.apiBaseUrl + 'Common/getApplyOnFileShareDDL', { headers: this.headers })
+  }
+
+  getAccountSelfShareEdit(id: number): Observable<any> {
+    return this.httpClient.get<any>(environment.apiBaseUrl + 'master/getAccountSelfShareEdit/' + id, { headers: this.headers })
+  }
+
+  deleteAccountSelfShare(id: number): Observable<any> {
+    return this.httpClient.get<any>(environment.apiBaseUrl + 'master/deleteAccountSelfShare/' + id, { headers: this.headers })
+  }
+
+  saveAccountSelfShare(data): Observable<any> {
+    return this.httpClient.post<any>(environment.apiBaseUrl + 'Master/saveAccountSelfShare', data, { headers: this.headers });
+  }
+  getAccountSelfShareList(accountId: number): Observable<any> {
+    return this.httpClient.get<any>(environment.apiBaseUrl + 'master/getAccountSelfShareList/' + accountId, { headers: this.headers })
+  }
+
 }
