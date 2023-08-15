@@ -381,6 +381,101 @@
     </div>
   </mat-tab>
 
+  <mat-tab label="Interest">
+    <form [formGroup]="itemForm" (ngSubmit)="onItemSubmit(itemForm.value)" fxLayout="row wrap" class="user-form">
+      <div class="white-block pb-5">
+          <h3><span>Item</span></h3>
+          <div class="tab-party-details-parent">
+              <div fxFlex="100" fxFlex.gt-sm="20" fxFlex.sm="50">
+                  <div class="dropdown-wrapper">
+                      <mat-form-field class="select-slab-mat" appearance="outline">
+                        <mat-label>Select Type</mat-label>
+                        <mat-select #select placeholder="Select Type" panelClass="custom-select-panel" formControlName="type">
+                          <input class="milti-search-box" #multiUserSearch type="text" autocomplete="off" matInput placeholder="Search Type" (input)="onInputTypeChange($event)" />
+                          <mat-option *ngFor="let option of filterTypeList" [value]="option.id">
+                            {{ option.name }}
+                          </mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                  </div>
+              </div>
+              <div fxFlex="100" fxFlex.gt-sm="20" fxFlex.sm="50">
+                  <div class="dropdown-wrapper">
+                      <mat-form-field class="select-slab-mat" appearance="outline">
+                        <mat-label>Select ApplyOn</mat-label>
+                        <mat-select #select placeholder="Select ApplyOn" panelClass="custom-select-panel" formControlName="applyOn">
+                          <input class="milti-search-box" #multiUserSearch type="text" autocomplete="off" matInput placeholder="Search ApplyOn" (input)="onInputApplyOnChange($event)" />
+                          <mat-option *ngFor="let option of filterApplyOnList" [value]="option.id">
+                            {{ option.name }}
+                          </mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                  </div>
+              </div>
+              <div fxFlex="100" fxFlex.gt-sm="20" fxFlex.sm="50">
+                  <div class="dropdown-wrapper">
+                      <mat-form-field class="select-slab-mat" appearance="outline">
+                        <mat-label>Select Post Voucher</mat-label>
+                        <mat-select #select placeholder="Select Post Voucher" panelClass="custom-select-panel" formControlName="postVouchers">
+                          <input class="milti-search-box" #multiUserSearch type="text" autocomplete="off" matInput placeholder="Search Post Voucher" (input)="onInputVoucherChange($event)" />
+                          <mat-option *ngFor="let option of filterPostVoucherList" [value]="option.id">
+                            {{ option.name }}
+                          </mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                  </div>
+              </div>
+              <div fxFlex="100" fxFlex.gt-sm="15" fxFlex.sm="50">
+                  <mat-form-field appearance="outline">
+                    <mat-label>Year Days</mat-label>
+                    <input matInput autocomplete="off" placeholder="Year Days" formControlName="yearDays" type="number">
+                    <mat-error *ngIf="itemForm.controls.yearDays.errors?.required">yearDays is required</mat-error>
+                  </mat-form-field>
+                </div>
+              <div fxFlex="100" fxFlex.gt-sm="15" fxFlex.sm="50">
+                  <mat-form-field appearance="outline">
+                    <mat-label>Int Rate</mat-label>
+                    <input matInput autocomplete="off" placeholder="Int Rate" formControlName="intRate" type="number">
+                    <mat-error *ngIf="itemForm.controls.intRate.errors?.required">Int Rate is required</mat-error>
+                  </mat-form-field>
+                </div>
+              <div fxFlex="100" fxFlex.gt-sm="14" fxFlex.sm="50">
+                  <mat-form-field appearance="outline">
+                    <mat-label>From</mat-label>
+                    <input matInput [matDatepicker]="itemFormpicker1" formControlName="fromDt">
+                    <mat-datepicker-toggle matSuffix [for]="itemFormpicker1"></mat-datepicker-toggle>
+                    <mat-datepicker #itemFormpicker1></mat-datepicker>
+                  </mat-form-field>
+                </div>
+                <div fxFlex="100" fxFlex.gt-sm="14" fxFlex.sm="50">
+                  <mat-form-field appearance="outline">
+                    <input matInput [matDatepicker]="itemFormpicker2" placeholder="To" formControlName="toDt">
+                    <mat-datepicker-toggle matSuffix [for]="itemFormpicker2"></mat-datepicker-toggle>
+                    <mat-datepicker #itemFormpicker2></mat-datepicker>
+                  </mat-form-field>
+                </div>
+              
+          </div>
+      </div>
+      <div fxFlex="100" class="mt-2 text-center space-between-btns">
+          <button mat-raised-button color="warn" (click)="close()">Cancel</button>            
+          <button mat-raised-button color="primary" class="uppercase" [disabled]="!itemForm.valid" type="submit">Save</button> 
+      </div>
+  </form>
+  <div class="col-xl-12 mt-2">
+    <ag-grid-angular style=" height: 535px;"
+                     class="ag-theme-material"
+                       [rowHeight]="31"
+                     [rowData]="interestMasterList"
+                     [pagination]="true"
+                     [columnDefs]="columnItemDefs"
+                     [defaultColDef]="agGridOptions.defaultColDef"
+                     (cellClicked)="onGridClick($event)"
+                     headerHeight="34">
+    </ag-grid-angular>
+  </div>
+  </mat-tab>
+
 
 
 </mat-tab-group>

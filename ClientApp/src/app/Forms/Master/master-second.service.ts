@@ -95,6 +95,9 @@ export class MasterSecondService {
   getInterestList(): Observable<any> {
     return this.httpClient.get<any>(environment.apiBaseUrl + 'MasterSecond/getInterestList', { headers: this.headers });
   }
+  getAccountInterestList(id: number): Observable<any> {
+    return this.httpClient.get<any>(environment.apiBaseUrl + 'MasterSecond/getAccountInterestList/' + id, { headers: this.headers });
+  }
   getTaxAccountList(id: number): Observable<any> {
     return this.httpClient.get<any>(environment.apiBaseUrl + 'MasterSecond/getAccountTaxList/' + id, { headers: this.headers })
   }

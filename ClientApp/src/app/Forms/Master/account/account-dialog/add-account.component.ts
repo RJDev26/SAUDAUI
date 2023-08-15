@@ -12,6 +12,7 @@ import { ConfirmationDialog } from '../../../Dialog/confirmation-dialog/confirma
 import { ErrorDialog } from '../../../Dialog/confirmation-dialog/error-dialog.component';
 import { MasterService } from '../../master.service';
 import { Account } from '../account.model';
+import { MasterSecondService } from '../../master-second.service';
 
 export interface State {
   id: number;
@@ -42,6 +43,7 @@ export interface ACHead {
 export class AddAccountComponent implements OnInit, AfterViewInit {
   public personalForm: UntypedFormGroup;
 
+  public itemForm: UntypedFormGroup;
   public acSelfShareForm: FormGroup;
   brokerageForm: FormGroup;
   subscription: any;
@@ -50,6 +52,13 @@ export class AddAccountComponent implements OnInit, AfterViewInit {
   acGroupCtrl = new FormControl('');
   filteredacGroup: Observable<ACGroup[]>;
 
+
+  typeList: any[];
+  applyOnList: any[];
+  postVoucherList: any[];
+  filterPostVoucherList: any[];
+  filterTypeList: any[];
+  filterApplyOnList: any[];
 
   cityCtrl = new FormControl('');
   filteredCity: Observable<City[]>;
@@ -72,13 +81,14 @@ export class AddAccountComponent implements OnInit, AfterViewInit {
   brokApplyOn: any;
   brokApplyOnQty: any;
   brokInstype: any;
-  itemList: any
+  itemList: any;
+  interestMasterList: any;
 
   accountSelfShareList: any;
 
   @ViewChildren(MatAutocompleteTrigger) triggerCollection: QueryList<MatAutocompleteTrigger>;
 
-  constructor(private formBuilder: UntypedFormBuilder, public dialogRef:
+  constructor(private formBuilder: UntypedFormBuilder, private _masterSeconedService: MasterSecondService, public dialogRef:
     MatDialogRef<AddAccountComponent>, @Inject(MAT_DIALOG_DATA) public user: Account,
     private _masterService: MasterService, public dialog: MatDialog, private _appService: AppService) {
     this.bindFormControls();
@@ -164,6 +174,21 @@ export class AddAccountComponent implements OnInit, AfterViewInit {
 
   ];
 
+  columnItemDefs = [
+    {
+      headerName: 'Action', field: 'fileIcon', cellRenderer: this.actionCellRenderer, minWidth: 80,
+      maxWidth: 110, resizable: true
+    },
+    { headerName: 'Account Name', field: 'acName', filter: true, sorting: true, resizable: true },
+  { headerName: 'ApplyOn', field: 'applyOnName', filter: true, sorting: true, resizable: true },  
+  { headerName: 'From Date', field: 'fromDtFormat', filter: true, sorting: true, resizable: true },  
+  { headerName: 'To Date', field: 'toDtFormat', filter: true, sorting: true, resizable: true },  
+  { headerName: 'Type', field: 'typeName', filter: true, sorting: true, resizable: true },  
+  { headerName: 'Post Vouchers', field: 'postVouchersName', filter: true, sorting: true, resizable: true },  
+  { headerName: 'Int Rate', field: 'intRate', filter: true, sorting: true, resizable: true },  
+  { headerName: 'Year Days', field: 'yearDays', filter: true, sorting: true, resizable: true },  
+];
+
   bindFormControls() {
     this.personalForm = this.formBuilder.group({
       'ShortCode': ['', Validators.required],
@@ -201,6 +226,110 @@ export class AddAccountComponent implements OnInit, AfterViewInit {
       'id': [0],
     });
   }
+
+  bindItemFormControls() {
+    this.itemForm = this.formBuilder.group({
+      'accountId': this.selectedAccountId,
+      'type': ['', Validators.required],
+      'applyOn': ['', Validators.required],
+      'postVouchers': ['', Validators.required],
+      'intRate': ['', Validators.required],
+      'yearDays': ['', Validators.required],
+      'fromDt': ['', Validators.required],
+      'toDt': ['', Validators.required],
+      'id': [0]
+    });
+   this.initialItemApiCalls();
+}
+
+initialItemApiCalls() {
+  forkJoin([this._appService.getIntrestApplyOnDDL(), this._appService.getIntrestTypeDLL(), this._appService.getPostVoucherDLL()]).pipe(map(response => {
+    this.applyOnList = response[0];
+    this.filterApplyOnList = response[0];
+    this.typeList = response[1];
+    this.filterTypeList = response[1];
+    this.postVoucherList = response[2];
+    this.filterPostVoucherList = response[2];
+  })).subscribe(res => {
+  
+  });
+  if(this.selectedAccountId){
+    this.getInterestList();
+  }
+}
+
+getInterestList() {
+  this._masterSeconedService.getAccountInterestList(this.selectedAccountId).subscribe((results) => {
+       this.interestMasterList = results;       
+      });
+  }
+
+public onItemSubmit(values: Object): void {
+  if (this.selectedAccountId == 0) {
+    const dialogRef = this.dialog.open(ErrorDialog, {
+      data: {
+        message: 'Please select or save account to save account Interest',
+        buttonText: {
+          ok: 'OK',
+
+        }
+      }
+
+    });
+  } else {
+    var body = this.itemForm.value;
+  
+    if (this.itemForm.valid) {
+      //const body = JSON.stringify(addFormData);
+      this._masterSeconedService.saveInterest(body).subscribe(result => {
+        console.log("result", result);
+        this.getInterestList();
+      }, err => {
+        console.log(err);
+      });
+    }
+  }
+}
+
+/* to filter select account dropdown*/
+onInputTypeChange(event: any) {
+  const searchInput = event.target.value.toLowerCase();
+
+  this.filterTypeList = this.typeList.filter((data) => {
+    const prov = data.name.toLowerCase();
+    return prov.includes(searchInput);
+  });
+
+  if (searchInput === '') {
+    this.filterTypeList = [...this.typeList];
+  }
+}
+
+onInputApplyOnChange(event: any) {
+  const searchInput = event.target.value.toLowerCase();
+
+  this.filterApplyOnList = this.applyOnList.filter((data) => {
+    const prov = data.name.toLowerCase();
+    return prov.includes(searchInput);
+  });
+
+  if (searchInput === '') {
+    this.filterApplyOnList = [...this.applyOnList];
+  }
+}
+
+onInputVoucherChange(event: any) {
+  const searchInput = event.target.value.toLowerCase();
+
+  this.filterPostVoucherList = this.postVoucherList.filter((data) => {
+    const prov = data.name.toLowerCase();
+    return prov.includes(searchInput);
+  });
+
+  if (searchInput === '') {
+    this.filterPostVoucherList = [...this.postVoucherList];
+  }
+}
 
 
 
@@ -250,6 +379,52 @@ export class AddAccountComponent implements OnInit, AfterViewInit {
       this.bindFilterFntoList();
     })).subscribe(res => {
       this.getValuesInEditMode();
+    });
+  }
+
+  onGridClick(params: any) {
+    if (params.event.target.dataset.action == "edit")
+    {
+      this.editInterestItem(params.data.id);
+    }
+    if (params.event.target.dataset.action == "delete")
+    {
+      const dialogRef = this.dialog.open(ConfirmationDialog, {
+        data: {
+          message: 'Do you really want to delete this record?',
+          buttonText: {
+            ok: 'Yes',
+            cancel: 'No'
+          }
+        }
+      });
+
+      dialogRef.afterClosed().subscribe((confirmed: boolean) => {
+        if (confirmed) {
+          this._masterSeconedService.deleteInterest(params.data.id).subscribe((res) => {
+            this.getInterestList();
+          });
+        }
+      });
+
+
+    }
+  }
+
+  editInterestItem(id: number){
+    this._masterSeconedService.getInterestId(id).subscribe((res) => {
+      this.itemForm.get('accountId').setValue(this.selectedAccountId);
+      this.itemForm.get('type').setValue(res.type);
+      this.itemForm.get('applyOn').setValue(res.applyOn);
+      this.itemForm.get('postVouchers').setValue(res.postVouchers);
+      this.itemForm.get('intRate').setValue(res.intRate);
+
+      this.itemForm.get('yearDays').setValue(res.yearDays);
+      this.itemForm.get('fromDt').setValue(res.fromDt);
+      this.itemForm.get('toDt').setValue(res.toDt);
+      this.itemForm.get('id').setValue(res.id);
+
+      
     });
   }
 
@@ -309,6 +484,7 @@ export class AddAccountComponent implements OnInit, AfterViewInit {
     this.initialApiCalls();
     this.getAccountSelfShareList();
     this.getBrokerageSetupList();
+    this.bindItemFormControls();
   }
 
 

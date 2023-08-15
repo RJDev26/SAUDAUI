@@ -63,6 +63,7 @@ constructor(public appSettings: AppSettings, private formBuilder: UntypedFormBui
         maxWidth: 110, resizable: true
       },
       { headerName: 'ItemID', field: 'itemId', filter: true, sorting: true, resizable: true },
+      { headerName: 'Item Name', field: 'itemName', filter: true, sorting: true, resizable: true },
     { headerName: 'Symbol', field: 'symbol', filter: true, sorting: true, resizable: true },  
   ];
 
