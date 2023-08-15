@@ -82,7 +82,11 @@ export class AddAccountComponent implements OnInit, AfterViewInit {
     MatDialogRef<AddAccountComponent>, @Inject(MAT_DIALOG_DATA) public user: Account,
     private _masterService: MasterService, public dialog: MatDialog, private _appService: AppService) {
     this.bindFormControls();
-    this.selectedAccountId = this.user.id;
+    
+    if (this.user == null) { this.selectedAccountId = 0; }
+    else {
+      this.selectedAccountId = this.user.id;
+    }
     this.bindacSelfShareFormControls();
 
     this.bindBrokerageControls()
@@ -166,7 +170,7 @@ export class AddAccountComponent implements OnInit, AfterViewInit {
       'Name': ['', Validators.required],
       'OpeningBal': [],
       'City': [''],
-      'Email': ['', Validators.compose([Validators.required, emailValidator])],
+      'Email': ['', Validators.compose([emailValidator])],
       'PanNo': [''],
       'Gstinno': [''],
       'Phone': ['', Validators.required],
@@ -476,7 +480,7 @@ export class AddAccountComponent implements OnInit, AfterViewInit {
   }
 
   getBrokerageSetupList() {
-    this._appService.getBrokerageSetupList().subscribe((results) => {
+    this._appService.getBrokerageSetupListAccount(this.selectedAccountId).subscribe((results) => {
       this.brokerageList = results;
     });
   }
