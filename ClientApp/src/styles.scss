@@ -175,6 +175,20 @@ input[type=number]:-moz-placeholder { /* Firefox 18- */
     background: #f3f3f3;
 }
 
+.ag-header-icon {
+    color: #fff;
+}
+
+.ag-header-cell, .ag-header-group-cell {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+.ag-cell, .ag-full-width-row .ag-cell-wrapper.ag-row-group {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
 .ag-theme-material {
     .ag-header-row {
         background: rgb(0 105 92 / 81%);
