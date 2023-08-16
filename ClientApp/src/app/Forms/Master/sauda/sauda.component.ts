@@ -51,7 +51,7 @@ export class SaudaComponent implements OnInit {
   columnDefs = [
     {
       headerName: 'Action', field: 'fileIcon', cellRenderer: this.actionCellRenderer, minWidth: 80,
-      maxWidth: 110, resizable: true
+      maxWidth: 110, resizable: true, filter: false
     },
     { headerName: 'Item', field: 'itemName', filter: true, sorting: true, resizable: true },
     { headerName: 'SaudaCode', field: 'saudaCode', filter: true, sorting: true, resizable: true },

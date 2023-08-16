@@ -61,7 +61,7 @@ export class BrokerageSetupComponent implements OnInit {
 
   columnDefs = [
     {
-      headerName: 'Action', field: 'fileIcon', cellRenderer: this.actionCellRenderer, resizable: true
+      headerName: 'Action', field: 'fileIcon', cellRenderer: this.actionCellRenderer, resizable: true, filter: false
     },
     { headerName: 'ApplyOn',  field: 'applyOnName', filter: true, sorting: true, resizable: true },
     { headerName: 'Apply OnQty',  field: 'applyOnQtyName', filter: true, sorting: true, resizable: true },

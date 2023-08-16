@@ -31,7 +31,7 @@ export class BrokerageSlabComponent implements OnInit {
     columnDefs = [
         {
             headerName: 'Action', field: 'fileIcon', cellRenderer: this.actionCellRenderer, minWidth: 80,
-            maxWidth: 110, resizable: true
+            maxWidth: 110, resizable: true, filter: false
         },
         { field: 'applyOnName', headerName: 'Apply On', filter: true, sorting: true, resizable: true },
         { field: 'applyOnQtyName', headerName: 'ApplyOnQty', filter: true, sorting: true, resizable: true },

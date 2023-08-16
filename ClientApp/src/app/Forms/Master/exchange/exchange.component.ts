@@ -47,7 +47,7 @@ constructor(public appSettings: AppSettings,
   columnDefs = [
       {
         headerName: 'Action', field: 'fileIcon', cellRenderer: this.actionCellRenderer, minWidth: 80,
-        maxWidth: 110, resizable: true
+        maxWidth: 110, resizable: true, filter: false
       },
       { headerName: 'Name', field: 'name', filter: true, sorting: true, resizable: true },
     { headerName: 'FMCCode', field: 'fmccode', filter: true, sorting: true, resizable: true },  

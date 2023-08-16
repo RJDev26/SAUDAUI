@@ -59,7 +59,7 @@ constructor(public appSettings: AppSettings, private formBuilder: UntypedFormBui
 
   columnDefs = [
       {
-        headerName: 'Action', field: 'fileIcon', cellRenderer: this.actionCellRenderer, minWidth: 80,
+        headerName: 'Action', field: 'fileIcon', cellRenderer: this.actionCellRenderer, minWidth: 80, filter: false,
         maxWidth: 110, resizable: true
       },
       { headerName: 'ItemID', field: 'itemId', filter: true, sorting: true, resizable: true },

@@ -48,7 +48,7 @@ constructor(public appSettings: AppSettings,
   columnDefs = [
       {
         headerName: 'Action', field: 'fileIcon', cellRenderer: this.actionCellRenderer, minWidth: 80,
-        maxWidth: 110, resizable: true
+        maxWidth: 110, resizable: true, filter: false
       },
       { headerName: 'Account Name', field: 'acName', filter: true, sorting: true, resizable: true },
     { headerName: 'ApplyOn', field: 'applyOnName', filter: true, sorting: true, resizable: true },  

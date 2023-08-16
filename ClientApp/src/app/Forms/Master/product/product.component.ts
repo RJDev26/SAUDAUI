@@ -47,7 +47,7 @@ export class ProductComponent implements OnInit {
     columnDefs = [
       {
         headerName: 'Action', field: 'fileIcon', cellRenderer: this.actionCellRenderer, minWidth: 80,
-        maxWidth: 110, resizable: true
+        maxWidth: 110, resizable: true, filter: false
       },
       { headerName: 'Exchange', field: 'exName', filter: true, sorting: true, resizable: true },
       { headerName: 'Symbol', field: 'symbol', filter: true, sorting: true, resizable: true },

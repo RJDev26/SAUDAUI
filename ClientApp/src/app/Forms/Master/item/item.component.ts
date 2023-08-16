@@ -54,7 +54,7 @@ export class ItemComponent implements OnInit {
   columnDefs = [
     {
       headerName: 'Action', field: 'fileIcon', cellRenderer: this.actionCellRenderer, minWidth: 80,
-      maxWidth: 110, resizable: true
+      maxWidth: 110, resizable: true, filter: false
     },
     { headerName: 'Code', field: 'itemCode', filter: true, sorting: true, resizable: true },
     { headerName: 'Item', field: 'itemName', filter: true, sorting: true, resizable: true },

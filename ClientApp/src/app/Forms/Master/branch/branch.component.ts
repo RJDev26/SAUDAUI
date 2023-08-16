@@ -30,7 +30,7 @@ export class BranchComponent implements OnInit {
   }
   columnDefs = [
     {
-      headerName: 'Action', field: 'fileIcon', cellRenderer: this.actionCellRenderer, resizable: true
+      headerName: 'Action', field: 'fileIcon', cellRenderer: this.actionCellRenderer, resizable: true, filter: false
     },
     { headerName: 'Name',  field: 'name', filter: true, sorting: true, resizable: true },
   ];
