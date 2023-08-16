@@ -23,7 +23,8 @@
                           <mat-error *ngIf="itemForm.controls.symbol.errors?.required">Symbol is required</mat-error>
                         </mat-form-field>
                       </div>
-                      <button mat-raised-button color="primary" class="uppercase" [disabled]="!itemForm.valid" type="submit">Save</button> 
+                      <button mat-raised-button color="primary" class="uppercase save-btn" [disabled]="!itemForm.valid" type="submit">Save</button> 
+                      <button type="button" mat-raised-button color="warn" (click)="close()">Cancel</button>            
                 </div>
             </div>
         </form>

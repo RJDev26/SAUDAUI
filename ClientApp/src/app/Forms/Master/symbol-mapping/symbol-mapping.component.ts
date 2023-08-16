@@ -95,6 +95,7 @@ constructor(public appSettings: AppSettings, private formBuilder: UntypedFormBui
       this._masterSecondService.saveSymbolMapping(body).subscribe(result => {
         console.log("result", result);
         this.getSymbolMappingList();
+        this.resetForm(this.itemForm);
       }, err => {
         console.log(err);
       });
@@ -154,4 +155,16 @@ getSymbolMappingList() {
       this.itemForm.get('itemId').setValue(res.itemId);      
     });
   } 
+
+  resetForm(myForm) {
+    myForm.reset();
+    myForm.get('id').setValue(0);
+    Object.keys(myForm.controls).forEach(key => {
+      myForm.get(key).setErrors(null);
+    });
+  }
+
+  close() {
+    this.resetForm(this.itemForm);
+  }
 }

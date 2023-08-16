@@ -284,11 +284,20 @@ public onItemSubmit(values: Object): void {
       this._masterSeconedService.saveInterest(body).subscribe(result => {
         console.log("result", result);
         this.getInterestList();
+        this.resetForm(this.itemForm);
       }, err => {
         console.log(err);
       });
     }
   }
+}
+
+resetForm(myForm) {
+  myForm.reset();
+  myForm.get('id').setValue(0);
+  Object.keys(myForm.controls).forEach(key => {
+    myForm.get(key).setErrors(null);
+  });
 }
 
 /* to filter select account dropdown*/
@@ -627,7 +636,9 @@ onInputVoucherChange(event: any) {
         //const body = JSON.stringify(addFormData);
         this._masterService.saveAccountSelfShare(body).subscribe(result => {
           console.log("result", result);
-          this.dialogRef.close();
+          // this.dialogRef.close();
+          this.getAccountSelfShareList();
+          this.resetForm(this.acSelfShareForm);
         }, err => {
           console.log(err);
         });
@@ -722,7 +733,9 @@ onInputVoucherChange(event: any) {
 
       this._masterService.saveBrokerageSetup(body).subscribe(result => {
         console.log("result", result);
-        this.dialogRef.close();
+        // this.dialogRef.close();
+        this.resetForm(this.brokerageForm);
+        this.getBrokerageSetupList();
       });
     }
   }

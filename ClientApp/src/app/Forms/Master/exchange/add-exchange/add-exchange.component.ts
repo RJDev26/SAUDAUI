@@ -308,8 +308,17 @@ onGridClick(params: any) {
     if (this.exchangeForm.valid) {
       this._masterSecondService.saveExchangeAccount(body).subscribe(result => {
         this.getExchangeAccountList();
+        this.resetForm(this.exchangeForm);
       });
     }
+  }
+
+  resetForm(myForm) {
+    myForm.reset();
+    myForm.get('id').setValue(0);
+    Object.keys(myForm.controls).forEach(key => {
+      myForm.get(key).setErrors(null);
+    });
   }
 
   public onSubmitExchangeTax(values: Object): void {
@@ -338,6 +347,7 @@ onGridClick(params: any) {
     if (this.exchangeDetailsForm.valid) {
       this._masterSecondService.saveExchangeTax(body).subscribe(result => {
         this.getExchangeTaxList();
+        this.resetForm(this.exchangeDetailsForm);
       });
     }
   }
