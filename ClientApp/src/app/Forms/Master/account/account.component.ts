@@ -8,6 +8,7 @@ import { CommonUtility } from '../../../shared/common-utility';
 import { ConfirmationDialog } from '../../Dialog/confirmation-dialog/confirmation-dialog.component';
 import { MasterService } from '../master.service';
 import { AddAccountComponent } from './account-dialog/add-account.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-blank',
@@ -26,7 +27,7 @@ export class AccountComponent implements OnInit {
  
   public settings: Settings;
   accountList: any;
-  constructor(public appSettings: AppSettings, private _masterService: MasterService, public dialog: MatDialog) {
+  constructor(public appSettings: AppSettings, public snackBar: MatSnackBar, private _masterService: MasterService, public dialog: MatDialog) {
     this.settings = this.appSettings.settings;
   }
 
@@ -110,6 +111,7 @@ export class AccountComponent implements OnInit {
           if (confirmed) {
             this._masterService.deleteAccountById(params.data.id).subscribe((res) => {
               this.getAccountList();
+              this.showToaster('Deleted Successfully.');
             });
           }
         });
@@ -120,6 +122,12 @@ export class AccountComponent implements OnInit {
 
   
    
+  }
+
+  showToaster(message){
+    this.snackBar.open(message, "Success", {
+      duration: 3000,
+    });
   }
 
   public openUserDialog(user)

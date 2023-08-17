@@ -416,6 +416,7 @@ onInputVoucherChange(event: any) {
         if (confirmed) {
           this._masterSeconedService.deleteInterest(params.data.id).subscribe((res) => {
             this.getInterestList();
+            this.showToaster('Deleted Successfully.');
           });
         }
       });
@@ -602,16 +603,19 @@ onInputVoucherChange(event: any) {
         if (confirmed) {
           this._masterService.deleteAccountSelfShare(params.data.id).subscribe((res) => {
             this.getAccountSelfShareList();
+            this.showToaster('Deleted Successfully.');
           });
         }
       });
 
 
     }
+  }
 
-
-
-
+  showToaster(message){
+    this.snackBar.open(message, "Success", {
+      duration: 3000,
+    });
   }
 
 
@@ -640,6 +644,9 @@ onInputVoucherChange(event: any) {
         //const body = JSON.stringify(addFormData);
         this._masterService.saveAccountSelfShare(body).subscribe(result => {
           console.log("result", result);
+          this.snackBar.open("Self Share details saved sucessfully.", "Success", {
+            duration: 3000,
+          });
           // this.dialogRef.close();
           this.getAccountSelfShareList();
           this.resetForm(this.acSelfShareForm);
@@ -721,6 +728,7 @@ onInputVoucherChange(event: any) {
         if (confirmed) {
           this._masterService.deleteBrokerageSetup(params.data.id).subscribe((res) => {
             this.getBrokerageSetupList();
+            this.showToaster('Deleted Successfully.');
           });
         }
       });
@@ -738,6 +746,9 @@ onInputVoucherChange(event: any) {
       this._masterService.saveBrokerageSetup(body).subscribe(result => {
         console.log("result", result);
         // this.dialogRef.close();
+        this.snackBar.open("Brokerage details saved successfully.", "Success", {
+          duration: 3000,
+        });
         this.resetForm(this.brokerageForm);
         this.getBrokerageSetupList();
       });
