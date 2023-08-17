@@ -193,7 +193,7 @@ export class MasterService {
   }
 
   deleteBrokerageSetup(id: number): Observable<any> {
-    return this.httpClient.get<any>(environment.apiBaseUrl + 'master/deleteBrokerageSetup/' + id, { headers: this.headers })
+    return this.httpClient.delete<any>(environment.apiBaseUrl + 'master/deleteBrokerageSetup/' + id, { headers: this.headers })
   }
 
   saveBrokerageSlab(data): Observable<any> {
@@ -306,7 +306,7 @@ export class MasterService {
   }
 
   deleteAccountSelfShare(id: number): Observable<any> {
-    return this.httpClient.get<any>(environment.apiBaseUrl + 'master/deleteAccountSelfShare/' + id, { headers: this.headers })
+    return this.httpClient.delete<any>(environment.apiBaseUrl + 'master/deleteAccountSelfShare/' + id, { headers: this.headers })
   }
 
   saveAccountSelfShare(data): Observable<any> {
