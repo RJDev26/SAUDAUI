@@ -13,6 +13,7 @@ import { ErrorDialog } from '../../../Dialog/confirmation-dialog/error-dialog.co
 import { MasterService } from '../../master.service';
 import { Account } from '../account.model';
 import { MasterSecondService } from '../../master-second.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 export interface State {
   id: number;
@@ -90,7 +91,7 @@ export class AddAccountComponent implements OnInit, AfterViewInit {
 
   constructor(private formBuilder: UntypedFormBuilder, private _masterSeconedService: MasterSecondService, public dialogRef:
     MatDialogRef<AddAccountComponent>, @Inject(MAT_DIALOG_DATA) public user: Account,
-    private _masterService: MasterService, public dialog: MatDialog, private _appService: AppService) {
+    private _masterService: MasterService, public dialog: MatDialog, private _appService: AppService, public snackBar: MatSnackBar) {
     this.bindFormControls();
     
     if (this.user == null) { this.selectedAccountId = 0; }
@@ -285,6 +286,9 @@ public onItemSubmit(values: Object): void {
         console.log("result", result);
         this.getInterestList();
         this.resetForm(this.itemForm);
+        this.snackBar.open("Interest save sucessfully", "Success", {
+          duration: 3000,
+        });
       }, err => {
         console.log(err);
       });
