@@ -29,7 +29,7 @@ export class MasterSecondService {
   }
 
   deleteInterest(id: number): Observable<any> {
-    return this.httpClient.get<any>(environment.apiBaseUrl + 'MasterSecond/deleteInterest/' + id, { headers: this.headers })
+    return this.httpClient.delete<any>(environment.apiBaseUrl + 'MasterSecond/deleteInterest/' + id, { headers: this.headers })
   }
 
   deleteExchangeTax(id: number): Observable<any> {
