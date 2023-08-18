@@ -13,6 +13,7 @@ export class Account {
   email: string;
   address: string;
   pin: string;
+  brokerId: number;
   panNo: string
   gstinno: string;
   drCr: string;

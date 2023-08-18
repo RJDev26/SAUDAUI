@@ -86,6 +86,8 @@ export class AddAccountComponent implements OnInit, AfterViewInit {
   interestMasterList: any;
 
   accountSelfShareList: any;
+  brokerList: any;
+  filterBrokerList: any;
 
   @ViewChildren(MatAutocompleteTrigger) triggerCollection: QueryList<MatAutocompleteTrigger>;
 
@@ -206,6 +208,7 @@ export class AddAccountComponent implements OnInit, AfterViewInit {
       'TelegramNo': [''],
       'TelegramId': [''],
       'Id': [0],
+      'brokerId': [0],
       'DrCr': ['1', Validators.required],
       'ApplyTax': [false],
       'ApplyFutureCutBrok': [false],
@@ -244,13 +247,15 @@ export class AddAccountComponent implements OnInit, AfterViewInit {
 }
 
 initialItemApiCalls() {
-  forkJoin([this._appService.getIntrestApplyOnDDL(), this._appService.getIntrestTypeDLL(), this._appService.getPostVoucherDLL()]).pipe(map(response => {
+  forkJoin([this._appService.getIntrestApplyOnDDL(), this._appService.getIntrestTypeDLL(), this._appService.getPostVoucherDLL(), this._masterService.getAccounts()]).pipe(map(response => {
     this.applyOnList = response[0];
     this.filterApplyOnList = response[0];
     this.typeList = response[1];
     this.filterTypeList = response[1];
     this.postVoucherList = response[2];
     this.filterPostVoucherList = response[2];
+    this.brokerList = response[3];
+    this.filterBrokerList = response[3];
   })).subscribe(res => {
   
   });
@@ -302,6 +307,20 @@ resetForm(myForm) {
   Object.keys(myForm.controls).forEach(key => {
     myForm.get(key).setErrors(null);
   });
+}
+
+/* to filter select account dropdown*/
+onInputBrokerChange(event: any) {
+  const searchInput = event.target.value.toLowerCase();
+
+  this.filterBrokerList = this.brokerList.filter((data) => {
+    const prov = data.name.toLowerCase();
+    return prov.includes(searchInput);
+  });
+
+  if (searchInput === '') {
+    this.filterBrokerList = [...this.brokerList];
+  }
 }
 
 /* to filter select account dropdown*/
@@ -376,8 +395,7 @@ onInputVoucherChange(event: any) {
     this._masterService.getInstrumentList(), this._masterService.getAccount(), this._masterService.getApplyOnFileShareDDL(),
     this._masterService.getItemListDrp(),
     this._masterService.getApplyOnQtyDDL(),
-    this._masterService.getApplyOnDDL(),]).pipe(map(response => {
-      debugger
+    this._masterService.getApplyOnDDL(), this._masterService.getAccounts()]).pipe(map(response => {
       this.acGroupList = response[0];
       this.acHeadList = response[1];
       this.cityList = response[2];
@@ -388,7 +406,9 @@ onInputVoucherChange(event: any) {
       this.applyOnFileShare = response[7];
       this.itemList = response[8];
       this.brokApplyOnQty = response[9];
-      this.brokApplyOn = response[10]
+      this.brokApplyOn = response[10];
+      this.brokerList = response[11];
+    this.filterBrokerList = response[11];
       this.bindFilterFntoList();
     })).subscribe(res => {
       this.getValuesInEditMode();
@@ -471,6 +491,7 @@ onInputVoucherChange(event: any) {
       'TelegramNo': this.user.telegramNo,
       'TelegramId': this.user.telegramId,
       'Id': this.user.id,
+      'brokerId': this.user.brokerId,
       'DrCr': this.user.drCr,
       'ApplyTax': this.user.applyTax,
       'ApplyFutureCutBrok': this.user.applyFutureCutBrok,
@@ -498,7 +519,7 @@ onInputVoucherChange(event: any) {
     this.initialApiCalls();
     this.getAccountSelfShareList();
     this.getBrokerageSetupList();
-    this.bindItemFormControls();
+    // this.bindItemFormControls();
   }
 
 

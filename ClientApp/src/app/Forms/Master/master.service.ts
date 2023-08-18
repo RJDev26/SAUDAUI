@@ -59,6 +59,22 @@ export class MasterService {
     return this.httpClient.get<any>(environment.apiBaseUrl + 'Master/gettransporterlist',{headers:this.headers});
   }
 
+  getFileCodeList(id: number): Observable<any> {
+    return this.httpClient.get<any>(environment.apiBaseUrl + 'Master/getFileCodeList/' + id, { headers: this.headers });
+  }
+
+  getFileCodeId(id: number): Observable<any> {
+    return this.httpClient.get<any>(environment.apiBaseUrl + 'Master/getFileCodeId/' + id, { headers: this.headers })
+  }
+
+  deleteAcFileCode(id: number): Observable<any> {
+    return this.httpClient.delete<any>(environment.apiBaseUrl + 'Master/deleteAcFileCode/' + id, { headers: this.headers })
+  }
+  
+  saveAcFileCode(data): Observable<any> {
+    return this.httpClient.post<any>(environment.apiBaseUrl + 'Master/SaveAcFileCode', data, { headers: this.headers });
+  }
+
   saveTransporter(data): Observable<any>{
     return this.httpClient.post<any>(environment.apiBaseUrl + 'Master/saveTransporter', data, {headers:this.headers});
   }

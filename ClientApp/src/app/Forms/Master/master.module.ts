@@ -37,6 +37,8 @@ import { AddAccountHeadComponent } from './account-head/add-account-head/add-acc
 import { InterestMasterComponent } from './interest-master/interest-master.component';
 import { AddInterestMasterComponent } from './interest-master/add-interest-master/add-interest-master.component';
 import { SymbolMappingComponent } from './symbol-mapping/symbol-mapping.component';
+import { AddInteresetComponent } from './account/account-dialog/add-intereset/add-intereset.component';
+import { FileCodeTabComponent } from './account/account-dialog/file-code-tab/file-code-tab.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'account', pathMatch: 'full' },
@@ -98,7 +100,9 @@ export const routes: Routes = [
      AddAccountHeadComponent,
      InterestMasterComponent,
      AddInterestMasterComponent,
-     SymbolMappingComponent
+     SymbolMappingComponent,
+     AddInteresetComponent,
+     FileCodeTabComponent
   ],
   providers: [
     { provide: MAT_DATE_LOCALE, useValue: 'en-GB' }
