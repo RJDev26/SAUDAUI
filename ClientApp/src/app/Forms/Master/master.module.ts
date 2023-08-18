@@ -39,6 +39,8 @@ import { AddInterestMasterComponent } from './interest-master/add-interest-maste
 import { SymbolMappingComponent } from './symbol-mapping/symbol-mapping.component';
 import { AddInteresetComponent } from './account/account-dialog/add-intereset/add-intereset.component';
 import { FileCodeTabComponent } from './account/account-dialog/file-code-tab/file-code-tab.component';
+import { SelfShareTabComponent } from './account/account-dialog/self-share-tab/self-share-tab.component';
+import { BrokerageTabComponent } from './account/account-dialog/brokerage-tab/brokerage-tab.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'account', pathMatch: 'full' },
@@ -102,7 +104,9 @@ export const routes: Routes = [
      AddInterestMasterComponent,
      SymbolMappingComponent,
      AddInteresetComponent,
-     FileCodeTabComponent
+     FileCodeTabComponent,
+     SelfShareTabComponent,
+     BrokerageTabComponent
   ],
   providers: [
     { provide: MAT_DATE_LOCALE, useValue: 'en-GB' }

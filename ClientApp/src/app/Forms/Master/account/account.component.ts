@@ -87,7 +87,6 @@ export class AccountComponent implements OnInit {
 
   onGridClick(params: any)
   {
-    debugger
     if (params.event.target.dataset.action == "edit")
     { 
       this._masterService.getAccountById(params.data.id).subscribe((res)=>{

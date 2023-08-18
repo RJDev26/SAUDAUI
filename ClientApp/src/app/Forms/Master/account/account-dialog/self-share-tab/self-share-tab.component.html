@@ -1,0 +1,80 @@
+<form [formGroup]="acSelfShareForm" (ngSubmit)="onSelfShare(acSelfShareForm.value)" fxLayout="row wrap" class="user-form">
+    <div class="tab-tax-details-parent tab-party-details-parent">
+      <div class="white-block pb-0">
+        <h3><span>Self Share</span></h3>
+
+        <div fxFlex="100" fxFlex.gt-sm="15" fxFlex.sm="50">
+          <mat-form-field class="example-full-width" appearance="outline">
+            <mat-label>Exchange </mat-label>
+            <mat-select placeholder="Select Exchange" formControlName="exId">
+              <mat-option *ngFor="let exchange of exchangeList" [value]="exchange.id">
+                {{exchange.name}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+
+        <div fxFlex="100" fxFlex.gt-sm="14" fxFlex.sm="50">
+          <mat-form-field appearance="outline">
+            <mat-label>From</mat-label>
+            <input matInput [matDatepicker]="picker1" formControlName="fromDt">
+            <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+            <mat-datepicker #picker1></mat-datepicker>
+          </mat-form-field>
+        </div>
+        <div fxFlex="100" fxFlex.gt-sm="14" fxFlex.sm="50">
+          <mat-form-field appearance="outline">
+            <input matInput [matDatepicker]="picker2" placeholder="To" formControlName="toDt">
+            <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+            <mat-datepicker #picker2></mat-datepicker>
+          </mat-form-field>
+        </div>
+        <div fxFlex="100" fxFlex.gt-sm="13" fxFlex.sm="50">
+          <mat-form-field class="example-full-width" appearance="outline">
+            <mat-label>Apply On</mat-label>
+            <mat-select placeholder="Select value" formControlName="applyOn">
+              <mat-option *ngFor="let applyOn of applyOnFileShare" [value]="applyOn.id">
+                {{applyOn.name}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div fxFlex="100" fxFlex.gt-sm="14" fxFlex.sm="50">
+          <mat-form-field appearance="outline">
+            <mat-label>Rate</mat-label>
+            <input matInput autocomplete="off" placeholder="Rate" formControlName="rate" type="number">
+            <mat-error *ngIf="acSelfShareForm.controls.rate.errors?.required">DeliveryRate is required</mat-error>
+          </mat-form-field>
+        </div>
+
+        <div fxFlex="100" fxFlex.gt-sm="15" fxFlex.sm="50">
+          <mat-form-field class="example-full-width" appearance="outline">
+            <mat-label>Contra Account </mat-label>
+            <mat-select placeholder="Select Exchange" formControlName="contraId">
+              <mat-option *ngFor="let account of acList" [value]="account.id">
+                {{account.name}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+
+
+      </div>
+      <div fxFlex="100" class="mt-2 text-center space-between-btns">
+        <button mat-raised-button color="warn" type="button" (click)="close()">Cancel</button>
+        <button mat-raised-button color="primary" class="uppercase" [disabled]="!acSelfShareForm.valid" type="submit">Save</button>
+      </div>
+    </div>
+  </form>
+  <div class="col-xl-12 mt-2">
+    <ag-grid-angular style=" height: 250px;"
+                     class="ag-theme-material"
+                     [rowData]="accountSelfShareList"
+                     [pagination]="true"
+                     [rowHeight]="31"
+                     [columnDefs]="columnDefs"
+                     [defaultColDef]="agGridOptions.defaultColDef"
+                     (cellClicked)="onSelfShareClick($event)"
+                     headerHeight="34">
+    </ag-grid-angular>
+  </div>

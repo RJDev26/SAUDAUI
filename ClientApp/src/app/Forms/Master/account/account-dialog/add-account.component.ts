@@ -1,10 +1,9 @@
 import { formatDate } from '@angular/common';
-import { Component, OnInit, Inject, ViewChild, AfterViewInit, QueryList, ViewChildren } from '@angular/core';
+import { Component, OnInit, Inject, AfterViewInit, QueryList, ViewChildren } from '@angular/core';
 import { UntypedFormGroup, UntypedFormControl, UntypedFormBuilder, Validators, FormControl, FormGroup } from '@angular/forms';
 import { MatAutocompleteTrigger } from '@angular/material/autocomplete';
-import { MatOptionSelectionChange } from '@angular/material/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { combineLatest, forkJoin, Observable } from 'rxjs';
+import { forkJoin, Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 import { AppService } from '../../../../service/app.service';
 import { CommonUtility } from '../../../../shared/common-utility';
@@ -14,6 +13,7 @@ import { MasterService } from '../../master.service';
 import { Account } from '../account.model';
 import { MasterSecondService } from '../../master-second.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatTabChangeEvent } from '@angular/material/tabs';
 
 export interface State {
   id: number;
@@ -43,7 +43,10 @@ export interface ACHead {
 })
 export class AddAccountComponent implements OnInit, AfterViewInit {
   public personalForm: UntypedFormGroup;
-
+  isFileCodeTabActive: boolean = false;
+  isInterestTabActive: boolean = false;
+  isSelfShareTabActive: boolean = false;
+  isBrokerageTabActive: boolean = false;
   public itemForm: UntypedFormGroup;
   public acSelfShareForm: FormGroup;
   brokerageForm: FormGroup;
@@ -52,14 +55,6 @@ export class AddAccountComponent implements OnInit, AfterViewInit {
   emittedValue: any;
   acGroupCtrl = new FormControl('');
   filteredacGroup: Observable<ACGroup[]>;
-
-
-  typeList: any[];
-  applyOnList: any[];
-  postVoucherList: any[];
-  filterPostVoucherList: any[];
-  filterTypeList: any[];
-  filterApplyOnList: any[];
 
   cityCtrl = new FormControl('');
   filteredCity: Observable<City[]>;
@@ -83,7 +78,6 @@ export class AddAccountComponent implements OnInit, AfterViewInit {
   brokApplyOnQty: any;
   brokInstype: any;
   itemList: any;
-  interestMasterList: any;
 
   accountSelfShareList: any;
   brokerList: any;
@@ -100,9 +94,6 @@ export class AddAccountComponent implements OnInit, AfterViewInit {
     else {
       this.selectedAccountId = this.user.id;
     }
-    this.bindacSelfShareFormControls();
-
-    this.bindBrokerageControls()
   }
 
   ngAfterViewInit() {
@@ -141,57 +132,6 @@ export class AddAccountComponent implements OnInit, AfterViewInit {
     }
   }
 
-
-  //self share list defination
-  columnDefs = [
-    {
-      headerName: 'Action', field: 'fileIcon', cellRenderer: this.actionCellRenderer, minWidth: 80,
-      maxWidth: 110, resizable: true
-    },
-    { headerName: 'Exchange', field: 'exName', filter: true, sorting: true, resizable: true },
-    { headerName: 'ContraAccount', field: 'contraName', filter: true, sorting: true, resizable: true },
-    { headerName: 'FromDt', field: 'fromDtString', filter: true, sorting: true, resizable: true },
-    { headerName: 'ToDt', field: 'toDtString', filter: true, sorting: true, resizable: true },
-    { headerName: 'ApplyOn', field: 'applyOnName', filter: true, sorting: true, resizable: true },
-    { headerName: 'Rate', field: 'rate', filter: true, sorting: true, resizable: true, valueFormatter: params => CommonUtility.formatNumber(params.data.intradayRate), type: 'rightAligned' },
-  ];
-
-
-  columnDefsBrok = [
-    {
-      headerName: 'Action', field: 'fileIcon', cellRenderer: this.actionCellRenderer, resizable: true
-    },
-    { headerName: 'ApplyOn', field: 'applyOnName', filter: true, sorting: true, resizable: true },
-    { headerName: 'Apply OnQty', field: 'applyOnQtyName', filter: true, sorting: true, resizable: true },
-    { field: 'Intraday BrokRate', headerName: 'IntradayBrokRate', filter: true, sorting: true, resizable: true, valueFormatter: params => CommonUtility.formatNumber(params.data.intradayBrokRate), type: 'rightAligned' },
-    { headerName: 'Delivery BrokRate', field: 'deliveryBrokRate', filter: true, sorting: true, resizable: true, valueFormatter: params => CommonUtility.formatNumber(params.data.deliveryBrokRate), type: 'rightAligned' },
-    /*{ headerName: 'HigherSide Only', minWidth: 120, maxWidth: 120, field: 'higherSideOnly', filter: true, sorting: true, resizable: true },*/
-    { headerName: 'Instrument', field: 'instrumentType', filter: true, sorting: true, resizable: true },
-    { headerName: 'RateRange1', field: 'rateRange1', filter: true, sorting: true, resizable: true, valueFormatter: params => CommonUtility.formatNumber(params.data.rateRange1), type: 'rightAligned' },
-    { headerName: 'RateRange2', field: 'rateRange2', filter: true, sorting: true, resizable: true, valueFormatter: params => CommonUtility.formatNumber(params.data.rateRange2), type: 'rightAligned' },
-    { headerName: 'Exchange', field: 'exchange', filter: true, sorting: true, resizable: true },
-    { headerName: 'Item', field: 'item', filter: true, sorting: true, resizable: true },
-    /*    { headerName: 'IntradaySingleSideOnly', field: 'intradaySingleSideOnly', filter: true, sorting: true, resizable: true },*/
-    { headerName: 'FromDT', field: 'fromDT', filter: true, sorting: true, resizable: true },
-    { headerName: 'ToDT', field: 'toDT', filter: true, sorting: true, resizable: true },
-
-  ];
-
-  columnItemDefs = [
-    {
-      headerName: 'Action', field: 'fileIcon', cellRenderer: this.actionCellRenderer, minWidth: 80,
-      maxWidth: 110, resizable: true
-    },
-    { headerName: 'Account Name', field: 'acName', filter: true, sorting: true, resizable: true },
-  { headerName: 'ApplyOn', field: 'applyOnName', filter: true, sorting: true, resizable: true },  
-  { headerName: 'From Date', field: 'fromDtFormat', filter: true, sorting: true, resizable: true },  
-  { headerName: 'To Date', field: 'toDtFormat', filter: true, sorting: true, resizable: true },  
-  { headerName: 'Type', field: 'typeName', filter: true, sorting: true, resizable: true },  
-  { headerName: 'Post Vouchers', field: 'postVouchersName', filter: true, sorting: true, resizable: true },  
-  { headerName: 'Int Rate', field: 'intRate', filter: true, sorting: true, resizable: true },  
-  { headerName: 'Year Days', field: 'yearDays', filter: true, sorting: true, resizable: true },  
-];
-
   bindFormControls() {
     this.personalForm = this.formBuilder.group({
       'ShortCode': ['', Validators.required],
@@ -217,89 +157,20 @@ export class AddAccountComponent implements OnInit, AfterViewInit {
   }
 
 
-
-  bindacSelfShareFormControls() {
-    this.acSelfShareForm = this.formBuilder.group({
-      'accountId': [0, Validators.required],
-      'contraId': ['', Validators.required],
-      'exId': ['', Validators.required],
-      'rate': ['', Validators.required],
-      'applyOn': ['', Validators.required],
-      'fromDt': ['', Validators.required],
-      'toDt': ['', Validators.required],
-      'id': [0],
-    });
-  }
-
-  bindItemFormControls() {
-    this.itemForm = this.formBuilder.group({
-      'accountId': this.selectedAccountId,
-      'type': ['', Validators.required],
-      'applyOn': ['', Validators.required],
-      'postVouchers': ['', Validators.required],
-      'intRate': ['', Validators.required],
-      'yearDays': ['', Validators.required],
-      'fromDt': ['', Validators.required],
-      'toDt': ['', Validators.required],
-      'id': [0]
-    });
-   this.initialItemApiCalls();
-}
-
-initialItemApiCalls() {
-  forkJoin([this._appService.getIntrestApplyOnDDL(), this._appService.getIntrestTypeDLL(), this._appService.getPostVoucherDLL(), this._masterService.getAccounts()]).pipe(map(response => {
-    this.applyOnList = response[0];
-    this.filterApplyOnList = response[0];
-    this.typeList = response[1];
-    this.filterTypeList = response[1];
-    this.postVoucherList = response[2];
-    this.filterPostVoucherList = response[2];
-    this.brokerList = response[3];
-    this.filterBrokerList = response[3];
-  })).subscribe(res => {
-  
-  });
-  if(this.selectedAccountId){
-    this.getInterestList();
-  }
-}
-
-getInterestList() {
-  this._masterSeconedService.getAccountInterestList(this.selectedAccountId).subscribe((results) => {
-       this.interestMasterList = results;       
-      });
-  }
-
-public onItemSubmit(values: Object): void {
-  if (this.selectedAccountId == 0) {
-    const dialogRef = this.dialog.open(ErrorDialog, {
-      data: {
-        message: 'Please select or save account to save account Interest',
-        buttonText: {
-          ok: 'OK',
-
-        }
-      }
-
-    });
-  } else {
-    var body = this.itemForm.value;
-  
-    if (this.itemForm.valid) {
-      //const body = JSON.stringify(addFormData);
-      this._masterSeconedService.saveInterest(body).subscribe(result => {
-        console.log("result", result);
-        this.getInterestList();
-        this.resetForm(this.itemForm);
-        this.snackBar.open("Interest save sucessfully", "Success", {
-          duration: 3000,
-        });
-      }, err => {
-        console.log(err);
-      });
+  handleTabChange(event: MatTabChangeEvent): void {
+    if(event.index === 1){
+      this.isSelfShareTabActive = true;
+    }
+    if(event.index === 2){
+      this.isBrokerageTabActive = true;
+    }
+    if (event.index === 3) { // Assuming "FileCode" tab has index 1
+      this.isInterestTabActive = true;
+    }
+    if (event.index === 4) { // Assuming "FileCode" tab has index 1
+      this.isFileCodeTabActive = true;
     }
   }
-}
 
 resetForm(myForm) {
   myForm.reset();
@@ -322,48 +193,6 @@ onInputBrokerChange(event: any) {
     this.filterBrokerList = [...this.brokerList];
   }
 }
-
-/* to filter select account dropdown*/
-onInputTypeChange(event: any) {
-  const searchInput = event.target.value.toLowerCase();
-
-  this.filterTypeList = this.typeList.filter((data) => {
-    const prov = data.name.toLowerCase();
-    return prov.includes(searchInput);
-  });
-
-  if (searchInput === '') {
-    this.filterTypeList = [...this.typeList];
-  }
-}
-
-onInputApplyOnChange(event: any) {
-  const searchInput = event.target.value.toLowerCase();
-
-  this.filterApplyOnList = this.applyOnList.filter((data) => {
-    const prov = data.name.toLowerCase();
-    return prov.includes(searchInput);
-  });
-
-  if (searchInput === '') {
-    this.filterApplyOnList = [...this.applyOnList];
-  }
-}
-
-onInputVoucherChange(event: any) {
-  const searchInput = event.target.value.toLowerCase();
-
-  this.filterPostVoucherList = this.postVoucherList.filter((data) => {
-    const prov = data.name.toLowerCase();
-    return prov.includes(searchInput);
-  });
-
-  if (searchInput === '') {
-    this.filterPostVoucherList = [...this.postVoucherList];
-  }
-}
-
-
 
 
   bindFilterFntoList() {
@@ -391,74 +220,20 @@ onInputVoucherChange(event: any) {
 
   initialApiCalls() {
     forkJoin([this._masterService.getAcGoup(), this._masterService.getAcHead(), this._masterService.getCityList(),
-    this._masterService.getTaxType(), this._masterService.getExchangeName(),
-    this._masterService.getInstrumentList(), this._masterService.getAccount(), this._masterService.getApplyOnFileShareDDL(),
-    this._masterService.getItemListDrp(),
-    this._masterService.getApplyOnQtyDDL(),
-    this._masterService.getApplyOnDDL(), this._masterService.getAccounts()]).pipe(map(response => {
+    this._masterService.getTaxType(), this._masterService.getAccount(), this._masterService.getApplyOnFileShareDDL(),
+     this._masterService.getAccounts()]).pipe(map(response => {
       this.acGroupList = response[0];
       this.acHeadList = response[1];
       this.cityList = response[2];
-      this.taxList = response[3];
-      this.exchangeList = response[4];
-      this.instrumentList = response[5];
-      this.acList = response[6];
-      this.applyOnFileShare = response[7];
-      this.itemList = response[8];
-      this.brokApplyOnQty = response[9];
-      this.brokApplyOn = response[10];
-      this.brokerList = response[11];
-    this.filterBrokerList = response[11];
+      
+      
+      this.acList = response[4];
+      this.applyOnFileShare = response[5];
+      this.itemList = response[6];
+    this.filterBrokerList = response[6];
       this.bindFilterFntoList();
     })).subscribe(res => {
       this.getValuesInEditMode();
-    });
-  }
-
-  onGridClick(params: any) {
-    if (params.event.target.dataset.action == "edit")
-    {
-      this.editInterestItem(params.data.id);
-    }
-    if (params.event.target.dataset.action == "delete")
-    {
-      const dialogRef = this.dialog.open(ConfirmationDialog, {
-        data: {
-          message: 'Do you really want to delete this record?',
-          buttonText: {
-            ok: 'Yes',
-            cancel: 'No'
-          }
-        }
-      });
-
-      dialogRef.afterClosed().subscribe((confirmed: boolean) => {
-        if (confirmed) {
-          this._masterSeconedService.deleteInterest(params.data.id).subscribe((res) => {
-            this.getInterestList();
-            this.showToaster('Deleted Successfully.');
-          });
-        }
-      });
-
-
-    }
-  }
-
-  editInterestItem(id: number){
-    this._masterSeconedService.getInterestId(id).subscribe((res) => {
-      this.itemForm.get('accountId').setValue(this.selectedAccountId);
-      this.itemForm.get('type').setValue(res.type);
-      this.itemForm.get('applyOn').setValue(res.applyOn);
-      this.itemForm.get('postVouchers').setValue(res.postVouchers);
-      this.itemForm.get('intRate').setValue(res.intRate);
-
-      this.itemForm.get('yearDays').setValue(res.yearDays);
-      this.itemForm.get('fromDt').setValue(res.fromDt);
-      this.itemForm.get('toDt').setValue(res.toDt);
-      this.itemForm.get('id').setValue(res.id);
-
-      
     });
   }
 
@@ -517,9 +292,6 @@ onInputVoucherChange(event: any) {
 
   ngOnInit() {
     this.initialApiCalls();
-    this.getAccountSelfShareList();
-    this.getBrokerageSetupList();
-    // this.bindItemFormControls();
   }
 
 
@@ -577,62 +349,6 @@ onInputVoucherChange(event: any) {
     }
   }
 
-  getAccountSelfShareList() {
-    this._masterService.getAccountSelfShareList(this.selectedAccountId).subscribe((results) => {
-      this.accountSelfShareList = results;
-
-    });
-  }
-
-  bindSelfShareFormInEditMode(res) {
-
-    this.acSelfShareForm.setValue({
-      'exId': res.exId,
-      'rate': CommonUtility.formatNumber(res.rate),
-      'fromDt': res.fromDt,
-      'toDt': res.toDt,
-      'id': res.id,
-      'applyOn': res.applyOn,
-      'contraId': res.contraId,
-      'accountId': res.accountId
-    });
-
-  }
-
- 
-
-  //account Self share clicked 
-  onSelfShareClick(params: any) {
-
-    if (params.event.target.dataset.action == "edit") {
-      this._masterService.getAccountSelfShareEdit(params.data.id).subscribe((res) => {
-        this.bindSelfShareFormInEditMode(res);
-      });
-    }
-    if (params.event.target.dataset.action == "delete") {
-      const dialogRef = this.dialog.open(ConfirmationDialog, {
-        data: {
-          message: 'Do you really want to delete this record?',
-          buttonText: {
-            ok: 'Yes',
-            cancel: 'No'
-          }
-        }
-      });
-
-      dialogRef.afterClosed().subscribe((confirmed: boolean) => {
-        if (confirmed) {
-          this._masterService.deleteAccountSelfShare(params.data.id).subscribe((res) => {
-            this.getAccountSelfShareList();
-            this.showToaster('Deleted Successfully.');
-          });
-        }
-      });
-
-
-    }
-  }
-
   showToaster(message){
     this.snackBar.open(message, "Success", {
       duration: 3000,
@@ -640,156 +356,9 @@ onInputVoucherChange(event: any) {
   }
 
 
-  public onSelfShare(values: Object): void {
-
-    if (this.selectedAccountId == 0) {
-      const dialogRef = this.dialog.open(ErrorDialog, {
-        data: {
-          message: 'Please select or save account to save account tax',
-          buttonText: {
-            ok: 'OK',
-
-          }
-        }
-
-      });
-    }
-    else {
-
-
-      this.acSelfShareForm.controls['rate'].setValue(Number(this.acSelfShareForm.get('rate').value));
-      this.acSelfShareForm.controls['accountId'].setValue(this.selectedAccountId);
-      var body = this.acSelfShareForm.value;
-
-      if (this.acSelfShareForm.valid) {
-        //const body = JSON.stringify(addFormData);
-        this._masterService.saveAccountSelfShare(body).subscribe(result => {
-          console.log("result", result);
-          this.snackBar.open("Self Share details saved sucessfully.", "Success", {
-            duration: 3000,
-          });
-          // this.dialogRef.close();
-          this.getAccountSelfShareList();
-          this.resetForm(this.acSelfShareForm);
-        }, err => {
-          console.log(err);
-        });
-      }
-    }
-  }
-
-  bindBrokerageControls() {
-    this.brokerageForm = this.formBuilder.group({
-      'exchangeId': ['', Validators.required],
-      'applyOn': ['', Validators.required],
-      'applyOnQty': ['', Validators.required],
-      'itemId': ['', Validators.required],
-      'instrumentType': ['', Validators.required],
-      'deliveryBrokRate': ['', Validators.required],
-      'intradayBrokRate': ['', Validators.required],
-      'rateRange1': ['', Validators.required],
-      'rateRange2': ['', Validators.required],
-      'fromDt': ['', Validators.required],
-      'accountId': [this.selectedAccountId, Validators.required],
-      'toDt': ['', Validators.required],
-      'intradaySingleSideonly': [false],
-      'id': [0, Validators.required],
-    });
-    this.initialApiCalls();
-  }
-
-  getBrokerageSetupList() {
-    this._appService.getBrokerageSetupListAccount(this.selectedAccountId).subscribe((results) => {
-      this.brokerageList = results;
-    });
-  }
-
-  getSelectedBrokerageInfo(brokId) {
-    this._masterService.getBrokerageSetupId(brokId).subscribe((res) => {
-      const fromDate = new Date(res.fromDT);
-      const toDate = new Date(res.toDT);
-       const formattedFromDate = formatDate(fromDate, 'yyyy-MM-dd', 'en-US');
-      ///  const formattedToDate = formatDate(toDate, 'yyyy-MM-dd', 'en-US');
-      this.brokerageForm.patchValue({
-        accountId: res.accountId,
-        exchangeId: res.exchangeId,
-        applyOn: res.applyOn,
-        applyOnQty: res.applyOnQty,
-        itemId: res.itemId,
-        fromDt: formatDate(fromDate, 'yyyy-MM-dd', 'en-US') ,
-        toDt: res.toDT,
-        instrumentType: res.instrumentType,
-        deliveryBrokRate: res.deliveryBrokRate,
-        intradayBrokRate: res.intradayBrokRate,
-        rateRange1: res.rateRange1,
-        rateRange2: res.rateRange2,
-        intradaySingleSideonly: res.intradaySingleSideonly,
-        id: brokId
-      });
-    });
-  }
-  onBrokerageClick(params: any) {
-
-    if (params.event.target.dataset.action == "edit") {
-      this.getSelectedBrokerageInfo(params.data.id)
-
-    }
-    if (params.event.target.dataset.action == "delete") {
-      const dialogRef = this.dialog.open(ConfirmationDialog, {
-        data: {
-          message: 'Do you really want to delete this record?',
-          buttonText: {
-            ok: 'Yes',
-            cancel: 'No'
-          }
-        }
-      });
-
-      dialogRef.afterClosed().subscribe((confirmed: boolean) => {
-        if (confirmed) {
-          this._masterService.deleteBrokerageSetup(params.data.id).subscribe((res) => {
-            this.getBrokerageSetupList();
-            this.showToaster('Deleted Successfully.');
-          });
-        }
-      });
-
-
-    }
-  }
-  public onBrokerageSave(values: object) {
-    console.log(values);
-    var body = this.brokerageForm.value;
-    console.log(body);
-
-    if (this.brokerageForm.valid) {
-
-      this._masterService.saveBrokerageSetup(body).subscribe(result => {
-        console.log("result", result);
-        // this.dialogRef.close();
-        this.snackBar.open("Brokerage details saved successfully.", "Success", {
-          duration: 3000,
-        });
-        this.resetForm(this.brokerageForm);
-        this.getBrokerageSetupList();
-      });
-    }
-  }
 
   close(): void {
     this.dialogRef.close();
-  }
-
-  public actionCellRenderer(params: any) {
-    let eGui = document.createElement("div");
-    let editingCells = params.api.getEditingCells();
-    let isCurrentRowEditing = editingCells.some((cell: any) => {
-      return cell.rowIndex === params.node.rowIndex;
-    });
-    eGui.innerHTML = `<button class="material-icons action-button-edit " data-action="edit">edit </button>
-                      <button class="material-icons action-button-red" delete data-action="delete">delete</button>`;
-
-    return eGui;
   }
 
 }
