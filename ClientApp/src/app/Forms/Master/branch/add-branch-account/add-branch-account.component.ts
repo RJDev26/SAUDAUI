@@ -4,6 +4,7 @@ import { MasterService } from '../../master.service';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { ConfirmationDialog } from 'src/app/Forms/Dialog/confirmation-dialog/confirmation-dialog.component';
 import { forkJoin, map } from 'rxjs';
+import { ConfirmationAccountDialog } from 'src/app/Forms/Dialog/confirmation-dialog/confirmation-account-dialog';
 
 @Component({
   selector: 'app-add-account',
@@ -167,28 +168,34 @@ export class AddBranchAccountComponent implements OnInit {
     else { this.isRowSelected = false; }
   }
 
-  selectAccounts()
-  {
+  selectAccounts()  {
+    const dialogRef = this.dialog.open(ConfirmationAccountDialog, {
+      data: {
+        message: 'Please select option',
+        content: ``,
+        buttonText: {
+          ok: 'Yes',
+          cancel: 'No'
+        }
+      }
+    });
+
     var selectAccount = this.gridApiSelectAc.getSelectedRows();
     const body = {
       dropDownVMs: selectAccount,
-      BranchId: this.selectedBranchID
-      
+      BranchId: this.selectedBranchID      
     };
-
     this._masterService.addBranchAccount(body).subscribe(result => {
      /* this.selectedBranchID = result.id;*/
       this.getBranchAccountIDs();
-      });
-    
-
+    });
   }
+
   removeAccounts() {
     var selectAccount = this.gridApi.getSelectedRows();
     const body = {
       dropDownVMs: selectAccount,
       BranchId: this.selectedBranchID
-
     };
 
     this._masterService.deleteBranchAccount(body).subscribe(result => {
@@ -221,6 +228,7 @@ export class AddBranchAccountComponent implements OnInit {
     this.branchForm = this.formBuilder.group({
       'name': ['', Validators.required],
       'headId': ['', Validators.required],
+      'contraId': ['', Validators.required],
       'chatid': ['', Validators.required],
       'id': [this.selectedBranchID, Validators.required]
     });
