@@ -3,6 +3,7 @@ import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms
 import { MasterService } from '../../master.service';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { ConfirmationDialog } from 'src/app/Forms/Dialog/confirmation-dialog/confirmation-dialog.component';
+import { forkJoin, map } from 'rxjs';
 
 @Component({
   selector: 'app-add-account',
@@ -20,6 +21,7 @@ export class AddBranchAccountComponent implements OnInit {
   gridApi: any;
   gridApiSelectAc: any;
   isRowSelected: boolean = false;
+  filteredHeadList: any[] = []
   agGridOptions: any = {
     //defaultColDef: {
     //  filter: true,
@@ -193,20 +195,39 @@ export class AddBranchAccountComponent implements OnInit {
       /* this.selectedBranchID = result.id;*/
       this.getBranchAccountIDs();
     });
-
-
   }
 
+  initialApiCalls() {
+    forkJoin([this._masterService.getAccount()]).pipe(map(response => {
+      this.filteredHeadList = response[0];
+      this.accountList = response[0];
+    })).subscribe(res => {
+    
+    });
+  }
 
+  onInputChange(event: any) {
+    const searchInput = event.target.value.toLowerCase();
+    this.filteredHeadList = this.accountList.filter((data) => {
+      const prov = data.name.toLowerCase();
+      return prov.includes(searchInput);
+    });
+    if (searchInput === '') {
+      this.filteredHeadList = [...this.accountList];
+    }
+  }
 
   bindFormControls() {
     this.branchForm = this.formBuilder.group({
       'name': ['', Validators.required],
+      'headId': ['', Validators.required],
+      'chatid': ['', Validators.required],
       'id': [this.selectedBranchID, Validators.required]
     });
     this.accountForm = this.formBuilder.group({
       'accountIds': ['', Validators.required]
     });
+    this.initialApiCalls();
   }
 
   public onSubmit(values: Object): void {

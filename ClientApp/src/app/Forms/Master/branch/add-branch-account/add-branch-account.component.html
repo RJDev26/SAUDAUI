@@ -10,11 +10,44 @@
         <div class="tab-party-details-parent">
           <div class="white-block pb-0">
             <h3><span>Branch</span></h3>
-            <div fxFlex="100">
+            <div fxFlex="100" fxFlex.gt-sm="33.33" fxFlex.sm="33.33">
               <mat-form-field appearance="outline">
                 <mat-label>Name</mat-label>
                 <input matInput autocomplete="off" placeholder="item Name" formControlName="name" type="text">
                 <mat-error *ngIf="branchForm.controls.name.errors?.required">Branch Name is required</mat-error>
+              </mat-form-field>
+            </div>
+            <div fxFlex="100" fxFlex.gt-sm="33.33" fxFlex.sm="33.33">
+              <div class="dropdown-wrapper">
+                <mat-form-field class="select-slab-mat" appearance="outline">
+                  <mat-label>Select Head</mat-label>
+                  <mat-select #select placeholder="Select Head" panelClass="custom-select-panel" formControlName="headId">
+                    <input class="milti-search-box" #multiUserSearch type="text" autocomplete="off" matInput placeholder="Search Head" (input)="onInputChange($event)" />
+                    <mat-option *ngFor="let option of filteredHeadList" [value]="option.id">
+                      {{ option.name }}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+            </div>
+            <div fxFlex="100" fxFlex.gt-sm="33.33" fxFlex.sm="33.33">
+              <div class="dropdown-wrapper">
+                <mat-form-field class="select-slab-mat" appearance="outline">
+                  <mat-label>Contra Id</mat-label>
+                  <mat-select #select placeholder="Select Contra Id" panelClass="custom-select-panel" formControlName="contraId">
+                    <input class="milti-search-box" #multiUserSearch type="text" autocomplete="off" matInput placeholder="Search Contra Id" (input)="onInputChange($event)" />
+                    <mat-option *ngFor="let option of filteredHeadList" [value]="option.id">
+                      {{ option.name }}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+            </div>
+            <div fxFlex="100" fxFlex.gt-sm="33.33" fxFlex.sm="33.33">
+              <mat-form-field appearance="outline">
+                <mat-label>Chat Id</mat-label>
+                <input matInput autocomplete="off" placeholder="Chat Id" formControlName="chatid" type="text">
+                <mat-error *ngIf="branchForm.controls.chatid.errors?.required">Chat Id is required</mat-error>
               </mat-form-field>
             </div>
           </div>          
