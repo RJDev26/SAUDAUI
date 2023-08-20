@@ -1,10 +1,10 @@
 import { Component, Inject } from "@angular/core";
-import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
+import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from "@angular/material/dialog";
 
 
 @Component({
-    selector: 'confirmation-dialog',
-    templateUrl: 'confirmation-account-dialog.html',
+    selector: 'confirmation-account-dialog',
+    templateUrl: 'confirmation-account-dialog.component.html',
 })
 
 export class ConfirmationAccountDialog {

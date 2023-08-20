@@ -4,7 +4,7 @@ import { MasterService } from '../../master.service';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { ConfirmationDialog } from 'src/app/Forms/Dialog/confirmation-dialog/confirmation-dialog.component';
 import { forkJoin, map } from 'rxjs';
-import { ConfirmationAccountDialog } from 'src/app/Forms/Dialog/confirmation-dialog/confirmation-account-dialog';
+import { ConfirmationAccountDialog } from 'src/app/Forms/Dialog/confirmation-dialog/confirmation-account-dialog.component';
 
 @Component({
   selector: 'app-add-account',
@@ -169,7 +169,7 @@ export class AddBranchAccountComponent implements OnInit {
   }
 
   selectAccounts()  {
-    const dialogRef = this.dialog.open(ConfirmationAccountDialog, {
+    this.dialog.open(ConfirmationAccountDialog, {
       data: {
         message: 'Please select option',
         content: ``,

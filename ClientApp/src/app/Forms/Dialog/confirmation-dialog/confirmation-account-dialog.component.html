@@ -1,12 +1,12 @@
 <div class="error-message">
-    <h1>Confirmation</h1>
+    <h1><mat-icon>check_circle_outline</mat-icon> Confirmation</h1>
     <div class="content">
       <mat-dialog-content>
         <p>
           {{message}}
         </p>
-      </mat-dialog-content>
-      {{content}}
+        {{content}}
+      </mat-dialog-content>      
       <mat-dialog-actions align="center">
         <button mat-raised-button color="primary" (click)="onConfirmClick()" tabindex="1">{{confirmButtonText}}</button>
         <button mat-raised-button color="warn" mat-dialog-close tabindex="-1">{{cancelButtonText}}</button>

@@ -41,6 +41,7 @@ import { AddInteresetComponent } from './account/account-dialog/add-intereset/ad
 import { FileCodeTabComponent } from './account/account-dialog/file-code-tab/file-code-tab.component';
 import { SelfShareTabComponent } from './account/account-dialog/self-share-tab/self-share-tab.component';
 import { BrokerageTabComponent } from './account/account-dialog/brokerage-tab/brokerage-tab.component';
+import { ConfirmationAccountDialog } from '../Dialog/confirmation-dialog/confirmation-account-dialog.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'account', pathMatch: 'full' },
@@ -87,6 +88,7 @@ export const routes: Routes = [
     AddContractMasterComponent,
     BrokerageSlabComponent,
     ConfirmationDialog,
+    ConfirmationAccountDialog,
     BrokerageSetupComponent,
      ErrorDialog,
      AddSlabDetailsComponent,
