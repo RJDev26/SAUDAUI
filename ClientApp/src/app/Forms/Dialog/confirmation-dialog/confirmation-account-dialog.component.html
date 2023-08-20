@@ -2,10 +2,11 @@
     <h1><mat-icon>check_circle_outline</mat-icon> Confirmation</h1>
     <div class="content">
       <mat-dialog-content>
-        <p>
+        <p class="mb-10">
           {{message}}
         </p>
-        {{content}}
+        <mat-checkbox class="pl-10" formControlName="ShowInReport">Show In Report</mat-checkbox>
+        <mat-checkbox class="pl-10 ml-15" formControlName="InPartyMTM">In Party MTM</mat-checkbox>
       </mat-dialog-content>      
       <mat-dialog-actions align="center">
         <button mat-raised-button color="primary" (click)="onConfirmClick()" tabindex="1">{{confirmButtonText}}</button>

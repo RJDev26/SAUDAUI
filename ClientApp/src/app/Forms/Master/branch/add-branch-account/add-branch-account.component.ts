@@ -174,8 +174,8 @@ export class AddBranchAccountComponent implements OnInit {
         message: 'Please select option',
         content: ``,
         buttonText: {
-          ok: 'Yes',
-          cancel: 'No'
+          ok: 'Submit',
+          cancel: 'Cancel'
         }
       }
     });
