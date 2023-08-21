@@ -1,4 +1,4 @@
-import { Component, Inject } from "@angular/core";
+import { Component, Inject, EventEmitter, Output } from "@angular/core";
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from "@angular/material/dialog";
 
 
@@ -12,6 +12,9 @@ export class ConfirmationAccountDialog {
     content: any
     confirmButtonText = "Yes"
     cancelButtonText = "Cancel"
+    @Output() submitClicked: EventEmitter<void> = new EventEmitter<void>();
+
+  // Other component code  
     constructor(
       @Inject(MAT_DIALOG_DATA) private data: any,
       private dialogRef: MatDialogRef<ConfirmationAccountDialog>) {
@@ -23,9 +26,15 @@ export class ConfirmationAccountDialog {
         }
       }
     }
-  
-    onConfirmClick(): void {
+
+    onConfirmClick() {
       this.dialogRef.close(true);
+      // This method will be called when the "Submit" button is clicked
+      this.submitClicked.emit();
     }
+  
+    // onConfirmClick(): void {
+    //   this.dialogRef.close(true);
+    // }
   
 }

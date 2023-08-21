@@ -22,6 +22,8 @@ export class AddBranchAccountComponent implements OnInit {
   gridApi: any;
   gridApiSelectAc: any;
   isRowSelected: boolean = false;
+  showInReport: boolean
+  isPartyMTM: boolean
   filteredHeadList: any[] = []
   agGridOptions: any = {
     suppressRowHoverHighlight: true,
@@ -46,6 +48,8 @@ export class AddBranchAccountComponent implements OnInit {
         headerName: '', editable: false,width:5, minwidth: 5, maxwidth: 5, resizable: false, checkboxSelection: true, headerCheckboxSelection: true,
       },
       { headerName: 'Account', field: 'account', filter: true, sorting: true, resizable: true, flex: 1 },
+      { headerName: 'show In Report', field: 'showInReport', filter: false, sorting: false, resizable: true, flex: 1 },
+      { headerName: 'is Party MTM', field: 'isPartyMTM', filter: false, sorting: false, resizable: true, flex: 1 }
     ]
   }
   ];
@@ -103,21 +107,32 @@ export class AddBranchAccountComponent implements OnInit {
 
 
   checkSelectedRowSelectAc(event: any) {
-    debugger
     var selectedRow = this.gridApiSelectAc.getSelectedRows();
     if (selectedRow.length > 0) { this.isRowSelected = true; }
     else { this.isRowSelected = false; }
   }
 
-  checkSelectedRow(event: any)
-  {
+  checkSelectedRow(event: any)  {
     var selectedRow = this.gridApi.getSelectedRows();
     if (selectedRow.length > 0) { this.isRowSelected = true; }
     else { this.isRowSelected = false; }
   }
 
+  onSubmitFromDialog() {
+    var selectAccount = this.gridApiSelectAc.getSelectedRows();
+    const body = {
+      dropDownVMs: selectAccount,
+      BranchId: this.selectedBranchID,
+      showInReport: this.showInReport,
+      isPartyMTM: this.isPartyMTM
+    };
+    this._masterService.addBranchAccount(body).subscribe(result => {
+      this.getBranchAccountIDs();
+    });
+  }
+
   selectAccounts()  {
-    this.dialog.open(ConfirmationAccountDialog, {
+    var dialogRef = this.dialog.open(ConfirmationAccountDialog, {
       data: {
         message: 'Please select option',
         content: ``,
@@ -128,15 +143,11 @@ export class AddBranchAccountComponent implements OnInit {
       }
     });
 
-    var selectAccount = this.gridApiSelectAc.getSelectedRows();
-    const body = {
-      dropDownVMs: selectAccount,
-      BranchId: this.selectedBranchID      
-    };
-    this._masterService.addBranchAccount(body).subscribe(result => {
-     /* this.selectedBranchID = result.id;*/
-      this.getBranchAccountIDs();
+    dialogRef.componentInstance.submitClicked.subscribe(() => {
+      // This function will be called when the "Submit" button is clicked in the dialog
+      this.onSubmitFromDialog();
     });
+  
   }
 
   removeAccounts() {
