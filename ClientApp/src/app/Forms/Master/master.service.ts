@@ -63,6 +63,10 @@ export class MasterService {
     return this.httpClient.get<any>(environment.apiBaseUrl + 'Master/getFileCodeList/' + id, { headers: this.headers });
   }
 
+  getItemListExchange(id: number): Observable<any> {
+    return this.httpClient.get<any>(environment.apiBaseUrl + 'Master/getItemListExchange/' + id, { headers: this.headers })
+  }
+
   getFileCodeId(id: number): Observable<any> {
     return this.httpClient.get<any>(environment.apiBaseUrl + 'Master/getFileCodeId/' + id, { headers: this.headers })
   }

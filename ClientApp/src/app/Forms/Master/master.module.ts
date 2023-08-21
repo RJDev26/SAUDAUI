@@ -42,6 +42,8 @@ import { FileCodeTabComponent } from './account/account-dialog/file-code-tab/fil
 import { SelfShareTabComponent } from './account/account-dialog/self-share-tab/self-share-tab.component';
 import { BrokerageTabComponent } from './account/account-dialog/brokerage-tab/brokerage-tab.component';
 import { ConfirmationAccountDialog } from '../Dialog/confirmation-dialog/confirmation-account-dialog.component';
+import { ItemGroupComponent } from './item-group/item-group.component';
+import { AddItemGroupComponent } from './item-group/add-item-group/add-item-group.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'account', pathMatch: 'full' },
@@ -59,7 +61,8 @@ export const routes: Routes = [
   { path: 'exchange', component: ExchangeComponent, data: { breadcrumb: 'Exchange' } },
   { path: 'interest-master', component: InterestMasterComponent, data: { breadcrumb: 'Interest Master' } },
   { path: 'account-head', component: AccountHeadComponent, data: { breadcrumb: 'Account Head' } },
-  { path: 'symbol-mapping', component: SymbolMappingComponent, data: { breadcrumb: 'Symbol Mapping' } }
+  { path: 'symbol-mapping', component: SymbolMappingComponent, data: { breadcrumb: 'Symbol Mapping' } },
+  { path: 'item-group', component: ItemGroupComponent, data: { breadcrumb: 'Item Group' } }
 ];
 
 @NgModule({
@@ -108,7 +111,9 @@ export const routes: Routes = [
      AddInteresetComponent,
      FileCodeTabComponent,
      SelfShareTabComponent,
-     BrokerageTabComponent
+     BrokerageTabComponent,
+     ItemGroupComponent,
+     AddItemGroupComponent
   ],
   providers: [
     { provide: MAT_DATE_LOCALE, useValue: 'en-GB' }

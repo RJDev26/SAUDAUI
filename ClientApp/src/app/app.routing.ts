@@ -18,6 +18,7 @@ import { BrokerageSetupComponent } from './Forms/Master/brokerage-setup/brokerag
 import { TaxComponent } from './Forms/Master/tax-master/tax-master.component';
 import { AccountHeadComponent } from './Forms/Master/account-head/account-head.component';
 import { SymbolMappingComponent } from './Forms/Master/symbol-mapping/symbol-mapping.component';
+import { ItemGroupComponent } from './Forms/Master/item-group/item-group.component';
 
 export const routes: Routes = [
     { 
@@ -50,7 +51,8 @@ export const routes: Routes = [
             { path: 'brokerage-slab', component: BrokerageSlabComponent, data: { breadcrumb: 'Brokerage Slab' } },
             { path: 'tax', component: TaxComponent, data: { breadcrumb: 'Tax' } },
             { path: 'account-head', component: AccountHeadComponent, data: { breadcrumb: 'Account Head' } },
-            { path: 'symbol-mapping', component: SymbolMappingComponent, data: { breadcrumb: 'Symbol Mapping' } }
+            { path: 'symbol-mapping', component: SymbolMappingComponent, data: { breadcrumb: 'Symbol Mapping' } },
+            { path: 'item-group', component: ItemGroupComponent, data: { breadcrumb: 'Item Group' } }
            
         ]
     },

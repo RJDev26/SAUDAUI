@@ -1,0 +1,78 @@
+<h2 class="heading mb-10">Add Item Group</h2>
+<a (click)="close()" class="close-btn">
+    <span class="material-symbols-outlined">
+      <mat-icon>close</mat-icon>
+    </span>
+</a>
+<mat-tab-group>
+    <mat-tab label="Item Group " (click)="checkTaxSelect()">
+        <form [formGroup]="itemGroupNameForm" (ngSubmit)="onSubmit(itemGroupNameForm.value)" fxLayout="row wrap" class="user-form">
+            <div class="white-block pb-5">
+                <h3><span>Group Name</span></h3>
+                <div class="tab-party-details-parent">
+                    <div fxFlex="100" fxFlex.gt-sm="70" fxFlex.sm="50">
+                        <mat-form-field appearance="outline">
+                          <mat-label>Group Name</mat-label>
+                          <input matInput autocomplete="off" placeholder="Group Name" formControlName="name" type="text">
+                          <mat-error *ngIf="itemGroupNameForm.controls.name.errors?.required">Group Name is required</mat-error>
+                        </mat-form-field>
+                      </div>
+                      <button mat-raised-button color="primary" class="uppercase save-btn" [disabled]="!itemGroupNameForm.valid" type="submit">Save</button> 
+                </div>
+            </div>
+        </form>
+        <form [formGroup]="exchangeForm" (ngSubmit)="onExchangeSubmit(exchangeForm.value)" fxLayout="row wrap" class="user-form">
+            <div class="tab-party-details-parent">
+                <div class="white-block pb-0">
+                    <h3><span>Add Item</span></h3>
+                    <div fxFlex="100" fxFlex.gt-sm="33.33" fxFlex.sm="33.33">
+                          <mat-form-field class="example-full-width" appearance="outline">
+                            <mat-label>Exchange </mat-label>
+                            <mat-select placeholder="Select Exchange" (selectionChange)="onExchangeSelection($event.value)">
+                              <mat-option *ngFor="let exchange of exchangeList" [value]="exchange.id">
+                                {{exchange.name}}
+                              </mat-option>
+                            </mat-select>
+                          </mat-form-field>
+                    </div>
+                    <div fxFlex="100" fxFlex.gt-sm="33.33" fxFlex.sm="33.33">
+                        <div class="dropdown-wrapper">
+                            <mat-form-field class="select-slab-mat" appearance="outline">
+                              <mat-label>Select Item Group</mat-label>
+
+                              <mat-select #select multiple placeholder="Select Account" panelClass="custom-select-panel" formControlName="accounts">
+                                <input class="milti-search-box" #multiUserSearch type="text" autocomplete="off" matInput placeholder="Search Item Group" (input)="onInputChange($event)" />
+                                <mat-option value=-1 (click)="accountAllSelection()">Select All</mat-option>
+                                <mat-option *ngFor="let option of accountList" [value]="option.id">
+                                  {{ option.exName }}
+                                </mat-option>
+                              </mat-select>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div fxFlex="100" class="mt-2 text-center space-between-btns">
+                <button mat-raised-button color="warn" type="button" (click)="close()">Cancel</button>
+                <button mat-raised-button color="primary" class="uppercase" [disabled]="!exchangeForm.valid" type="submit">Save</button>
+            </div>
+        </form>
+        <div class="col-xl-12 mt-2 position-relative">
+            <span class="material-symbols-outlined delete-icon" (click)="deleteItemGroup()">
+              <mat-icon>delete_sweep</mat-icon>
+            </span>
+            <ag-grid-angular style=" height: 240px;"
+                          class="ag-theme-material mt-2"
+                          [rowData]="itemGroupList"
+                          [pagination]="true"
+                          [rowHeight]="31"
+                          [columnDefs]="columnDefs"
+                          [rowSelection]="'multiple'"
+                          [rowMultiSelectWithClick]="true"
+                          [defaultColDef]="agGridOptions.defaultColDef"
+                          (gridReady)="onGridReady($event)"
+                          headerHeight="34">
+            </ag-grid-angular>
+        </div>
+    </mat-tab>
+</mat-tab-group>

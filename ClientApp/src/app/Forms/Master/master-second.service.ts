@@ -48,6 +48,10 @@ export class MasterSecondService {
     return this.httpClient.post<any>(environment.apiBaseUrl + 'MasterSecond/SaveAccountTax', data, { headers: this.headers });
   }
 
+  addItemGroup(data): Observable<any> {
+    return this.httpClient.post<any>(environment.apiBaseUrl + 'MasterSecond/AddItemGroup', data, { headers: this.headers });
+  }
+
   saveExchangeAccount(data): Observable<any> {
     return this.httpClient.post<any>(environment.apiBaseUrl + 'MasterSecond/SaveExchangeAccount', data, { headers: this.headers });
   }
@@ -65,11 +69,17 @@ export class MasterSecondService {
   saveTax(data): Observable<any> {
     return this.httpClient.post<any>(environment.apiBaseUrl + 'MasterSecond/SaveTax', data, { headers: this.headers });
   }
+  saveItemGroup(data): Observable<any> {
+    return this.httpClient.post<any>(environment.apiBaseUrl + 'MasterSecond/saveItemGroup', data, { headers: this.headers });
+  }
   saveExchange(data): Observable<any> {
     return this.httpClient.post<any>(environment.apiBaseUrl + 'MasterSecond/SaveExchange', data, { headers: this.headers });
   }
   getTaxById(id: number): Observable<any> {
     return this.httpClient.get<any>(environment.apiBaseUrl + 'MasterSecond/getTaxId/' + id, { headers: this.headers })
+  }
+  getItemGroupId(id: number): Observable<any> {
+    return this.httpClient.get<any>(environment.apiBaseUrl + 'MasterSecond/getItemGroupId/' + id, { headers: this.headers })
   }
   getInterestId(id: number): Observable<any> {
     return this.httpClient.get<any>(environment.apiBaseUrl + 'MasterSecond/getInterestId/' + id, { headers: this.headers })
@@ -84,6 +94,11 @@ export class MasterSecondService {
   getTax(): Observable<any> {
     return this.httpClient.get<any>(environment.apiBaseUrl + 'MasterSecond/getTaxList', { headers: this.headers });
   }
+
+  getItemGroupNameList(): Observable<any> {
+    return this.httpClient.get<any>(environment.apiBaseUrl + 'MasterSecond/getItemGroupNameList', { headers: this.headers });
+  }
+
   getExchangeList(): Observable<any> {
     return this.httpClient.get<any>(environment.apiBaseUrl + 'MasterSecond/getExchangeList', { headers: this.headers });
   }
@@ -102,6 +117,10 @@ export class MasterSecondService {
     return this.httpClient.get<any>(environment.apiBaseUrl + 'MasterSecond/getAccountTaxList/' + id, { headers: this.headers })
   }
 
+  getItemGroupList(id: number): Observable<any> {
+    return this.httpClient.get<any>(environment.apiBaseUrl + 'MasterSecond/getItemGroupList/' + id, { headers: this.headers })
+  }
+
   getExchangeAccountList(id: number): Observable<any> {
     return this.httpClient.get<any>(environment.apiBaseUrl + 'MasterSecond/getExchangeAccountList/' + id, { headers: this.headers })
   }
@@ -115,6 +134,10 @@ export class MasterSecondService {
   }
   deleteAccountTax(data): Observable<any> {
     return this.httpClient.post<any>(environment.apiBaseUrl + 'MasterSecond/deleteAccountTax', data, { headers: this.headers });
+  }
+
+  removeMultipleItemGroup(data): Observable<any> {
+    return this.httpClient.post<any>(environment.apiBaseUrl + 'MasterSecond/removeMultipleItemGroup', data, { headers: this.headers });
   }
 
   
