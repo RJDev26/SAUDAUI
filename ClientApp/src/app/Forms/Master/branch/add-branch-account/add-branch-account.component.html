@@ -34,7 +34,7 @@
               <div class="dropdown-wrapper">
                 <mat-form-field class="select-slab-mat" appearance="outline">
                   <mat-label>Contra Id</mat-label>
-                  <mat-select #select placeholder="Select Contra Id" panelClass="custom-select-panel" formControlName="contraId">
+                  <mat-select #select placeholder="Select Contra Id" panelClass="custom-select-panel" formControlName="contraAcId">
                     <input class="milti-search-box" #multiUserSearch type="text" autocomplete="off" matInput placeholder="Search Contra Id" (input)="onInputChange($event)" />
                     <mat-option *ngFor="let option of filteredHeadList" [value]="option.id">
                       {{ option.name }}

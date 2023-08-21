@@ -175,9 +175,9 @@ input[type=number]:-moz-placeholder { /* Firefox 18- */
     background: #f3f3f3;
 }
 
-.ag-header-icon {
-    color: #fff;
-}
+// .ag-header-icon {
+//     color: #fff;
+// }
 
 .ag-header-cell, .ag-header-group-cell {
     padding-left: 20px;
@@ -207,6 +207,12 @@ input[type=number]:-moz-placeholder { /* Firefox 18- */
                 background: #054b42 !important;
             }
         }
+    }
+}
+
+.ag-header-cell-menu-button {
+    &:not(.ag-header-menu-always-show) {
+        opacity: 1;
     }
 }
 

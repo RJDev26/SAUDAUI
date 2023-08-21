@@ -19,7 +19,7 @@ export class BranchComponent implements OnInit {
   agGridOptions: any = {
     defaultColDef: {
       filter: true,
-       flex:1,
+      flex:1,
       sortable: true,
       wraptext: true,
       resizable: true,
@@ -33,6 +33,9 @@ export class BranchComponent implements OnInit {
       headerName: 'Action', field: 'fileIcon', cellRenderer: this.actionCellRenderer, resizable: true, filter: false
     },
     { headerName: 'Name',  field: 'name', filter: true, sorting: true, resizable: true },
+    { headerName: 'Head',  field: 'headId', filter: true, sorting: true, resizable: true },
+    { headerName: 'Contra Id',  field: 'contraAcId', filter: true, sorting: true, resizable: true },
+    { headerName: 'Chat Id',  field: 'chatId', filter: true, sorting: true, resizable: true }
   ];
   constructor(public appSettings: AppSettings, private _appService: AppService, public dialog: MatDialog, private _masterService: MasterService) {
     this.settings = this.appSettings.settings;

@@ -24,29 +24,15 @@ export class AddBranchAccountComponent implements OnInit {
   isRowSelected: boolean = false;
   filteredHeadList: any[] = []
   agGridOptions: any = {
-    //defaultColDef: {
-    //  filter: true,
-    //   flex:1,
-    //  sortable: true,
-    //  wraptext: true,
-    //  resizable: true,
-      
-     
-    //},
     suppressRowHoverHighlight: true,
   }
 
-
   columnDefsSelectAc = [{
-    headerName: 'Select account ',
+    headerName: 'Select account',
     children: [
-
       {
         headerName: '', editable: false, width: 5, minwidth: 5, maxwidth: 5, resizable: false, checkboxSelection: true, headerCheckboxSelection: true,
       },
-      //{
-      //  headerName: 'Action', field: 'fileIcon', cellRenderer: this.actionCellRenderer, resizable: true
-      //},
       { headerName: 'Name', field: 'name', filter: true, sorting: true, resizable: true, flex: 1 },
     ]
   }
@@ -59,9 +45,6 @@ export class AddBranchAccountComponent implements OnInit {
       {
         headerName: '', editable: false,width:5, minwidth: 5, maxwidth: 5, resizable: false, checkboxSelection: true, headerCheckboxSelection: true,
       },
-      //{
-      //  headerName: 'Action', field: 'fileIcon', cellRenderer: this.actionCellRenderer, resizable: true
-      //},
       { headerName: 'Account', field: 'account', filter: true, sorting: true, resizable: true, flex: 1 },
     ]
   }
@@ -72,7 +55,6 @@ export class AddBranchAccountComponent implements OnInit {
 
   ngOnInit(): void {
     this.bindFormControls();
-    //this.getApiData();
     this.getBranchAccountIDs();
     this.getAccounts();
     this.getApiData();
@@ -85,51 +67,17 @@ export class AddBranchAccountComponent implements OnInit {
       return cell.rowIndex === params.node.rowIndex;
     });
     eGui.innerHTML = `<button class="material-icons action-button-red" delete data-action="delete">delete</button>`;
-
     return eGui;
-}
-
-//onGridClick(params: any) {
-//  if (params.event.target.dataset.action == "delete")
-//  {
-//    const dialogRef = this.dialog.open(ConfirmationDialog, {
-//      data: {
-//        message: 'Do you really want to delete this record?',
-//        buttonText: {
-//          ok: 'Yes',
-//          cancel: 'No'
-//        }
-//      }
-//    });
-
-//    dialogRef.afterClosed().subscribe((confirmed: boolean) => {
-//      if (confirmed) {
-//        const reqObj = {
-//          "id": 0,
-//          "branchId": this.selectedBranchID,
-//          "accountId": 0,
-//          "accountIds": params.data.id
-//        }
-//        this._masterService.deleteBranchAccount(reqObj).subscribe((res) => {
-
-//        });
-//      }
-//    });
-
-
-//  }
-//  }
-
+  }
 
   onGridReady(event) { this.gridApi = event.api; }
 
   onGridReadySelectAc(event) { this.gridApiSelectAc = event.api; }
 
-  getBranchAccountIDs()
-  {
+  getBranchAccountIDs()  {
     this._masterService.getAccountsAddedinBranch(this.selectedBranchID).subscribe((res) => {
-    this.branchIDAccountList = res;
-  });
+      this.branchIDAccountList = res;
+    });
   }
 
   getAccounts() {
@@ -228,9 +176,10 @@ export class AddBranchAccountComponent implements OnInit {
     this.branchForm = this.formBuilder.group({
       'name': ['', Validators.required],
       'headId': ['', Validators.required],
-      'contraId': ['', Validators.required],
+      'contraAcId': ['', Validators.required],
       'chatid': ['', Validators.required],
-      'id': [this.selectedBranchID, Validators.required]
+      // 'id': [this.selectedBranchID]
+      'id': [0]
     });
     this.accountForm = this.formBuilder.group({
       'accountIds': ['', Validators.required]
@@ -239,14 +188,11 @@ export class AddBranchAccountComponent implements OnInit {
   }
 
   public onSubmit(values: Object): void {
-
-    debugger;
     var h = this.gridApi.getSelectedRows();
     var body = this.branchForm.value;
-    console.log(body);
     if (this.branchForm.valid) {
       this._masterService.saveBranch(body).subscribe(result => {
-        console.log("result", result);
+        this.dialogRef.close();
         this.selectedBranchID = result.id;
       });
     }
