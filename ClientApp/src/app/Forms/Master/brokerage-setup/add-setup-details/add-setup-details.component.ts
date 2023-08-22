@@ -3,7 +3,7 @@ import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { MasterService } from '../../master.service';
 import { forkJoin, map } from 'rxjs';
-import { formatDate } from '@angular/common';
+import { DatePipe, formatDate } from '@angular/common';
 
 @Component({
   selector: 'app-add-setup-details',
@@ -22,27 +22,23 @@ export class AddSetupDetailsComponent implements OnInit {
   salbId: any;
   selectedSlabDetailsId: any;
   accountList: any;
+  parentData: any;
 
-  constructor(private formBuilder: UntypedFormBuilder, public dialogRef: MatDialogRef<AddSetupDetailsComponent>, @Inject(MAT_DIALOG_DATA) public data: any, private _appService: MasterService) {
+
+  constructor(private datePipe: DatePipe, private formBuilder: UntypedFormBuilder, public dialogRef: MatDialogRef<AddSetupDetailsComponent>, @Inject(MAT_DIALOG_DATA) public data: any, private _appService: MasterService) {
    this.salbId = data.slabId;
    this.selectedSlabDetailsId = data.selectedSlabId;
+   this.parentData = data;
   }
 
   bindFormControls() {
     this.itemForm = this.formBuilder.group({
-     'exchangeId': ['', Validators.required],
      'applyOn': ['', Validators.required],
      'applyOnQty': ['', Validators.required],
-     'itemId': ['', Validators.required],
-     'instrumentType': ['', Validators.required],
      'deliveryBrokRate': ['', Validators.required],
      'intradayBrokRate': ['', Validators.required],
-     'rateRange1': ['', Validators.required],
-     'rateRange2': ['', Validators.required],
-     'fromDt': ['', Validators.required],
-     'accountId': ['', Validators.required],
-      'toDt': ['', Validators.required],
      'intradaySingleSideonly': [false],
+     'id':[0],
     });
    this.initialApiCalls();
 }
@@ -78,14 +74,8 @@ initialApiCalls() {
       const formattedFromDate = formatDate(fromDate, 'yyyy-MM-dd', 'en-US');
       const formattedToDate = formatDate(toDate, 'yyyy-MM-dd', 'en-US');
       this.itemForm.patchValue({
-        accountId: res.accountId,
-        exchangeId: res.exchangeId,
         applyOn: res.applyOn,
         applyOnQty: res.applyOnQty,
-        itemId: res.itemId,
-        fromDt: formattedFromDate,
-        toDt: formattedToDate,
-        instrumentType: res.instrumentType,
         deliveryBrokRate: res.deliveryBrokRate,
         intradayBrokRate: res.intradayBrokRate,
         rateRange1: res.rateRange1,
@@ -107,6 +97,15 @@ initialApiCalls() {
     if(this.selectedSlabDetailsId){
       body.id = this.selectedSlabDetailsId;
     }
+
+    body.accounts = this.parentData.accountIds.filter((val)=> val != -1);;
+    
+    body.fromDate = this.datePipe.transform(this.parentData.fromDt, 'yyyy-MM-dd');
+    body.toDate = this.datePipe.transform(this.parentData.toDt, 'yyyy-MM-dd');
+    body.instrumentType = this.parentData.instrumentType;
+    body.itemGroupId = this.parentData.itemGroupIds;
+    body.higherSideOnly= false;
+
     if (this.itemForm.valid) {
       //const body = JSON.stringify(addFormData);
       this._appService.saveBrokerageSetup(body).subscribe(result => {

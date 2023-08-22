@@ -31,7 +31,7 @@ constructor(public appSettings: AppSettings,
     }
 
   ngOnInit() {
-      this.gettaxList();
+      this.getItemGroupNameList();
   }
 
   agGridOptions: any = {
@@ -52,10 +52,10 @@ constructor(public appSettings: AppSettings,
       { headerName: 'Name', field: 'name', filter: true, sorting: true, resizable: true },
   ];
 
-gettaxList() {
-  this._masterSecondService.getItemGroupNameList().subscribe((results) => {
-       this.taxList = results;       
-      });
+  getItemGroupNameList() {
+    this._masterSecondService.getItemGroupNameList().subscribe((results) => {
+        this.taxList = results;       
+        });
   }
 
   public actionCellRenderer(params: any) {
@@ -89,7 +89,7 @@ gettaxList() {
       dialogRef.afterClosed().subscribe((confirmed: boolean) => {
         if (confirmed) {
           this._masterSecondService.deleteTax(params.data.id).subscribe((res) => {
-            this.gettaxList();
+            this.getItemGroupNameList();
           });
         }
       });
@@ -104,7 +104,7 @@ gettaxList() {
       });
     
       dialogRef.afterClosed().subscribe(user => {
-        this.gettaxList();
+        this.getItemGroupNameList();
         if (user) {
           /* (user.id) ? this.updateUser(user) : this.addUser(user);*/
         }

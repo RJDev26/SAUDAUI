@@ -5,12 +5,14 @@ import { MasterService } from "../master.service";
 import { MatDialog } from '@angular/material/dialog';
 import { MatSelect } from '@angular/material/select';
 import { MatOption } from '@angular/material/core';
-import { Item } from '../item/item.model';
-import parseJSON from 'date-fns/esm/parseJSON';
 import { AppService } from 'src/app/service/app.service';
 import { AddSetupDetailsComponent } from './add-setup-details/add-setup-details.component';
 import { ConfirmationDialog } from '../../Dialog/confirmation-dialog/confirmation-dialog.component';
 import { CommonUtility } from 'src/app/shared/common-utility';
+import { forkJoin, map } from 'rxjs';
+import { MasterSecondService } from '../master-second.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-brokerage-setup',
@@ -24,16 +26,24 @@ export class BrokerageSetupComponent implements OnInit {
   public settings: Settings;
   slabId: number;
   slabList: any[];
+  fromDt: any;
+  toDt: any;
   accountList: any[];
   branchList: any[];
+  instrumentList: any[];
+  instrumentType: any;
+  itemGroupIds: any;
+  filteredItemGroup: any;
+  itemGroupIdList: any;
+
   branchIds: Array<string>;
-  accountIds: any;
+  accountIds: any[];
   filteredProviders: any[];
   filteredAccountList: any[];
   brokeragesetupList: any;
   branchAllSellected: boolean = false;
 
-  constructor(public appSettings: AppSettings, private _appService: AppService, public dialog: MatDialog, private _masterService: MasterService) {
+  constructor(private datePipe: DatePipe, public snackBar: MatSnackBar, public appSettings: AppSettings, private _appService: AppService, public dialog: MatDialog, private _masterService: MasterService, private _masterSecondService: MasterSecondService) {
     this.settings = this.appSettings.settings;
   }
 
@@ -80,17 +90,76 @@ export class BrokerageSetupComponent implements OnInit {
   ];
 
   getBrokerageSetupList() {
-    this._appService.getBrokerageSetupList().subscribe((results) => {
-     this.brokeragesetupList = results;       
+    if(this.areRequiredValuesSelected){
+      var accountIds = this.accountIds.filter((val)=> val != -1);
+      var req = {
+        "itemGroupId": this.itemGroupIds,
+        "accounts": accountIds,
+        "fromDate": this.datePipe.transform(this.fromDt, 'yyyy-MM-dd'),
+        "toDate": this.datePipe.transform(this.toDt, 'yyyy-MM-dd'),
+        "instrumentType": this.instrumentType
+      };
+      this._appService.getBrokerageSetupList(req).subscribe((results) => {
+       this.brokeragesetupList = results.data;       
+      });
+    }
+  }
+
+  async getBrokerageAddValidation(): Promise<string> {
+    const accountIds = this.accountIds.filter((val) => val != "-1");
+    const req = {
+      itemGroupId: this.itemGroupIds,
+      accounts: accountIds,
+      fromDate: this.datePipe.transform(this.fromDt, 'yyyy-MM-dd'),
+      toDate: this.datePipe.transform(this.toDt, 'yyyy-MM-dd'),
+      instrumentType: this.instrumentType,
+    };
+  
+    try {
+      const results = await this._appService.getBrokerageAddValidation(req).toPromise();
+  
+      if (results.message) {
+        this.showToaster(results.message);
+        this.brokeragesetupList = results.data;
+        return results.message;
+      } else {
+        return results.message;
+      }
+    } catch (error) {
+      // Handle error here
+      console.error('Error during validation:', error);
+      return '';
+    }
+  }
+
+  showToaster(message){
+    this.snackBar.open(message, "Success", {
+      duration: 3000,
     });
   }
 
+  areRequiredValuesSelected(): boolean {
+    return this.accountIds && this.itemGroupIds && this.instrumentType && this.fromDt && this.toDt;
+  }
+
   fetchDropdownData() {
-    this._masterService.getSlabDDL().subscribe((response) => { this.slabList = response });
-    this._masterService.getBranchDDLList().subscribe((response) => { 
-      this.branchList = response;
-      this.filteredProviders = this.branchList;
-   });
+    forkJoin([
+      this._masterService.getBranchDDLList(), 
+      this._masterService.getInstrumentList(),
+      this._masterService.getAccount(),
+      this._masterSecondService.getItemGroupNameList()
+    ]).pipe(map(response => {
+      this.branchList = response[0];
+      this.filteredProviders = response[0];
+      this.instrumentList = response[1];
+      this.instrumentList = response[1];
+      this.accountList = response[2];
+      this.filteredAccountList = response[2];
+      this.itemGroupIdList = response[3];
+      this.filteredItemGroup = response[3];
+    })).subscribe(res => {
+      
+    });
 
     
   }
@@ -111,6 +180,15 @@ export class BrokerageSetupComponent implements OnInit {
     const searchInput = event.target.value.toLowerCase();
 
     this.filteredProviders = this.branchList.filter((data) => {
+      const prov = data.name.toLowerCase();
+      return prov.includes(searchInput);
+    });
+  }
+
+  onInputItemGroupChange(event: any) {
+    const searchInput = event.target.value.toLowerCase();
+
+    this.filteredItemGroup = this.itemGroupIdList.filter((data) => {
       const prov = data.name.toLowerCase();
       return prov.includes(searchInput);
     });
@@ -180,7 +258,7 @@ export class BrokerageSetupComponent implements OnInit {
     //event.source.options._results[1]._selected = true;
     //event.source.options._results[1]._active = true;
     if (this.branchIds) {
-      this._masterService.getBranchAccounts(this.branchIds).subscribe(
+      this._masterService.getFilterBranchAccounts(this.branchIds).subscribe(
         response => {
           this.accountList = response;
           this.filteredAccountList = this.accountList;
@@ -189,34 +267,33 @@ export class BrokerageSetupComponent implements OnInit {
     }
   }
 
-  applySlab(event: any)
-  {
-    const model = { SlabId: this.slabId, Accounts: this.accountIds }
-
-    this._masterService.applySlab(model).subscribe(result => {
-      console.log("result", result);
-     
-    }, err => {
-      console.log(err);
-    });
-
-   
-
-
-  }
   addBrokerage(event: any) { }
 
-  public openSlabDetailsDialog(selectedSlabId) {
-    let dialogRef = this.dialog.open(AddSetupDetailsComponent, {
-        data: { 
-            selectedSlabId: selectedSlabId,
-        }
-    });
+  public async openSlabDetailsDialog(selectedSlabId) {
+    const isValid = await this.getBrokerageAddValidation();
+  debugger;
+    if (isValid == '') {
+      const dialogRef = this.dialog.open(AddSetupDetailsComponent, {
+        data: {
+          selectedSlabId: selectedSlabId,
+          fromDt: this.fromDt,
+          toDt: this.toDt,
+          branchIds: this.branchIds,
+          accountIds: this.accountIds,
+          itemGroupIds: this.itemGroupIds,
+          instrumentType: this.instrumentType,
+        },
+      });
+  
+      dialogRef.afterClosed().subscribe((user) => {
+        this.getBrokerageSetupList();
+      });
+    }
+  }
 
-    dialogRef.afterClosed().subscribe(user => {
-      this.getBrokerageSetupList();
-    });
-}
+  onFromDateChange() {
+    console.log("fromDt changed:", this.fromDt);
+  }
 
 onGridClick(params: any) {
   if (params.event.target.dataset.action == "edit")

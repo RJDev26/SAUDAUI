@@ -197,8 +197,8 @@ export class MasterService {
   getBranchDDLList(): Observable<any> {
     return this.httpClient.get<any>(environment.apiBaseUrl + 'master/getBranchDDL', { headers: this.headers })
   }
-  getBranchAccounts(branchIds:any): Observable<any> {
-    return this.httpClient.get<any>(environment.apiBaseUrl + 'master/getBranchAccounts/' + branchIds, { headers: this.headers })
+  getFilterBranchAccounts(branchIds:any): Observable<any> {
+    return this.httpClient.get<any>(environment.apiBaseUrl + 'master/getFilterBranchAccounts/' + branchIds, { headers: this.headers })
   }
   saveBrokerageSlabName(slabName: string): Observable<any> {
     return this.httpClient.get<any>(environment.apiBaseUrl + `master/SaveBrokerageSlabName?name=${slabName}`, { headers: this.headers })

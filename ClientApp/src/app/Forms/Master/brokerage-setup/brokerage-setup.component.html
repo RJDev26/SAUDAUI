@@ -4,9 +4,8 @@
       <div class="dropdown-wrapper">
         <mat-form-field class="select-slab-mat" appearance="outline">
           <mat-label>Select Branch</mat-label>
-          <mat-select #select  [(ngModel)]="branchIds" multiple placeholder="Select Branch" (selectionChange)="onBranchChange($event)" panelClass="custom-select-panel">
+          <mat-select #select  [(ngModel)]="branchIds" placeholder="Select Branch" (selectionChange)="onBranchChange($event)" panelClass="custom-select-panel">
             <input class="milti-search-box" #multiUserSearch type="text" autocomplete="off" matInput placeholder="Search Branch" (input)="onInputChange($event)"/>
-            <mat-option value=-1 (click)="branchAllSelection()">Select All</mat-option>
             <mat-option *ngFor="let option of filteredProviders" [value]="option.id">
               {{ option.name }}
             </mat-option>
@@ -20,7 +19,7 @@
           
           <mat-select #selectAccount [(ngModel)]="accountIds" multiple placeholder="Select Account" panelClass="custom-select-panel">
             <input class="milti-search-box" #multiUserSearch type="text" autocomplete="off" matInput placeholder="Search Account" (input)="onInputAccountListChange($event)"/>
-            <mat-option value=0 (click)="accountAllSelection()">Select All</mat-option>
+            <mat-option value=-1 (click)="accountAllSelection()">Select All</mat-option>
 
             <mat-option *ngFor="let option of filteredAccountList" [value]="option.id">
               {{ option.name }}
@@ -28,35 +27,53 @@
           </mat-select>
         </mat-form-field>
       </div>
+      <div class="dropdown-wrapper">
+        <mat-form-field class="select-slab-mat" appearance="outline">
+          <mat-label>Select Item Group</mat-label>
+          <mat-select #select  [(ngModel)]="itemGroupIds" placeholder="Select Item Group" panelClass="custom-select-panel">
+            <input class="milti-search-box" #multiUserSearch type="text" autocomplete="off" matInput placeholder="Search Item Group" (input)="onInputItemGroupChange($event)"/>
+            <mat-option *ngFor="let option of filteredItemGroup" [value]="option.id">
+              {{ option.name }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="dropdown-wrapper">
+        <mat-form-field class="example-full-width" appearance="outline">
+          <mat-label>Instrument Type</mat-label>
+          <mat-select placeholder="Select InsType" [(ngModel)]="instrumentType">
+            <mat-option *ngFor="let exchange of instrumentList" [value]="exchange.id">
+              {{exchange.name}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="dropdown-wrapper">
+        <mat-form-field appearance="outline">
+          <mat-label>From</mat-label>
+          <input matInput [matDatepicker]="picker1" [(ngModel)]="fromDt" (ngModelChange)="onFromDateChange()">
+          <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+          <mat-datepicker #picker1></mat-datepicker>
+        </mat-form-field>
+      </div>
+      <div class="dropdown-wrapper">
+        <mat-form-field appearance="outline">
+            <mat-label>To</mat-label>
+          <input matInput [matDatepicker]="picker2" placeholder="To" [(ngModel)]="toDt">
+          <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+          <mat-datepicker #picker2></mat-datepicker>
+        </mat-form-field>
+      </div>
       </div>
 
-
-      <div class="dropdown-container">
-        <div class="dropdown-wrapper">
-          <mat-form-field class="select-slab-mat" appearance="outline">
-            <mat-label>Select Slab</mat-label>
-            <mat-select [(ngModel)]="slabId" placeholder="Select Slab" panelClass="custom-select-panel">
-              <mat-option *ngFor="let option of slabList" [value]="option.id">
-                {{ option.name }}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
-        </div>
-        <button mat-raised-button color="accent" (click)="applySlab(null)">
-          Apply Slab
-        </button>
-
-      </div>
       <div>
-        <button mat-raised-button color="primary" class="delete-slab icon-btn" >
-          <mat-icon>
-            <span class="material-icons-outlined">        
-              file_download
-            </span>
-          </mat-icon> 
-          Export
+        <button mat-raised-button color="accent" (click)="getBrokerageSetupList(null)" [disabled]="!areRequiredValuesSelected()" class="icon-btn ml-15">
+          <mat-icon>search</mat-icon> search
         </button>
-        <button mat-raised-button color="accent" (click)="openSlabDetailsDialog(null)" class="icon-btn ml-15">
+        <button mat-raised-button color="accent"  [disabled]="!areRequiredValuesSelected()" (click)="openSlabDetailsDialog(null)" class="icon-btn ml-15">
+          <mat-icon>edit</mat-icon> Modify
+        </button>
+        <button mat-raised-button color="accent"  [disabled]="!areRequiredValuesSelected()" (click)="openSlabDetailsDialog(null)" class="icon-btn ml-15">
           <mat-icon>add</mat-icon> Add Brokerage
         </button>
       </div>

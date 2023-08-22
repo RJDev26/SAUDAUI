@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '../../shared/shared.module';
@@ -116,6 +116,7 @@ export const routes: Routes = [
      AddItemGroupComponent
   ],
   providers: [
+    DatePipe,
     { provide: MAT_DATE_LOCALE, useValue: 'en-GB' }
   ],
 })

@@ -50,8 +50,12 @@ export class AppService {
     return this.httpClient.get<any>(environment.apiBaseUrl + 'Master/getCompanyList',{headers:this.headers});
   }
 
-  getBrokerageSetupList():Observable<any>{
-    return this.httpClient.get<any>(environment.apiBaseUrl + 'Master/getBrokeageSetupList',{headers:this.headers});
+  getBrokerageSetupList(data):Observable<any>{
+    return this.httpClient.post<any>(environment.apiBaseUrl + 'Master/getBrokeageSetupList', data, {headers:this.headers});
+  }
+
+  getBrokerageAddValidation(data):Observable<any>{
+    return this.httpClient.post<any>(environment.apiBaseUrl + 'Master/getBrokerageAddValidation', data, {headers:this.headers});
   }
 
   getBrokerageSetupListAccount(accountId: number): Observable<any> {
