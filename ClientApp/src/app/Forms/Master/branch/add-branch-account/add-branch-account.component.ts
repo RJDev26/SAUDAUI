@@ -22,8 +22,9 @@ export class AddBranchAccountComponent implements OnInit {
   gridApi: any;
   gridApiSelectAc: any;
   isRowSelected: boolean = false;
-  showInReport: boolean
+  showInReport: boolean = false
   isPartyMTM: boolean
+  setValue: boolean
   filteredHeadList: any[] = []
   agGridOptions: any = {
     suppressRowHoverHighlight: true,
@@ -53,11 +54,11 @@ export class AddBranchAccountComponent implements OnInit {
     ]
   }
   ];
-  constructor(private formBuilder: UntypedFormBuilder, public dialog: MatDialog,  @Inject(MAT_DIALOG_DATA) public data: any, private _masterService: MasterService, public dialogRef: MatDialogRef<AddBranchAccountComponent>) { 
+  constructor(private formBuilder: UntypedFormBuilder, public dialog: MatDialog, @Inject(MAT_DIALOG_DATA) public data: any, private _masterService: MasterService, public dialogRef: MatDialogRef<AddBranchAccountComponent>) { 
     this.selectedBranchID = data.branchID;
   }
 
-  ngOnInit(): void {
+  ngOnInit(): void {    
     this.bindFormControls();
     this.getBranchAccountIDs();
     this.getAccounts();
@@ -99,10 +100,6 @@ export class AddBranchAccountComponent implements OnInit {
       });
       this.getBranchAccountIDs();
     }
-    //this._masterService.getAccountsForBranch(this.selectedBranchID).subscribe((response) => {
-    //  this.accountList = response;
-    //  this.filteredAccountList = response;
-    //});
   }
 
 
@@ -118,13 +115,13 @@ export class AddBranchAccountComponent implements OnInit {
     else { this.isRowSelected = false; }
   }
 
-  onSubmitFromDialog() {
+  onSubmitFromDialog(checked, MTM) {    
     var selectAccount = this.gridApiSelectAc.getSelectedRows();
     const body = {
       dropDownVMs: selectAccount,
       BranchId: this.selectedBranchID,
-      showInReport: this.showInReport,
-      isPartyMTM: this.isPartyMTM
+      showInReport: checked,
+      isPartyMTM: MTM
     };
     this._masterService.addBranchAccount(body).subscribe(result => {
       this.getBranchAccountIDs();
@@ -143,9 +140,9 @@ export class AddBranchAccountComponent implements OnInit {
       }
     });
 
-    dialogRef.componentInstance.submitClicked.subscribe(() => {
-      // This function will be called when the "Submit" button is clicked in the dialog
-      this.onSubmitFromDialog();
+    dialogRef.componentInstance.submitClicked.subscribe((res) => {
+      debugger;
+      this.onSubmitFromDialog(res.checked, res.MTM);
     });
   
   }

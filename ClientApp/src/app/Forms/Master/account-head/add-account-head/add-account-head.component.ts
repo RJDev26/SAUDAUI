@@ -120,8 +120,7 @@ export class AddAccountHeadComponent implements OnInit {
       var selectAccount = this.gridApiSelectAc.getSelectedRows();
       const body = {
         dropDownVMs: selectAccount,
-        AcHeadId: this.selectedAccountHeadID
-        
+        AcHeadId: this.selectedAccountHeadID        
       };
 
       this._masterService.addAcHead(body).subscribe(result => {

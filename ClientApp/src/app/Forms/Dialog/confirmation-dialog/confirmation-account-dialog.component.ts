@@ -12,13 +12,15 @@ export class ConfirmationAccountDialog {
     content: any
     confirmButtonText = "Yes"
     cancelButtonText = "Cancel"
-    @Output() submitClicked: EventEmitter<void> = new EventEmitter<void>();
+    checked: boolean = false
+    MTM: boolean = false
+    @Output() submitClicked = new EventEmitter<{checked: boolean, MTM: boolean}>();
 
   // Other component code  
     constructor(
       @Inject(MAT_DIALOG_DATA) private data: any,
       private dialogRef: MatDialogRef<ConfirmationAccountDialog>) {
-      if (data) {
+      if (data) {        
         this.message = data.message || this.message;
         if (data.buttonText) {
           this.confirmButtonText = data.buttonText.ok || this.confirmButtonText;
@@ -29,12 +31,6 @@ export class ConfirmationAccountDialog {
 
     onConfirmClick() {
       this.dialogRef.close(true);
-      // This method will be called when the "Submit" button is clicked
-      this.submitClicked.emit();
-    }
-  
-    // onConfirmClick(): void {
-    //   this.dialogRef.close(true);
-    // }
-  
+      this.submitClicked.emit({checked: this.checked, MTM: this.MTM});
+    }  
 }

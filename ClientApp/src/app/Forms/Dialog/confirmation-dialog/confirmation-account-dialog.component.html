@@ -5,8 +5,8 @@
         <p class="mb-10">
           {{message}}
         </p>
-        <mat-checkbox class="pl-10">Show In Report</mat-checkbox>
-        <mat-checkbox class="pl-10 ml-15">In Party MTM</mat-checkbox>
+        <mat-checkbox class="pl-10" [(ngModel)]="checked">Show In Report</mat-checkbox>
+        <mat-checkbox class="pl-10 ml-15" [(ngModel)]="MTM">In Party MTM</mat-checkbox>
       </mat-dialog-content>      
       <mat-dialog-actions align="center">
         <button mat-raised-button color="primary" (click)="onConfirmClick()" tabindex="1">{{confirmButtonText}}</button>

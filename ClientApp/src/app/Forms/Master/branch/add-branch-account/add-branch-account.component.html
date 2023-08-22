@@ -69,8 +69,7 @@
                          [columnDefs]="columnDefsSelectAc"
                          [rowSelection]="'multiple'"
                          [rowMultiSelectWithClick]="true"
-                         [defaultColDef]="agGridOptions.defaultColDef"
-                        
+                         [defaultColDef]="agGridOptions.defaultColDef"                        
                          (gridReady)="onGridReadySelectAc($event)"
                          (selectionChanged)="checkSelectedRowSelectAc($event)"
                          headerHeight="34">
