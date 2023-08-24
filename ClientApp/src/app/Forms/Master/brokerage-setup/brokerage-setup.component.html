@@ -25,7 +25,7 @@
         </mat-form-field>
       </div>
       <div class="dropdown-wrapper">
-        <mat-icon class="info-icon" (click)="viewAllItemGroups(null)">info</mat-icon>
+        <mat-icon class="info-icon" (click)="viewAllItemGroups(null)" matTooltip="View All Item" matTooltipPosition="above">info</mat-icon>
         <mat-form-field class="select-slab-mat" appearance="outline">
           <mat-label>Select Item Group</mat-label>
           <mat-select #select  [(ngModel)]="itemGroupIds" placeholder="Select Item Group" panelClass="custom-select-panel">

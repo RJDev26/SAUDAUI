@@ -89,7 +89,7 @@ export class BrokerageSetupComponent implements OnInit {
   ];
 
   getBrokerageSetupList() {
-    if(this.areRequiredValuesSelected){
+    if(this.areRequiredValuesSelected()){
       var accountIds = this.accountIds.filter((val)=> val != -1);
       var req = {
         "itemGroupId": this.itemGroupIds,
