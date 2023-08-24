@@ -213,12 +213,6 @@ input[type=number]:-moz-placeholder { /* Firefox 18- */
     }
 }
 
-.ag-header-cell-menu-button {
-    &:not(.ag-header-menu-always-show) {
-        opacity: 1;
-    }
-}
-
 .app {
   &.teal-light {
     .mat-radio-button {
@@ -539,10 +533,13 @@ input {
         }
     }
 }
+.mat-select-panel .mat-optgroup-label, .mat-select-panel .mat-option {
+    height: 2.25rem !important;
+    line-height: 2.25rem !important;
+}
 .dropdown-container {
     .dropdown-wrapper {
         position: relative;
-        vertical-align: text-top;
         display: inline-block;
         .info-icon{
             position: absolute;
@@ -556,9 +553,14 @@ input {
             margin-right: 8px;
             margin-bottom: 10px;
             .mat-form-field-infix {
-                width: 150px;
+                width: 140px;
                 .mat-select-arrow {
                     margin-top: 7px;
+                }
+            }
+            &.calendar {
+                .mat-form-field-infix {
+                    width: 100px;
                 }
             }
             .mat-form-field-wrapper {
