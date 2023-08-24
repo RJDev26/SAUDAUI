@@ -4,6 +4,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { MasterService } from '../../master.service';
 import { forkJoin, map } from 'rxjs';
 import { DatePipe, formatDate } from '@angular/common';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-lock-brokerage',
@@ -16,7 +17,7 @@ export class LockBrokerageComponent implements OnInit {
   parentData: any;
 
 
-  constructor(private datePipe: DatePipe, private formBuilder: UntypedFormBuilder, public dialogRef: MatDialogRef<LockBrokerageComponent>, @Inject(MAT_DIALOG_DATA) public data: any, private _appService: MasterService) {
+  constructor( public snackBar: MatSnackBar, private datePipe: DatePipe, private formBuilder: UntypedFormBuilder, public dialogRef: MatDialogRef<LockBrokerageComponent>, @Inject(MAT_DIALOG_DATA) public data: any, private _appService: MasterService) {
    this.parentData = data;
   }
 
@@ -53,9 +54,16 @@ export class LockBrokerageComponent implements OnInit {
       //const body = JSON.stringify(addFormData);
       this._appService.lockBrokerage(body).subscribe(result => {
         console.log("result", result);
+        this.showToaster(result.message);
         this.dialogRef.close();
       });
     }
+  }
+
+  showToaster(message){
+    this.snackBar.open(message, "Success", {
+      duration: 3000,
+    });
   }
 
 }

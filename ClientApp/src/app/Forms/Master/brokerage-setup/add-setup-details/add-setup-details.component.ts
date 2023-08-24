@@ -96,8 +96,8 @@ initialApiCalls() {
 
     if (this.itemForm.valid) {
       //const body = JSON.stringify(addFormData);
-      body.id = this.parentData.editParms.id;
       if(this.parentData.isEditMode === 2){
+        body.id = this.parentData.editParms.id;
         this._appService.updateSingleBrokerage(body).subscribe(result => {
           this.dialogRef.close();
         });

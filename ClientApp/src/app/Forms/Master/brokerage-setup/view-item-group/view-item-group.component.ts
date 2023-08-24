@@ -36,18 +36,17 @@ export class ViewItemGroupComponent implements OnInit {
   agGridOptions: any = {
     defaultColDef: {
       filter: true,
-      //flex:1,
+      flex:1,
       sortable: true,
       wraptext: true,
       resizable: true,
-      /* minWidth: 100,*/
+      minWidth: 100,
 
     },
-    /* suppressRowHoverHighlight: true,*/
+    suppressRowHoverHighlight: true,
   }
 
   columnDefs = [{
-    headerName: 'Added account Item Group list',
     children: [
       { headerName: 'Exchange Name', field: 'exName', filter: true, sorting: true, resizable: true, flex: 1, },
       { headerName: 'Item Name', field: 'itemName', filter: true, sorting: true, resizable: true, flex: 1, },
