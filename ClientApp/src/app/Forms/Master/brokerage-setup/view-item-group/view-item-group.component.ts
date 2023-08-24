@@ -22,7 +22,7 @@ export class ViewItemGroupComponent implements OnInit {
   public itemGroupNameForm: UntypedFormGroup;
   public exchangeForm: UntypedFormGroup;
   applyOnList: any;
-  exchangeList:any;
+  exchangeList: any;
   selectedId: any;
   selectedName: any;
   accountList: any[];
@@ -36,22 +36,22 @@ export class ViewItemGroupComponent implements OnInit {
   agGridOptions: any = {
     defaultColDef: {
       filter: true,
-      flex:1,
+      flex: 1,
       sortable: true,
       wraptext: true,
       resizable: true,
       minWidth: 100,
-
+     
     },
     suppressRowHoverHighlight: true,
   }
 
-  columnDefs = [{
-    children: [
-      { headerName: 'Exchange Name', field: 'exName', filter: true, sorting: true, resizable: true, flex: 1, },
-      { headerName: 'Item Name', field: 'itemName', filter: true, sorting: true, resizable: true, flex: 1, },
-    ]
-  }];
+  columnDefs = [
+
+    { headerName: 'Exchange Name', field: 'exName', filter: true, sorting: true, resizable: true, flex: 1, },
+    { headerName: 'Item Name', field: 'itemName', filter: true, sorting: true, resizable: true, flex: 1, },
+
+  ];
 
   constructor(public appSettings: AppSettings,
     private formBuilder: UntypedFormBuilder, public dialogRef: MatDialogRef<ViewItemGroupComponent>,
@@ -89,7 +89,7 @@ export class ViewItemGroupComponent implements OnInit {
     });
   }
 
-  
+
 
   onGridReady(event) { this.gridApi = event.api; }
 
@@ -100,7 +100,7 @@ export class ViewItemGroupComponent implements OnInit {
       (item: MatOption, index) => {
         if (isAllChecked) { item.select(); }
         else { item.deselect() }
-        
+
       }
     );
   }
