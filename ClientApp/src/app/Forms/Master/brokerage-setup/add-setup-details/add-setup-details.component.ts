@@ -94,6 +94,7 @@ initialApiCalls() {
     var body = this.itemForm.value;
     console.log(body);
     body.slabId = this.salbId;
+    body.id = this.parentData.isEditMode;
     if(this.selectedSlabDetailsId){
       body.id = this.selectedSlabDetailsId;
     }
