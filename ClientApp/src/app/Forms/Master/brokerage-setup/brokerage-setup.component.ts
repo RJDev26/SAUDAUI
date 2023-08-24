@@ -13,6 +13,8 @@ import { forkJoin, map } from 'rxjs';
 import { MasterSecondService } from '../master-second.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { DatePipe } from '@angular/common';
+import { LockBrokerageComponent } from './lock-brokerage/lock-brokerage.component';
+import { ViewItemGroupComponent } from './view-item-group/view-item-group.component';
 
 @Component({
   selector: 'app-brokerage-setup',
@@ -36,6 +38,7 @@ export class BrokerageSetupComponent implements OnInit {
   filteredItemGroup: any;
   itemGroupIdList: any;
 
+  searchedData: any;
   branchIds: Array<string>;
   accountIds: any[];
   filteredProviders: any[];
@@ -96,6 +99,7 @@ export class BrokerageSetupComponent implements OnInit {
         "instrumentType": this.instrumentType
       };
       this._appService.getBrokerageSetupList(req).subscribe((results) => {
+        this.searchedData = req;
        this.brokeragesetupList = results.data;       
       });
     }
@@ -116,6 +120,7 @@ export class BrokerageSetupComponent implements OnInit {
   
       if (results.message) {
         this.showToaster(results.message);
+        this.searchedData = req;
         this.brokeragesetupList = results.data;
         return results.message;
       } else {
@@ -265,12 +270,12 @@ export class BrokerageSetupComponent implements OnInit {
 
   addBrokerage(event: any) { }
 
-  public async openSlabDetailsDialog(selectedSlabId) {
+  public async openSlabDetailsDialog(event) {
     const isValid = await this.getBrokerageAddValidation();
-    if (isValid == '') {
+    if (isValid == '' && event === 'add') {
       const dialogRef = this.dialog.open(AddSetupDetailsComponent, {
         data: {
-          selectedSlabId: selectedSlabId,
+          selectedSlabId: null,
           fromDt: this.fromDt,
           toDt: this.toDt,
           branchIds: this.branchIds,
@@ -280,14 +285,29 @@ export class BrokerageSetupComponent implements OnInit {
           isEditMode: 0
         },
       });
-  
+      dialogRef.afterClosed().subscribe((user) => {
+        this.getBrokerageSetupList();
+      });
+    } else if(isValid !== '' && event === 'lock'){
+      const dialogRef = this.dialog.open(LockBrokerageComponent, {
+        data: {
+          selectedSlabId: null,
+          fromDt: this.fromDt,
+          toDt: this.toDt,
+          branchIds: this.branchIds,
+          accountIds: this.accountIds,
+          itemGroupIds: this.itemGroupIds,
+          instrumentType: this.instrumentType,
+          isEditMode: 0
+        },
+      });
       dialogRef.afterClosed().subscribe((user) => {
         this.getBrokerageSetupList();
       });
     }
   }
 
-  public openEditSetupDialog() {
+  public openModifySetupDialog() {
     const dialogRef = this.dialog.open(AddSetupDetailsComponent, {
       data: {
         selectedSlabId: null,
@@ -310,10 +330,30 @@ export class BrokerageSetupComponent implements OnInit {
     console.log("fromDt changed:", this.fromDt);
   }
 
+  openEditBrokerageDetails(params) {
+    const dialogRef = this.dialog.open(AddSetupDetailsComponent, {
+      data: {
+        selectedSlabId: null,
+        fromDt: this.searchedData.fromDate,
+        toDt: this.searchedData.toDate,
+        branchIds: this.searchedData.branchIds,
+        accountIds: this.searchedData.accounts,
+        itemGroupIds: this.searchedData.itemGroupId,
+        instrumentType: this.searchedData.instrumentType,
+        isEditMode: 2,
+        editParms: params
+      },
+    });
+
+    dialogRef.afterClosed().subscribe((user) => {
+      this.getBrokerageSetupList();
+    });
+  }
+
 onGridClick(params: any) {
   if (params.event.target.dataset.action == "edit")
   {
-    this.openSlabDetailsDialog(params.data.id);
+    this.openEditBrokerageDetails(params.data);
 
   }
   if (params.event.target.dataset.action == "delete")
@@ -338,6 +378,16 @@ onGridClick(params: any) {
 
 
   }
+}
+
+viewAllItemGroups(){
+  let dialogRef = this.dialog.open(ViewItemGroupComponent, {
+    data: { id:this.itemGroupIds }
+  });
+
+  dialogRef.afterClosed().subscribe(user => {
+   
+  });
 }
 
 }

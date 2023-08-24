@@ -1,0 +1,24 @@
+<h2 class="heading mb-10">Item</h2>
+<a (click)="close()" class="close-btn">
+    <span class="material-symbols-outlined">
+      <mat-icon>close</mat-icon>
+    </span>
+</a>
+<mat-tab-group>
+    <mat-tab label="Item List " (click)="checkTaxSelect()">
+        <div class="col-xl-12 mt-2 position-relative">
+            <ag-grid-angular style=" height: 240px;"
+                          class="ag-theme-material mt-2"
+                          [rowData]="itemGroupList"
+                          [pagination]="true"
+                          [rowHeight]="31"
+                          [columnDefs]="columnDefs"
+                          [rowSelection]="'multiple'"
+                          [rowMultiSelectWithClick]="true"
+                          [defaultColDef]="agGridOptions.defaultColDef"
+                          (gridReady)="onGridReady($event)"
+                          headerHeight="34">
+            </ag-grid-angular>
+        </div>
+    </mat-tab>
+</mat-tab-group>

@@ -20,14 +20,12 @@ export class AddSetupDetailsComponent implements OnInit {
   applyOnQtyList: any;
   applyOnList: any;
   salbId: any;
-  selectedSlabDetailsId: any;
   accountList: any;
   parentData: any;
 
 
   constructor(private datePipe: DatePipe, private formBuilder: UntypedFormBuilder, public dialogRef: MatDialogRef<AddSetupDetailsComponent>, @Inject(MAT_DIALOG_DATA) public data: any, private _appService: MasterService) {
    this.salbId = data.slabId;
-   this.selectedSlabDetailsId = data.selectedSlabId;
    this.parentData = data;
   }
 
@@ -62,27 +60,19 @@ initialApiCalls() {
 
   ngOnInit(): void {
     this.bindFormControls();
-    if(this.selectedSlabDetailsId){
-      this.getSelectedSlabDetailsInfo();
+    if(this.parentData.isEditMode === 2 && this.parentData.editParms){
+      this.getSelectedSlabDetailsInfo(this.parentData.editParms);
     }
   }
 
-  getSelectedSlabDetailsInfo() {
-    this._appService.getBrokerageSetupId(this.selectedSlabDetailsId).subscribe((res) => {
-      const fromDate = new Date(res.fromDT);
-      const toDate = new Date(res.toDT);
-      const formattedFromDate = formatDate(fromDate, 'yyyy-MM-dd', 'en-US');
-      const formattedToDate = formatDate(toDate, 'yyyy-MM-dd', 'en-US');
+  getSelectedSlabDetailsInfo(editParms) {
       this.itemForm.patchValue({
-        applyOn: res.applyOn,
-        applyOnQty: res.applyOnQty,
-        deliveryBrokRate: res.deliveryBrokRate,
-        intradayBrokRate: res.intradayBrokRate,
-        rateRange1: res.rateRange1,
-        rateRange2: res.rateRange2,
-        intradaySingleSideonly: res.intradaySingleSideonly
+        applyOn: editParms.applyOn,
+        applyOnQty: editParms.applyOnQty,
+        deliveryBrokRate: editParms.deliveryBrokRate,
+        intradayBrokRate: editParms.intradayBrokRate,
+        intradaySingleSideonly: editParms.intradaySingleSideonly
       });
-    });
   }
 
   close(): void {
@@ -95,9 +85,6 @@ initialApiCalls() {
     console.log(body);
     body.slabId = this.salbId;
     body.id = this.parentData.isEditMode;
-    if(this.selectedSlabDetailsId){
-      body.id = this.selectedSlabDetailsId;
-    }
 
     body.accounts = this.parentData.accountIds.filter((val)=> val != -1);;
     
@@ -109,10 +96,17 @@ initialApiCalls() {
 
     if (this.itemForm.valid) {
       //const body = JSON.stringify(addFormData);
-      this._appService.saveBrokerageSetup(body).subscribe(result => {
-        console.log("result", result);
-        this.dialogRef.close();
-      });
+      body.id = this.parentData.editParms.id;
+      if(this.parentData.isEditMode === 2){
+        this._appService.updateSingleBrokerage(body).subscribe(result => {
+          this.dialogRef.close();
+        });
+      } else {
+        this._appService.saveBrokerageSetup(body).subscribe(result => {
+          console.log("result", result);
+          this.dialogRef.close();
+        });
+      }
     }
   }
 

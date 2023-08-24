@@ -63,13 +63,19 @@
       </div>
     </div>
     <div>
+      <button *ngIf="itemGroupIds" mat-raised-button color="primary" (click)="viewAllItemGroups(null)" class="icon-btn">
+        <mat-icon>search</mat-icon> click to view all item
+      </button>
       <button mat-raised-button color="primary" (click)="getBrokerageSetupList(null)" [disabled]="!areRequiredValuesSelected()" class="icon-btn">
         <mat-icon>search</mat-icon> search
       </button>
-      <button mat-raised-button color="accent" [disabled]="!areRequiredValuesSelected()" (click)="openEditSetupDialog(null)" class="icon-btn ml-15">
+      <button mat-raised-button color="accent" [disabled]="!areRequiredValuesSelected()" (click)="openSlabDetailsDialog('lock')" class="icon-btn ml-15">
+        <mat-icon>lock</mat-icon> Loack Brokerage
+      </button>
+      <button mat-raised-button color="accent" [disabled]="!areRequiredValuesSelected()" (click)="openModifySetupDialog(null)" class="icon-btn ml-15">
         <mat-icon>edit</mat-icon> Modify
       </button>
-      <button mat-raised-button color="accent" [disabled]="!areRequiredValuesSelected()" (click)="openSlabDetailsDialog(null)" class="icon-btn ml-15">
+      <button mat-raised-button color="accent" [disabled]="!areRequiredValuesSelected()" (click)="openSlabDetailsDialog('add')" class="icon-btn ml-15">
         <mat-icon>add</mat-icon> Add Brokerage
       </button>
     </div>

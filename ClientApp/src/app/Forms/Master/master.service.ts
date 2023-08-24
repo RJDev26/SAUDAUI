@@ -236,6 +236,14 @@ export class MasterService {
     return this.httpClient.post<any>(environment.apiBaseUrl + 'Master/SaveBrokerageSetup', data, { headers: this.headers });
   }
 
+  updateSingleBrokerage(data): Observable<any> {
+    return this.httpClient.post<any>(environment.apiBaseUrl + 'Master/updateSingleBrokerage', data, { headers: this.headers });
+  }
+
+  lockBrokerage(data): Observable<any> {
+    return this.httpClient.post<any>(environment.apiBaseUrl + 'Master/lockBrokerage', data, { headers: this.headers });
+  }
+
   getBrokeageSetupList(): Observable<any> {
     return this.httpClient.get<any>(environment.apiBaseUrl + 'master/getBrokeageSetupList/', { headers: this.headers })
   }

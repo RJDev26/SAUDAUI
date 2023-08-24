@@ -44,6 +44,8 @@ import { BrokerageTabComponent } from './account/account-dialog/brokerage-tab/br
 import { ConfirmationAccountDialog } from '../Dialog/confirmation-dialog/confirmation-account-dialog.component';
 import { ItemGroupComponent } from './item-group/item-group.component';
 import { AddItemGroupComponent } from './item-group/add-item-group/add-item-group.component';
+import { LockBrokerageComponent } from './brokerage-setup/lock-brokerage/lock-brokerage.component';
+import { ViewItemGroupComponent } from './brokerage-setup/view-item-group/view-item-group.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'account', pathMatch: 'full' },
@@ -113,7 +115,9 @@ export const routes: Routes = [
      SelfShareTabComponent,
      BrokerageTabComponent,
      ItemGroupComponent,
-     AddItemGroupComponent
+     AddItemGroupComponent,
+     LockBrokerageComponent,
+     ViewItemGroupComponent
   ],
   providers: [
     DatePipe,
