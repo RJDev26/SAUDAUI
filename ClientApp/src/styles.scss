@@ -74,6 +74,9 @@ body {
 .position-relative {
     position: relative;
 }
+.text-end {
+    text-align: end;
+}
 .delete-icon {
     color: #dc3545;
     position: absolute;
@@ -538,7 +541,17 @@ input {
 }
 .dropdown-container {
     .dropdown-wrapper {
+        position: relative;
+        vertical-align: text-top;
         display: inline-block;
+        .info-icon{
+            position: absolute;
+            top: -7px;
+            right: 12px;
+            font-size: 18px;
+            color: #00695c;
+            z-index: 1;
+        }
         .mat-form-field {
             margin-right: 8px;
             margin-bottom: 10px;
