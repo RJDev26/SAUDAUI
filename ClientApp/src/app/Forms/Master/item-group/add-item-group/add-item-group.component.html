@@ -44,7 +44,7 @@
                                 <input class="milti-search-box" #multiUserSearch type="text" autocomplete="off" matInput placeholder="Search Item Group" (input)="onInputChange($event)" />
                                 <mat-option value=-1 (click)="accountAllSelection()">Select All</mat-option>
                                 <mat-option *ngFor="let option of accountList" [value]="option.id">
-                                  {{ option.exName }}
+                                  {{ option.itemName }}
                                 </mat-option>
                               </mat-select>
                             </mat-form-field>

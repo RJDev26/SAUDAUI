@@ -32,7 +32,7 @@ export class ViewItemGroupComponent implements OnInit {
   itemGroupList: any[];
   accountApplyOnList: any[];
   gridApi: any;
-  isRowSelected: boolean = false;
+  isRowSelected: boolean = false; 
   agGridOptions: any = {
     defaultColDef: {
       filter: true,
