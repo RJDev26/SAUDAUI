@@ -46,6 +46,9 @@ import { ItemGroupComponent } from './item-group/item-group.component';
 import { AddItemGroupComponent } from './item-group/add-item-group/add-item-group.component';
 import { LockBrokerageComponent } from './brokerage-setup/lock-brokerage/lock-brokerage.component';
 import { ViewItemGroupComponent } from './brokerage-setup/view-item-group/view-item-group.component';
+import { SubBrokerageSetupComponent } from './sub-brokerage-setup/sub-brokerage-setup.component';
+import { SubAddSetupDetailsComponent } from './sub-brokerage-setup/sub-add-setup-details/sub-add-setup-details.component';
+import { SubLockBrokerageComponent } from './sub-brokerage-setup/sub-lock-brokerage/sub-lock-brokerage.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'account', pathMatch: 'full' },
@@ -58,6 +61,7 @@ export const routes: Routes = [
   { path: 'contract-master', component: ContractMasterComponent, data: { breadcrumb: 'Contract Master' } },
   { path: 'brokerage-slab', component: BrokerageSlabComponent, data: { breadcrumb: 'Brokerage Slab' } },
   { path: 'brokerage-setup', component: BrokerageSetupComponent, data: { breadcrumb: 'Brokerage Setup' } },
+  { path: 'sub-brokerage-setup', component: SubBrokerageSetupComponent, data: { breadcrumb: 'Sub Brokerage Setup' } },
   { path: 'branch', component: BranchComponent, data: { breadcrumb: 'Branch' } },
   { path: 'tax', component: TaxComponent, data: { breadcrumb: 'Tax' } },
   { path: 'exchange', component: ExchangeComponent, data: { breadcrumb: 'Exchange' } },
@@ -117,7 +121,10 @@ export const routes: Routes = [
      ItemGroupComponent,
      AddItemGroupComponent,
      LockBrokerageComponent,
-     ViewItemGroupComponent
+     ViewItemGroupComponent,
+     SubBrokerageSetupComponent,
+     SubAddSetupDetailsComponent,
+     SubLockBrokerageComponent
   ],
   providers: [
     DatePipe,

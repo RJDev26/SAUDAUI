@@ -54,8 +54,16 @@ export class AppService {
     return this.httpClient.post<any>(environment.apiBaseUrl + 'Master/getBrokeageSetupList', data, {headers:this.headers});
   }
 
+  getSubBrokeageList(data):Observable<any>{
+    return this.httpClient.post<any>(environment.apiBaseUrl + 'Master/getSubBrokeageList', data, {headers:this.headers});
+  }
+
   getBrokerageAddValidation(data):Observable<any>{
     return this.httpClient.post<any>(environment.apiBaseUrl + 'Master/getBrokerageAddValidation', data, {headers:this.headers});
+  }
+
+  getSubBrokerageAddValidation(data):Observable<any>{
+    return this.httpClient.post<any>(environment.apiBaseUrl + 'Master/getSubBrokerageAddValidation', data, {headers:this.headers});
   }
 
   getBrokerageSetupListAccount(accountId: number): Observable<any> {

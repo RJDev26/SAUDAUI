@@ -216,6 +216,10 @@ export class MasterService {
     return this.httpClient.delete<any>(environment.apiBaseUrl + 'master/deleteBrokerageSetup/' + id, { headers: this.headers })
   }
 
+  deleteSubBrokerageSetup(id: number): Observable<any> {
+    return this.httpClient.delete<any>(environment.apiBaseUrl + 'master/deleteSubBrokerageSetup/' + id, { headers: this.headers })
+  }
+
   saveBrokerageSlab(data): Observable<any> {
     return this.httpClient.post<any>(environment.apiBaseUrl + 'Master/SaveBrokerageSlab', data, { headers: this.headers });
   }
@@ -236,12 +240,24 @@ export class MasterService {
     return this.httpClient.post<any>(environment.apiBaseUrl + 'Master/SaveBrokerageSetup', data, { headers: this.headers });
   }
 
+  saveSubBrokerageSetup(data): Observable<any> {
+    return this.httpClient.post<any>(environment.apiBaseUrl + 'Master/saveSubBrokerageSetup', data, { headers: this.headers });
+  }
+
   updateSingleBrokerage(data): Observable<any> {
     return this.httpClient.post<any>(environment.apiBaseUrl + 'Master/updateSingleBrokerage', data, { headers: this.headers });
   }
 
+  updateSingleSubBrokerage(data): Observable<any> {
+    return this.httpClient.post<any>(environment.apiBaseUrl + 'Master/updateSingleSubBrokerage', data, { headers: this.headers });
+  }
+
   lockBrokerage(data): Observable<any> {
     return this.httpClient.post<any>(environment.apiBaseUrl + 'Master/lockBrokerage', data, { headers: this.headers });
+  }
+
+  lockSubBrokerage(data): Observable<any> {
+    return this.httpClient.post<any>(environment.apiBaseUrl + 'Master/lockSubBrokerage', data, { headers: this.headers });
   }
 
   getBrokeageSetupList(): Observable<any> {

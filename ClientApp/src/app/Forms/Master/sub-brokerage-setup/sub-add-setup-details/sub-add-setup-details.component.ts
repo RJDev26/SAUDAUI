@@ -6,11 +6,11 @@ import { forkJoin, map } from 'rxjs';
 import { DatePipe, formatDate } from '@angular/common';
 
 @Component({
-  selector: 'app-add-setup-details',
-  templateUrl: './add-setup-details.component.html',
-  styleUrls: ['./add-setup-details.component.scss']
+  selector: 'app-sub-add-setup-details',
+  templateUrl: './sub-add-setup-details.component.html',
+  styleUrls: ['./sub-add-setup-details.component.scss']
 })
-export class AddSetupDetailsComponent implements OnInit {
+export class SubAddSetupDetailsComponent implements OnInit {
 
   public itemForm: UntypedFormGroup;
   exchangeList: any;
@@ -25,7 +25,7 @@ export class AddSetupDetailsComponent implements OnInit {
   isEditMode: any;
 
 
-  constructor(private datePipe: DatePipe, private formBuilder: UntypedFormBuilder, public dialogRef: MatDialogRef<AddSetupDetailsComponent>, @Inject(MAT_DIALOG_DATA) public data: any, private _appService: MasterService) {
+  constructor(private datePipe: DatePipe, private formBuilder: UntypedFormBuilder, public dialogRef: MatDialogRef<SubAddSetupDetailsComponent>, @Inject(MAT_DIALOG_DATA) public data: any, private _appService: MasterService) {
    this.salbId = data.slabId;
    this.parentData = data;
   }
@@ -61,7 +61,7 @@ initialApiCalls() {
 
   ngOnInit(): void {
     this.bindFormControls();
-    this.isEditMode = this.parentData.isEditMode
+    this.isEditMode = this.parentData.isEditMode;
     if(this.parentData.isEditMode === 2 && this.parentData.editParms){
       this.getSelectedSlabDetailsInfo(this.parentData.editParms);
     }
@@ -87,7 +87,7 @@ initialApiCalls() {
     console.log(body);
     body.slabId = this.salbId;
     body.id = this.parentData.isEditMode;
-
+    body.branchId = this.parentData.branchIds;
     body.accounts = this.parentData.accountIds.filter((val)=> val != -1);;
     
     body.fromDate = this.datePipe.transform(this.parentData.fromDt, 'yyyy-MM-dd');
@@ -100,11 +100,11 @@ initialApiCalls() {
       //const body = JSON.stringify(addFormData);
       if(this.parentData.isEditMode === 2){
         body.id = this.parentData.editParms.id;
-        this._appService.updateSingleBrokerage(body).subscribe(result => {
+        this._appService.updateSingleSubBrokerage(body).subscribe(result => {
           this.dialogRef.close();
         });
       } else {
-        this._appService.saveBrokerageSetup(body).subscribe(result => {
+        this._appService.saveSubBrokerageSetup(body).subscribe(result => {
           console.log("result", result);
           this.dialogRef.close();
         });

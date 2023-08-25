@@ -1,0 +1,25 @@
+<h2 class="heading">Add Item</h2>
+<a (click)="close()" class="close-btn">
+  <span class="material-symbols-outlined">
+    <mat-icon>close</mat-icon>
+  </span>
+</a>
+<form [formGroup]="itemForm" (ngSubmit)="onSubmit(itemForm.value)" fxLayout="row wrap" class="user-form">
+    <div class="white-block pb-5">
+        <h3><span>Loak Brokerage</span></h3>
+        <div class="tab-party-details-parent">
+            <div class="dropdown-wrapper">
+                <mat-form-field appearance="outline">
+                  <mat-label>Lock Brokerage</mat-label>
+                  <input matInput [matDatepicker]="lockPicker" formControlName="lockBrokDate">
+                  <mat-datepicker-toggle matSuffix [for]="lockPicker"></mat-datepicker-toggle>
+                  <mat-datepicker #lockPicker></mat-datepicker>
+                </mat-form-field>
+              </div>
+        </div>
+    </div>
+    <div fxFlex="100" class="mt-2 text-center space-between-btns">
+        <button mat-raised-button color="warn" type="button" (click)="close()">Cancel</button>            
+        <button mat-raised-button color="primary" class="uppercase" [disabled]="!itemForm.valid" type="submit">Save</button> 
+    </div>
+</form>
