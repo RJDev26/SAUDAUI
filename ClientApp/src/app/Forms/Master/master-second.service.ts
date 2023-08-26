@@ -129,6 +129,10 @@ export class MasterSecondService {
     return this.httpClient.get<any>(environment.apiBaseUrl + 'MasterSecond/getExchangeTaxList/' + id, { headers: this.headers })
   }
 
+  getSharingSetupList(data):Observable<any>{
+    return this.httpClient.post<any>(environment.apiBaseUrl + 'MasterSecond/getSharingSetupList', data, {headers:this.headers});
+  }
+
   getTaxAccountId(id: number): Observable<any> {
     return this.httpClient.get<any>(environment.apiBaseUrl + 'MasterSecond/getAccountTaxId/' + id, { headers: this.headers })
   }
@@ -144,5 +148,17 @@ export class MasterSecondService {
 
   getApplyOnFileShareDDL(): Observable<any> {
     return this.httpClient.get<any>(environment.apiBaseUrl + 'MasterSecond/getApplyOnFileShareDDL', { headers: this.headers })
+  }
+
+  saveSharing(data): Observable<any> {
+    return this.httpClient.post<any>(environment.apiBaseUrl + 'MasterSecond/SaveSharing', data, { headers: this.headers });
+  }
+
+  updateSingleSharing(data): Observable<any> {
+    return this.httpClient.post<any>(environment.apiBaseUrl + 'MasterSecond/updateSingleSharing', data, { headers: this.headers });
+  }
+
+  lockSharing(data): Observable<any> {
+    return this.httpClient.post<any>(environment.apiBaseUrl + 'MasterSecond/lockSharing', data, { headers: this.headers });
   }
 }

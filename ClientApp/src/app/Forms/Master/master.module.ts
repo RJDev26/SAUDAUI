@@ -49,6 +49,9 @@ import { ViewItemGroupComponent } from './brokerage-setup/view-item-group/view-i
 import { SubBrokerageSetupComponent } from './sub-brokerage-setup/sub-brokerage-setup.component';
 import { SubAddSetupDetailsComponent } from './sub-brokerage-setup/sub-add-setup-details/sub-add-setup-details.component';
 import { SubLockBrokerageComponent } from './sub-brokerage-setup/sub-lock-brokerage/sub-lock-brokerage.component';
+import { SharingSetupComponent } from './sharing-setup/sharing-setup.component';
+import { AddSharingSetupComponent } from './sharing-setup/add-sharing-setup/add-sharing-setup.component';
+import { LockSharingSetupComponent } from './sharing-setup/lock-sharing-setup/lock-sharing-setup.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'account', pathMatch: 'full' },
@@ -62,6 +65,7 @@ export const routes: Routes = [
   { path: 'brokerage-slab', component: BrokerageSlabComponent, data: { breadcrumb: 'Brokerage Slab' } },
   { path: 'brokerage-setup', component: BrokerageSetupComponent, data: { breadcrumb: 'Brokerage Setup' } },
   { path: 'sub-brokerage-setup', component: SubBrokerageSetupComponent, data: { breadcrumb: 'Sub Brokerage Setup' } },
+  { path: 'sharing-setup', component: SharingSetupComponent, data: { breadcrumb: 'Sharing Setup' } },
   { path: 'branch', component: BranchComponent, data: { breadcrumb: 'Branch' } },
   { path: 'tax', component: TaxComponent, data: { breadcrumb: 'Tax' } },
   { path: 'exchange', component: ExchangeComponent, data: { breadcrumb: 'Exchange' } },
@@ -124,7 +128,10 @@ export const routes: Routes = [
      ViewItemGroupComponent,
      SubBrokerageSetupComponent,
      SubAddSetupDetailsComponent,
-     SubLockBrokerageComponent
+     SubLockBrokerageComponent,
+     SharingSetupComponent,
+     AddSharingSetupComponent,
+     LockSharingSetupComponent
   ],
   providers: [
     DatePipe,

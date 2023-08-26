@@ -1,0 +1,42 @@
+<h2 class="heading" *ngIf="isEditMode == 0; else modifyEditHeading">
+    Add Sub Brokerage
+  </h2>
+  <ng-template #modifyEditHeading>
+    <h2 class="heading" *ngIf="isEditMode == 1">Modify Sub Brokerage</h2>
+    <h2 class="heading" *ngIf="isEditMode == 2">Edit Sub Brokerage</h2>
+  </ng-template>
+<a (click)="close()" class="close-btn">
+  <span class="material-symbols-outlined">
+    <mat-icon>close</mat-icon>
+  </span>
+</a>
+<form [formGroup]="itemForm" (ngSubmit)="onSubmit(itemForm.value)" fxLayout="row wrap" class="user-form">
+    <div class="white-block pb-5">
+        <h3><span>Sub Brokerage</span></h3>
+        <div class="tab-party-details-parent">
+              <div fxFlex="100" fxFlex.gt-sm="20" fxFlex.sm="50">
+                <mat-form-field class="example-full-width" appearance="outline">
+                  <mat-label>ApplyOn</mat-label>
+                
+                  <mat-select placeholder="Select Item" formControlName="applyOn">
+                    <!--<input (keyup)="onKey($event.target.value)">-->
+                    <mat-option *ngFor="let item of applyOnList" [value]="item.id">
+                      {{item.name}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+              <div fxFlex="100" fxFlex.gt-sm="20" fxFlex.sm="50">
+                <mat-form-field appearance="outline">
+                    <mat-label>share Value</mat-label>
+                    <input matInput autocomplete="off" placeholder="Share Value" formControlName="shareValue" type="number">
+                    <mat-error *ngIf="itemForm.controls.shareValue.errors?.required">Share Value is required</mat-error>                
+                </mat-form-field> 
+            </div>
+        </div>
+    </div>
+    <div fxFlex="100" class="mt-2 text-center space-between-btns">
+        <button mat-raised-button color="warn" type="button" (click)="close()">Cancel</button>            
+        <button mat-raised-button color="primary" class="uppercase" [disabled]="!itemForm.valid" type="submit">Save</button> 
+    </div>
+</form>
