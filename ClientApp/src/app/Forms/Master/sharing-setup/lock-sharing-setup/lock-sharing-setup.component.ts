@@ -42,11 +42,11 @@ export class LockSharingSetupComponent implements OnInit {
     console.log(body);
     body.lockBrokDate = this.datePipe.transform(body.lockBrokDate, 'yyyy-MM-dd');
     body.id = this.parentData.isEditMode;
-    body.accounts = this.parentData.accountIds.filter((val)=> val != -1);;
+    body.accounts = this.parentData.accountIds.filter((val)=> val != -1);
     body.branchId = this.parentData.branchIds;
     body.fromDate = this.datePipe.transform(this.parentData.fromDt, 'yyyy-MM-dd');
     body.toDate = this.datePipe.transform(this.parentData.toDt, 'yyyy-MM-dd');
-    body.exchanges = this.parentData.exchangeIds;
+    body.exchanges = this.parentData.exchangeIds.filter((val)=> val != -1);
     body.higherSideOnly= false;
 
     if (this.itemForm.valid) {

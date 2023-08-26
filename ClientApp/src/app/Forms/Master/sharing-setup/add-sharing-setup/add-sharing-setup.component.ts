@@ -75,11 +75,11 @@ initialApiCalls() {
     body.slabId = this.salbId;
     body.id = this.parentData.isEditMode;
     body.branchId = this.parentData.branchIds;
-    body.accounts = this.parentData.accountIds.filter((val)=> val != -1);;
+    body.accounts = this.parentData.accountIds.filter((val)=> val != -1);
     
     body.fromDate = this.datePipe.transform(this.parentData.fromDt, 'yyyy-MM-dd');
     body.toDate = this.datePipe.transform(this.parentData.toDt, 'yyyy-MM-dd');
-    body.exchanges = this.parentData.exchangeIds;
+    body.exchanges = this.parentData.exchangeIds.filter((val)=> val != -1);
     body.higherSideOnly= false;
 
     if (this.itemForm.valid) {
