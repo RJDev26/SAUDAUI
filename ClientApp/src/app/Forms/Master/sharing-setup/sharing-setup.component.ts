@@ -94,7 +94,7 @@ export class SharingSetupComponent implements OnInit {
       var accountIds = this.accountIds.filter((val)=> val != -1);
       var req = {
         "exId": 0,
-        "exchange": this.exchangeIds,
+        "exchange": this.exchangeIds.filter((val)=> val != -1),
         "branchId": this.branchIds,
         "accounts": accountIds,
         "fromDate": this.datePipe.transform(this.fromDt, 'yyyy-MM-dd'),
@@ -113,7 +113,7 @@ export class SharingSetupComponent implements OnInit {
       branchId : this.branchIds,
       itemGroupId: this.itemGroupIds,
       accounts: accountIds,
-      exchange: this.exchangeIds,
+      exchange: this.exchangeIds.filter((val) => val != "-1"),
       fromDate: this.datePipe.transform(this.fromDt, 'yyyy-MM-dd'),
       toDate: this.datePipe.transform(this.toDt, 'yyyy-MM-dd'),
       instrumentType: this.instrumentType,
