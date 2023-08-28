@@ -33,7 +33,7 @@
           <div *ngFor="let detail of vouDetails().controls; let detailIndex=index" class="mb-10">
             <div [formGroupName]="detailIndex">
               <div class="dropdown-container">
-                <div class="dropdown-wrapper">
+                <div fxFlex="100" fxFlex.gt-sm="20" fxFlex.sm="20">
                   <mat-form-field class="select-slab-mat mb-0" appearance="outline">
                     <mat-label>Account</mat-label>
                     <mat-select #select formControlName="Account" placeholder="Select Account" panelClass="custom-select-panel">
@@ -46,7 +46,7 @@
                     <input matInput autocomplete="off" placeholder="Amount" formControlName="Amount" type="number">      
                   </mat-form-field>
                 </div>      
-                <div class="dropdown-wrapper">
+                <div fxFlex="100" fxFlex.gt-sm="10" fxFlex.sm="15">
                   <mat-form-field class="select-slab-mat mb-0" appearance="outline">
                     <mat-label>DR/CR</mat-label>
                     <mat-select #select formControlName="DRCR" placeholder="Select DRCR" panelClass="custom-select-panel">
@@ -60,13 +60,15 @@
                     <mat-label>Narration</mat-label>
                     <input matInput autocomplete="off" placeholder="Narration" formControlName="Narration" type="text">      
                   </mat-form-field>
-                </div>                        
-                <button mat-raised-button color="primary" type="button" (click)="addVouDetail()">
-                  <mat-icon>add</mat-icon>
-                </button>  
-                <button mat-raised-button color="warn" (click)="removeVouDetail(detailIndex)" class="ml-7">
-                  <mat-icon>delete</mat-icon>
-                </button>                 
+                </div>  
+                <div>                      
+                  <button mat-raised-button color="primary" type="button" (click)="addVouDetail()">
+                    <mat-icon>add</mat-icon>
+                  </button>  
+                  <button mat-raised-button color="warn" (click)="removeVouDetail(detailIndex)" class="ml-7">
+                    <mat-icon>delete</mat-icon>
+                  </button>
+                </div>                 
               </div>              
             </div>
           </div>          

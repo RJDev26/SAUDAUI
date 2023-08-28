@@ -553,11 +553,10 @@ input {
             border-top: 1px solid #ccc;
         }
         .dropdown-container {
-            .dropdown-wrapper {
-                .mat-form-field {
-                    .mat-form-field-infix {
-                        width: auto;
-                    }
+            .mat-form-field {
+                width: 95%;
+                .mat-form-field-infix {
+                    width: auto;
                 }
             }
         }
@@ -590,7 +589,6 @@ input {
     }    
 }
 
-.app.teal-light 
 /* ----------------------- Brokerage slab ----------------------- */
 .icon-btn {
     .mat-button-wrapper {
