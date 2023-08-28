@@ -23,7 +23,7 @@ export const verticalMenuItems = [
   new Menu(4, 'Users', '/users', null, 'supervisor_account', null, false, 0),
   new Menu(5, 'Entries', null, null, 'card_membership', null, true, 0),
 
-  new Menu(6, 'Voucher', '/entry/voucher', null, 'card_membership', null, false, 5),
+  new Menu(6, 'Voucher', '/entry/voucher', null, 'confirmation_number', null, false, 5),
   new Menu(7, 'Trade', '/pagenotfound', null, 'card_membership', null, false, 5),
   new Menu(8, 'Closing Rate', '/pagenotfound', null, 'card_membership', null, false, 5),
   new Menu(9, 'Partywise Closing', '/pagenotfound', null, 'card_membership', null, false, 5),

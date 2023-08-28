@@ -1,5 +1,3 @@
-
-
 <form [formGroup]="voucherForm" (ngSubmit)="onSubmit()" class="pt-10"> 
   <div class="flex-p">
     <mat-card-content class="voucher-form">
@@ -32,7 +30,7 @@
           </div>
         </div>
         <div formArrayName="vouDetails">
-          <div *ngFor="let detail of vouDetails().controls; let detailIndex=index">
+          <div *ngFor="let detail of vouDetails().controls; let detailIndex=index" class="mb-10">
             <div [formGroupName]="detailIndex">
               <div class="dropdown-container">
                 <div class="dropdown-wrapper">
@@ -62,9 +60,11 @@
                     <mat-label>Narration</mat-label>
                     <input matInput autocomplete="off" placeholder="Narration" formControlName="Narration" type="text">      
                   </mat-form-field>
-                </div>
-                <button mat-raised-button color="warn" (click)="removeVouDetail(detailIndex)">Remove</button>        
-                <button mat-raised-button color="primary" type="button" (click)="addVouDetail()">Add Employee</button>                   
+                </div>                        
+                <button mat-raised-button color="primary" type="button" (click)="addVouDetail()">Add Employee</button>  
+                <button mat-raised-button color="warn" (click)="removeVouDetail(detailIndex)" class="ml-7">
+                  <mat-icon>delete</mat-icon>
+                </button>                 
               </div>              
             </div>
           </div>          
