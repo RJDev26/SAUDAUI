@@ -55,13 +55,15 @@
                     </mat-select>
                   </mat-form-field>
                 </div>      
-                <div fxFlex="100" fxFlex.gt-sm="20" fxFlex.sm="50">
+                <div fxFlex="100" fxFlex.gt-sm="20" fxFlex.sm="60">
                   <mat-form-field appearance="outline">
                     <mat-label>Narration</mat-label>
                     <input matInput autocomplete="off" placeholder="Narration" formControlName="Narration" type="text">      
                   </mat-form-field>
                 </div>                        
-                <button mat-raised-button color="primary" type="button" (click)="addVouDetail()">Add Employee</button>  
+                <button mat-raised-button color="primary" type="button" (click)="addVouDetail()">
+                  <mat-icon>add</mat-icon>
+                </button>  
                 <button mat-raised-button color="warn" (click)="removeVouDetail(detailIndex)" class="ml-7">
                   <mat-icon>delete</mat-icon>
                 </button>                 

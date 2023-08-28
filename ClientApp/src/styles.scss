@@ -522,39 +522,6 @@ input {
     }
 }
 
-// .voucher-form {
-//     .mat-form-field {
-//         &.mat-form-field-appearance-outline {
-//             .mat-form-field-wrapper {
-//                 padding: 5px;
-//             }
-//         }
-//     }
-// }
-
-// .voucher-form {
-//     .mat-form-field {
-//         &.mat-form-field-appearance-outline {
-//             .mat-form-field-infix {
-//                 font-size: 13px;
-//                 padding: 12px 0 8px 0;
-//                 border: 0;
-//             }
-//         }
-//     }
-//     .dropdown-container {
-//         .dropdown-wrapper {
-//             .mat-form-field-appearance-outline {
-//                 .mat-form-field-infix {
-//                     font-size: 13px;
-//                     padding: 12px 0 8px 0;
-//                     border: 0;
-//                 }
-//             }
-//         }
-//     }
-// }
-
 .voucher-form {
     .mat-form-field-appearance-outline {
         .mat-form-field-infix {
@@ -565,14 +532,65 @@ input {
             margin: 0;
         }
         .mat-form-field-label {
-            top: 1.25rem;
+            top: 1.2rem;
+        }
+        &.mat-form-field-can-float {
+            &.mat-form-field-should-float {
+                .mat-form-field-label {
+                    transform: translateY(-1.2rem) scale(0.75);
+                }
+            }
         }
     }
     .form-control {
         width: 95%;
     }
 }
+.app.teal-light {
+    .voucher-form {
+        .mat-expansion-panel-body {
+            padding-top: 20px;
+            border-top: 1px solid #ccc;
+        }
+        .dropdown-container {
+            .dropdown-wrapper {
+                .mat-form-field {
+                    .mat-form-field-infix {
+                        width: auto;
+                    }
+                }
+            }
+        }
+        .mat-expansion-panel-header {
+            .mat-expansion-panel-header-title {
+                font-weight: 500;
+            }
+            &.mat-expanded {
+                background: #00695c;
+                height: 48px;
+                .mat-expansion-panel-header-title {
+                    color: #fff;
+                }
+                .mat-expansion-indicator {
+                    &::after {
+                        color: #fff;
+                    }
+                }
+            }
+        }
+        .mat-expansion-panel {
+            &:not(.mat-expanded) {
+                .mat-expansion-panel-header {
+                    &:hover:not([aria-disabled=true]) {
+                        background: #fff;
+                    }
+                }
+            }
+        }
+    }    
+}
 
+.app.teal-light 
 /* ----------------------- Brokerage slab ----------------------- */
 .icon-btn {
     .mat-button-wrapper {
