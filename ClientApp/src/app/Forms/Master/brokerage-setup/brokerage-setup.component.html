@@ -25,7 +25,7 @@
         </mat-form-field>
       </div>
       <div class="dropdown-wrapper">
-        <mat-icon class="info-icon" (click)="viewAllItemGroups(null)" matTooltip="View All Item" matTooltipPosition="above">info</mat-icon>
+        <mat-icon class="info-icon" (click)="viewAllItemGroups()" matTooltip="View All Item" matTooltipPosition="above">info</mat-icon>
         <mat-form-field class="select-slab-mat" appearance="outline">
           <mat-label>Select Item Group</mat-label>
           <mat-select #select  [(ngModel)]="itemGroupIds" placeholder="Select Item Group" panelClass="custom-select-panel">
@@ -63,7 +63,7 @@
         </mat-form-field>
       </div>
       <div class="dropdown-wrapper text-end">
-        <button mat-raised-button color="primary" (click)="getBrokerageSetupList(null)" [disabled]="!areRequiredValuesSelected()" class="search-icon-btn">
+        <button mat-raised-button color="primary" (click)="getBrokerageSetupList()" [disabled]="!areRequiredValuesSelected()" class="search-icon-btn">
           <mat-icon>search</mat-icon>
         </button>
       </div>
@@ -73,7 +73,7 @@
         <button mat-raised-button color="accent" [disabled]="!areRequiredValuesSelected()" (click)="openSlabDetailsDialog('lock')" class="icon-btn">
           <mat-icon>lock</mat-icon> Lock Brokerage
         </button>
-        <button mat-raised-button color="accent" [disabled]="!areRequiredValuesSelected()" (click)="openModifySetupDialog(null)" class="icon-btn ml-15">
+        <button mat-raised-button color="accent" [disabled]="!areRequiredValuesSelected()" (click)="openModifySetupDialog()" class="icon-btn ml-15">
           <mat-icon>edit</mat-icon> Modify
         </button>
       </div>
