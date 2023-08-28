@@ -1,0 +1,94 @@
+
+
+<form [formGroup]="voucherForm" (ngSubmit)="onSubmit()">
+
+  <div class="dropdown-container">
+    <div class="dropdown-wrapper">
+      <mat-form-field class="select-slab-mat" appearance="outline">
+        <mat-label>Vou Type</mat-label>
+        <mat-select #select formControlName="VouType" placeholder="Select VouType" panelClass="custom-select-panel">
+
+          <!--<mat-option *ngFor="let option of filteredProviders" [value]="option.id">
+            {{ option.name }}
+          </mat-option>-->
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <div class="dropdown-wrapper">
+      <mat-form-field appearance="outline" class="calendar">
+        <mat-label>VouDate</mat-label>
+        <input matInput [matDatepicker]="picker2" placeholder="Date" formControlName="VouDate">
+        <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+        <mat-datepicker #picker2></mat-datepicker>
+      </mat-form-field>
+    </div>
+    <div class="dropdown-wrapper">
+      <mat-form-field class="select-slab-mat" appearance="outline">
+        <mat-label>Contra Account</mat-label>
+        <mat-select #select formControlName="ContraAc" placeholder="Select ContraAc" panelClass="custom-select-panel">
+
+          <!--<mat-option *ngFor="let option of filteredProviders" [value]="option.id">
+            {{ option.name }}
+          </mat-option>-->
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+  </div>
+
+  <div formArrayName="vouDetails">
+    <div *ngFor="let detail of vouDetails().controls; let detailIndex=index">
+      <div [formGroupName]="detailIndex">
+
+        <div class="dropdown-container">
+          <div class="dropdown-wrapper">
+            <mat-form-field class="select-slab-mat" appearance="outline">
+              <mat-label>Account</mat-label>
+              <mat-select #select formControlName="Account" placeholder="Select Account" panelClass="custom-select-panel">
+
+                <!--<mat-option *ngFor="let option of filteredProviders" [value]="option.id">
+                  {{ option.name }}
+                </mat-option>-->
+              </mat-select>
+            </mat-form-field>
+          </div>
+
+          <div fxFlex="100" fxFlex.gt-sm="20" fxFlex.sm="50">
+            <mat-form-field appearance="outline">
+              <mat-label>Amount</mat-label>
+              <input matInput autocomplete="off" placeholder="Amount" formControlName="Amount" type="number">
+
+            </mat-form-field>
+          </div>
+
+          <div class="dropdown-wrapper">
+            <mat-form-field class="select-slab-mat" appearance="outline">
+              <mat-label>DR/CR</mat-label>
+              <mat-select #select formControlName="DRCR" placeholder="Select DRCR" panelClass="custom-select-panel">
+                <mat-option [value]="DR">DR</mat-option>
+                <mat-option [value]="CR">CR</mat-option>
+
+              </mat-select>
+            </mat-form-field>
+          </div>
+
+          <div fxFlex="100" fxFlex.gt-sm="20" fxFlex.sm="50">
+            <mat-form-field appearance="outline">
+              <mat-label>Narration</mat-label>
+              <input matInput autocomplete="off" placeholder="Narration" formControlName="Narration" type="text">
+
+            </mat-form-field>
+          </div>
+
+        </div>
+
+        <button (click)="removeVouDetail(detailIndex)">Remove</button>
+      </div>
+    </div>
+    <button type="button" (click)="addVouDetail()">Add Employee</button>
+  </div>
+
+
+</form>
+

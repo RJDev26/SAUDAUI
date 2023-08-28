@@ -41,18 +41,7 @@ export const routes: Routes = [
             { path: 'profile', loadChildren: () => import ('./pages/profile/profile.module').then(m => m.ProfileModule), data: { breadcrumb: 'Profile' } }, 
             { path: 'blank', component: BlankComponent, data: { breadcrumb: 'Blank page' } },
             { path: 'search', component: SearchComponent, data: { breadcrumb: 'Search' } },
-            { path: 'account', component: AccountComponent, data: { breadcrumb: 'Account' } },
-            { path: 'item', component: ItemComponent, data: { breadcrumb: 'Item' } },
-            { path: 'transporter', component: TransporterComponent, data: { breadcrumb: 'Transporter' } },
-            { path: 'company', component: CompanyComponent, data: { breadcrumb: 'company' } },
-            { path: 'sauda', component: SaudaComponent, data: { breadcrumb: 'sauda' } },
-            { path: 'product', component: ProductComponent, data: { breadcrumb: 'product' } },
-            { path: 'contract-master', component: ContractMasterComponent, data: { breadcrumb: 'Contract Master' } },
-            { path: 'brokerage-slab', component: BrokerageSlabComponent, data: { breadcrumb: 'Brokerage Slab' } },
-            { path: 'tax', component: TaxComponent, data: { breadcrumb: 'Tax' } },
-            { path: 'account-head', component: AccountHeadComponent, data: { breadcrumb: 'Account Head' } },
-            { path: 'symbol-mapping', component: SymbolMappingComponent, data: { breadcrumb: 'Symbol Mapping' } },
-            { path: 'item-group', component: ItemGroupComponent, data: { breadcrumb: 'Item Group' } }
+            { path: 'entry', loadChildren: () => import('./Forms/Entry/entry.module').then(m => m.EntryModule), data: { breadcrumb: 'Entry' } },
            
         ]
     },
