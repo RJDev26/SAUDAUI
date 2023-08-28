@@ -78,11 +78,9 @@ export class SharingSetupComponent implements OnInit {
       headerName: 'Action', field: 'fileIcon', cellRenderer: this.actionCellRenderer, resizable: true, filter: false
     },
     { headerName: 'ApplyOn',  field: 'applyOnName', filter: true, sorting: true, resizable: true },
-    { headerName: 'Apply OnQty',  field: 'applyOnQtyName', filter: true, sorting: true, resizable: true },
-    { field: 'Intraday BrokRate',   headerName: 'IntradayBrokRate', filter: true, sorting: true, resizable: true, valueFormatter: params => CommonUtility.formatNumber(params.data.intradayBrokRate) },
-    { headerName: 'Delivery BrokRate', field: 'deliveryBrokRate', filter: true, sorting: true, resizable: true, valueFormatter: params => CommonUtility.formatNumber(params.data.deliveryBrokRate)},    
-    /*{ headerName: 'HigherSide Only', minWidth: 120, maxWidth: 120, field: 'higherSideOnly', filter: true, sorting: true, resizable: true },*/
-    { headerName: 'Instrument',   field: 'instrumentType', filter: true, sorting: true, resizable: true },
+    // { headerName: 'Apply OnQty',  field: 'applyOnQtyName', filter: true, sorting: true, resizable: true },
+    { headerName: 'Exchange', minWidth: 120, maxWidth: 120, field: 'exchange', filter: true, sorting: true, resizable: true },
+    { headerName: 'Share Value',   field: 'shareValue', filter: true, sorting: true, resizable: true },
 /*    { headerName: 'IntradaySingleSideOnly', field: 'intradaySingleSideOnly', filter: true, sorting: true, resizable: true },*/
     { headerName: 'FromDT', field: 'fromDT',   filter: true, sorting: true, resizable: true },
     { headerName: 'ToDT', field: 'toDT',  filter: true, sorting: true, resizable: true },
@@ -93,7 +91,6 @@ export class SharingSetupComponent implements OnInit {
     if(this.areRequiredValuesSelected()){
       var accountIds = this.accountIds.filter((val)=> val != -1);
       var req = {
-        "exId": 0,
         "exchange": this.exchangeIds.filter((val)=> val != -1),
         "branchId": this.branchIds,
         "accounts": accountIds,
@@ -120,7 +117,7 @@ export class SharingSetupComponent implements OnInit {
     };
   
     try {
-      const results = await this._appService.getSubBrokerageAddValidation(req).toPromise();
+      const results = await this._masterSecondService.getSharingAddValidation(req).toPromise();
   
       if (results.message) {
         this.showToaster(results.message);
@@ -308,8 +305,7 @@ export class SharingSetupComponent implements OnInit {
           toDt: this.toDt,
           branchIds: this.branchIds,
           accountIds: this.accountIds,
-          itemGroupIds: this.itemGroupIds,
-          instrumentType: this.instrumentType,
+          exchangeIds: this.exchangeIds,
           isEditMode: 0
         },
       });

@@ -132,6 +132,10 @@ export class MasterSecondService {
   getSharingSetupList(data):Observable<any>{
     return this.httpClient.post<any>(environment.apiBaseUrl + 'MasterSecond/getSharingSetupList', data, {headers:this.headers});
   }
+  
+  getSharingAddValidation(data):Observable<any>{
+    return this.httpClient.post<any>(environment.apiBaseUrl + 'MasterSecond/getSharingAddValidation', data, {headers:this.headers});
+  }
 
   getTaxAccountId(id: number): Observable<any> {
     return this.httpClient.get<any>(environment.apiBaseUrl + 'MasterSecond/getAccountTaxId/' + id, { headers: this.headers })
