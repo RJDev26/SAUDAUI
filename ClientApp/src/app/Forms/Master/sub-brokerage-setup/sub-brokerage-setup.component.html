@@ -1,6 +1,6 @@
 <div class="row">
     <div class="mt-2">
-      <div class="dropdown-container">
+      <div class="dropdown-container pt-5">
         <div class="dropdown-wrapper">
           <mat-form-field class="select-slab-mat" appearance="outline">
             <mat-label>Select Branch *</mat-label>
@@ -62,7 +62,12 @@
             <mat-datepicker #picker2></mat-datepicker>
           </mat-form-field>
         </div>
-        <div class="dropdown-wrapper text-end">
+        <div class="dropdown-wrapper">
+          <button mat-raised-button color="accent" [disabled]="!areRequiredValuesSelected()" (click)="openModifySetupDialog()" class="icon-btn ml-15">
+            <mat-icon>edit</mat-icon> Modify
+          </button>
+        </div>
+        <div class="dropdown-wrapper float-right">
           <button mat-raised-button color="primary" (click)="getBrokerageSetupList()" [disabled]="!areRequiredValuesSelected()" class="search-icon-btn">
             <mat-icon>search</mat-icon>
           </button>
@@ -72,9 +77,6 @@
         <div fxFlex="100" fxFlex.gt-sm="50" fxFlex.sm="50">
           <button mat-raised-button color="accent" [disabled]="!areRequiredValuesSelected()" (click)="openSlabDetailsDialog('lock')" class="icon-btn">
             <mat-icon>lock</mat-icon> Lock Sub Brokerage
-          </button>
-          <button mat-raised-button color="accent" [disabled]="!areRequiredValuesSelected()" (click)="openModifySetupDialog()" class="icon-btn ml-15">
-            <mat-icon>edit</mat-icon> Modify
           </button>
         </div>
         <div fxFlex="100" fxFlex.gt-sm="50" fxFlex.sm="50" class="text-end">

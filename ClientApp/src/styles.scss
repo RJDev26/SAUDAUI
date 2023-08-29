@@ -79,6 +79,9 @@ body {
 .text-end {
     text-align: end;
 }
+.float-right {
+    float: right;
+}
 .delete-icon {
     color: #dc3545;
     position: absolute;
@@ -210,6 +213,18 @@ input[type=number]:-moz-placeholder { /* Firefox 18- */
         .ag-header-row {
             &.ag-header-row-column-group {
                 background: #054b42 !important;
+            }
+        }
+    }
+}
+
+.brokerage-setup-item {
+    .ag-theme-material {
+        .ag-header-container {
+            .ag-header-row {
+                &.ag-header-row-column {
+                    background: #054b42 !important;
+                }
             }
         }
     }
@@ -605,6 +620,7 @@ input {
 }
 .dropdown-container {
     .dropdown-wrapper {
+        vertical-align: top;
         position: relative;
         display: inline-block;
         .info-icon{

@@ -1,10 +1,11 @@
-<h2 class="heading mb-10">Item</h2>
-<a (click)="close()" class="close-btn">
+<div class="brokerage-setup-item">
+  <h2 class="heading">Item</h2>
+  <a (click)="close()" class="close-btn">
     <span class="material-symbols-outlined">
       <mat-icon>close</mat-icon>
     </span>
-</a>
-        <div class="col-xl-12 mt-2 position-relative">
+  </a>
+  <div class="col-xl-12 position-relative">
             <ag-grid-angular style=" height: 240px;"
                           class="ag-theme-material"
                           [rowData]="itemGroupList"
@@ -15,4 +16,5 @@
                           (gridReady)="onGridReady($event)"
                           headerHeight="34">
             </ag-grid-angular>
-        </div>
+    </div>
+</div>
