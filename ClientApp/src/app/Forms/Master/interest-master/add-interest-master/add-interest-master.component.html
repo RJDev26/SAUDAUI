@@ -60,21 +60,21 @@
                     </mat-form-field>
                 </div>
             </div>
-            <div fxFlex="100" fxFlex.gt-sm="15" fxFlex.sm="50">
+            <div fxFlex="100" fxFlex.gt-sm="20" fxFlex.sm="50">
                 <mat-form-field appearance="outline">
                   <mat-label>Year Days</mat-label>
                   <input matInput autocomplete="off" placeholder="Year Days" formControlName="yearDays" type="number">
                   <mat-error *ngIf="itemForm.controls.yearDays.errors?.required">yearDays is required</mat-error>
                 </mat-form-field>
               </div>
-            <div fxFlex="100" fxFlex.gt-sm="15" fxFlex.sm="50">
+            <div fxFlex="100" fxFlex.gt-sm="20" fxFlex.sm="50">
                 <mat-form-field appearance="outline">
                   <mat-label>Int Rate</mat-label>
                   <input matInput autocomplete="off" placeholder="Int Rate" formControlName="intRate" type="number">
                   <mat-error *ngIf="itemForm.controls.intRate.errors?.required">Int Rate is required</mat-error>
                 </mat-form-field>
               </div>
-            <div fxFlex="100" fxFlex.gt-sm="14" fxFlex.sm="50">
+            <div fxFlex="100" fxFlex.gt-sm="20" fxFlex.sm="50">
                 <mat-form-field appearance="outline">
                   <mat-label>From</mat-label>
                   <input matInput [matDatepicker]="picker1" formControlName="fromDt">
@@ -82,14 +82,13 @@
                   <mat-datepicker #picker1></mat-datepicker>
                 </mat-form-field>
               </div>
-              <div fxFlex="100" fxFlex.gt-sm="14" fxFlex.sm="50">
+              <div fxFlex="100" fxFlex.gt-sm="20" fxFlex.sm="50">
                 <mat-form-field appearance="outline">
                   <input matInput [matDatepicker]="picker2" placeholder="To" formControlName="toDt">
                   <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
                   <mat-datepicker #picker2></mat-datepicker>
                 </mat-form-field>
-              </div>
-            
+              </div>            
         </div>
     </div>
     <div fxFlex="100" class="mt-2 text-center space-between-btns">

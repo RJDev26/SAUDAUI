@@ -1,16 +1,17 @@
-.symbol-mapping{
+.symbol-mapping {
     flex-direction: column !important;
     .white-block {
         width: 100%;
         justify-content: center;
         align-items: center;
         display: flex;
-        button{
-            height: 42px;
+        button {
+            height: 30px;
+            line-height: 30px;
+            margin: 5px;
         }
     } 
-
-    .save-btn{
+    .save-btn {
         margin-right: 10px;
     }
 }

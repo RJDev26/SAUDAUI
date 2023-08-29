@@ -51,11 +51,10 @@
         <div class="tab-party-details-parent">
             <div class="white-block pb-0">
                 <h3><span> Exchange</span></h3>
-                <div fxFlex="100" fxFlex.gt-sm="33.33" fxFlex.sm="33.33">
+                <div fxFlex="100" fxFlex.gt-sm="50" fxFlex.sm="50">
                     <div class="dropdown-wrapper">
                         <mat-form-field class="select-slab-mat" appearance="outline">
                           <mat-label>Select Account</mat-label>
-
                           <mat-select #select placeholder="Select Account" panelClass="custom-select-panel" formControlName="accountId">
                             <input class="milti-search-box" #multiUserSearch type="text" autocomplete="off" matInput placeholder="Search Account" (input)="onInputChange($event)" />
                             <mat-option *ngFor="let option of accountList" [value]="option.id">
@@ -64,9 +63,8 @@
                           </mat-select>
                         </mat-form-field>
                     </div>
-                </div>
-                
-                <div fxFlex="100" fxFlex.gt-sm="33.33" fxFlex.sm="33.33">
+                </div>                
+                <div fxFlex="100" fxFlex.gt-sm="50" fxFlex.sm="50">
                     <mat-form-field class="example-full-width" appearance="outline">
                         <mat-label>Tax Type</mat-label>
                         <mat-select placeholder="Select Tax Type" formControlName="taxId">
@@ -101,7 +99,7 @@
         <div class="tab-tax-details-parent tab-party-details-parent">
           <div class="white-block pb-0">
             <h3><span>Tax Details</span></h3>
-            <div fxFlex="100" fxFlex.gt-sm="15" fxFlex.sm="50">
+            <div fxFlex="100" fxFlex.gt-sm="20" fxFlex.sm="50">
               <mat-form-field class="example-full-width" appearance="outline">
                 <mat-label>Tax type</mat-label>
                 <mat-select placeholder="Select Tax" formControlName="taxId">
@@ -111,21 +109,21 @@
                 </mat-select>
               </mat-form-field>
             </div>
-            <div fxFlex="100" fxFlex.gt-sm="15" fxFlex.sm="50">
+            <div fxFlex="100" fxFlex.gt-sm="16" fxFlex.sm="50">
               <mat-form-field appearance="outline">
                 <mat-label>Rate</mat-label>
                 <input matInput autocomplete="off" placeholder="IntraDay" formControlName="rate" type="number">
                 <mat-error *ngIf="exchangeDetailsForm.controls.rate.errors?.required">Rate is required</mat-error>
               </mat-form-field>
             </div>
-            <div fxFlex="100" fxFlex.gt-sm="14" fxFlex.sm="50">
+            <div fxFlex="100" fxFlex.gt-sm="16" fxFlex.sm="50">
               <mat-form-field appearance="outline">
                 <mat-label>Delivery Rate</mat-label>
                 <input matInput autocomplete="off" placeholder="DeliveryRate" formControlName="rateDelivery" type="number">
                 <mat-error *ngIf="exchangeDetailsForm.controls.rateDelivery.errors?.required">DeliveryRate is required</mat-error>
               </mat-form-field>
             </div>
-            <div fxFlex="100" fxFlex.gt-sm="14" fxFlex.sm="50">
+            <div fxFlex="100" fxFlex.gt-sm="16" fxFlex.sm="50">
               <mat-form-field appearance="outline">
                 <mat-label>From</mat-label>
                 <input matInput [matDatepicker]="picker1" formControlName="fromDt">
@@ -133,14 +131,14 @@
                 <mat-datepicker #picker1></mat-datepicker>
               </mat-form-field>
             </div>
-            <div fxFlex="100" fxFlex.gt-sm="14" fxFlex.sm="50">
+            <div fxFlex="100" fxFlex.gt-sm="16" fxFlex.sm="50">
               <mat-form-field appearance="outline">
                 <input matInput [matDatepicker]="picker2" placeholder="To" formControlName="toDt">
                 <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
                 <mat-datepicker #picker2></mat-datepicker>
               </mat-form-field>
             </div>
-            <div fxFlex="100" fxFlex.gt-sm="13" fxFlex.sm="50">
+            <div fxFlex="100" fxFlex.gt-sm="16" fxFlex.sm="50">
               <mat-form-field class="example-full-width" appearance="outline">
                 <mat-label>InsType</mat-label>
                 <mat-select placeholder="Select InsType" formControlName="instrumentType">

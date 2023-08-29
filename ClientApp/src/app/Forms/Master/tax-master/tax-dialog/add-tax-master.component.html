@@ -40,11 +40,10 @@
             <div class="tab-party-details-parent">
                 <div class="white-block pb-0">
                     <h3><span>{{selectedName}} Tax</span></h3>
-                    <div fxFlex="100" fxFlex.gt-sm="33.33" fxFlex.sm="33.33">
+                    <div fxFlex="100" fxFlex.gt-sm="50" fxFlex.sm="50">
                         <div class="dropdown-wrapper">
                             <mat-form-field class="select-slab-mat" appearance="outline">
                               <mat-label>Select Account</mat-label>
-
                               <mat-select #select multiple placeholder="Select Account" panelClass="custom-select-panel" formControlName="accounts">
                                 <input class="milti-search-box" #multiUserSearch type="text" autocomplete="off" matInput placeholder="Search Account" (input)="onInputChange($event)" />
                                 <mat-option value=-1 (click)="accountAllSelection()">Select All</mat-option>
@@ -54,9 +53,8 @@
                               </mat-select>
                             </mat-form-field>
                         </div>
-                    </div>
-                    
-                    <div fxFlex="100" fxFlex.gt-sm="33.33" fxFlex.sm="33.33">
+                    </div>                    
+                    <div fxFlex="100" fxFlex.gt-sm="50" fxFlex.sm="50">
                         <mat-form-field class="example-full-width" appearance="outline">
                             <mat-label>Apply On</mat-label>
                             <mat-select placeholder="Select ApplyOn" formControlName="applyOn">
