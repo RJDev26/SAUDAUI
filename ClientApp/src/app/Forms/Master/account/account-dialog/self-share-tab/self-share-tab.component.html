@@ -2,7 +2,6 @@
     <div class="tab-tax-details-parent tab-party-details-parent">
       <div class="white-block pb-0">
         <h3><span>Self Share</span></h3>
-
         <div fxFlex="100" fxFlex.gt-sm="15" fxFlex.sm="50">
           <mat-form-field class="example-full-width" appearance="outline">
             <mat-label>Exchange </mat-label>
@@ -13,7 +12,6 @@
             </mat-select>
           </mat-form-field>
         </div>
-
         <div fxFlex="100" fxFlex.gt-sm="14" fxFlex.sm="50">
           <mat-form-field appearance="outline">
             <mat-label>From</mat-label>
@@ -46,8 +44,7 @@
             <mat-error *ngIf="acSelfShareForm.controls.rate.errors?.required">DeliveryRate is required</mat-error>
           </mat-form-field>
         </div>
-
-        <div fxFlex="100" fxFlex.gt-sm="15" fxFlex.sm="50">
+        <div fxFlex="100" fxFlex.gt-sm="30" fxFlex.sm="50">
           <mat-form-field class="example-full-width" appearance="outline">
             <mat-label>Contra Account </mat-label>
             <mat-select placeholder="Select Exchange" formControlName="contraId">
@@ -57,8 +54,6 @@
             </mat-select>
           </mat-form-field>
         </div>
-
-
       </div>
       <div fxFlex="100" class="mt-2 text-center space-between-btns">
         <button mat-raised-button color="warn" type="button" (click)="close()">Cancel</button>
