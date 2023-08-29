@@ -15,6 +15,7 @@ import { DatePipe } from '@angular/common';
 import { MasterSecondService } from '../../Master/master-second.service';
 import { MasterService } from '../../Master/master.service';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { EntryService } from '../entry.service';
 
 
 @Component({
@@ -24,8 +25,14 @@ import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 })
 export class VoucherComponent implements OnInit {
   voucherForm: FormGroup;
+  filteredAccountList: any;
+  accountList: any;
+  filteredVouTypeList: any;
+  vouTypeList: any;
+  DR: string = "DR";
+  CR: string = "CR";
 
-  constructor(private fb: FormBuilder) { }
+  constructor(private fb: FormBuilder, private _masterService: MasterService, private _entryService: EntryService) { }
 
   ngOnInit() {
     this.voucherForm = this.fb.group({
@@ -36,7 +43,40 @@ export class VoucherComponent implements OnInit {
      
     });
     this.addVouDetail();
+    this.initApiCalls();
 
+  }
+
+  onInputVouTypeListChange(event: any) {
+    const searchInput = event.target.value.toLowerCase();
+
+    this.filteredVouTypeList = this.vouTypeList.filter((data) => {
+      const prov = data.name.toLowerCase();
+      return prov.includes(searchInput);
+    });
+  }
+
+  onInputAccountListChange(event: any) {
+    const searchInput = event.target.value.toLowerCase();
+
+    this.filteredAccountList = this.accountList.filter((data) => {
+      const prov = data.name.toLowerCase();
+      return prov.includes(searchInput);
+    });
+  }
+
+  initApiCalls() {
+    forkJoin([
+      this._masterService.getAccount(),
+      this._entryService.getVouType(),
+    ]).pipe(map(response => {
+      this.accountList = response[0];
+      this.filteredAccountList = response[0];
+      this.vouTypeList = response[1];
+      this.filteredVouTypeList = response[1];
+    })).subscribe(res => {
+      
+    });
   }
   vouDetails(): FormArray {
     return this.voucherForm.get('vouDetails') as FormArray;

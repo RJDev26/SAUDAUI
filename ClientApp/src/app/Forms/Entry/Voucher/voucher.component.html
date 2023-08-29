@@ -10,6 +10,10 @@
             <mat-form-field class="select-slab-mat" appearance="outline">
               <mat-label>Vou Type</mat-label>
               <mat-select #select formControlName="VouType" placeholder="Select VouType" panelClass="custom-select-panel">
+                <input class="milti-search-box" #multiUserSearch type="text" autocomplete="off" matInput placeholder="Search Account" (input)="onInputVouTypeListChange($event)"/>
+                <mat-option *ngFor="let option of filteredVouTypeList" [value]="option.id">
+                  {{ option.name }}
+                </mat-option>
               </mat-select>
             </mat-form-field>
           </div>
@@ -25,6 +29,10 @@
             <mat-form-field class="select-slab-mat" appearance="outline">
               <mat-label>Contra Account</mat-label>
               <mat-select #select formControlName="ContraAc" placeholder="Select ContraAc" panelClass="custom-select-panel">
+                <input class="milti-search-box" #multiUserSearch type="text" autocomplete="off" matInput placeholder="Search Account" (input)="onInputAccountListChange($event)"/>
+                <mat-option *ngFor="let option of filteredAccountList" [value]="option.id">
+                  {{ option.name }}
+                </mat-option>
               </mat-select>
             </mat-form-field>
           </div>
@@ -37,6 +45,10 @@
                   <mat-form-field class="select-slab-mat mb-0" appearance="outline">
                     <mat-label>Account</mat-label>
                     <mat-select #select formControlName="Account" placeholder="Select Account" panelClass="custom-select-panel">
+                      <input class="milti-search-box" #multiUserSearch type="text" autocomplete="off" matInput placeholder="Search Account" (input)="onInputAccountListChange($event)"/>
+                      <mat-option *ngFor="let option of filteredAccountList" [value]="option.id">
+                        {{ option.name }}
+                      </mat-option>
                     </mat-select>
                   </mat-form-field>
                 </div>      
@@ -73,6 +85,7 @@
             </div>
           </div>          
         </div>
+        <button mat-raised-button color="primary" class="uppercase" [disabled]="!voucherForm.valid" type="submit">Save</button>
       </mat-expansion-panel>
     </mat-card-content>
   </div>

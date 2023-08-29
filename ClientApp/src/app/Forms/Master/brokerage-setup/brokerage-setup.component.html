@@ -91,18 +91,18 @@
       </button>
     </div>
     <div class="btn-group">
-      <button mat-raised-button color="accent" [disabled]="!areRequiredValuesSelected()" (click)="openSlabDetailsDialog('lock')" class="icon-btn">
+      <button mat-raised-button color="accent" matTooltip="Lock Brokerage" matTooltipPosition="above" [disabled]="!areRequiredValuesSelected()" (click)="openSlabDetailsDialog('lock')" class="icon-btn">
         <mat-icon class="lock-icon">lock</mat-icon>
       </button>
-      <button mat-raised-button color="accent" [disabled]="!areRequiredValuesSelected()" (click)="openModifySetupDialog()" class="icon-btn">
+      <button mat-raised-button color="accent" matTooltip="Modify Brokerage" matTooltipPosition="above" [disabled]="!areRequiredValuesSelected()" (click)="openModifySetupDialog()" class="icon-btn">
         <mat-icon class="edit-icon">edit</mat-icon>
       </button>
-      <button mat-raised-button color="accent" [disabled]="!areRequiredValuesSelected()" (click)="openSlabDetailsDialog('add')" class="icon-btn">
+      <button mat-raised-button color="accent" matTooltip="Search Brokerage" matTooltipPosition="above" [disabled]="!areRequiredValuesSelected()" (click)="openSlabDetailsDialog('add')" class="icon-btn">
         <mat-icon>add</mat-icon>
       </button>
-      <button mat-raised-button *ngIf="itemGroupIds" color="accent" class="icon-btn">
+      <!-- <button mat-raised-button *ngIf="itemGroupIds" color="accent" class="icon-btn">
         <mat-icon>search</mat-icon>
-      </button>
+      </button> -->
     </div>
   </div>
     <div class="col-xl-12 mt-2">

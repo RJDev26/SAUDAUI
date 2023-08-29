@@ -77,13 +77,13 @@
         </button>
       </div>
       <div class="btn-group">
-        <button mat-raised-button color="accent" [disabled]="!areRequiredValuesSelected()" (click)="openSlabDetailsDialog('lock')" class="icon-btn">
+        <button mat-raised-button matTooltip="Lock Sharing" matTooltipPosition="above" color="accent" [disabled]="!areRequiredValuesSelected()" (click)="openSlabDetailsDialog('lock')" class="icon-btn">
           <mat-icon class="lock-icon">lock</mat-icon>
         </button>
-        <button mat-raised-button color="accent" [disabled]="!areRequiredValuesSelected()" (click)="openModifySetupDialog()" class="icon-btn ml-15">
+        <button mat-raised-button matTooltip="Modify Sahring" matTooltipPosition="above" color="accent" [disabled]="!areRequiredValuesSelected()" (click)="openModifySetupDialog()" class="icon-btn ml-15">
           <mat-icon class="edit-icon">edit</mat-icon>
         </button>
-        <button mat-raised-button color="accent" [disabled]="!areRequiredValuesSelected()" (click)="openSlabDetailsDialog('add')" class="icon-btn">
+        <button mat-raised-button color="accent" matTooltip="Add Sharing" matTooltipPosition="above" [disabled]="!areRequiredValuesSelected()" (click)="openSlabDetailsDialog('add')" class="icon-btn">
           <mat-icon>add</mat-icon>
         </button>
       </div>
