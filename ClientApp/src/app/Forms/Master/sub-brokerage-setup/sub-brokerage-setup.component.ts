@@ -42,7 +42,7 @@ export class SubBrokerageSetupComponent implements OnInit {
   accountIds: any[];
   filteredProviders: any[];
   filteredAccountList: any[];
-  brokeragesetupList: any;
+  brokeragesetupList: any = [];
   branchAllSellected: boolean = false;
 
   constructor(private datePipe: DatePipe, public snackBar: MatSnackBar, public appSettings: AppSettings, private _appService: AppService, public dialog: MatDialog, private _masterService: MasterService, private _masterSecondService: MasterSecondService) {
