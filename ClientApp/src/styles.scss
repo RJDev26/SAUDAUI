@@ -620,6 +620,7 @@ input {
 }
 .dropdown-container {
     .dropdown-wrapper {
+        width: 100%;
         vertical-align: top;
         position: relative;
         display: inline-block;
@@ -632,17 +633,18 @@ input {
             z-index: 1;
         }
         .mat-form-field {
+            width: calc(100% - 8px);
             margin-right: 8px;
             margin-bottom: 10px;
             .mat-form-field-infix {
-                width: 140px;
+                width: 100%;
                 .mat-select-arrow {
                     margin-top: 7px;
                 }
             }
             &.calendar {
                 .mat-form-field-infix {
-                    width: 100px;
+                    width: 100%;
                 }
             }
             .mat-form-field-wrapper {
@@ -681,6 +683,31 @@ input {
 .ag-header-cell-text {
   font-size:10px;
   font-weight:700;
+}
+
+.btn-group {
+    position: absolute;
+    right: 60px;
+    top: 11px;
+    .icon-btn {
+        background: transparent !important;
+        margin-left: 10px;
+        padding: 0;
+        min-width: auto;
+        box-shadow: none !important;
+        .mat-button-wrapper {
+            .mat-icon {
+                color: #000;
+                margin-right: 0;
+                &.lock-icon {
+                    color: #fc0303 !important;
+                }
+                &.edit-icon {
+                    color: #ffb80a !important;
+                }
+            }
+        }
+    }
 }
 
 

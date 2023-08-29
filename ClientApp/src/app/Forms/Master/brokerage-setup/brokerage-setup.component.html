@@ -1,89 +1,108 @@
 <div class="row">
   <div class="mt-2">
-    <div class="dropdown-container pt-5">
-      <div class="dropdown-wrapper">
-        <mat-form-field class="select-slab-mat" appearance="outline">
-          <mat-label>Select Branch</mat-label>
-          <mat-select #select  [(ngModel)]="branchIds" placeholder="Select Branch" (selectionChange)="onBranchChange($event)" panelClass="custom-select-panel">
-            <input class="milti-search-box" #multiUserSearch type="text" autocomplete="off" matInput placeholder="Search Branch" (input)="onInputChange($event)"/>
-            <mat-option *ngFor="let option of filteredProviders" [value]="option.id">
-              {{ option.name }}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
-      </div>
-      <div class="dropdown-wrapper">
-        <mat-form-field class="select-slab-mat" appearance="outline">
-          <mat-label>Select Account</mat-label>          
-          <mat-select #selectAccount [(ngModel)]="accountIds" multiple placeholder="Select Account" panelClass="custom-select-panel">
-            <input class="milti-search-box" #multiUserSearch type="text" autocomplete="off" matInput placeholder="Search Account" (input)="onInputAccountListChange($event)"/>
-            <mat-option value=-1 (click)="accountAllSelection()">Select All</mat-option>
-            <mat-option *ngFor="let option of filteredAccountList" [value]="option.id">
-              {{ option.name }}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
-      </div>
-      <div class="dropdown-wrapper">
-        <mat-icon class="info-icon" (click)="viewAllItemGroups()" matTooltip="View All Item" matTooltipPosition="above">info</mat-icon>
-        <mat-form-field class="select-slab-mat" appearance="outline">
-          <mat-label>Select Item Group</mat-label>
-          <mat-select #select  [(ngModel)]="itemGroupIds" placeholder="Select Item Group" panelClass="custom-select-panel">
-            <input class="milti-search-box" #multiUserSearch type="text" autocomplete="off" matInput placeholder="Search Item Group" (input)="onInputItemGroupChange($event)"/>
-            <mat-option *ngFor="let option of filteredItemGroup" [value]="option.id">
-              {{ option.name }}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
-      </div>
-      <div class="dropdown-wrapper">
-        <mat-form-field class="example-full-width" appearance="outline">
-          <mat-label>Instrument Type</mat-label>
-          <mat-select placeholder="Select InsType" [(ngModel)]="instrumentType">
-            <mat-option *ngFor="let exchange of instrumentList" [value]="exchange.id">
-              {{exchange.name}}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
-      </div>
-      <div class="dropdown-wrapper">
-        <mat-form-field appearance="outline" class="calendar">
-          <mat-label>From</mat-label>
-          <input matInput [matDatepicker]="picker1" [(ngModel)]="fromDt" (ngModelChange)="onFromDateChange()">
-          <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
-          <mat-datepicker #picker1></mat-datepicker>
-        </mat-form-field>
-      </div>
-      <div class="dropdown-wrapper">
-        <mat-form-field appearance="outline" class="calendar">
-            <mat-label>To</mat-label>
-          <input matInput [matDatepicker]="picker2" placeholder="To" [(ngModel)]="toDt">
-          <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
-          <mat-datepicker #picker2></mat-datepicker>
-        </mat-form-field>
-      </div>
-      <div class="dropdown-wrapper">
-        <button mat-raised-button color="accent" [disabled]="!areRequiredValuesSelected()" (click)="openModifySetupDialog()" class="icon-btn">
-          <mat-icon>edit</mat-icon> Modify
-        </button>
-      </div>
-      <div class="dropdown-wrapper float-right">
-        <button mat-raised-button color="primary" (click)="getBrokerageSetupList()" [disabled]="!areRequiredValuesSelected()" class="search-icon-btn">
-          <mat-icon>search</mat-icon>
-        </button>
+    <div fxFlex="100" fxFlex.gt-sm="15" fxFlex.sm="15">
+      <div class="dropdown-container">
+        <div class="dropdown-wrapper">
+          <mat-form-field class="select-slab-mat" appearance="outline">
+            <mat-label>Select Branch</mat-label>
+            <mat-select #select  [(ngModel)]="branchIds" placeholder="Select Branch" (selectionChange)="onBranchChange($event)" panelClass="custom-select-panel">
+              <input class="milti-search-box" #multiUserSearch type="text" autocomplete="off" matInput placeholder="Search Branch" (input)="onInputChange($event)"/>
+              <mat-option *ngFor="let option of filteredProviders" [value]="option.id">
+                {{ option.name }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
       </div>
     </div>
-    <div class="row">
-      <div fxFlex="100" fxFlex.gt-sm="50" fxFlex.sm="50">
-        <button mat-raised-button color="accent" [disabled]="!areRequiredValuesSelected()" (click)="openSlabDetailsDialog('lock')" class="icon-btn">
-          <mat-icon>lock</mat-icon> Lock Brokerage
-        </button>
+    <div fxFlex="100" fxFlex.gt-sm="15" fxFlex.sm="15">
+      <div class="dropdown-container">
+        <div class="dropdown-wrapper">
+          <mat-form-field class="select-slab-mat" appearance="outline">
+            <mat-label>Select Account</mat-label>          
+            <mat-select #selectAccount [(ngModel)]="accountIds" multiple placeholder="Select Account" panelClass="custom-select-panel">
+              <input class="milti-search-box" #multiUserSearch type="text" autocomplete="off" matInput placeholder="Search Account" (input)="onInputAccountListChange($event)"/>
+              <mat-option value=-1 (click)="accountAllSelection()">Select All</mat-option>
+              <mat-option *ngFor="let option of filteredAccountList" [value]="option.id">
+                {{ option.name }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
       </div>
-      <div fxFlex="100" fxFlex.gt-sm="50" fxFlex.sm="50" class="text-end">
-        <button mat-raised-button color="accent" [disabled]="!areRequiredValuesSelected()" (click)="openSlabDetailsDialog('add')" class="icon-btn">
-          <mat-icon>add</mat-icon> Add Brokerage
-        </button>
+    </div>
+    <div fxFlex="100" fxFlex.gt-sm="23" fxFlex.sm="23">
+      <div class="dropdown-container">
+        <div class="dropdown-wrapper">
+          <mat-icon class="info-icon" (click)="viewAllItemGroups()" matTooltip="View All Item" matTooltipPosition="above">info</mat-icon>
+          <mat-form-field class="select-slab-mat" appearance="outline">
+            <mat-label>Select Item Group</mat-label>
+            <mat-select #select  [(ngModel)]="itemGroupIds" placeholder="Select Item Group" panelClass="custom-select-panel">
+              <input class="milti-search-box" #multiUserSearch type="text" autocomplete="off" matInput placeholder="Search Item Group" (input)="onInputItemGroupChange($event)"/>
+              <mat-option *ngFor="let option of filteredItemGroup" [value]="option.id">
+                {{ option.name }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
       </div>
+    </div>
+    <div fxFlex="100" fxFlex.gt-sm="15" fxFlex.sm="15">
+      <div class="dropdown-container">
+        <div class="dropdown-wrapper">
+          <mat-form-field class="example-full-width" appearance="outline">
+            <mat-label>Instrument Type</mat-label>
+            <mat-select placeholder="Select InsType" [(ngModel)]="instrumentType">
+              <mat-option *ngFor="let exchange of instrumentList" [value]="exchange.id">
+                {{exchange.name}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </div>
+    </div>
+    <div fxFlex="100" fxFlex.gt-sm="15" fxFlex.sm="15">
+      <div class="dropdown-container">
+        <div class="dropdown-wrapper">
+          <mat-form-field appearance="outline" class="calendar">
+            <mat-label>From</mat-label>
+            <input matInput [matDatepicker]="picker1" [(ngModel)]="fromDt" (ngModelChange)="onFromDateChange()">
+            <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+            <mat-datepicker #picker1></mat-datepicker>
+          </mat-form-field>
+        </div>
+      </div>
+    </div>
+    <div fxFlex="100" fxFlex.gt-sm="15" fxFlex.sm="15">
+      <div class="dropdown-container">
+        <div class="dropdown-wrapper">
+          <mat-form-field appearance="outline" class="calendar">
+              <mat-label>To</mat-label>
+            <input matInput [matDatepicker]="picker2" placeholder="To" [(ngModel)]="toDt">
+            <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+            <mat-datepicker #picker2></mat-datepicker>
+          </mat-form-field>
+        </div>
+      </div>
+    </div>
+    <div fxFlex="100" fxFlex.gt-sm="7" fxFlex.sm="7">
+      <button mat-raised-button color="primary" (click)="getBrokerageSetupList()" [disabled]="!areRequiredValuesSelected()" class="search-icon-btn">
+        <mat-icon>search</mat-icon>
+      </button>
+    </div>
+    <div class="btn-group">
+      <button mat-raised-button color="accent" [disabled]="!areRequiredValuesSelected()" (click)="openSlabDetailsDialog('lock')" class="icon-btn">
+        <mat-icon class="lock-icon">lock</mat-icon>
+      </button>
+      <button mat-raised-button color="accent" [disabled]="!areRequiredValuesSelected()" (click)="openModifySetupDialog()" class="icon-btn">
+        <mat-icon class="edit-icon">edit</mat-icon>
+      </button>
+      <button mat-raised-button color="accent" [disabled]="!areRequiredValuesSelected()" (click)="openSlabDetailsDialog('add')" class="icon-btn">
+        <mat-icon>add</mat-icon>
+      </button>
+      <button mat-raised-button *ngIf="itemGroupIds" color="accent" class="icon-btn">
+        <mat-icon>search</mat-icon>
+      </button>
     </div>
   </div>
     <div class="col-xl-12 mt-2">
