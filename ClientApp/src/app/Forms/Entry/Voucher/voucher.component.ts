@@ -99,7 +99,18 @@ export class VoucherComponent implements OnInit {
     this.vouDetails().removeAt(empIndex);
   }
   onSubmit() {
-    console.log(this.voucherForm.value);
+
+    if (this.voucherForm.valid) {
+      //const body = JSON.stringify(addFormData);
+      this._entryService.saveVoucher(this.voucherForm.value).subscribe(result => {
+        console.log("result", result);
+        
+      }, err => {
+        console.log(err);
+      });
+    }
+
+   
   }
 
   

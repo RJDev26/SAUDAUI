@@ -17,5 +17,8 @@ export class EntryService {
   getVouType(): Observable<any> {
     return this.httpClient.get<any>(environment.apiBaseUrl + 'Voucher/getVouType', { headers: this.headers });
   }
+  saveVoucher(data): Observable<any> {
+    return this.httpClient.post<any>(environment.apiBaseUrl + 'Voucher/saveVoucher', data, { headers: this.headers });
+  }
 
 }
