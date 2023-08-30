@@ -43,14 +43,14 @@
             </div>
           </div>  
           <div fxFlex="100" fxFlex.gt-sm="14.5" fxFlex.sm="14.5" class="text-end">
-            <button mat-raised-button color="primary" class="uppercase" [disabled]="!voucherForm.valid" type="submit">Save</button>
+            <button mat-raised-button color="primary" class="uppercase save-btn" [disabled]="!voucherForm.valid" type="submit">Save</button>
           </div>       
         </div>
         <div formArrayName="vouDetails">
           <div *ngFor="let detail of vouDetails().controls; let detailIndex=index" class="mb-10">
             <div [formGroupName]="detailIndex">
               <div class="dropdown-container">
-                <div fxFlex="100" fxFlex.gt-sm="20" fxFlex.sm="20">
+                <div fxFlex="100" fxFlex.gt-sm="20" fxFlex.sm="20" class="dropdown-arrow">
                   <mat-form-field class="select-slab-mat mb-0" appearance="outline">
                     <mat-label>Account</mat-label>
                     <mat-select #select formControlName="Account" placeholder="Select Account" panelClass="custom-select-panel">
@@ -67,7 +67,7 @@
                     <input matInput autocomplete="off" placeholder="Amount" formControlName="Amount" type="number">      
                   </mat-form-field>
                 </div>      
-                <div fxFlex="100" fxFlex.gt-sm="10" fxFlex.sm="15">
+                <div fxFlex="100" fxFlex.gt-sm="10" fxFlex.sm="15" class="dropdown-arrow">
                   <mat-form-field class="select-slab-mat mb-0" appearance="outline">
                     <mat-label>DR/CR</mat-label>
                     <mat-select #select formControlName="DRCR" placeholder="Select DRCR" panelClass="custom-select-panel">

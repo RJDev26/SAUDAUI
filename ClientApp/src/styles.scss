@@ -552,7 +552,7 @@ input {
         &.mat-form-field-can-float {
             &.mat-form-field-should-float {
                 .mat-form-field-label {
-                    transform: translateY(-1.2rem) scale(0.75);
+                    transform: translateY(-1rem) scale(0.75);
                 }
             }
         }
@@ -713,6 +713,14 @@ input {
 
 .ag-paging-panel {
     height: 40px;
+}
+
+.dropdown-arrow {
+    .mat-form-field-appearance-outline {
+        .mat-select-arrow-wrapper {
+            transform: translateY(0);
+        }
+    }
 }
 
 //ag-row-no-focus ag-row ag-row-level-0 ag-row-position-absolute ag-row-last
