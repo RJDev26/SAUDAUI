@@ -576,12 +576,13 @@ input {
             }
         }
         .mat-expansion-panel-header {
+            height: 40px;
             .mat-expansion-panel-header-title {
                 font-weight: 500;
             }
             &.mat-expanded {
                 background: #00695c;
-                height: 48px;
+                height: 40px;
                 .mat-expansion-panel-header-title {
                     color: #fff;
                 }
