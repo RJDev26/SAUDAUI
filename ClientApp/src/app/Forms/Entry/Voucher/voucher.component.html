@@ -10,7 +10,7 @@
             <div class="dropdown-wrapper">
               <mat-form-field class="select-slab-mat" appearance="outline">
                 <mat-label>Vou Type</mat-label>
-                <mat-select #select formControlName="VouType" placeholder="Select VouType" panelClass="custom-select-panel">
+                <mat-select #select formControlName="VouType" placeholder="Select VouType" (selectionChange)="getVoucherList($event)" panelClass="custom-select-panel">
                   <input class="milti-search-box" #multiUserSearch type="text" autocomplete="off" matInput placeholder="Search Account" (input)="onInputVouTypeListChange($event)"/>
                   <mat-option *ngFor="let option of filteredVouTypeList" [value]="option.id">
                     {{ option.name }}
@@ -23,7 +23,7 @@
             <div class="dropdown-wrapper">
               <mat-form-field appearance="outline" class="calendar">
                 <mat-label>VouDate</mat-label>
-                <input matInput [matDatepicker]="picker2" placeholder="Date" formControlName="VouDate">
+                <input matInput [matDatepicker]="picker2" placeholder="Date" formControlName="VouDate" (ngModelChange)="getVoucherList($event)">
                 <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
                 <mat-datepicker #picker2></mat-datepicker>
               </mat-form-field>
@@ -97,6 +97,23 @@
         </div>
       </mat-expansion-panel>
     </mat-card-content>
+    <div class="col-xl-12 mt-2 position-relative">
+      <span class="material-symbols-outlined delete-icon" (click)="deleteVochers()">
+        <mat-icon>delete_sweep</mat-icon>
+      </span>
+      <ag-grid-angular style=" height: 480px;"
+                    class="ag-theme-material mt-2"
+                    [rowData]="vocherGridData"
+                    [pagination]="true"
+                    [rowHeight]="31"
+                    [columnDefs]="columnDefs"
+                    [rowSelection]="'multiple'"
+                    [rowMultiSelectWithClick]="true"
+                    [defaultColDef]="agGridOptions.defaultColDef"
+                    (gridReady)="onGridReady($event)"
+                    headerHeight="34">
+      </ag-grid-angular>
+  </div>
   </div>
 </form>
 

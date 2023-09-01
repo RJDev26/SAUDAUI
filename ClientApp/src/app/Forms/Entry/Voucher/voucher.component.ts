@@ -16,6 +16,7 @@ import { MasterSecondService } from '../../Master/master-second.service';
 import { MasterService } from '../../Master/master.service';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { EntryService } from '../entry.service';
+import { ErrorDialog } from '../../Dialog/confirmation-dialog/error-dialog.component';
 
 
 @Component({
@@ -28,11 +29,42 @@ export class VoucherComponent implements OnInit {
   filteredAccountList: any;
   accountList: any;
   filteredVouTypeList: any;
-  vouTypeList: any;
+  vocherGridData: any;
+  vouTypeList:any = [];
   DR: string = "DR";
   CR: string = "CR";
+  gridApi: any;
+  agGridOptions: any = {
+    defaultColDef: {
+      filter: true,
+      //flex:1,
+      sortable: true,
+      wraptext: true,
+      resizable: true,
+      /* minWidth: 100,*/
 
-  constructor(private fb: FormBuilder, private _masterService: MasterService, private _entryService: EntryService) { }
+    },
+    /* suppressRowHoverHighlight: true,*/
+  }
+
+  columnDefs = [{
+    headerName: 'Vocher list',
+    children: [
+      {
+        headerName: 'Action', field: 'fileIcon', cellRenderer: this.actionCellRenderer, resizable: true, filter: false, width: 20, maxwidth: 20
+      },
+      {
+        headerName: '', editable: false, minwidth: 45, width: 20, maxwidth: 20, resizable: false, sortable: false, filter: false, checkboxSelection: true, headerCheckboxSelection: true,
+      },
+      { headerName: 'Vocher No', field: 'vouNo', filter: true, sorting: true, resizable: true, flex: 1, },
+      { headerName: 'Voucher', field: 'vouTypeName', filter: true, sorting: true, resizable: true, flex: 1, },
+      { headerName: 'Amount', field: 'amount', filter: true, sorting: true, resizable: true, flex: 1, valueFormatter: params => CommonUtility.formatNumber(params.data.amount), type: 'rightAligned'},
+      { headerName: 'Vocher Date', field: 'vouDateString', filter: true, sorting: true, resizable: true, flex: 1, },
+      { headerName: 'Created Date', field: 'createdDateString', filter: true, sorting: true, resizable: true, flex: 1, },
+    ]
+  }];
+
+  constructor(public dialog: MatDialog, private datePipe: DatePipe, private fb: FormBuilder, private _masterService: MasterService, private _entryService: EntryService) { }
 
   ngOnInit() {
     this.voucherForm = this.fb.group({
@@ -46,6 +78,19 @@ export class VoucherComponent implements OnInit {
     this.initApiCalls();
 
   }
+
+  public actionCellRenderer(params: any) {
+    let eGui = document.createElement("div");
+    let editingCells = params.api.getEditingCells();
+    let isCurrentRowEditing = editingCells.some((cell: any) => {
+      return cell.rowIndex === params.node.rowIndex;
+    });
+    eGui.innerHTML = `<button class="material-icons action-button-edit" data-action="edit">edit </button>`;
+
+    return eGui;
+}
+
+  onGridReady(event) { this.gridApi = event.api; }
 
   onInputVouTypeListChange(event: any) {
     const searchInput = event.target.value.toLowerCase();
@@ -98,12 +143,25 @@ export class VoucherComponent implements OnInit {
   removeVouDetail(empIndex: number) {
     this.vouDetails().removeAt(empIndex);
   }
+  getVoucherList() {
+    const {VouType, VouDate} = this.voucherForm.value;
+    if(VouType && VouDate){
+      
+      this._entryService.getVoucher(VouType, this.datePipe.transform(VouDate, 'yyyy-MM-dd')).subscribe((result)=>{
+        this.vocherGridData = result;
+      });
+    }
+  }
+
   onSubmit() {
 
     if (this.voucherForm.valid) {
       //const body = JSON.stringify(addFormData);
-      this._entryService.saveVoucher(this.voucherForm.value).subscribe(result => {
+      const body = this.voucherForm.value;
+      body.VouDate = this.datePipe.transform(body.VouDate, 'yyyy-MM-dd')
+      this._entryService.saveVoucher(body).subscribe(result => {
         console.log("result", result);
+        this.getVoucherList();
         
       }, err => {
         console.log(err);
@@ -113,7 +171,59 @@ export class VoucherComponent implements OnInit {
    
   }
 
+  deleteVochers()
+  {
+    var selectedRecord = this.gridApi.getSelectedRows();
+    if (selectedRecord.length == 0) {
+      const dialogRef = this.dialog.open(ErrorDialog, {
+        data: {
+          message: 'Please select record to delete',
+          buttonText: {
+            ok: 'OK',
+
+          }
+        }
+
+      });
+
+    }
+    else
+    {
+      const vouMasterIds = selectedRecord.map(item => item.vouMasterId).join(',');
+      this._entryService.deleteVoucher(vouMasterIds).subscribe(result => {
+        this.getVoucherList();
+      });
+    }
+  }
+
   
+  onGridClick(params: any) {
+    if (params.event.target.dataset.action == "edit")
+    {
+      this.openEditBrokerageDetails(params.data);
+  
+    }
+  }
+
+  openEditBrokerageDetails(params) {
+    // const dialogRef = this.dialog.open(AddSetupDetailsComponent, {
+    //   data: {
+    //     selectedSlabId: null,
+    //     fromDt: this.searchedData.fromDate,
+    //     toDt: this.searchedData.toDate,
+    //     branchIds: this.searchedData.branchIds,
+    //     accountIds: this.searchedData.accounts,
+    //     itemGroupIds: this.searchedData.itemGroupId,
+    //     instrumentType: this.searchedData.instrumentType,
+    //     isEditMode: 2,
+    //     editParms: params
+    //   },
+    // });
+
+    // dialogRef.afterClosed().subscribe((user) => {
+    //   this.getBrokerageSetupList();
+    // });
+  }
 
   
 
