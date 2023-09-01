@@ -46,6 +46,7 @@
             <button mat-raised-button color="primary" class="uppercase save-btn" [disabled]="!voucherForm.valid" type="submit">Save</button>
           </div>       
         </div>
+
         <div formArrayName="vouDetails">
           <div *ngFor="let detail of vouDetails().controls; let detailIndex=index" class="mb-10">
             <div [formGroupName]="detailIndex">
@@ -86,7 +87,7 @@
                   <button mat-raised-button color="primary" type="button" (click)="addVouDetail()">
                     <mat-icon>add</mat-icon>
                   </button>  
-                  <button mat-raised-button color="warn" (click)="removeVouDetail(detailIndex)" class="ml-7">
+                  <button *ngIf="detailIndex>0" mat-raised-button color="warn"  (click)="removeVouDetail(detailIndex)" class="ml-7">
                     <mat-icon>delete</mat-icon>
                   </button>
                 </div>                 
