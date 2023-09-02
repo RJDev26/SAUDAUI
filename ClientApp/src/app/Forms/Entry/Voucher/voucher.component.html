@@ -29,7 +29,7 @@
               </mat-form-field>
             </div>
           </div>
-          <div fxFlex="100" fxFlex.gt-sm="45.5" fxFlex.sm="45.5">
+          <div fxFlex="100" fxFlex.gt-sm="45.5" fxFlex.sm="45.5" *ngIf="voucherForm.get('VouType').value !== 'JV'">
             <div class="dropdown-wrapper">
               <mat-form-field class="select-slab-mat" appearance="outline">
                 <mat-label>Contra Account</mat-label>
@@ -111,6 +111,7 @@
                     [rowMultiSelectWithClick]="true"
                     [defaultColDef]="agGridOptions.defaultColDef"
                     (gridReady)="onGridReady($event)"
+                    (cellClicked)="onGridClick($event)"
                     headerHeight="34">
       </ag-grid-angular>
   </div>

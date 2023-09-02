@@ -23,6 +23,9 @@ export class EntryService {
   saveVoucher(data): Observable<any> {
     return this.httpClient.post<any>(environment.apiBaseUrl + 'Voucher/saveVoucher', data, { headers: this.headers });
   }
+  editVoucher(vocherMasterId): Observable<any> {
+    return this.httpClient.post<any>(environment.apiBaseUrl + `Voucher/editVoucher/${vocherMasterId}`, { headers: this.headers });
+  }
   deleteVoucher(vouMasterId: number): Observable<any> {
     return this.httpClient.delete<any>(environment.apiBaseUrl + `Voucher/deleteVoucher/${vouMasterId}`, { headers: this.headers })
   }

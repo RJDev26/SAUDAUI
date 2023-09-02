@@ -33,7 +33,7 @@ export class VoucherComponent implements OnInit {
   vouTypeList:any = [];
   DR: string = "DR";
   CR: string = "CR";
-  gridApi: any;
+  gridApi: any = [];
   agGridOptions: any = {
     defaultColDef: {
       filter: true,
@@ -51,10 +51,7 @@ export class VoucherComponent implements OnInit {
     headerName: 'Vocher list',
     children: [
       {
-        headerName: 'Action', field: 'fileIcon', cellRenderer: this.actionCellRenderer, resizable: true, filter: false, width: 20, maxwidth: 20
-      },
-      {
-        headerName: '', editable: false, minwidth: 45, width: 20, maxwidth: 20, resizable: false, sortable: false, filter: false, checkboxSelection: true, headerCheckboxSelection: true,
+        headerName: 'Action', field: 'fileIcon', cellRenderer: this.actionCellRenderer, resizable: true, filter: false,
       },
       { headerName: 'Vocher No', field: 'vouNo', filter: true, sorting: true, resizable: true, flex: 1, },
       { headerName: 'Voucher', field: 'vouTypeName', filter: true, sorting: true, resizable: true, flex: 1, },
@@ -68,15 +65,36 @@ export class VoucherComponent implements OnInit {
 
   ngOnInit() {
     this.voucherForm = this.fb.group({
+      'vouMasterId': [0],
       'VouType': ['', Validators.required],
       'VouDate': ['', Validators.required],
-      'ContraAc': [''],
+      'ContraAc': ['', Validators.required],
       vouDetails: this.fb.array([])
      
     });
     this.addVouDetail();
     this.initApiCalls();
+    this.watchVouTypeChanges();
 
+  }
+
+  watchVouTypeChanges() {
+    this.voucherForm.get('VouType').valueChanges.subscribe((value) => {
+      const contraAcControl = this.voucherForm.get('ContraAc');
+
+      if (value === 'JV') {
+        // Hide the Contra Account field
+        contraAcControl.clearValidators();
+        contraAcControl.updateValueAndValidity(); // Remove validation
+
+        // Clear the selected value for Contra Account
+        contraAcControl.setValue('');
+      } else {
+        // Show the Contra Account field and reapply validation if needed
+        contraAcControl.setValidators(Validators.required); // Add back validation
+        contraAcControl.updateValueAndValidity();
+      }
+    });
   }
 
   public actionCellRenderer(params: any) {
@@ -85,12 +103,13 @@ export class VoucherComponent implements OnInit {
     let isCurrentRowEditing = editingCells.some((cell: any) => {
       return cell.rowIndex === params.node.rowIndex;
     });
-    eGui.innerHTML = `<button class="material-icons action-button-edit" data-action="edit">edit </button>`;
+    eGui.innerHTML = `<button class="material-icons action-button-edit" type="button" data-action="edit">edit </button>
+                      <input type="checkbox" class="action-checkbox" data-action="checkbox" />`;
 
     return eGui;
 }
 
-  onGridReady(event) { this.gridApi = event.api; }
+  onGridReady(event) {  }
 
   onInputVouTypeListChange(event: any) {
     const searchInput = event.target.value.toLowerCase();
@@ -138,6 +157,11 @@ export class VoucherComponent implements OnInit {
 
   addVouDetail() {
     this.vouDetails().push(this.newVouDetail());
+    this.vouDetails().controls.forEach((control: any) => {
+      Object.keys(control.controls).forEach(key => {
+        control.get(key).setErrors(null);
+      });
+    });
   }
 
   removeVouDetail(empIndex: number) {
@@ -162,6 +186,7 @@ export class VoucherComponent implements OnInit {
       this._entryService.saveVoucher(body).subscribe(result => {
         console.log("result", result);
         this.getVoucherList();
+        this.resetForm(this.voucherForm);
         
       }, err => {
         console.log(err);
@@ -171,9 +196,34 @@ export class VoucherComponent implements OnInit {
    
   }
 
+  resetForm(myForm) {
+    // Reset the form and set the 'vouMasterId' to 0
+    myForm.reset();
+    myForm.get('vouMasterId').setValue(0);
+  
+    // Clear errors for top-level controls
+    Object.keys(myForm.controls).forEach(key => {
+      myForm.get(key).setErrors(null);
+    });
+    this.vouDetails().clear();
+    this.addVouDetail();
+    // Clear errors for the 'vouDetails' FormArray
+    // myForm.controls.vouDetails.clear();
+  
+    // // Add an initial 'vouDetails' entry after resetting
+    // myForm.controls.vouDetails.push(this.newVouDetail());
+  
+    // // Clear errors for controls within 'vouDetails'
+    // myForm.controls.vouDetails.controls.forEach((control: any) => {
+    //   Object.keys(control.controls).forEach(key => {
+    //     control.get(key).setErrors(null);
+    //   });
+    // });
+  }
+
   deleteVochers()
   {
-    var selectedRecord = this.gridApi.getSelectedRows();
+    var selectedRecord = this.gridApi;
     if (selectedRecord.length == 0) {
       const dialogRef = this.dialog.open(ErrorDialog, {
         data: {
@@ -203,26 +253,44 @@ export class VoucherComponent implements OnInit {
       this.openEditBrokerageDetails(params.data);
   
     }
+    if(params.event.target.dataset.action == "checkbox"){
+        const dataIndex = this.gridApi.findIndex((item: any) => item.vouMasterId === params.data.vouMasterId);
+
+        if (dataIndex === -1) {
+            // Checkbox is checked, so add the data to gridApi
+            this.gridApi.push(params.data);
+        } else {
+            // Checkbox is unchecked, so remove the data from gridApi
+            this.gridApi.splice(dataIndex, 1);
+        }
+    }
   }
 
   openEditBrokerageDetails(params) {
-    // const dialogRef = this.dialog.open(AddSetupDetailsComponent, {
-    //   data: {
-    //     selectedSlabId: null,
-    //     fromDt: this.searchedData.fromDate,
-    //     toDt: this.searchedData.toDate,
-    //     branchIds: this.searchedData.branchIds,
-    //     accountIds: this.searchedData.accounts,
-    //     itemGroupIds: this.searchedData.itemGroupId,
-    //     instrumentType: this.searchedData.instrumentType,
-    //     isEditMode: 2,
-    //     editParms: params
-    //   },
-    // });
-
-    // dialogRef.afterClosed().subscribe((user) => {
-    //   this.getBrokerageSetupList();
-    // });
+    this._entryService.editVoucher(params.vouMasterId).subscribe((data)=>{
+     this.voucherForm.patchValue({
+      'vouMasterId': data.vouMasterId,
+      'VouType': data.vouType,
+      'VouDate': data.vouDate,
+      'ContraAc': data.contraAc,
+    });
+  
+    // Clear existing vouDetails FormArray
+    const vouDetailsArray = this.voucherForm.get('vouDetails') as FormArray;
+    vouDetailsArray.clear();
+  
+    // Iterate through vouDetails and add them to the FormArray
+    for (const vouDetail of data.vouDetails) {
+      vouDetailsArray.push(this.fb.group({
+        'Account': vouDetail.account,
+        'DRCR': vouDetail.drcr,
+        'Amount': vouDetail.amount,
+        'Narration': vouDetail.narration,
+        // Other fields
+      }));
+    }
+    });
+    
   }
 
   
