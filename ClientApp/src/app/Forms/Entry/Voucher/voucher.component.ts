@@ -29,11 +29,11 @@ export class VoucherComponent implements OnInit {
   filteredAccountList: any;
   accountList: any;
   filteredVouTypeList: any;
-  vocherGridData: any;
+  vocherGridData: any=[];
   vouTypeList:any = [];
   DR: string = "DR";
   CR: string = "CR";
-  gridApi: any = [];
+  gridApi: any;
   agGridOptions: any = {
     defaultColDef: {
       filter: true,
@@ -51,7 +51,10 @@ export class VoucherComponent implements OnInit {
     headerName: 'Vocher list',
     children: [
       {
-        headerName: 'Action', field: 'fileIcon', cellRenderer: this.actionCellRenderer, resizable: true, filter: false,
+        headerName: '', field: 'fileIcon', cellRenderer: this.actionCellRenderer, resizable: true, filter: false, minwidth: 25, width: 25, maxwidth: 25
+      },
+      {
+        headerName: '', editable: false, minwidth: 25, width: 25, maxwidth: 25, resizable: false, sortable: false, filter: false, checkboxSelection: true, headerCheckboxSelection: true,
       },
       { headerName: 'Vocher No', field: 'vouNo', filter: true, sorting: true, resizable: true, flex: 1, },
       { headerName: 'Voucher', field: 'vouTypeName', filter: true, sorting: true, resizable: true, flex: 1, },
@@ -61,14 +64,14 @@ export class VoucherComponent implements OnInit {
     ]
   }];
 
-  constructor(public dialog: MatDialog, private datePipe: DatePipe, private fb: FormBuilder, private _masterService: MasterService, private _entryService: EntryService) { }
+  constructor(public snackBar: MatSnackBar, public dialog: MatDialog, private datePipe: DatePipe, private fb: FormBuilder, private _masterService: MasterService, private _entryService: EntryService) { }
 
   ngOnInit() {
     this.voucherForm = this.fb.group({
       'vouMasterId': [0],
       'VouType': ['', Validators.required],
       'VouDate': ['', Validators.required],
-      'ContraAc': ['', Validators.required],
+      'ContraAc': [0, Validators.required],
       vouDetails: this.fb.array([])
      
     });
@@ -88,7 +91,7 @@ export class VoucherComponent implements OnInit {
         contraAcControl.updateValueAndValidity(); // Remove validation
 
         // Clear the selected value for Contra Account
-        contraAcControl.setValue('');
+        contraAcControl.setValue(0);
       } else {
         // Show the Contra Account field and reapply validation if needed
         contraAcControl.setValidators(Validators.required); // Add back validation
@@ -103,13 +106,12 @@ export class VoucherComponent implements OnInit {
     let isCurrentRowEditing = editingCells.some((cell: any) => {
       return cell.rowIndex === params.node.rowIndex;
     });
-    eGui.innerHTML = `<button class="material-icons action-button-edit" type="button" data-action="edit">edit </button>
-                      <input type="checkbox" class="action-checkbox" data-action="checkbox" />`;
+    eGui.innerHTML = `<button class="material-icons action-button-edit" type="button" data-action="edit">edit </button>`;
 
     return eGui;
 }
 
-  onGridReady(event) {  }
+  onGridReady(event) { this.gridApi = event.api; }
 
   onInputVouTypeListChange(event: any) {
     const searchInput = event.target.value.toLowerCase();
@@ -157,11 +159,6 @@ export class VoucherComponent implements OnInit {
 
   addVouDetail() {
     this.vouDetails().push(this.newVouDetail());
-    this.vouDetails().controls.forEach((control: any) => {
-      Object.keys(control.controls).forEach(key => {
-        control.get(key).setErrors(null);
-      });
-    });
   }
 
   removeVouDetail(empIndex: number) {
@@ -177,10 +174,44 @@ export class VoucherComponent implements OnInit {
     }
   }
 
+  validateAndCalculateAmount(data) {
+    if (data.VouType === "JV") {
+      let totalAmount = 0;
+      for (const detail of data.vouDetails) {
+        if (detail.DRCR === "CR") {
+          // Subtract CR amount
+          totalAmount -= detail.Amount;
+        } else if (detail.DRCR === "DR") {
+          // Add DR amount
+          totalAmount += detail.Amount;
+        }
+      }
+
+      if (totalAmount === 0) {
+        // The Voucher is valid
+        return true;
+      } else {
+        // The Voucher is not valid as the total amount is not zero
+        return false;
+      }
+    }
+    return true;
+  }
+
   onSubmit() {
 
     if (this.voucherForm.valid) {
-      //const body = JSON.stringify(addFormData);
+      if(!this.validateAndCalculateAmount(this.voucherForm.value)){
+        this.dialog.open(ErrorDialog, {
+          data: {
+            message: 'Invalid Voucher: Total amount is not zero',
+            buttonText: {
+              ok: 'OK',
+            }
+          }
+        });
+        return;
+      }
       const body = this.voucherForm.value;
       body.VouDate = this.datePipe.transform(body.VouDate, 'yyyy-MM-dd')
       this._entryService.saveVoucher(body).subscribe(result => {
@@ -207,23 +238,20 @@ export class VoucherComponent implements OnInit {
     });
     this.vouDetails().clear();
     this.addVouDetail();
-    // Clear errors for the 'vouDetails' FormArray
-    // myForm.controls.vouDetails.clear();
-  
-    // // Add an initial 'vouDetails' entry after resetting
-    // myForm.controls.vouDetails.push(this.newVouDetail());
   
     // // Clear errors for controls within 'vouDetails'
-    // myForm.controls.vouDetails.controls.forEach((control: any) => {
-    //   Object.keys(control.controls).forEach(key => {
-    //     control.get(key).setErrors(null);
-    //   });
-    // });
+    setTimeout(()=>{
+      myForm.controls.vouDetails.controls.forEach((control: any) => {
+        Object.keys(control.controls).forEach(key => {
+          control.get(key).setErrors(null);
+        });
+      });
+    }, 50);
   }
 
   deleteVochers()
   {
-    var selectedRecord = this.gridApi;
+    var selectedRecord = this.gridApi.getSelectedRows();
     if (selectedRecord.length == 0) {
       const dialogRef = this.dialog.open(ErrorDialog, {
         data: {
@@ -239,11 +267,34 @@ export class VoucherComponent implements OnInit {
     }
     else
     {
-      const vouMasterIds = selectedRecord.map(item => item.vouMasterId).join(',');
-      this._entryService.deleteVoucher(vouMasterIds).subscribe(result => {
-        this.getVoucherList();
+      const dialogRef = this.dialog.open(ConfirmationDialog, {
+        data: {
+          message: 'Do you really want to delete this record?',
+          buttonText: {
+            ok: 'Yes',
+            cancel: 'No'
+          }
+        }
       });
+  
+      dialogRef.afterClosed().subscribe((confirmed: boolean) => {
+        if (confirmed) {
+          const vouMasterIds = selectedRecord.map(item => item.vouMasterId).join(',');
+          this._entryService.deleteVoucher(vouMasterIds).subscribe(result => {
+            this.getVoucherList();
+            this.showToaster(result);
+          });
+        }
+      });
+
+      
     }
+  }
+
+  showToaster(message){
+    this.snackBar.open(message, "Success", {
+      duration: 3000,
+    });
   }
 
   
