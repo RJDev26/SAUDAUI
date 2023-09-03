@@ -10,7 +10,7 @@
             <div class="dropdown-wrapper">
               <mat-form-field class="select-slab-mat" appearance="outline">
                 <mat-label>Vou Type</mat-label>
-                <mat-select [disabled]="voucherForm.get('vouMasterId').value !== 0" #select formControlName="VouType" placeholder="Select VouType" (selectionChange)="getVoucherList()" panelClass="custom-select-panel">
+                <mat-select #select formControlName="VouType" placeholder="Select VouType" (selectionChange)="getVoucherList($event)" panelClass="custom-select-panel">
                   <input class="milti-search-box" #multiUserSearch type="text" autocomplete="off" matInput placeholder="Search Account" (input)="onInputVouTypeListChange($event)"/>
                   <mat-option *ngFor="let option of filteredVouTypeList" [value]="option.id">
                     {{ option.name }}
@@ -23,7 +23,7 @@
             <div class="dropdown-wrapper">
               <mat-form-field appearance="outline" class="calendar">
                 <mat-label>VouDate</mat-label>
-                <input matInput [matDatepicker]="picker2" placeholder="Date" formControlName="VouDate" (ngModelChange)="getVoucherList()">
+                <input matInput [matDatepicker]="picker2" placeholder="Date" formControlName="VouDate" (ngModelChange)="getVoucherList($event)">
                 <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
                 <mat-datepicker #picker2></mat-datepicker>
               </mat-form-field>
@@ -77,13 +77,13 @@
                     </mat-select>
                   </mat-form-field>
                 </div>      
-                <div fxFlex="100" fxFlex.gt-sm="38" fxFlex.sm="38">
+                <div fxFlex="100" fxFlex.gt-sm="35" fxFlex.sm="35">
                   <mat-form-field appearance="outline">
                     <mat-label>Narration</mat-label>
                     <input matInput autocomplete="off" placeholder="Narration" formControlName="Narration" type="text">      
                   </mat-form-field>
                 </div>   
-                <div fxFlex="100" fxFlex.gt-sm="12" fxFlex.sm="12" class="text-end">                      
+                <div fxFlex="100" fxFlex.gt-sm="15" fxFlex.sm="15" class="text-end">                      
                   <button mat-raised-button color="primary" type="button" (click)="addVouDetail()">
                     <mat-icon>add</mat-icon>
                   </button>  
