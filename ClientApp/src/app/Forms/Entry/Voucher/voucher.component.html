@@ -9,7 +9,7 @@
           <div fxFlex="100" fxFlex.gt-sm="20" fxFlex.sm="20">
             <div class="dropdown-wrapper">
               <mat-form-field class="select-slab-mat" appearance="outline">
-                <mat-label>Vou Type</mat-label>
+                <mat-label>Vou Type</mat-label> 
                 <mat-select [disabled]="voucherForm.get('vouMasterId').value !== 0" #select formControlName="VouType" placeholder="Select VouType" (selectionChange)="getVoucherList()" panelClass="custom-select-panel">
                   <input class="milti-search-box" #multiUserSearch type="text" autocomplete="off" matInput placeholder="Search Account" (input)="onInputVouTypeListChange($event)"/>
                   <mat-option *ngFor="let option of filteredVouTypeList" [value]="option.id">
