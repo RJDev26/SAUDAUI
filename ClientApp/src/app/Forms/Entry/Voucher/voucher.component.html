@@ -29,8 +29,8 @@
               </mat-form-field>
             </div>
           </div>
-          <div fxFlex="100" fxFlex.gt-sm="45.5" fxFlex.sm="45.5" *ngIf="voucherForm.get('VouType').value !== 'JV'">
-            <div class="dropdown-wrapper">
+          <div fxFlex="100" fxFlex.gt-sm="45.5" fxFlex.sm="45.5">
+            <div class="dropdown-wrapper" *ngIf="voucherForm.get('VouType').value !== 'JV'">
               <mat-form-field class="select-slab-mat" appearance="outline">
                 <mat-label>Contra Account</mat-label>
                 <mat-select #select formControlName="ContraAc" placeholder="Select ContraAc" panelClass="custom-select-panel">
@@ -87,7 +87,8 @@
                   <button mat-raised-button color="primary" type="button" (click)="addVouDetail()">
                     <mat-icon>add</mat-icon>
                   </button>  
-                  <button *ngIf="detailIndex>0" mat-raised-button color="warn"  (click)="removeVouDetail(detailIndex)" class="ml-7">
+                  <span *ngIf="detailIndex<1" class="empty-div"></span>
+                  <button *ngIf="detailIndex>0" mat-raised-button color="warn" (click)="removeVouDetail(detailIndex)" class="ml-7">
                     <mat-icon>delete</mat-icon>
                   </button>
                 </div>                 
