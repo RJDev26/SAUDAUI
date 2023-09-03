@@ -95,10 +95,10 @@
         <mat-icon class="lock-icon">lock</mat-icon>
       </button>
       <button mat-raised-button color="accent" matTooltip="Modify Brokerage" matTooltipPosition="above" [disabled]="!areRequiredValuesSelected()" (click)="openModifySetupDialog()" class="icon-btn">
-        <mat-icon class="edit-icon">edit</mat-icon>
+        <mat-icon class="edit-icon">exposure</mat-icon>
       </button>
-      <button mat-raised-button color="accent" matTooltip="Search Brokerage" matTooltipPosition="above" [disabled]="!areRequiredValuesSelected()" (click)="openSlabDetailsDialog('add')" class="icon-btn">
-        <mat-icon>add</mat-icon>
+      <button mat-raised-button color="accent" matTooltip="Add Brokerage" matTooltipPosition="above" [disabled]="!areRequiredValuesSelected()" (click)="openSlabDetailsDialog('add')" class="icon-btn">
+        <mat-icon>add_to_queue</mat-icon>
       </button>
       <!-- <button mat-raised-button *ngIf="itemGroupIds" color="accent" class="icon-btn">
         <mat-icon>search</mat-icon>
