@@ -51,11 +51,12 @@ export class VoucherComponent implements OnInit {
     headerName: 'Vocher list',
     children: [
       {
-        headerName: '', field: 'fileIcon', cellRenderer: this.actionCellRenderer, resizable: true, filter: false, minwidth: 25, width: 25, maxwidth: 25
-      },
-      {
         headerName: '', editable: false, minwidth: 25, width: 25, maxwidth: 25, resizable: false, sortable: false, filter: false, checkboxSelection: true, headerCheckboxSelection: true,
       },
+      {
+        headerName: '', field: 'fileIcon', cellRenderer: this.actionCellRenderer, resizable: true, filter: false, minwidth: 25, width: 25, maxwidth: 25
+      },
+      
       { headerName: 'Vocher No', field: 'vouNo', filter: true, sorting: true, resizable: true, flex: 1, },
       { headerName: 'Voucher', field: 'vouTypeName', filter: true, sorting: true, resizable: true, flex: 1, },
       { headerName: 'Amount', field: 'amount', filter: true, sorting: true, resizable: true, flex: 1, valueFormatter: params => CommonUtility.formatNumber(params.data.amount), type: 'rightAligned'},
