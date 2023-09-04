@@ -8,6 +8,7 @@ import { MasterService } from "../master.service";
 import { ConfirmationDialog } from "../../Dialog/confirmation-dialog/confirmation-dialog.component";
 import { MasterSecondService } from "../master-second.service";
 import { AddItemGroupComponent } from "./add-item-group/add-item-group.component";
+import { MatSnackBar } from "@angular/material/snack-bar";
 
 @Component({
   selector: 'app-item-group',
@@ -26,7 +27,7 @@ export class ItemGroupComponent implements OnInit {
   public settings: Settings;
   taxList: any[]=[];
 constructor(public appSettings: AppSettings,
-  public dialog: MatDialog, private _masterService: MasterService, private _masterSecondService: MasterSecondService) {
+  public dialog: MatDialog, public snackBar: MatSnackBar, private _masterService: MasterService, private _masterSecondService: MasterSecondService) {
       this.settings = this.appSettings.settings;
     }
 
@@ -69,6 +70,12 @@ constructor(public appSettings: AppSettings,
       return eGui;
   }
 
+  showToaster(message){
+    this.snackBar.open(message, "Success", {
+      duration: 6000,
+    });
+  }
+
   onGridClick(params: any) {
     if (params.event.target.dataset.action == "edit")
     {
@@ -88,8 +95,11 @@ constructor(public appSettings: AppSettings,
 
       dialogRef.afterClosed().subscribe((confirmed: boolean) => {
         if (confirmed) {
-          this._masterSecondService.deleteTax(params.data.id).subscribe((res) => {
+          this._masterSecondService.deleteItemGroup(params.data.id).subscribe((res) => {
             this.getItemGroupNameList();
+            if(res.isSuccess){
+              this.showToaster(res.message);
+            }
           });
         }
       });

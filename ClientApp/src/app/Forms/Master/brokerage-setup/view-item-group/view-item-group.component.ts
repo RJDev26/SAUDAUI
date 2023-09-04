@@ -29,7 +29,7 @@ export class ViewItemGroupComponent implements OnInit {
   accountIds: Array<string>;
 
   accountAllSellected: boolean = false;
-  itemGroupList: any[];
+  itemGroupList: any[] = [];
   accountApplyOnList: any[];
   gridApi: any;
   isRowSelected: boolean = false; 

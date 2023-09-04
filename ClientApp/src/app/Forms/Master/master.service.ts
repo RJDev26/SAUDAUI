@@ -269,7 +269,7 @@ export class MasterService {
   }
 
   deleteBranch(id: number): Observable<any> {
-    return this.httpClient.get<any>(environment.apiBaseUrl + 'master/deleteBranch/' + id, { headers: this.headers })
+    return this.httpClient.delete<any>(environment.apiBaseUrl + 'master/deleteBranch/' + id, { headers: this.headers })
   }
 
   deleteAcHead(id: number): Observable<any> {

@@ -187,7 +187,11 @@ editInterestItem(id: number){
         if (confirmed) {
           this._masterSeconedService.deleteInterest(params.data.id).subscribe((res) => {
             this.getInterestList();
-            this.showToaster('Deleted Successfully.');
+            if(res.isSuccess){
+              this.showToaster(res.message);
+            } else {
+              this.showToaster(res.message, true);
+            }
           });
         }
       });
@@ -196,9 +200,14 @@ editInterestItem(id: number){
     }
   }
 
-  showToaster(message){
-    this.snackBar.open(message, "Success", {
-      duration: 3000,
+  showToaster(message, isError = false) {
+    const panelClass = isError ? ['red-text'] : undefined;
+    const label = isError ? "Error" : "Success";
+    const time = isError? 6000 : 3000;
+  
+    this.snackBar.open(message, label, {
+      duration: time,
+      panelClass: panelClass,
     });
   }
 

@@ -342,16 +342,17 @@ onInputBrokerChange(event: any) {
       //const body = JSON.stringify(addFormData);
       this._masterService.saveAccount(body).subscribe(result => {
         console.log("result", result);
-        this.showToaster(result);
+        this.showToaster(result.message, "Success");
         // this.dialogRef.close();
       }, err => {
+        this.showToaster(err.message, "Error");
         console.log(err);
       });
     }
   }
 
-  showToaster(message){
-    this.snackBar.open(message, "Success", {
+  showToaster(message, Label){
+    this.snackBar.open(message, Label, {
       duration: 3000,
     });
   }

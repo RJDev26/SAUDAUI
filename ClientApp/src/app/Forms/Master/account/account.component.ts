@@ -110,7 +110,11 @@ export class AccountComponent implements OnInit {
           if (confirmed) {
             this._masterService.deleteAccountById(params.data.id).subscribe((res) => {
               this.getAccountList();
-              this.showToaster('Deleted Successfully.');
+              if(res.isSuccess){
+                this.showToaster(res.message);
+              } else {
+                this.showToaster(res.message, true);
+              }
             });
           }
         });
@@ -123,9 +127,14 @@ export class AccountComponent implements OnInit {
    
   }
 
-  showToaster(message){
-    this.snackBar.open(message, "Success", {
-      duration: 3000,
+  showToaster(message, isError = false) {
+    const panelClass = isError ? ['red-text'] : undefined;
+    const label = isError ? "Error" : "Success";
+    const time = isError? 6000 : 3000;
+  
+    this.snackBar.open(message, label, {
+      duration: time,
+      panelClass: panelClass,
     });
   }
 

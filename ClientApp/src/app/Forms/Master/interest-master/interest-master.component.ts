@@ -8,6 +8,7 @@ import { MasterService } from "../master.service";
 import { ConfirmationDialog } from "../../Dialog/confirmation-dialog/confirmation-dialog.component";
 import { MasterSecondService } from "../master-second.service";
 import { AddInterestMasterComponent } from "./add-interest-master/add-interest-master.component";
+import { MatSnackBar } from "@angular/material/snack-bar";
 
 @Component({
   selector: 'app-interest-master',
@@ -26,7 +27,7 @@ export class InterestMasterComponent implements OnInit {
  
   public settings: Settings;
   interestMasterList: any;
-constructor(public appSettings: AppSettings,
+constructor(public appSettings: AppSettings, public snackBar: MatSnackBar,
   public dialog: MatDialog, private _masterService: MasterService, private _masterSecondService: MasterSecondService) {
       this.settings = this.appSettings.settings;
     }
@@ -97,13 +98,29 @@ getInterestList() {
       dialogRef.afterClosed().subscribe((confirmed: boolean) => {
         if (confirmed) {
           this._masterSecondService.deleteInterest(params.data.id).subscribe((res) => {
-            this.getInterestList();
+            if(res.isSuccess){
+              this.showToaster(res.message);
+              this.getInterestList();
+            } else {
+              this.showToaster(res.message, true);
+            }
           });
         }
       });
 
 
     }
+  }
+
+  showToaster(message, isError = false) {
+    const panelClass = isError ? ['red-text'] : undefined;
+    const label = isError ? "Error" : "Success";
+    const time = isError? 6000 : 3000;
+  
+    this.snackBar.open(message, label, {
+      duration: time,
+      panelClass: panelClass,
+    });
   }
 
   public openAddIMDialog(user) {

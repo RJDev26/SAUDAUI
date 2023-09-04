@@ -2,6 +2,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { MasterService } from '../../master.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
     selector: 'app-add-account-head',
@@ -51,7 +52,7 @@ export class AddAccountHeadComponent implements OnInit {
       ]
     }];
 
-    constructor(private formBuilder: UntypedFormBuilder, public dialog: MatDialog,  @Inject(MAT_DIALOG_DATA) public data: any, private _masterService: MasterService, public dialogRef: MatDialogRef<AddAccountHeadComponent>) { 
+    constructor(public snackBar: MatSnackBar, private formBuilder: UntypedFormBuilder, public dialog: MatDialog,  @Inject(MAT_DIALOG_DATA) public data: any, private _masterService: MasterService, public dialogRef: MatDialogRef<AddAccountHeadComponent>) { 
       this.selectedAccountHeadID = data.branchID;
     }
 
@@ -136,10 +137,25 @@ export class AddAccountHeadComponent implements OnInit {
       };
   
       this._masterService.deleteAcHeadAccount(body).subscribe(result => {
-        console.log("Hi")
+        if(result.isSuccess){
+          this.showToaster(result.message);
+        } else {
+          this.showToaster(result.message, true);
+        }
         /* this.selectedBranchID = result.id;*/
         this.getAcHeadAccountList();
       });   
+    }
+
+    showToaster(message, isError = false) {
+      const panelClass = isError ? ['red-text'] : undefined;
+      const label = isError ? "Error" : "Success";
+      const time = isError? 6000 : 3000;
+    
+      this.snackBar.open(message, label, {
+        duration: time,
+        panelClass: panelClass,
+      });
     }
 
     bindFormControls() {

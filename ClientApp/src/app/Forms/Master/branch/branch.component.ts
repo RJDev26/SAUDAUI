@@ -6,6 +6,7 @@ import { MasterService } from '../master.service';
 import { Settings } from 'src/app/app.settings.model';
 import { ConfirmationDialog } from '../../Dialog/confirmation-dialog/confirmation-dialog.component';
 import { AddBranchAccountComponent } from './add-branch-account/add-branch-account.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-branch',
@@ -37,7 +38,7 @@ export class BranchComponent implements OnInit {
     { headerName: 'Contra Id',  field: 'contraAcId', filter: true, sorting: true, resizable: true },
     { headerName: 'Chat Id',  field: 'chatId', filter: true, sorting: true, resizable: true }
   ];
-  constructor(public appSettings: AppSettings, private _appService: AppService, public dialog: MatDialog, private _masterService: MasterService) {
+  constructor(public snackBar: MatSnackBar, public appSettings: AppSettings, private _appService: AppService, public dialog: MatDialog, private _masterService: MasterService) {
     this.settings = this.appSettings.settings;
   }
 
@@ -75,6 +76,17 @@ public openAccountDialog(selectedBranchId) {
 
 onGridReady(event) { }
 
+showToaster(message, isError = false) {
+  const panelClass = isError ? ['red-text'] : undefined;
+  const label = isError ? "Error" : "Success";
+  const time = isError? 6000 : 3000;
+
+  this.snackBar.open(message, label, {
+    duration: time,
+    panelClass: panelClass,
+  });
+}
+
 onGridClick(params: any) {
   if (params.event.target.dataset.action == "edit")
   {
@@ -96,7 +108,12 @@ onGridClick(params: any) {
     dialogRef.afterClosed().subscribe((confirmed: boolean) => {
       if (confirmed) {
         this._masterService.deleteBranch(params.data.id).subscribe((res) => {
-          this.getLoadData();
+          if(res.isSuccess){
+            this.getLoadData();
+            this.showToaster(res.message);
+          } else {
+            this.showToaster(res.message, true);
+          }
         });
       }
     });

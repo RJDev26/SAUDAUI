@@ -168,7 +168,13 @@ export class AddItemGroupComponent implements OnInit {
     if (this.itemGroupNameForm.valid) {
       this._masterSecondService.saveItemGroup(body).subscribe(result => {
         console.log(result);
-        this.selectedId = result;
+        if(result.isSuccess){
+          this.selectedId = result.id;
+          this.itemGroupNameForm.get('id').setValue(result.id);
+          this.showToaster(result.message);
+        } else {
+          this.showToaster(result.message, true);
+        }
         // this.dialogRef.close();
       }, err => {
         console.log(err);
@@ -202,9 +208,13 @@ export class AddItemGroupComponent implements OnInit {
     }
   }
 
-  showToaster(message){
-    this.snackBar.open(message, "Success", {
-      duration: 3000,
+  showToaster(message, isError = false) {
+    const panelClass = isError ? ['red-text'] : undefined;
+    const label = isError ? "Error" : "Success";
+  
+    this.snackBar.open(message, label, {
+      duration: 30000,
+      panelClass: panelClass,
     });
   }
 

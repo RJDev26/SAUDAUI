@@ -20,6 +20,10 @@ export class MasterSecondService {
     return this.httpClient.get<any>(environment.apiBaseUrl + 'MasterSecond/deleteTax/' + id, { headers: this.headers })
   }
 
+  deleteItemGroup(id: number): Observable<any> {
+    return this.httpClient.delete<any>(environment.apiBaseUrl + 'MasterSecond/deleteItemGroup/' + id, { headers: this.headers })
+  }
+
   deleteExchange(id: number): Observable<any> {
     return this.httpClient.get<any>(environment.apiBaseUrl + 'MasterSecond/deleteExchange/' + id, { headers: this.headers })
   }

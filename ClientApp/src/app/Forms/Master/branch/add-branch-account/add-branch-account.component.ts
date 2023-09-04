@@ -5,6 +5,7 @@ import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dial
 import { ConfirmationDialog } from 'src/app/Forms/Dialog/confirmation-dialog/confirmation-dialog.component';
 import { forkJoin, map } from 'rxjs';
 import { ConfirmationAccountDialog } from 'src/app/Forms/Dialog/confirmation-dialog/confirmation-account-dialog.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-add-account',
@@ -54,8 +55,19 @@ export class AddBranchAccountComponent implements OnInit {
     ]
   }
   ];
-  constructor(private formBuilder: UntypedFormBuilder, public dialog: MatDialog, @Inject(MAT_DIALOG_DATA) public data: any, private _masterService: MasterService, public dialogRef: MatDialogRef<AddBranchAccountComponent>) { 
+  constructor(public snackBar: MatSnackBar, private formBuilder: UntypedFormBuilder, public dialog: MatDialog, @Inject(MAT_DIALOG_DATA) public data: any, private _masterService: MasterService, public dialogRef: MatDialogRef<AddBranchAccountComponent>) { 
     this.selectedBranchID = data.branchID;
+  }
+
+  showToaster(message, isError = false) {
+    const panelClass = isError ? ['red-text'] : undefined;
+    const label = isError ? "Error" : "Success";
+    const time = isError? 6000 : 3000;
+  
+    this.snackBar.open(message, label, {
+      duration: time,
+      panelClass: panelClass,
+    });
   }
 
   ngOnInit(): void {    
@@ -154,9 +166,14 @@ export class AddBranchAccountComponent implements OnInit {
       BranchId: this.selectedBranchID
     };
 
-    this._masterService.deleteBranchAccount(body).subscribe(result => {
+    this._masterService.deleteBranchAccount(body).subscribe(res => {
       /* this.selectedBranchID = result.id;*/
-      this.getBranchAccountIDs();
+      if(res.isSuccess){
+        this.showToaster(res.message);
+        this.getBranchAccountIDs();
+      } else {
+        this.showToaster(res.message, true);
+      }
     });
   }
 

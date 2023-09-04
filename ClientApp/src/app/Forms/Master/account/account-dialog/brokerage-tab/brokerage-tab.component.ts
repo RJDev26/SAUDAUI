@@ -110,8 +110,12 @@ onBrokerageClick(params: any) {
     dialogRef.afterClosed().subscribe((confirmed: boolean) => {
       if (confirmed) {
         this._masterService.deleteBrokerageSetup(params.data.id).subscribe((res) => {
-          this.getBrokerageSetupList();
-          this.showToaster('Deleted Successfully.');
+          if(res.isSuccess){
+            this.showToaster(res.message);
+            this.getBrokerageSetupList();
+          } else {
+            this.showToaster(res.message, true);
+          }
         });
       }
     });
@@ -152,11 +156,16 @@ public onBrokerageSave(values: object) {
   }
 }
 
-  showToaster(message){
-    this.snackBar.open(message, "Success", {
-      duration: 3000,
-    });
-  }
+showToaster(message, isError = false) {
+  const panelClass = isError ? ['red-text'] : undefined;
+  const label = isError ? "Error" : "Success";
+  const time = isError? 6000 : 3000;
+
+  this.snackBar.open(message, label, {
+    duration: time,
+    panelClass: panelClass,
+  });
+}
 
   resetForm(myForm) {
     myForm.reset();

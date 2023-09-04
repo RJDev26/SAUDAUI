@@ -1,3 +1,13 @@
 .save-btn{
     height: 34px;
 }
+
+.red-text {
+    color: red;
+    div {
+        color: red !important;
+    }
+    .mat-simple-snack-bar-content{
+        color: red !important;
+    }
+  }
