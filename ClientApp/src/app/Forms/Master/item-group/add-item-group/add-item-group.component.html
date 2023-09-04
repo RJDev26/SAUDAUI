@@ -5,25 +5,25 @@
     </span>
 </a>
 <mat-tab-group>
-    <mat-tab label="Item Group " (click)="checkTaxSelect()">
+    <mat-tab label="Item Group" (click)="checkTaxSelect()">
         <form [formGroup]="itemGroupNameForm" (ngSubmit)="onSubmit(itemGroupNameForm.value)" fxLayout="row wrap" class="user-form">
-            <div class="white-block pb-5">
-                <h3><span>Group Name</span></h3>
-                <div class="tab-party-details-parent">
-                    <div fxFlex="100" fxFlex.gt-sm="70" fxFlex.sm="50">
+            <div class="tab-party-details-parent">
+                <div class="white-block pb-0">
+                  <h3><span>Group Name</span></h3>
+                    <div fxFlex="100" fxFlex.gt-sm="87" fxFlex.sm="87">
                         <mat-form-field appearance="outline">
                           <mat-label>Group Name</mat-label>
                           <input matInput autocomplete="off" placeholder="Group Name" formControlName="name" type="text">
                           <mat-error *ngIf="itemGroupNameForm.controls.name.errors?.required">Group Name is required</mat-error>
                         </mat-form-field>
                       </div>
-                      <button mat-raised-button color="primary" class="uppercase save-btn" [disabled]="!itemGroupNameForm.valid" type="submit">Save</button> 
+                      <button mat-raised-button color="primary" class="uppercase save-btn mt-4" [disabled]="!itemGroupNameForm.valid" type="submit">Save</button> 
                 </div>
             </div>
         </form>
         <form [formGroup]="exchangeForm" (ngSubmit)="onExchangeSubmit(exchangeForm.value)" fxLayout="row wrap" class="user-form">
             <div class="tab-party-details-parent">
-                <div class="white-block pb-0">
+                <div class="white-block pb-0 mt-20">
                     <h3><span>Add Item</span></h3>
                     <div fxFlex="100" fxFlex.gt-sm="33.33" fxFlex.sm="33.33">
                           <mat-form-field class="example-full-width" appearance="outline">

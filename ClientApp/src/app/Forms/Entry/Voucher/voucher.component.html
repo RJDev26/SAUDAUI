@@ -31,7 +31,7 @@
               </mat-form-field>
             </div>
           </div>
-          <div fxFlex="100" fxFlex.gt-sm="30" fxFlex.sm="30">
+          <div fxFlex="100" fxFlex.gt-sm="35" fxFlex.sm="35">
             <div class="dropdown-wrapper" *ngIf="voucherForm.get('VouType').value !== 'JV'">
               <mat-form-field class="select-slab-mat" appearance="outline">
                 <mat-label>Contra Account</mat-label>
@@ -44,17 +44,20 @@
               </mat-form-field>
             </div>
           </div>  
-          <div *ngIf="totalAmount != 0 && voucherForm.get('VouType').value !== 'JV'">
-            <label [ngClass]="{ 'red-text': amountLabel === 'CR', 'green-text': amountLabel !== 'CR' }">{{ totalAmount }} {{ amountLabel }}</label>
-          </div>
-          <div fxFlex="100" fxFlex.gt-sm="14.5" fxFlex.sm="14.5" class="text-end">
-            <button mat-raised-button color="primary" class="uppercase save-btn" type="button" (click)="resetForm(voucherForm)">Clear</button>
-          </div>  
-          <div fxFlex="100" fxFlex.gt-sm="14.5" fxFlex.sm="14.5" class="text-end">
-            <button mat-raised-button color="primary" class="uppercase save-btn" [disabled]="!voucherForm.valid" type="submit">Save</button>
-          </div>       
+          <div fxFlex="100" fxFlex.gt-sm="10" fxFlex.sm="10" class="pt-5 text-end">
+            <div *ngIf="totalAmount != 0 && voucherForm.get('VouType').value !== 'JV'">
+              <label [ngClass]="{ 'red-text': amountLabel === 'CR', 'green-text': amountLabel !== 'CR' }">{{ totalAmount }} {{ amountLabel }}</label>
+            </div>
+          </div>          
+          <div fxFlex="100" fxFlex.gt-sm="15" fxFlex.sm="15" class="text-end">
+            <button mat-raised-button color="warn" class="uppercase" type="button" (click)="resetForm(voucherForm)">
+              <mat-icon>clear</mat-icon>
+            </button>
+            <button mat-raised-button color="primary" class="uppercase ml-7" [disabled]="!voucherForm.valid" type="submit">
+              <mat-icon>save</mat-icon>
+            </button>
+          </div>        
         </div>
-
         <div formArrayName="vouDetails">
           <div *ngFor="let detail of vouDetails().controls; let detailIndex=index" class="mb-10">
             <div [formGroupName]="detailIndex">
@@ -86,7 +89,7 @@
                   </mat-form-field>
                 </div>      
                 <div fxFlex="100" fxFlex.gt-sm="35" fxFlex.sm="35">
-                  <mat-form-field appearance="outline">
+                  <mat-form-field appearance="outline" class="wider-width">
                     <mat-label>Narration</mat-label>
                     <input matInput autocomplete="off" placeholder="Narration" formControlName="Narration" type="text">      
                   </mat-form-field>
