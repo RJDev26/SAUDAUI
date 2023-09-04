@@ -24,7 +24,7 @@ export class ItemGroupComponent implements OnInit {
   reorderable: boolean = true;
  
   public settings: Settings;
-  taxList: any;
+  taxList: any[]=[];
 constructor(public appSettings: AppSettings,
   public dialog: MatDialog, private _masterService: MasterService, private _masterSecondService: MasterSecondService) {
       this.settings = this.appSettings.settings;

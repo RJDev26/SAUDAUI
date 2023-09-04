@@ -27,7 +27,7 @@ export class SymbolMappingComponent implements OnInit {
   reorderable: boolean = true;
  
   public settings: Settings;
-  symbolMappingList: any;
+  symbolMappingList: any[]=[];
 constructor(public appSettings: AppSettings, private formBuilder: UntypedFormBuilder,
   public dialog: MatDialog, private _appService: AppService, private _masterService: MasterService, private _masterSecondService: MasterSecondService) {
       this.settings = this.appSettings.settings;

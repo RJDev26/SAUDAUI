@@ -28,10 +28,10 @@ export class AddExchangeComponent implements OnInit {
   accountList: any[];
   instrumentList: any[];
   accountIds: Array<string>;
-  exchangeTaxList: any[];
+  exchangeTaxList: any[] = [];
 
   accountAllSellected: boolean = false;
-  accountExchangeList: any[];
+  accountExchangeList: any[] = [];
   accountApplyOnList: any[];
   gridApi: any;
   isRowSelected: boolean = false;

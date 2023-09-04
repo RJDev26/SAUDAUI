@@ -13,12 +13,12 @@ import { ConfirmationAccountDialog } from 'src/app/Forms/Dialog/confirmation-dia
 })
 export class AddBranchAccountComponent implements OnInit {
 
-  accountList: any[];
+  accountList: any[] = [];
   filteredAccountList: any[];
   public branchForm: UntypedFormGroup;
   public accountForm: UntypedFormGroup;
   selectedBranchID: any;
-  branchIDAccountList: any[];
+  branchIDAccountList: any[] = [];
   gridApi: any;
   gridApiSelectAc: any;
   isRowSelected: boolean = false;

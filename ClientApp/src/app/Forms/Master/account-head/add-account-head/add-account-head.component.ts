@@ -11,12 +11,12 @@ import { MasterService } from '../../master.service';
 
 export class AddAccountHeadComponent implements OnInit {
 
-    accountList: any[];  
+    accountList: any[] = [];  
     public nameForm: UntypedFormGroup;
     selectedAccountHeadID: any
     gridApi: any;
     gridApiSelectAc: any;    
-    AcHeadAccountList: any[];
+    AcHeadAccountList: any[] = [];
     selectedAcHeadID: any;
     agGridOptions: any = {
         suppressRowHoverHighlight: true,

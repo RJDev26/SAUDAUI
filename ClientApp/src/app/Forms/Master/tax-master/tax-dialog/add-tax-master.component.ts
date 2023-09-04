@@ -33,7 +33,7 @@ export class AddTaxComponent implements OnInit {
   accountIds: Array<string>;
 
   accountAllSellected: boolean = false;
-  accountTaxList: any[];
+  accountTaxList: any[] = [];
   accountApplyOnList: any[];
   gridApi: any;
   isRowSelected: boolean = false;

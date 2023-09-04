@@ -17,7 +17,7 @@ import { CommonUtility } from 'src/app/shared/common-utility';
 export class BrokerageSlabComponent implements OnInit {
     public settings: Settings
     slabId: number;
-    slabList: any[];
+    slabList: any[] = [];
     dropdownData: any[];
     agGridOptions: any = {
         defaultColDef: {
