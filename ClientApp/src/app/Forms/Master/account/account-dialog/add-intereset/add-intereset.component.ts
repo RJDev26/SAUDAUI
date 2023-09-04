@@ -19,7 +19,7 @@ export class AddInteresetComponent implements OnInit {
   
   @Input() selectedAccountId: number;
   public itemForm: UntypedFormGroup;
-  interestMasterList: any;
+  interestMasterList: any = [];
   typeList: any[];
   applyOnList: any[];
   postVoucherList: any[];

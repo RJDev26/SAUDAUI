@@ -3,7 +3,9 @@
     <mat-card-content class="voucher-form">
       <mat-expansion-panel>
         <mat-expansion-panel-header>
-          <mat-panel-title>Voucher Entry</mat-panel-title>
+          <mat-panel-title>Voucher Entry <ng-container *ngIf="vouNo">
+            - {{vouNo}}
+          </ng-container></mat-panel-title>
         </mat-expansion-panel-header>                    
         <div class="dropdown-container">
           <div fxFlex="100" fxFlex.gt-sm="20" fxFlex.sm="20">
@@ -29,7 +31,7 @@
               </mat-form-field>
             </div>
           </div>
-          <div fxFlex="100" fxFlex.gt-sm="45.5" fxFlex.sm="45.5">
+          <div fxFlex="100" fxFlex.gt-sm="30" fxFlex.sm="30">
             <div class="dropdown-wrapper" *ngIf="voucherForm.get('VouType').value !== 'JV'">
               <mat-form-field class="select-slab-mat" appearance="outline">
                 <mat-label>Contra Account</mat-label>
@@ -41,6 +43,12 @@
                 </mat-select>
               </mat-form-field>
             </div>
+          </div>  
+          <div *ngIf="totalAmount != 0 && voucherForm.get('VouType').value !== 'JV'">
+            <label [ngClass]="{ 'red-text': amountLabel === 'CR', 'green-text': amountLabel !== 'CR' }">{{ totalAmount }} {{ amountLabel }}</label>
+          </div>
+          <div fxFlex="100" fxFlex.gt-sm="14.5" fxFlex.sm="14.5" class="text-end">
+            <button mat-raised-button color="primary" class="uppercase save-btn" type="button" (click)="resetForm(voucherForm)">Clear</button>
           </div>  
           <div fxFlex="100" fxFlex.gt-sm="14.5" fxFlex.sm="14.5" class="text-end">
             <button mat-raised-button color="primary" class="uppercase save-btn" [disabled]="!voucherForm.valid" type="submit">Save</button>

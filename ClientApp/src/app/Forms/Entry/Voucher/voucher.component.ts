@@ -8,7 +8,7 @@ import { MatOption } from '@angular/material/core';
 import { AppService } from 'src/app/service/app.service';
 import { ConfirmationDialog } from '../../Dialog/confirmation-dialog/confirmation-dialog.component';
 import { CommonUtility } from 'src/app/shared/common-utility';
-import { forkJoin, map } from 'rxjs';
+import { combineLatest, forkJoin, map } from 'rxjs';
 
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { DatePipe } from '@angular/common';
@@ -33,6 +33,9 @@ export class VoucherComponent implements OnInit {
   vouTypeList:any = [];
   DR: string = "DR";
   CR: string = "CR";
+  amountLabel: any;
+  vouNo: any;
+  totalAmount: any;
   gridApi: any;
   agGridOptions: any = {
     defaultColDef: {
@@ -78,6 +81,7 @@ export class VoucherComponent implements OnInit {
     this.addVouDetail();
     this.initApiCalls();
     this.watchVouTypeChanges();
+    this.watchVouDetailsChanges();
 
   }
 
@@ -96,6 +100,32 @@ export class VoucherComponent implements OnInit {
         // Show the Contra Account field and reapply validation if needed
         contraAcControl.setValidators(Validators.required); // Add back validation
         contraAcControl.updateValueAndValidity();
+      }
+    });
+  }
+  
+  watchVouDetailsChanges() {
+    combineLatest([
+      this.voucherForm.get('vouDetails').valueChanges,
+      this.voucherForm.get('VouType').valueChanges
+    ]).subscribe(([details, vouType]) => {
+      let DRAmount = 0;
+      let CRAmount = 0;
+      details.forEach((detail, index) => {
+        const amountControl = this.voucherForm.get(`vouDetails.${index}.Amount`);
+        const drCrControl = this.voucherForm.get(`vouDetails.${index}.DRCR`);
+
+        if(drCrControl.value == "DR"){
+          DRAmount += parseFloat(amountControl.value); 
+        } else if(drCrControl.value == "CR") {
+          CRAmount += parseFloat(amountControl.value);
+        }
+      });
+
+      if (['CV', 'BV'].includes(vouType)) {
+        const calCulatedVal = DRAmount - CRAmount;
+        this.totalAmount = Math.abs(calCulatedVal);
+        this.amountLabel = calCulatedVal < 0 ? 'CR' : 'DR';
       }
     });
   }
@@ -231,7 +261,8 @@ export class VoucherComponent implements OnInit {
     // Reset the form and set the 'vouMasterId' to 0
     myForm.reset();
     myForm.get('vouMasterId').setValue(0);
-  
+    this.totalAmount = 0;
+    this.amountLabel = '';
     // Clear errors for top-level controls
     Object.keys(myForm.controls).forEach(key => {
       myForm.get(key).setErrors(null);
@@ -319,6 +350,7 @@ export class VoucherComponent implements OnInit {
 
   openEditBrokerageDetails(params) {
     this._entryService.editVoucher(params.vouMasterId).subscribe((data)=>{
+      this.vouNo = data.vouNo;
      this.voucherForm.patchValue({
       'vouMasterId': data.vouMasterId,
       'VouType': data.vouType,

@@ -21,7 +21,7 @@ export class SelfShareTabComponent implements OnInit {
 
   @Input() selectedAccountId: number;
   public acSelfShareForm: UntypedFormGroup;
-  accountSelfShareList: any;
+  accountSelfShareList: any = [];
 
   applyOnFileShare: any[];
   exchangeList: any[];

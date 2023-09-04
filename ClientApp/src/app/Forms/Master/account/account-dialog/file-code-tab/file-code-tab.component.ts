@@ -20,7 +20,7 @@ export class FileCodeTabComponent implements OnInit {
 
   @Input() selectedAccountId: number;
   public itemForm: UntypedFormGroup;
-  interestMasterList: any;
+  interestMasterList: any = [];
   exchangeList: any[];
   filterExchangeList: any[];
   agGridOptions: any = {

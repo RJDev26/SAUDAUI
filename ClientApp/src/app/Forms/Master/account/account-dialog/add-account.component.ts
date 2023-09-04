@@ -342,7 +342,8 @@ onInputBrokerChange(event: any) {
       //const body = JSON.stringify(addFormData);
       this._masterService.saveAccount(body).subscribe(result => {
         console.log("result", result);
-        this.dialogRef.close();
+        this.showToaster(result);
+        // this.dialogRef.close();
       }, err => {
         console.log(err);
       });

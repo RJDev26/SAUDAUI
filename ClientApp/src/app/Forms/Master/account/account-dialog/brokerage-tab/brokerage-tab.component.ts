@@ -26,7 +26,7 @@ export class BrokerageTabComponent implements OnInit {
 
 
   brokerageForm: FormGroup;
-  brokerageList: any;
+  brokerageList: any = [];
   exchangeList: any;
   instrumentList: any;
   itemList: any;
@@ -44,9 +44,6 @@ export class BrokerageTabComponent implements OnInit {
   }
 
   columnDefsBrok = [
-    {
-      headerName: 'Action', field: 'fileIcon', cellRenderer: this.actionCellRenderer, resizable: true
-    },
     { headerName: 'ApplyOn', field: 'applyOnName', filter: true, sorting: true, resizable: true },
     { headerName: 'Apply OnQty', field: 'applyOnQtyName', filter: true, sorting: true, resizable: true },
     { field: 'Intraday BrokRate', headerName: 'IntradayBrokRate', filter: true, sorting: true, resizable: true, valueFormatter: params => CommonUtility.formatNumber(params.data.intradayBrokRate), type: 'rightAligned' },
@@ -70,42 +67,9 @@ export class BrokerageTabComponent implements OnInit {
   }
 
   bindBrokerageControls() {
-    this.brokerageForm = this.formBuilder.group({
-      'exchangeId': ['', Validators.required],
-      'applyOn': ['', Validators.required],
-      'applyOnQty': ['', Validators.required],
-      'itemId': ['', Validators.required],
-      'instrumentType': ['', Validators.required],
-      'deliveryBrokRate': ['', Validators.required],
-      'intradayBrokRate': ['', Validators.required],
-      'rateRange1': ['', Validators.required],
-      'rateRange2': ['', Validators.required],
-      'fromDt': ['', Validators.required],
-      'accountId': [this.selectedAccountId, Validators.required],
-      'toDt': ['', Validators.required],
-      'intradaySingleSideonly': [false],
-      'id': [0, Validators.required],
-    });
-    this.initialApiCalls();
     if(this.selectedAccountId){
       this.getBrokerageSetupList();
     }
-  }
-
-  initialApiCalls() {
-    forkJoin([ this._masterService.getExchangeName(),
-    this._masterService.getInstrumentList(),
-    this._masterService.getItemListDrp(),
-    this._masterService.getApplyOnQtyDDL(),
-    this._masterService.getApplyOnDDL()]).pipe(map(response => {
-      this.exchangeList = response[0];
-      this.instrumentList = response[1];
-      
-      this.itemList = response[2];
-      this.brokApplyOnQty = response[3];
-      this.brokApplyOn = response[4];
-    })).subscribe(res => {
-    });
   }
 
 public actionCellRenderer(params: any) {
@@ -131,36 +95,7 @@ getBrokerageSetupList() {
   });
 }
 
-getSelectedBrokerageInfo(brokId) {
-  this._masterService.getBrokerageSetupId(brokId).subscribe((res) => {
-    const fromDate = new Date(res.fromDT);
-    const toDate = new Date(res.toDT);
-     const formattedFromDate = formatDate(fromDate, 'yyyy-MM-dd', 'en-US');
-    ///  const formattedToDate = formatDate(toDate, 'yyyy-MM-dd', 'en-US');
-    this.brokerageForm.patchValue({
-      accountId: res.accountId,
-      exchangeId: res.exchangeId,
-      applyOn: res.applyOn,
-      applyOnQty: res.applyOnQty,
-      itemId: res.itemId,
-      fromDt: formatDate(fromDate, 'yyyy-MM-dd', 'en-US') ,
-      toDt: res.toDT,
-      instrumentType: res.instrumentType,
-      deliveryBrokRate: res.deliveryBrokRate,
-      intradayBrokRate: res.intradayBrokRate,
-      rateRange1: res.rateRange1,
-      rateRange2: res.rateRange2,
-      intradaySingleSideonly: res.intradaySingleSideonly,
-      id: brokId
-    });
-  });
-}
 onBrokerageClick(params: any) {
-
-  if (params.event.target.dataset.action == "edit") {
-    this.getSelectedBrokerageInfo(params.data.id)
-
-  }
   if (params.event.target.dataset.action == "delete") {
     const dialogRef = this.dialog.open(ConfirmationDialog, {
       data: {
