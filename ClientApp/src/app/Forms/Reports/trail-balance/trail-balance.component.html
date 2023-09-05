@@ -5,7 +5,7 @@
           <div class="dropdown-wrapper">
             <mat-form-field class="select-slab-mat" appearance="outline">
               <mat-label>Select Branch</mat-label>
-              <mat-select #select  [(ngModel)]="branchIds" placeholder="Select Branch" (selectionChange)="onBranchChange($event)" panelClass="custom-select-panel">
+              <mat-select #select  [(ngModel)]="branchIds" placeholder="Select Branch" panelClass="custom-select-panel">
                 <input class="milti-search-box" #multiUserSearch type="text" autocomplete="off" matInput placeholder="Search Branch" (input)="onInputChange($event)"/>
                 <mat-option *ngFor="let option of filteredProviders" [value]="option.id">
                   {{ option.name }}
@@ -20,7 +20,7 @@
           <div class="dropdown-wrapper">
             <mat-form-field appearance="outline" class="calendar">
               <mat-label>Date</mat-label>
-              <input matInput [matDatepicker]="picker1" [(ngModel)]="fromDt" (ngModelChange)="onFromDateChange()">
+              <input matInput [matDatepicker]="picker1" [(ngModel)]="fromDt">
               <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
               <mat-datepicker #picker1></mat-datepicker>
             </mat-form-field>
@@ -41,7 +41,6 @@
                          [rowHeight]="31"
                          [columnDefs]="columnDefs"
                          [defaultColDef]="agGridOptions.defaultColDef"
-                         (cellClicked)="onGridClick($event)"
                          (gridReady)="onGridReady($event)"
                           headerHeight="34"
                           domLayout="autoHeight">

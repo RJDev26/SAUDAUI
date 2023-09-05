@@ -52,7 +52,6 @@ import { SubLockBrokerageComponent } from './sub-brokerage-setup/sub-lock-broker
 import { SharingSetupComponent } from './sharing-setup/sharing-setup.component';
 import { AddSharingSetupComponent } from './sharing-setup/add-sharing-setup/add-sharing-setup.component';
 import { LockSharingSetupComponent } from './sharing-setup/lock-sharing-setup/lock-sharing-setup.component';
-import { UserRoleComponent } from '../User/user.component';
 import { InviteUserComponent } from '../User/invite-user/invite-user.component';
 
 export const routes: Routes = [
@@ -75,7 +74,6 @@ export const routes: Routes = [
   { path: 'account-head', component: AccountHeadComponent, data: { breadcrumb: 'Account Head' } },
   { path: 'symbol-mapping', component: SymbolMappingComponent, data: { breadcrumb: 'Symbol Mapping' } },
   { path: 'item-group', component: ItemGroupComponent, data: { breadcrumb: 'Item Group' } },
-  { path: 'users-roles', component: UserRoleComponent, data: { breadcrumb: 'Users and Roles' } }
 ];
 
 @NgModule({
@@ -135,7 +133,6 @@ export const routes: Routes = [
      SharingSetupComponent,
      AddSharingSetupComponent,
      LockSharingSetupComponent,
-     UserRoleComponent,
      InviteUserComponent
   ],
   providers: [

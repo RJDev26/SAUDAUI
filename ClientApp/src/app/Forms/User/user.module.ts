@@ -10,7 +10,8 @@ import { PipesModule } from '../../theme/pipes/pipes.module';
 import { UserRoleComponent } from './user.component';
 
 export const routes: Routes = [
-  { path: '', component: UserRoleComponent, pathMatch: 'full' }
+  { path: '', component: UserRoleComponent, pathMatch: 'full' },
+  { path: 'users-roles', component: UserRoleComponent, data: { breadcrumb: 'Users and Roles' } }
 ];
 
 @NgModule({
