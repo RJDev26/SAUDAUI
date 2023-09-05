@@ -52,6 +52,28 @@ export class TrailBalanceComponent implements OnInit {
     // this.getBrokerageSetupList();
   }
 
+  calculateTotalDebit(): number {
+    // Replace this logic with your actual calculation logic
+    let totalDebit = 0;
+    for (const item of this.brokeragesetupList) {
+      if (item.drAmt < 0) {
+        totalDebit += item.drAmt;
+      }
+    }
+    return totalDebit;
+  }
+  
+  calculateTotalCredit(): number {
+    // Replace this logic with your actual calculation logic
+    let totalCredit = 0;
+    for (const item of this.brokeragesetupList) {
+      if (item.crAmt > 0) {
+        totalCredit += item.crAmt;
+      }
+    }
+    return totalCredit;
+  }
+
   agGridOptions: any = {
     defaultColDef: {
       filter: true,
@@ -63,7 +85,7 @@ export class TrailBalanceComponent implements OnInit {
     
     },
     suppressRowHoverHighlight: true,
-   
+    domLayout: 'autoHeight', 
     //suppressSizeToFit: true,
     
   }
@@ -92,7 +114,13 @@ export class TrailBalanceComponent implements OnInit {
     };
     this._reportsService.getTrialBalance(req).subscribe((results) => {
       console.log('first', results)
-      this.brokeragesetupList = results.data;       
+      this.brokeragesetupList = results.data;   
+      this.brokeragesetupList.push({
+        drShortCode: 'Total Debit',
+        drAmt: this.calculateTotalDebit(),
+        crShortCode: 'Total Credit',
+        crAmt: this.calculateTotalCredit(),
+      });    
     });
   }
 
