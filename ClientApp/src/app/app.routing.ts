@@ -26,6 +26,7 @@ export const routes: Routes = [
         component: PagesComponent, children: [
             { path: '', loadChildren: () => import('./pages/dashboard/dashboard.module').then(m => m.DashboardModule), data: { breadcrumb: 'Dashboard' } },
             { path: 'users', loadChildren: () => import('./pages/users/users.module').then(m => m.UsersModule), data: { breadcrumb: 'Users' } },
+            { path: 'user-roles', loadChildren: () => import('../app/Forms/User/user.module').then(m => m.UserModule), data: { breadcrumb: 'Users & Roles' } },
             { path: 'master', loadChildren: () => import('./Forms/Master/master.module').then(m => m.MasterModule), data: { breadcrumb: 'Master' } },
             { path: 'ui', loadChildren: () => import('./pages/ui/ui.module').then(m => m.UiModule), data: { breadcrumb: 'UI' } },
             { path: 'form-controls', loadChildren: () => import('./pages/form-controls/form-controls.module').then(m => m.FormControlsModule), data: { breadcrumb: 'Form Controls' } },

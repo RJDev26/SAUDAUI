@@ -1,0 +1,25 @@
+<h2 class="heading">Invite User</h2>
+<a (click)="close()" class="close-btn">
+    <span class="material-symbols-outlined">
+      <mat-icon>close</mat-icon>
+    </span>
+</a>
+<form [formGroup]="inviteUserForm" (ngSubmit)="onSubmit(inviteUserForm.value)" fxLayout="row wrap" class="user-form">
+    <div class="white-block pb-5">
+        <h3><span>Item</span></h3>
+        <div class="tab-party-details-parent">
+            <div fxFlex="100" fxFlex.gt-sm="20" fxFlex.sm="50">
+                <mat-form-field class="example-full-width" appearance="outline">
+                  <mat-label>Name</mat-label>
+                  <input matInput autocomplete="off" placeholder="Name" formControlName="name" type="text">
+                </mat-form-field>
+            </div>
+            <div fxFlex="100" fxFlex.gt-sm="20" fxFlex.sm="50">
+                <mat-form-field class="example-full-width" appearance="outline">
+                  <mat-label>Email</mat-label>
+                  <input matInput autocomplete="off" placeholder="Email" formControlName="email" type="text">
+                </mat-form-field>
+            </div>
+        </div>
+    </div>
+</form>

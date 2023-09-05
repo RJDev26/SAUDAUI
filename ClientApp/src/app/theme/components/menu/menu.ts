@@ -20,6 +20,7 @@ export const verticalMenuItems = [
   new Menu(3, 'Account Head', '/master/account-head', null, 'manage_accounts', null, false, 2),
   new Menu(3, 'Symbol Mapping', '/master/symbol-mapping', null, 'account_tree', null, false, 2),
   new Menu(3, 'Item Group', '/master/item-group', null, 'group_work', null, false, 2),
+  new Menu(4, 'Users & Roles', '/user-roles', null, 'supervisor_account', null, false, 0),
   new Menu(4, 'Users', '/users', null, 'supervisor_account', null, false, 0),
   new Menu(5, 'Entries', null, null, 'card_membership', null, true, 0),
 

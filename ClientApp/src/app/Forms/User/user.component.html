@@ -1,0 +1,15 @@
+<div class="row">
+    <div fxLayout="row" class="mt-2 flex-end">
+      <button mat-raised-button color="accent" (click)="inviteUserDialog(null)" class="icon-btn ml-15">
+        <mat-icon>forward_to_inbox</mat-icon> Invite User
+      </button>
+    </div>
+</div>
+<mat-tab-group (selectedTabChange)="handleTabChange($event)">
+    <mat-tab label="Users">
+        Users
+    </mat-tab>
+    <mat-tab label="Roles">
+        Roles
+    </mat-tab>
+</mat-tab-group>
