@@ -731,5 +731,29 @@ input {
         }
     }
 }
-
+/* component-styles.css or your styles file */
+.trail-balance{
+    .red-text {
+        color: red;
+        text-align: right;
+      }
+      
+      .green-text {
+        color: green;
+        text-align: right;
+      }
+}
+.mat-snack-bar-container {
+    &.red-text {
+        color: #ff4848 !important;
+        .mat-simple-snackbar-action{
+            color: #ff4848 !important;
+        }
+      }
+      
+      &green-text {
+        color: green;
+      }
+}
+  
 //ag-row-no-focus ag-row ag-row-level-0 ag-row-position-absolute ag-row-last

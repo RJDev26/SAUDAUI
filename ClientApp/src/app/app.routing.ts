@@ -43,6 +43,7 @@ export const routes: Routes = [
             { path: 'blank', component: BlankComponent, data: { breadcrumb: 'Blank page' } },
             { path: 'search', component: SearchComponent, data: { breadcrumb: 'Search' } },
             { path: 'entry', loadChildren: () => import('./Forms/Entry/entry.module').then(m => m.EntryModule), data: { breadcrumb: 'Entry' } },
+            { path: 'reports', loadChildren: () => import('./Forms/Reports/reports.module').then(m => m.ReportsModule), data: { breadcrumb: 'Reports' } },
            
         ]
     },
