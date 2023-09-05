@@ -86,6 +86,13 @@ export class TrailBalanceComponent implements OnInit {
     },
     suppressRowHoverHighlight: true,
     domLayout: 'autoHeight', 
+    rowClass: (params) => {
+      // Check if the row is a total row (you can use your own criteria)
+      if (params.data && (params.data.drShortCode === 'Total Debit' || params.data.crShortCode === 'Total Credit')) {
+        return 'total-row'; // Apply the CSS class for total rows
+      }
+      return ''; // Return an empty string for other rows
+    },
     //suppressSizeToFit: true,
     
   }
@@ -95,13 +102,13 @@ export class TrailBalanceComponent implements OnInit {
     { headerName: 'Code',  field: 'drShortCode', filter: true, sorting: true, resizable: true },
     { headerName: 'Account',  field: 'drName', filter: true, sorting: true, resizable: true },
     { field: 'drAmt',   headerName: 'Debit', filter: true, sorting: true, resizable: true, valueFormatter: this.formatCurrency , cellClass: (params) => {
-      return params.value < 0 ? 'red-text' : 'green-text';
+      return 'red-text';
     }},
     { headerName: 'No.', field: 'drAcId', filter: true, sorting: true, resizable: true},    
     { headerName: 'Code',   field: 'crShortCode', filter: true, sorting: true, resizable: true },
     { headerName: 'Account', field: 'crName',   filter: true, sorting: true, resizable: true },
     { headerName: 'Credit', field: 'crAmt',  filter: true, sorting: true, resizable: true, valueFormatter: this.formatCurrency , cellClass: (params) => {
-      return params.value < 0 ? 'red-text' : 'green-text';
+      return 'green-text';
     } },
     { headerName: 'No.', field: 'crAcId',  filter: true, sorting: true, resizable: true },
     

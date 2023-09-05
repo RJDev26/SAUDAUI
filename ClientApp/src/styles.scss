@@ -737,6 +737,13 @@ input {
         color: red;
         text-align: right;
       }
+
+      .ag-row-last {
+        &:hover{
+            background-color: #dddddd !important;    
+        }
+        background-color: #dddddd !important;
+      }
       
       .green-text {
         color: green;
