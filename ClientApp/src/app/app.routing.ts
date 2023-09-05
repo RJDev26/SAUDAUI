@@ -46,7 +46,7 @@ export const routes: Routes = [
         ]
     },
     { path: 'landing', loadChildren: () => import('./pages/landing/landing.module').then(m => m.LandingModule) },
-    { path: 'login', loadChildren: () => import('./pages/login/login.module').then(m => m.LoginModule) },
+    { path: 'login', loadChildren: () => import('../app/Forms/Login/login.module').then(m => m.LoginModule) },
     { path: 'register', loadChildren: () => import('./pages/register/register.module').then(m => m.RegisterModule) },
     { path: 'error', component: ErrorComponent, data: { breadcrumb: 'Error' } },
     { path: '**', component: NotFoundComponent }
