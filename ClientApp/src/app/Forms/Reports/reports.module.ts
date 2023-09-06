@@ -6,10 +6,12 @@ import { SharedModule } from '../../shared/shared.module';
 import { AgGridModule } from 'ag-grid-angular';
 import { MAT_DATE_LOCALE } from '@angular/material/core';
 import { TrailBalanceComponent } from './trail-balance/trail-balance.component';
+import { LedgerReportComponent } from './ledger-report/ledger-report.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'reports', pathMatch: 'full' },
   { path: 'trail-balance', component: TrailBalanceComponent, data: { breadcrumb: 'Trail Balance' } },
+  { path: 'ledger-report', component: LedgerReportComponent, data: { breadcrumb: 'Ledger Report' } },
 ];
 
 @NgModule({
@@ -23,7 +25,8 @@ export const routes: Routes = [
   ],
   declarations: [
   
-    TrailBalanceComponent
+    TrailBalanceComponent,
+        LedgerReportComponent
   ],
   providers: [
     DatePipe,

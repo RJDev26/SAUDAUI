@@ -14,11 +14,11 @@ import { MasterService } from '../../Master/master.service';
 import { ReportsService } from '../reports.service';
 
 @Component({
-  selector: 'app-trail-balance',
-  templateUrl: './trail-balance.component.html',
-  styleUrls: ['./trail-balance.component.scss']
+  selector: 'app-ledger-report',
+  templateUrl: './ledger-report.component.html',
+  styleUrls: ['./ledger-report.component.scss']
 })
-export class TrailBalanceComponent implements OnInit {
+export class LedgerReportComponent implements OnInit {
 
   @ViewChild('select') select: MatSelect;
   @ViewChild('selectAccount') selectAccount: MatSelect;
@@ -49,26 +49,28 @@ export class TrailBalanceComponent implements OnInit {
 
   ngOnInit() {
     this.fetchDropdownData();
-    // this.getBrokerageSetupList();
+    this.getBrokerageSetupList({
+      "account": "7,6,5,4",
+      "fromDate": "2023-09-02",
+      "toDate": "2023-09-07"
+  });
   }
 
   calculateTotalDebit(): number {
-    // Replace this logic with your actual calculation logic
     let totalDebit = 0;
     for (const item of this.brokeragesetupList) {
-      if (item.drAmt < 0) {
-        totalDebit += item.drAmt;
+      if (item.debit < 0) {
+        totalDebit += item.debit;
       }
     }
     return totalDebit;
   }
   
   calculateTotalCredit(): number {
-    // Replace this logic with your actual calculation logic
     let totalCredit = 0;
     for (const item of this.brokeragesetupList) {
-      if (item.crAmt > 0) {
-        totalCredit += item.crAmt;
+      if (item.credit > 0) {
+        totalCredit += item.credit;
       }
     }
     return totalCredit;
@@ -84,42 +86,67 @@ export class TrailBalanceComponent implements OnInit {
       minWidth: 100,
     
     },
-    suppressRowHoverHighlight: true,
-    domLayout: 'autoHeight', 
-    rowClass: (params) => {
-      // Check if the row is a total row (you can use your own criteria)
-      if (params.data && (params.data.drShortCode === 'Total Debit' || params.data.crShortCode === 'Total Credit')) {
-        return 'total-row'; // Apply the CSS class for total rows
-      }
-      return ''; // Return an empty string for other rows
+    autoGroupColumnDef: {
+      headerName: 'Account',
+      field: 'account',
+      minWidth: 200,
+      cellRenderer: 'agGroupCellRenderer',
+      cellRendererParams: {
+        suppressCount: true,
+      },
+      aggFunc: (params) => {
+        const debitTotal = params.values.reduce((total, value) => total + (value.debit || 0), 0);
+        const creditTotal = params.values.reduce((total, value) => total + (value.credit || 0), 0);
+        return {
+          account: params.key, 
+          debit: debitTotal,   
+          credit: creditTotal, 
+        };
+      },
     },
+    animateRows: true,
+    groupUseEntireRow: true,
+    groupRowAggNodes: (nodes) => {
+      const debitTotal = nodes.reduce((total, node) => total + (node.data.debit || 0), 0);
+      const creditTotal = nodes.reduce((total, node) => total + (node.data.credit || 0), 0);
+      return {
+        debit: debitTotal,
+        credit: creditTotal,
+      };
+    },
+    suppressRowHoverHighlight: true,
+    domLayout: 'autoHeight',
+    
     //suppressSizeToFit: true,
     
   }
   onGridReady(event) { }
 
   columnDefs = [
-    { headerName: 'Code',  field: 'drShortCode', filter: true, sorting: true, resizable: true },
-    { headerName: 'Account',  field: 'drName', filter: true, sorting: true, resizable: true },
-    { field: 'drAmt',   headerName: 'Debit', filter: true, sorting: true, resizable: true, valueFormatter: this.formatCurrency , cellClass: (params) => {
+    { headerName: 'Vou No',  field: 'vouNo', filter: true, sorting: true, resizable: true },
+    { headerName: 'Date',  field: 'vouDate', filter: true, sorting: true, resizable: true },
+    { headerName: 'Narration', field: 'narration', filter: true, sorting: true, resizable: true},    
+    { headerName: 'Account', field: 'account', filter: true, sorting: true, resizable: true, rowGroup: true, hide: false},    
+    { field: 'debit',   headerName: 'Debit', filter: true, sorting: true, resizable: true, valueFormatter: this.formatCurrency , cellClass: (params) => {
       return 'red-text';
     }},
-    { headerName: 'No.', field: 'drAcId', filter: true, sorting: true, resizable: true},    
-    { headerName: 'Code',   field: 'crShortCode', filter: true, sorting: true, resizable: true },
-    { headerName: 'Account', field: 'crName',   filter: true, sorting: true, resizable: true },
-    { headerName: 'Credit', field: 'crAmt',  filter: true, sorting: true, resizable: true, valueFormatter: this.formatCurrency , cellClass: (params) => {
+    { headerName: 'Credit', field: 'credit',  filter: true, sorting: true, resizable: true, valueFormatter: this.formatCurrency , cellClass: (params) => {
       return 'green-text';
     } },
-    { headerName: 'No.', field: 'crAcId',  filter: true, sorting: true, resizable: true },
+    { headerName: 'Balance', field: 'balance',  filter: true, sorting: true, resizable: true, valueFormatter: this.formatCurrency , cellClass: (params) => {
+      return 'green-text';
+    } },
     
   ];
 
-  getBrokerageSetupList() {
-    var req = {
-      "branch": String(this.branchIds),
-      "asOnDate": this.datePipe.transform(this.fromDt, 'yyyy-MM-dd'),
-    };
-    this._reportsService.getTrialBalance(req).subscribe((results) => {
+  getBrokerageSetupList(req) {
+    // const accountIds = this.accountIds.filter((val) => val != "-1");
+    // var req = {
+    //   "account": accountIds.join(','),
+    //   "fromDate": this.datePipe.transform(this.fromDt, 'yyyy-MM-dd'),
+    //   "toDate": this.datePipe.transform(this.toDt, 'yyyy-MM-dd'),
+    // };
+    this._reportsService.getLedger(req).subscribe((results) => {
       console.log('first', results)
       this.brokeragesetupList = results.data;   
       this.brokeragesetupList.push({
@@ -152,15 +179,15 @@ export class TrailBalanceComponent implements OnInit {
   }
 
   areRequiredValuesSelected(): boolean {
-    return this.branchIds && this.fromDt;
+    return this.accountIds && this.fromDt && this.toDt;
   }
 
   fetchDropdownData() {
     forkJoin([
-      this._masterService.getBranchDDLList(), 
+      this._masterService.getAccount(),
     ]).pipe(map(response => {
-      this.branchList = response[0];
-      this.filteredProviders = response[0];
+      this.accountList = response[0];
+      this.filteredAccountList = response[0];
     })).subscribe(res => {
       
     });
@@ -190,5 +217,28 @@ export class TrailBalanceComponent implements OnInit {
 }
 
   addBrokerage(event: any) { }
+
+  accountAllSelection()
+  {
+    var isAllChecked = this.selectAccount.options.first.selected;
+    this.selectAccount.options.forEach(
+      (item: MatOption) => {
+
+        if (isAllChecked) { item.select(); }
+        else { item.deselect() }
+      }
+
+    );
+
+  }
+
+  onInputAccountListChange(event: any) {
+    const searchInput = event.target.value.toLowerCase();
+
+    this.filteredAccountList = this.accountList.filter((data) => {
+      const prov = data.name.toLowerCase();
+      return prov.includes(searchInput);
+    });
+  }
 
 }
