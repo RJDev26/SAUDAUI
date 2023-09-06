@@ -49,11 +49,11 @@ export class LedgerReportComponent implements OnInit {
 
   ngOnInit() {
     this.fetchDropdownData();
-    this.getBrokerageSetupList({
-      "account": "7,6,5,4",
-      "fromDate": "2023-09-02",
-      "toDate": "2023-09-07"
-  });
+  //   this.getBrokerageSetupList({
+  //     "account": "7,6,5,4",
+  //     "fromDate": "2023-09-02",
+  //     "toDate": "2023-09-07"
+  // });
   }
 
   calculateTotalDebit(): number {
