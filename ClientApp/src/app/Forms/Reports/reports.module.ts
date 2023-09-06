@@ -9,7 +9,7 @@ import { TrailBalanceComponent } from './trail-balance/trail-balance.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'reports', pathMatch: 'full' },
-  { path: 'trail-balance', component: TrailBalanceComponent, data: { breadcrumb: 'Reports' } },
+  { path: 'trail-balance', component: TrailBalanceComponent, data: { breadcrumb: 'Trail Balance' } },
 ];
 
 @NgModule({
