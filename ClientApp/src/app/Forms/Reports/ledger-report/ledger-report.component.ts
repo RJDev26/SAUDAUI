@@ -139,13 +139,13 @@ export class LedgerReportComponent implements OnInit {
     
   ];
 
-  getBrokerageSetupList(req) {
-    // const accountIds = this.accountIds.filter((val) => val != "-1");
-    // var req = {
-    //   "account": accountIds.join(','),
-    //   "fromDate": this.datePipe.transform(this.fromDt, 'yyyy-MM-dd'),
-    //   "toDate": this.datePipe.transform(this.toDt, 'yyyy-MM-dd'),
-    // };
+  getBrokerageSetupList() {
+    const accountIds = this.accountIds.filter((val) => val != "-1");
+    var req = {
+      "account": accountIds.join(','),
+      "fromDate": this.datePipe.transform(this.fromDt, 'yyyy-MM-dd'),
+      "toDate": this.datePipe.transform(this.toDt, 'yyyy-MM-dd'),
+    };
     this._reportsService.getLedger(req).subscribe((results) => {
       console.log('first', results)
       this.brokeragesetupList = results.data;   
