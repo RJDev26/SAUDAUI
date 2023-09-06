@@ -27,4 +27,8 @@ export class InviteUserComponent implements OnInit {
     ngOnInit() {
         
     }
+
+    close(): void {
+        this.dialogRef.close();
+    }
 }
