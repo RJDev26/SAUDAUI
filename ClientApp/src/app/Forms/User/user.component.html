@@ -1,15 +1,25 @@
 <div class="row">
     <div fxLayout="row" class="mt-2 flex-end">
       <button mat-raised-button color="accent" (click)="inviteUserDialog(null)" class="icon-btn ml-15">
-        <mat-icon>forward_to_inbox</mat-icon> Invite User
+        <mat-icon>add</mat-icon> Create User
       </button>
     </div>
 </div>
 <mat-tab-group>
-    <mat-tab label="Users">
-        Users
-    </mat-tab>
-    <mat-tab label="Roles">
-        Roles
-    </mat-tab>
+  <mat-tab label="Users">
+    <div class="col-xl-12 mt-2">
+      <ag-grid-angular style=" height: 535px;"
+                        class="ag-theme-material"
+                        [rowHeight]="31"
+                        [rowData]="userList"
+                        [pagination]="true"
+                        [columnDefs]="columnDefs"
+                        [defaultColDef]="agGridOptions.defaultColDef"
+                        headerHeight="34">
+      </ag-grid-angular>
+    </div>
+  </mat-tab>
+  <mat-tab label="Roles">
+    Roles
+  </mat-tab>
 </mat-tab-group>

@@ -8,6 +8,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { SharedModule } from '../../shared/shared.module';
 import { PipesModule } from '../../theme/pipes/pipes.module';
 import { UserRoleComponent } from './user.component';
+import { AgGridModule } from 'ag-grid-angular';
 
 export const routes: Routes = [
   { path: '', component: UserRoleComponent, pathMatch: 'full' }
@@ -22,7 +23,8 @@ export const routes: Routes = [
     ReactiveFormsModule,
     NgxPaginationModule,
     SharedModule,
-    PipesModule    
+    PipesModule,
+    AgGridModule  
   ],
   declarations: [
     UserRoleComponent,

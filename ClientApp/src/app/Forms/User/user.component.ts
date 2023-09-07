@@ -13,10 +13,37 @@ import { Settings } from "src/app/app.settings.model";
 })
 
 export class UserRoleComponent {
+    userList: any=[];
     public settings: Settings;
     constructor(public appSettings: AppSettings, private _appService: AppService, public dialog: MatDialog, private _masterService: MasterService) {
-        this.settings = this.appSettings.settings;
-    
+        this.settings = this.appSettings.settings;    
+    }
+
+    agGridOptions: any = {
+        defaultColDef: {
+          filter: true,
+          flex: 1,
+          sortable: true,
+          wraptext: true,
+          resizable: true
+        }
+    }
+
+    columnDefs = [
+        { headerName: 'First Name', field: 'firstName', filter: true, sorting: true, resizable: true },
+        { headerName: 'Last Name', field: 'lastName', filter: true, sorting: true, resizable: true },
+        { headerName: 'User Name', field: 'userName', filter: true, sorting: true, resizable: true },
+        { headerName: 'Email', field: 'email', filter: true, sorting: true, resizable: true },    
+    ];
+
+    getUserList() {
+        this._appService.getUserList().subscribe((results) => {
+            this.userList = results.data;         
+        });
+    }
+
+    ngOnInit() {
+        this.getUserList();
     }
 
     public inviteUserDialog(user) {

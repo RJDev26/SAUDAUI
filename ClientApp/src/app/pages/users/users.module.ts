@@ -10,6 +10,8 @@ import { PipesModule } from '../../theme/pipes/pipes.module';
 import { UsersComponent } from './users.component';
 import { UsersData } from './users.data';
 import { UserDialogComponent } from './user-dialog/user-dialog.component';
+import { AgGridModule } from 'ag-grid-angular';
+import { UserRoleComponent } from 'src/app/Forms/User/user.component';
 
 export const routes: Routes = [
   { path: '', component: UsersComponent, pathMatch: 'full' }
@@ -25,9 +27,11 @@ export const routes: Routes = [
     InMemoryWebApiModule.forRoot(UsersData, { delay: 500 }),
     NgxPaginationModule,
     SharedModule,
-    PipesModule    
+    PipesModule,
+    AgGridModule  
   ],
   declarations: [
+    UserRoleComponent,
     UsersComponent,
     UserDialogComponent,
   ] 

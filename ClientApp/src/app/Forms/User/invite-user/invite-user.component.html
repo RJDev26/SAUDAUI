@@ -1,25 +1,55 @@
-<h2 class="heading">Invite User</h2>
+<h2 class="heading">Create User</h2>
 <a (click)="close()" class="close-btn">
     <span class="material-symbols-outlined">
       <mat-icon>close</mat-icon>
     </span>
 </a>
-<form [formGroup]="inviteUserForm"  fxLayout="row wrap" class="user-form">
+<form [formGroup]="inviteUserForm" (ngSubmit)="onSubmit(inviteUserForm.value)" fxLayout="row wrap" class="user-form">
     <div class="white-block pb-5">
         <h3><span>Item</span></h3>
         <div class="tab-party-details-parent">
-            <div fxFlex="100" fxFlex.gt-sm="20" fxFlex.sm="50">
-                <mat-form-field class="example-full-width" appearance="outline">
-                  <mat-label>Name</mat-label>
-                  <input matInput autocomplete="off" placeholder="Name" formControlName="name" type="text">
-                </mat-form-field>
-            </div>
-            <div fxFlex="100" fxFlex.gt-sm="20" fxFlex.sm="50">
-                <mat-form-field class="example-full-width" appearance="outline">
-                  <mat-label>Email</mat-label>
-                  <input matInput autocomplete="off" placeholder="Email" formControlName="email" type="text">
-                </mat-form-field>
-            </div>
+          <div fxFlex="100" fxFlex.gt-sm="20" fxFlex.sm="50">
+            <mat-form-field class="example-full-width" appearance="outline">
+              <mat-label>First Name</mat-label>
+                <input matInput autocomplete="off" placeholder="First Name" formControlName="FirstName" type="text">
+              </mat-form-field>
+          </div>
+          <div fxFlex="100" fxFlex.gt-sm="20" fxFlex.sm="50">
+            <mat-form-field class="example-full-width" appearance="outline">
+              <mat-label>Last Name</mat-label>
+              <input matInput autocomplete="off" placeholder="Last Name" formControlName="LastName" type="text">
+            </mat-form-field>
+          </div>
+          <div fxFlex="100" fxFlex.gt-sm="20" fxFlex.sm="50">
+            <mat-form-field class="example-full-width" appearance="outline">
+              <mat-label>User Name</mat-label>
+              <input matInput autocomplete="off" placeholder="User Name" formControlName="userName" type="text">
+            </mat-form-field>
+          </div>
+          <div fxFlex="100" fxFlex.gt-sm="20" fxFlex.sm="50">
+            <mat-form-field class="example-full-width" appearance="outline">
+              <mat-label>Email</mat-label>
+              <input matInput autocomplete="off" placeholder="Email" formControlName="email" type="text">
+            </mat-form-field>
+          </div>
+          <div fxFlex="100" fxFlex.gt-sm="20" fxFlex.sm="50">
+            <mat-form-field class="example-full-width" appearance="outline">
+              <mat-label>Password</mat-label>
+              <input matInput autocomplete="off" placeholder="Password" formControlName="Password" [type]="passwordHide ? 'password' : 'text'">
+              <mat-icon matSuffix (click)="passwordHide = !passwordHide">{{passwordHide ? 'visibility' : 'visibility_off'}}</mat-icon>
+            </mat-form-field>
+          </div>
+          <div fxFlex="100" fxFlex.gt-sm="20" fxFlex.sm="50">
+            <mat-form-field class="example-full-width" appearance="outline">
+              <mat-label>Confirm Password</mat-label>
+              <input matInput autocomplete="off" placeholder="Confirm Password" formControlName="ConfirmPassword" type="password" [type]="confirmPasswordHide ? 'password' : 'text'">
+              <mat-icon matSuffix (click)="confirmPasswordHide = !confirmPasswordHide">{{confirmPasswordHide ? 'visibility' : 'visibility_off'}}</mat-icon>
+            </mat-form-field>
+          </div>
         </div>
     </div>
+    <div fxFlex="100" class="mt-2 text-center space-between-btns">
+      <button mat-raised-button color="warn" (click)="close()">Cancel</button>            
+      <button mat-raised-button color="primary" class="uppercase" [disabled]="!inviteUserForm.valid" type="submit">Save</button> 
+  </div>
 </form>

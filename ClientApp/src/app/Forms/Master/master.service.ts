@@ -364,4 +364,8 @@ export class MasterService {
     return this.httpClient.get<any>(environment.apiBaseUrl + 'master/getAccountSelfShareList/' + accountId, { headers: this.headers })
   }
 
+  createUser(data): Observable<any> {
+    return this.httpClient.post<any>(environment.apiBaseUrl + 'User/createUser', data, { headers: this.headers });
+  }
+
 }

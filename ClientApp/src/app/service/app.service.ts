@@ -84,4 +84,8 @@ export class AppService {
   getPostVoucherDLL(): Observable<any> {
     return this.httpClient.get<any>(environment.apiBaseUrl + 'Common/getPostVoucherDLL', { headers: this.headers });
   }
+
+  getUserList():Observable<any>{
+    return this.httpClient.get<any>(environment.apiBaseUrl + 'User/getUserList',{headers:this.headers});
+  }
 }

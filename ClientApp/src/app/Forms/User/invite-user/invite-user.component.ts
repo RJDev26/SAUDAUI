@@ -11,21 +11,46 @@ import { forkJoin } from "rxjs";
 })
 export class InviteUserComponent implements OnInit {
     public inviteUserForm: UntypedFormGroup;
-
+    public passwordHide:boolean = true;
+    public confirmPasswordHide:boolean = true;
     constructor(private formBuilder: UntypedFormBuilder, public dialogRef: MatDialogRef<InviteUserComponent>, @Inject(MAT_DIALOG_DATA) public data: any, private _appService: MasterService) {
        
     }
 
     bindFormControls() {
         this.inviteUserForm = this.formBuilder.group({         
-          'name': ['', Validators.required],
+          'FirstName': ['', Validators.required],
+          'LastName': ['', Validators.required],
+          'userName': ['', Validators.required],
           'email': ['', Validators.required],
+          'Password': ['', Validators.required],
+          'ConfirmPassword': ['', Validators.required],
           'id': []
         });
     }
 
+    public onSubmit(values: Object): void {    
+        this.inviteUserForm.controls['FirstName'].setValue(String(this.inviteUserForm.get('FirstName').value));
+        this.inviteUserForm.controls['LastName'].setValue(String(this.inviteUserForm.get('LastName').value));
+        this.inviteUserForm.controls['userName'].setValue(String(this.inviteUserForm.get('userName').value));
+        this.inviteUserForm.controls['email'].setValue(String(this.inviteUserForm.get('email').value));
+        this.inviteUserForm.controls['Password'].setValue(String(this.inviteUserForm.get('Password').value));
+        this.inviteUserForm.controls['ConfirmPassword'].setValue(String(this.inviteUserForm.get('ConfirmPassword').value));
+    
+        var body = this.inviteUserForm.value;
+    
+        if (this.inviteUserForm.valid) {
+          //const body = JSON.stringify(addFormData);
+          this._appService.createUser(body).subscribe(result => {
+            this.dialogRef.close();
+          }, err => {
+            console.log(err);
+          });
+        }
+    }
+
     ngOnInit() {
-        
+        this.bindFormControls();
     }
 
     close(): void {
