@@ -29,7 +29,30 @@ export class UserRoleComponent {
         }
     }
 
+    public actionCellRenderer(params: any) {
+        let eGui = document.createElement("div");
+        let editingCells = params.api.getEditingCells();
+        let isCurrentRowEditing = editingCells.some((cell: any) => {
+          return cell.rowIndex === params.node.rowIndex;
+        });
+        eGui.innerHTML = `<button class="material-icons action-button-edit" data-action="edit">edit </button>`;
+    
+        return eGui;
+    }
+
+    onGridClick(params: any) {
+        if (params.event.target.dataset.action == "edit")
+        {
+          this.inviteUserDialog(params.data.id);
+    
+        }
+    }
+
     columnDefs = [
+        {
+            headerName: 'Action', field: 'fileIcon', cellRenderer: this.actionCellRenderer, minWidth: 80,
+            maxWidth: 110, resizable: true, filter: false
+        },
         { headerName: 'First Name', field: 'firstName', filter: true, sorting: true, resizable: true },
         { headerName: 'Last Name', field: 'lastName', filter: true, sorting: true, resizable: true },
         { headerName: 'User Name', field: 'userName', filter: true, sorting: true, resizable: true },
