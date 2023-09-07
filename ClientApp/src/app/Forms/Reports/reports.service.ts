@@ -18,4 +18,8 @@ export class ReportsService {
     return this.httpClient.post<any>(environment.apiBaseUrl + 'Report/getTrialBalance', data, {headers:this.headers});
   }
 
+  getLedger(data):Observable<any>{
+    return this.httpClient.post<any>(environment.apiBaseUrl + 'Report/getLedger', data, {headers:this.headers});
+  }
+
 }

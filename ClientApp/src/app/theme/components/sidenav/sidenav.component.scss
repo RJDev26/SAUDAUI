@@ -46,7 +46,7 @@
     }       
     &.user-block-show{
         .ps{        
-            height: calc(100% - #{$toolbar-height + $sidenav-user-block-height}); 
+            height: calc(100% - #{$toolbar-height}); 
         }
     } 
 }
