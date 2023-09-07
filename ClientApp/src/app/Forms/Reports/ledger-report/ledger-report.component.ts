@@ -12,6 +12,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { DatePipe } from '@angular/common';
 import { MasterService } from '../../Master/master.service';
 import { ReportsService } from '../reports.service';
+import { EntryService } from '../../Entry/entry.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-ledger-report',
@@ -22,9 +24,12 @@ export class LedgerReportComponent implements OnInit {
 
   @ViewChild('select') select: MatSelect;
   @ViewChild('selectAccount') selectAccount: MatSelect;
+  @ViewChild('selectVouType') selectVouType: MatSelect;
   public settings: Settings;
   slabId: number;
   slabList: any[];
+  includeOpBal: boolean = true;
+  withinterest: boolean = true;
   fromDt: any;
   toDt: any;
   accountList: any[];
@@ -42,8 +47,11 @@ export class LedgerReportComponent implements OnInit {
   filteredAccountList: any[];
   brokeragesetupList: any = [];
   branchAllSellected: boolean = false;
+  vouTypeList: any
+  filteredVouTypeList: any;
+  vouTypeIds: any;
 
-  constructor(private datePipe: DatePipe, public snackBar: MatSnackBar, public appSettings: AppSettings, private _appService: AppService, public dialog: MatDialog, private _masterService: MasterService, private _reportsService: ReportsService) {
+  constructor(private router: Router, private _entryService: EntryService, private datePipe: DatePipe, public snackBar: MatSnackBar, public appSettings: AppSettings, private _appService: AppService, public dialog: MatDialog, private _masterService: MasterService, private _reportsService: ReportsService) {
     this.settings = this.appSettings.settings;
   }
 
@@ -122,39 +130,43 @@ export class LedgerReportComponent implements OnInit {
   }
   onGridReady(event) { }
 
-  columnDefs = [
-    { headerName: 'Vou No',  field: 'vouNo', filter: true, sorting: true, resizable: true },
-    { headerName: 'Date',  field: 'vouDate', filter: true, sorting: true, resizable: true },
-    { headerName: 'Narration', field: 'narration', filter: true, sorting: true, resizable: true},    
-    { headerName: 'Account', field: 'account', filter: true, sorting: true, resizable: true, rowGroup: true, hide: false},    
-    { field: 'debit',   headerName: 'Debit', filter: true, sorting: true, resizable: true, valueFormatter: this.formatCurrency , cellClass: (params) => {
-      return 'red-text';
-    }},
-    { headerName: 'Credit', field: 'credit',  filter: true, sorting: true, resizable: true, valueFormatter: this.formatCurrency , cellClass: (params) => {
-      return 'green-text';
-    } },
-    { headerName: 'Balance', field: 'balance',  filter: true, sorting: true, resizable: true, valueFormatter: this.formatCurrency , cellClass: (params) => {
+  columnDefs = [ 
+    { headerName: 'Account', field: 'name', filter: true, sorting: true, resizable: true, rowGroup: true, hide: false},    
+    { headerName: 'Balance', field: 'netAmt',  filter: true, sorting: true, resizable: true, valueFormatter: this.formatCurrency , cellClass: (params) => {
       return 'green-text';
     } },
     
   ];
 
+  onCellClicked(event) {
+    if (event.column && event.column.getColDef().field === 'name') {
+      const rowData = event.data;
+      this.openRouteInNewWindow(rowData);
+  
+    }
+  }
+
   getBrokerageSetupList() {
     const accountIds = this.accountIds.filter((val) => val != "-1");
+    const vouTypeIds = this.vouTypeIds.filter((val) => val != "-1");
     var req = {
       "account": accountIds.join(','),
       "fromDate": this.datePipe.transform(this.fromDt, 'yyyy-MM-dd'),
       "toDate": this.datePipe.transform(this.toDt, 'yyyy-MM-dd'),
+      "vouType": vouTypeIds.join(','),
+      "includeOpBal": this.includeOpBal,
+      "withinterest": this.withinterest
     };
-    this._reportsService.getLedger(req).subscribe((results) => {
+    this._reportsService.getLedgerSummary(req).subscribe((results) => {
       console.log('first', results)
+      this.searchedData = req;
       this.brokeragesetupList = results.data;   
-      this.brokeragesetupList.push({
-        drShortCode: 'Total Debit',
-        drAmt: this.calculateTotalDebit(),
-        crShortCode: 'Total Credit',
-        crAmt: this.calculateTotalCredit(),
-      });    
+      // this.brokeragesetupList.push({
+      //   drShortCode: 'Total Debit',
+      //   drAmt: this.calculateTotalDebit(),
+      //   crShortCode: 'Total Credit',
+      //   crAmt: this.calculateTotalCredit(),
+      // });    
     });
   }
 
@@ -179,20 +191,60 @@ export class LedgerReportComponent implements OnInit {
   }
 
   areRequiredValuesSelected(): boolean {
-    return this.accountIds && this.fromDt && this.toDt;
+    return this.accountIds && this.fromDt && this.toDt && this.vouTypeIds;
   }
 
   fetchDropdownData() {
     forkJoin([
       this._masterService.getAccount(),
+      this._masterService.getBranchDDLList(), 
+      this._entryService.getVouType(),
     ]).pipe(map(response => {
       this.accountList = response[0];
       this.filteredAccountList = response[0];
+      this.branchList = response[1];
+      this.filteredProviders = response[1];
+      this.vouTypeList = response[1];
+      this.filteredVouTypeList = response[1];
+      this.vouTypeAllSelection();
     })).subscribe(res => {
       
     });
 
     
+  }
+
+  openRouteInNewWindow(rowData) {
+    const route = '/reports/single-ledger-report';
+    const queryParams = { 
+      account: rowData.accountId, 
+      fromDate: this.searchedData.fromDate,
+      toDate: this.searchedData.toDate,
+      vouType: this.searchedData.vouType,
+      includeOpBal: this.searchedData.includeOpBal,
+      withinterest: this.searchedData.withinterest,
+     }; 
+
+    const url = this.router.serializeUrl(this.router.createUrlTree([route], { queryParams }));
+
+    window.open(url, '_blank');
+  }
+
+  onBranchChange(event: any, isLastIndex?: boolean) {
+    if(this.branchAllSellected && !isLastIndex){
+      return;
+    }
+    if(this.branchIds.length < 2 && this.branchIds[0] == '-1'){
+      return;
+    }
+    if (this.branchIds) {
+      this._masterService.getFilterBranchAccounts(this.branchIds).subscribe(
+        response => {
+          this.accountList = response;
+          this.filteredAccountList = response;
+        }
+      );
+    }
   }
 
   onInputChange(event: any) {
@@ -230,6 +282,29 @@ export class LedgerReportComponent implements OnInit {
 
     );
 
+  }
+
+  vouTypeAllSelection()
+  {
+    var isAllChecked = this.selectVouType.options.first.selected;
+    this.selectVouType.options.forEach(
+      (item: MatOption) => {
+
+        if (isAllChecked) { item.select(); }
+        else { item.deselect() }
+      }
+
+    );
+
+  }
+
+  onInputVouTypeListChange(event: any) {
+    const searchInput = event.target.value.toLowerCase();
+
+    this.filteredVouTypeList = this.vouTypeList.filter((data) => {
+      const prov = data.name.toLowerCase();
+      return prov.includes(searchInput);
+    });
   }
 
   onInputAccountListChange(event: any) {

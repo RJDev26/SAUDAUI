@@ -7,11 +7,13 @@ import { AgGridModule } from 'ag-grid-angular';
 import { MAT_DATE_LOCALE } from '@angular/material/core';
 import { TrailBalanceComponent } from './trail-balance/trail-balance.component';
 import { LedgerReportComponent } from './ledger-report/ledger-report.component';
+import { SubLedgerReportComponent } from './sub-ledger-report/sub-ledger-report.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'reports', pathMatch: 'full' },
   { path: 'trail-balance', component: TrailBalanceComponent, data: { breadcrumb: 'Trail Balance' } },
   { path: 'ledger-report', component: LedgerReportComponent, data: { breadcrumb: 'Ledger Report' } },
+  { path: 'single-ledger-report',pathMatch: 'prefix', component: SubLedgerReportComponent, data: { breadcrumb: 'Single Ledger Report' } },
 ];
 
 @NgModule({
@@ -26,7 +28,8 @@ export const routes: Routes = [
   declarations: [
   
     TrailBalanceComponent,
-        LedgerReportComponent
+        LedgerReportComponent,
+        SubLedgerReportComponent
   ],
   providers: [
     DatePipe,

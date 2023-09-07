@@ -78,6 +78,7 @@ export class AddAccountComponent implements OnInit, AfterViewInit {
   brokApplyOnQty: any;
   brokInstype: any;
   itemList: any;
+  formSubmitted = false;
 
   accountSelfShareList: any;
   brokerList: any;
@@ -343,6 +344,7 @@ onInputBrokerChange(event: any) {
       this._masterService.saveAccount(body).subscribe(result => {
         console.log("result", result);
         this.showToaster(result.message, "Success");
+        this.formSubmitted = true;
         // this.dialogRef.close();
       }, err => {
         this.showToaster(err.message, "Error");
