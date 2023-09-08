@@ -5,6 +5,7 @@ import { MasterService } from "../Master/master.service";
 import { AppService } from "src/app/service/app.service";
 import { AppSettings } from "src/app/app.settings";
 import { Settings } from "src/app/app.settings.model";
+import { changePasswordComponent } from "./change-password/change-password.component";
 
 @Component({
     selector: 'app-user',
@@ -41,10 +42,12 @@ export class UserRoleComponent {
     }
 
     onGridClick(params: any) {
-        if (params.event.target.dataset.action == "edit")
-        {
+        if (params.event.target.dataset.action == "edit") {
           this.inviteUserDialog(params.data.id);
     
+        }
+        if (params.column && params.column.getColDef().field === 'changePassword') {
+            this.dialog.open(changePasswordComponent)
         }
     }
 
@@ -57,7 +60,14 @@ export class UserRoleComponent {
         { headerName: 'Last Name', field: 'lastName', filter: true, sorting: true, resizable: true },
         { headerName: 'User Name', field: 'userName', filter: true, sorting: true, resizable: true },
         { headerName: 'Email', field: 'email', filter: true, sorting: true, resizable: true },
-        { headerName: '', field: 'changePassword', filter: true, sorting: true, resizable: true }    
+        { 
+            headerName: '', 
+            cellRenderer: () => 'Change Password',  
+            field: 'changePassword', 
+            filter: false, 
+            sorting: false, 
+            resizable: true,
+        },  
     ];
 
     getUserList() {

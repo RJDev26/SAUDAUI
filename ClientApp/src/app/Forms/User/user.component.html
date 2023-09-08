@@ -1,11 +1,11 @@
 <div class="row">
     <div fxLayout="row" class="mt-2 flex-end">
-      <button mat-raised-button color="accent" (click)="inviteUserDialog(null)" class="icon-btn ml-15">
+      <button mat-raised-button color="accent" (click)="inviteUserDialog(null)" class="icon-btn ml-15 create-user">
         <mat-icon>add</mat-icon> Create User
       </button>
     </div>
 </div>
-<mat-tab-group>
+<mat-tab-group class="user-tab">
   <mat-tab label="Users">
     <div class="col-xl-12 mt-2">
       <ag-grid-angular style=" height: 535px;"

@@ -54,6 +54,7 @@ import { AddSharingSetupComponent } from './sharing-setup/add-sharing-setup/add-
 import { LockSharingSetupComponent } from './sharing-setup/lock-sharing-setup/lock-sharing-setup.component';
 import { InviteUserComponent } from '../User/invite-user/invite-user.component';
 import { UserRoleComponent } from '../User/user.component';
+import { changePasswordComponent } from '../User/change-password/change-password.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'account', pathMatch: 'full' },
@@ -136,7 +137,8 @@ export const routes: Routes = [
      AddSharingSetupComponent,
      LockSharingSetupComponent,
      UserRoleComponent,
-     InviteUserComponent
+     InviteUserComponent,
+     changePasswordComponent
   ],
   providers: [
     DatePipe,
