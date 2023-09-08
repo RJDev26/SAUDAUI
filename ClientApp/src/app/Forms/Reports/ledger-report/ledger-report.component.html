@@ -57,6 +57,7 @@
                 placeholder="Search Branch"
                 (input)="onInputChange($event)"
               />
+              <mat-option>None</mat-option>
               <mat-option
                 *ngFor="let option of filteredProviders"
                 [value]="option.id"

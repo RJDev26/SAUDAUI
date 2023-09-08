@@ -34,6 +34,7 @@ export const verticalMenuItems = [
 
   new Menu(13, 'Imports', null, null, 'outbox', null, true, 0),
   new Menu(14, 'Trade', '/pagenotfound', null, 'outbox', null, false, 13),
+  new Menu(17, 'Scripts', '/imports/scripts', null, 'outbox', null, false, 13),
   new Menu(15, 'Closing Rate', '/pagenotfound', null, 'outbox', null, false, 13),
   new Menu(16, 'Live Rate', '/pagenotfound', null, 'outbox', null, false, 13),
   new Menu(6, 'Reports', null, null, 'outbox', null, true, 0),

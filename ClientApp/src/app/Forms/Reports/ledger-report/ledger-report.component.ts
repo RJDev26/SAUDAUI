@@ -204,8 +204,8 @@ export class LedgerReportComponent implements OnInit {
       this.filteredAccountList = response[0];
       this.branchList = response[1];
       this.filteredProviders = response[1];
-      this.vouTypeList = response[1];
-      this.filteredVouTypeList = response[1];
+      this.vouTypeList = response[2];
+      this.filteredVouTypeList = response[2];
       this.vouTypeAllSelection();
     })).subscribe(res => {
       

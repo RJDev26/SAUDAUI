@@ -44,6 +44,7 @@ export const routes: Routes = [
             { path: 'search', component: SearchComponent, data: { breadcrumb: 'Search' } },
             { path: 'entry', loadChildren: () => import('./Forms/Entry/entry.module').then(m => m.EntryModule), data: { breadcrumb: 'Entry' } },
             { path: 'reports', loadChildren: () => import('./Forms/Reports/reports.module').then(m => m.ReportsModule), data: { breadcrumb: 'Reports' } },
+            { path: 'imports', loadChildren: () => import('./Forms/Imports/imports.module').then(m => m.ImportsModule), data: { breadcrumb: 'Imports' } },
            
         ]
     },
