@@ -56,7 +56,8 @@ export class UserRoleComponent {
         { headerName: 'First Name', field: 'firstName', filter: true, sorting: true, resizable: true },
         { headerName: 'Last Name', field: 'lastName', filter: true, sorting: true, resizable: true },
         { headerName: 'User Name', field: 'userName', filter: true, sorting: true, resizable: true },
-        { headerName: 'Email', field: 'email', filter: true, sorting: true, resizable: true },    
+        { headerName: 'Email', field: 'email', filter: true, sorting: true, resizable: true },
+        { headerName: '', field: 'changePassword', filter: true, sorting: true, resizable: true }    
     ];
 
     getUserList() {
