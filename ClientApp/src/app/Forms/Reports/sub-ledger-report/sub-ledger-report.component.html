@@ -1,0 +1,13 @@
+<div class="col-xl-12 mt-2 sub-ledger-report">
+    <ag-grid-angular style=" height: 535px;"
+                     class="ag-theme-material"
+                     [rowData]="brokeragesetupList"
+                     [pagination]="true"
+                     [rowHeight]="31"
+                     [columnDefs]="columnDefs"
+                     [defaultColDef]="agGridOptions.defaultColDef"
+                     (gridReady)="onGridReady($event)"
+                      headerHeight="34"
+                      domLayout="autoHeight">
+    </ag-grid-angular>
+  </div>

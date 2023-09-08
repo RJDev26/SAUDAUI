@@ -167,7 +167,7 @@
       </div>
       <div fxFlex="100" class="mt-2 text-center space-between-btns">
         <button mat-raised-button color="warn" type="button" (click)="close()">Cancel</button>
-        <button mat-raised-button color="primary" class="uppercase" [disabled]="!personalForm.valid" type="submit">Save</button>
+        <button mat-raised-button color="primary" class="uppercase" [disabled]="!personalForm.valid || (!personalForm.dirty && !formSubmitted)" type="submit">Save</button>
       </div>
     </form>
   </mat-tab>
