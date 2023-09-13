@@ -14,4 +14,8 @@ export class ScriptsService {
   
   constructor(private httpClient: HttpClient) { }
 
+  ImportScript(formData): Observable<any> {
+    return this.httpClient.post<any>(environment.apiBaseUrl + 'Import/importScript', formData);
+  }
+
 }
