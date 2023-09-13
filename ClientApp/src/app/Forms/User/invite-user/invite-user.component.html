@@ -46,6 +46,9 @@
               <mat-icon matSuffix (click)="confirmPasswordHide = !confirmPasswordHide">{{confirmPasswordHide ? 'visibility' : 'visibility_off'}}</mat-icon>
             </mat-form-field>
           </div>
+          <div fxFlex="100" fxFlex.gt-sm="20" fxFlex.sm="50" class="pt-8 pl-10">
+            <mat-slide-toggle [(ngModel)]="includeOpBal" color="primary">Active</mat-slide-toggle>
+          </div>
         </div>
     </div>
     <div fxFlex="100" class="mt-2 text-center space-between-btns">

@@ -25,6 +25,7 @@ export class InviteUserComponent implements OnInit {
           'email': ['', Validators.required],
           'Password': ['', Validators.required],
           'ConfirmPassword': ['', Validators.required],
+          'isActive': ['', Validators.required],
           'id': []
         });
     }
@@ -36,7 +37,7 @@ export class InviteUserComponent implements OnInit {
         this.inviteUserForm.controls['email'].setValue(String(this.inviteUserForm.get('email').value));
         this.inviteUserForm.controls['Password'].setValue(String(this.inviteUserForm.get('Password').value));
         this.inviteUserForm.controls['ConfirmPassword'].setValue(String(this.inviteUserForm.get('ConfirmPassword').value));
-    
+        this.inviteUserForm.controls['isActive'].setValue(Boolean(this.inviteUserForm.get('isActive').value));
         var body = this.inviteUserForm.value;
     
         if (this.inviteUserForm.valid) {
