@@ -24,6 +24,14 @@ export class changePasswordComponent implements OnInit {
         });
     }
 
+    public onSubmit(values: Object): void {    
+        
+    }
+
+    close() {
+        
+    }
+
 
     ngOnInit() {
         

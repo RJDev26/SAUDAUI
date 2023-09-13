@@ -11,7 +11,6 @@ import { UsersComponent } from './users.component';
 import { UsersData } from './users.data';
 import { UserDialogComponent } from './user-dialog/user-dialog.component';
 import { AgGridModule } from 'ag-grid-angular';
-import { UserRoleComponent } from 'src/app/Forms/User/user.component';
 
 export const routes: Routes = [
   { path: '', component: UsersComponent, pathMatch: 'full' }
@@ -31,7 +30,6 @@ export const routes: Routes = [
     AgGridModule  
   ],
   declarations: [
-    UserRoleComponent,
     UsersComponent,
     UserDialogComponent,
   ] 
