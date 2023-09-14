@@ -32,6 +32,7 @@ export class ScriptsComponent implements OnInit {
 
           const formData: FormData = new FormData();
           formData.append("files", this.files[0], file.name);
+          formData.append("exCode", "MCX");
           //formData.append('listid' this.listid);
           //formData.append('userId', this.userId);
 
