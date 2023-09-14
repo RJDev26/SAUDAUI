@@ -6,7 +6,6 @@ import { SharedModule } from '../../shared/shared.module';
 import { AgGridModule } from 'ag-grid-angular';
 import { MAT_DATE_LOCALE } from '@angular/material/core';
 import { ScriptsComponent } from './scripts/scripts.component';
-import { NgxDropzoneModule } from 'ngx-dropzone';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'scripts', pathMatch: 'full' },
@@ -22,7 +21,6 @@ export const routes: Routes = [
     ReactiveFormsModule,
     SharedModule,
     AgGridModule,
-    NgxDropzoneModule 
   ],
   declarations: [
     ScriptsComponent

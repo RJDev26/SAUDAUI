@@ -234,6 +234,14 @@ export class LedgerReportComponent implements OnInit {
     if(this.branchAllSellected && !isLastIndex){
       return;
     }
+    if(!this.branchIds){
+      this._masterService.getAccount().subscribe(
+        response => {
+          this.accountList = response;
+          this.filteredAccountList = response;
+        }
+      );
+    }
     if(this.branchIds.length < 2 && this.branchIds[0] == '-1'){
       return;
     }
