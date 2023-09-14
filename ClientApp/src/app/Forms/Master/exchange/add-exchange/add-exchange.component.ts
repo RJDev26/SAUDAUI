@@ -226,7 +226,7 @@ onGridClick(params: any) {
   }
 
   getExchangeInfo() {
-    this._masterSecondService.getExchangeId(this.selectedId).subscribe((res) => { 
+    this._masterSecondService.getExchangeId(this.selectedId).subscribe((res) => {
       this.exchangeMasterForm.get('exCode').setValue(res.exCode);
       this.exchangeMasterForm.get('name').setValue(res.name);
       this.exchangeMasterForm.get('fmccode').setValue(res.fmccode);
