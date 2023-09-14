@@ -173,6 +173,7 @@ onGridClick(params: any) {
   /* for adding exchange detail*/
   bindFormControls() {
     this.exchangeMasterForm = this.formBuilder.group({
+      'exCode': ['', Validators.required],
       'name': ['', Validators.required],
       'fmccode': ['', Validators.required],
       'memberId': ['', Validators.required],
@@ -226,6 +227,7 @@ onGridClick(params: any) {
 
   getExchangeInfo() {
     this._masterSecondService.getExchangeId(this.selectedId).subscribe((res) => {
+      this.exchangeMasterForm.get('exCode').setValue(res.exCode);
       this.exchangeMasterForm.get('name').setValue(res.name);
       this.exchangeMasterForm.get('fmccode').setValue(res.fmccode);
       this.exchangeMasterForm.get('memberId').setValue(res.memberId);

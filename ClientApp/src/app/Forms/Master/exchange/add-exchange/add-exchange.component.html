@@ -11,6 +11,13 @@
                 <div class="white-block pb-0">
                     <h3><span>Exchange</span></h3>
                     <div fxFlex="100" fxFlex.gt-sm="50" fxFlex.sm="50">
+                      <mat-form-field appearance="outline">
+                        <mat-label>ExCode</mat-label>
+                        <input matInput autocomplete="off" placeholder="name" formControlName="exCode" type="text">
+                        <mat-error *ngIf="exchangeMasterForm.controls.exCode.errors?.required">ExCode is required</mat-error>
+                      </mat-form-field>
+                  </div>
+                    <div fxFlex="100" fxFlex.gt-sm="50" fxFlex.sm="50">
                         <mat-form-field appearance="outline">
                           <mat-label>Name</mat-label>
                           <input matInput autocomplete="off" placeholder="name" formControlName="name" type="text">
