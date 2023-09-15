@@ -20,6 +20,9 @@
         <ngx-dropzone-label>{{ f.name }} ({{ f.type }})</ngx-dropzone-label>
       </ngx-dropzone-preview>
     </ngx-dropzone>
+    <div *ngIf="showError" class="error-message">
+      Only CSV files are allowed.
+    </div>
   </div>
 </div>
 <div class="text-end">

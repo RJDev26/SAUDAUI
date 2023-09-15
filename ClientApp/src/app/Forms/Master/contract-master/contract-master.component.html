@@ -15,9 +15,6 @@
         <mat-icon>file_download</mat-icon> 
         Export
       </button>
-      <button mat-raised-button color="accent" (click)="openCompanyDialog(null)" class="icon-btn ml-15">
-        <mat-icon>add</mat-icon> Add ContractMaster
-      </button>
     </div>
   </div>
   <div class="col-xl-12 mt-2">
@@ -28,7 +25,6 @@
                       [rowHeight]="31"
                      [columnDefs]="columnDefs"
                      [defaultColDef]="agGridOptions.defaultColDef"
-                     (cellClicked)="onGridClick($event)"
                      headerHeight="34">
     </ag-grid-angular>
   </div>

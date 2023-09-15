@@ -42,7 +42,7 @@ export class LedgerReportComponent implements OnInit {
 
   searchedData: any;
   branchIds: Array<string>;
-  accountIds: any[];
+  accountIds: any[] = ['-1'];
   filteredProviders: any[];
   filteredAccountList: any[];
   brokeragesetupList: any = [];
@@ -208,10 +208,18 @@ export class LedgerReportComponent implements OnInit {
       this.filteredVouTypeList = response[2];
       this.vouTypeAllSelection();
     })).subscribe(res => {
-      
+      this.selectAllAccountValues();
     });
 
     
+  }
+
+  selectAllAccountValues() {
+    this.filteredAccountList.forEach(option => {
+      this.accountIds.push(option.id);
+    });
+
+    this.selectAccount.value = this.accountIds;
   }
 
   openRouteInNewWindow(rowData) {

@@ -55,13 +55,10 @@ export class ContractMasterComponent implements OnInit {
     }
 
     columnDefs = [
-      {
-        headerName: 'Action', field: 'fileIcon', cellRenderer: this.actionCellRenderer, minWidth: 80,
-        maxWidth: 110, resizable: true, filter: false
-      },
       { headerName: 'Exchange', field: 'exName', filter: true, sorting: true, resizable: true },
       { headerName: 'InstrumentType', field: 'insName', filter: true, sorting: true, resizable: true },
       { headerName: 'Symbol', field: 'symbol', filter: true, sorting: true, resizable: true },
+      { headerName: 'Item Name', field: 'itemName', filter: true, sorting: true, resizable: true },
       { headerName: 'Maturity', field: 'maturityDate', filter: true, sorting: true, resizable: true },
       { headerName: 'OptionType', field: 'optionType', filter: true, sorting: true, resizable: true },  
       { headerName: 'StrikePrice', field: 'strikePrice', filter: true, sorting: true, resizable: true, valueFormatter: params => CommonUtility.formatNumber(params.data.strikePrice), type: 'rightAligned' },
