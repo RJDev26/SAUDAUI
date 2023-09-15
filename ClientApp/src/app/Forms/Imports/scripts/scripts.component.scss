@@ -1,7 +1,9 @@
-.script-main{
-    display: flex;
-    justify-content: flex-end;
-    .drop-box{
-        width: 50%;
+.script-main {
+    margin: 20px 0;
+    .drop-box {
+        width: 100%;
+        ngx-dropzone {
+            height: 240px;
+        }
     }
 }

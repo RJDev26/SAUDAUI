@@ -70,6 +70,9 @@ body {
 .pt-10 {
     padding-top: 10px;
 }
+.text-end {
+    text-align: end;
+}
 .d-inline-block {
     display: inline-block !important;
 }
@@ -762,5 +765,30 @@ input {
         color: green;
       }
 }
-  
+
+.paret-form {
+    .mat-form-field-appearance-outline {
+        .mat-form-field-wrapper {
+            margin: 0;
+            padding-bottom: 0;
+        }
+        .mat-form-field-infix {
+            padding: 4px 0 10px 0;
+            .mat-select-arrow {
+                margin-top: 7px;
+            }
+        }
+        .mat-form-field-label {
+            top: 19px;
+        }
+        &.mat-form-field-can-float{
+            &.mat-form-field-should-float {
+                .mat-form-field-label {
+                    transform: translateY(-1em) scale(0.75);
+                }
+            }
+        }
+    }
+}
+
 //ag-row-no-focus ag-row ag-row-level-0 ag-row-position-absolute ag-row-last

@@ -1,5 +1,5 @@
-<div class="row">
-  <div fxLayout="row" class="mt-2 flex-end">
+<div class="row paret-form">
+  <div fxLayout="row" fxLayoutAlign="space-between" class="mt-2">
     <div fxFlex="100" fxFlex.gt-sm="20" fxFlex.sm="50">
       <mat-form-field class="example-full-width" appearance="outline">
           <mat-label>Exchange</mat-label>
@@ -9,18 +9,16 @@
               </mat-option>
           </mat-select>
       </mat-form-field>
-  </div>
-    <button mat-raised-button color="primary" class="delete-slab icon-btn" >
-      <mat-icon>
-        <span class="material-icons-outlined">        
-          file_download
-        </span>
-      </mat-icon> 
-      Export
-    </button>
-    <button mat-raised-button color="accent" (click)="openCompanyDialog(null)" class="icon-btn ml-15">
-      <mat-icon>add</mat-icon> Add ContractMaster
-    </button>
+    </div>
+    <div>
+      <button mat-raised-button color="primary" class="icon-btn">
+        <mat-icon>file_download</mat-icon> 
+        Export
+      </button>
+      <button mat-raised-button color="accent" (click)="openCompanyDialog(null)" class="icon-btn ml-15">
+        <mat-icon>add</mat-icon> Add ContractMaster
+      </button>
+    </div>
   </div>
   <div class="col-xl-12 mt-2">
     <ag-grid-angular style=" height: 535px;"
