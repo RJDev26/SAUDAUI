@@ -9,7 +9,7 @@ export const verticalMenuItems = [
   new Menu(3, 'Sauda', '/master/sauda', null, 'web_stories', null, false, 2),
   new Menu(3, 'Product', '/master/product', null, 'category', null, false, 2),
   new Menu(3, 'Contract Master', '/master/contract-master', null, 'assignment', null, false, 2),
-  new Menu(3, 'Brokerage Slab', '/master/brokerage-slab', null, 'segment', null, false, 2),
+  // new Menu(3, 'Brokerage Slab', '/master/brokerage-slab', null, 'segment', null, false, 2),
   new Menu(3, 'Brokerage Setup', '/master/brokerage-setup', null, 'manage_accounts', null, false, 2),
   new Menu(3, 'Sub Brokerage', '/master/sub-brokerage-setup', null, 'manage_accounts', null, false, 2),
   new Menu(3, 'Sharing Setup', '/master/sharing-setup', null, 'manage_accounts', null, false, 2),

@@ -8,6 +8,7 @@ import { DatatableComponent } from "@swimlane/ngx-datatable";
 import { AppService } from "src/app/service/app.service";
 import { ConfirmationDialog } from "../../Dialog/confirmation-dialog/confirmation-dialog.component";
 import { CommonUtility } from "../../../shared/common-utility";
+import { forkJoin, map } from "rxjs";
 
 @Component({
     selector: 'app-blank',
@@ -23,15 +24,24 @@ export class ContractMasterComponent implements OnInit {
     selected = [];
     loadingIndicator: boolean = true;
     reorderable: boolean = true;
+    selectedExId: any;
+    exchangeList: any;
    
     public settings: Settings;
-    contractList: any;
+    contractList: any = [];
     constructor(public appSettings: AppSettings, private _appService: AppService, public dialog: MatDialog, private _masterService: MasterService) {
       this.settings = this.appSettings.settings;
     }
 
     ngOnInit() {
-      this.getcontractList();
+      this.getExchangeList();
+    }
+
+    getExchangeList(){
+      forkJoin([this._masterService.getExchangeName()]).pipe(map(response => {
+        this.exchangeList = response[0];
+      })).subscribe(res => {
+      });
     }
 
     agGridOptions: any = {
@@ -60,8 +70,8 @@ export class ContractMasterComponent implements OnInit {
     
     ];
 
-    getcontractList() {
-      this._appService.getContract().subscribe((results) => {
+    getcontractList(id: any) {
+      this._appService.getContract(id).subscribe((results) => {
        this.contractList = results;       
       });
     }
@@ -76,6 +86,11 @@ export class ContractMasterComponent implements OnInit {
                         <button class="material-icons action-button-red" delete data-action="delete">delete</button>`;
   
       return eGui;
+    }
+
+    onBranchChange(event: any){
+      console.log(event);
+      this.getcontractList(this.selectedExId);
     }
 
     onGridClick(params: any) {
@@ -99,7 +114,7 @@ export class ContractMasterComponent implements OnInit {
         dialogRef.afterClosed().subscribe((confirmed: boolean) => {
           if (confirmed) {
             this._masterService.deleteContract(params.data.id).subscribe((res) => {
-              this.getcontractList();
+              this.getcontractList(this.selectedExId);
             });
           }
         });
@@ -114,7 +129,7 @@ export class ContractMasterComponent implements OnInit {
         });
       
         dialogRef.afterClosed().subscribe(user => {
-          this.getcontractList();
+          this.getcontractList(this.selectedExId);
           if (user) {
             /* (user.id) ? this.updateUser(user) : this.addUser(user);*/
           }

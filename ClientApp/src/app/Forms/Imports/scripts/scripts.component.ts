@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ScriptsService } from '../imports.service';
+import { forkJoin, map } from 'rxjs';
+import { MasterService } from '../../Master/master.service';
 
 @Component({
   selector: 'app-scripts',
@@ -8,7 +10,8 @@ import { ScriptsService } from '../imports.service';
 })
 export class ScriptsComponent implements OnInit {
   files: File[] = [];
-
+  exchangeList: any;
+  selectedExId: any;
   onSelect(event) {
     console.log(event);
     this.files = [];
@@ -20,18 +23,30 @@ export class ScriptsComponent implements OnInit {
     this.files.splice(this.files.indexOf(event), 1);
   }
 
-  constructor(private _scriptsService: ScriptsService) { }
+  constructor(private _scriptsService: ScriptsService, private _masterService: MasterService) { }
 
   ngOnInit(): void {
+    this.getExchangeList();
+  }
+
+  getExchangeList(){
+    forkJoin([this._masterService.getExchangeName()]).pipe(map(response => {
+      this.exchangeList = response[0];
+    })).subscribe(res => {
+    });
+  }
+  onSave() {
+
   }
   submit() {
-    if (this.files.length > 0) {
+    if (this.files.length > 0 && this.selectedExId) {
       this.files.forEach((file, idx, array) => {
         let fileReader: FileReader = new FileReader();
         fileReader.readAsDataURL(file); fileReader.onloadend = (e) => {
 
           const formData: FormData = new FormData();
           formData.append("files", this.files[0], file.name);
+          formData.append("exCode", this.selectedExId);
           //formData.append('listid' this.listid);
           //formData.append('userId', this.userId);
 
