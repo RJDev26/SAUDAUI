@@ -29,7 +29,7 @@ export class changePasswordComponent implements OnInit {
     }
 
     close() {
-        
+        this.dialogRef.close();
     }
 
 
