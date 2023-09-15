@@ -47,7 +47,9 @@ export class UserRoleComponent {
     
         }
         if (params.column && params.column.getColDef().field === 'changePassword') {
-            this.dialog.open(changePasswordComponent)
+            this.dialog.open(changePasswordComponent, {
+                data: { id:params.data.id }
+              })
         }
     }
 

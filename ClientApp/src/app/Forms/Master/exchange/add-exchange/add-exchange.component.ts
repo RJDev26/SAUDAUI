@@ -10,6 +10,7 @@ import { MatOption } from '@angular/material/core';
 import { MasterSecondService } from '../../master-second.service';
 import { ErrorDialog } from '../../../Dialog/confirmation-dialog/error-dialog.component';
 import { ConfirmationDialog } from 'src/app/Forms/Dialog/confirmation-dialog/confirmation-dialog.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 
 @Component({
@@ -76,7 +77,7 @@ export class AddExchangeComponent implements OnInit {
     ]
   }];
 
-  constructor(public appSettings: AppSettings,
+  constructor(public appSettings: AppSettings, public snackBar: MatSnackBar,
     private formBuilder: UntypedFormBuilder, public dialogRef: MatDialogRef<AddExchangeComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any, private _masterService: MasterService,
     private _masterSecondService: MasterSecondService, public dialog: MatDialog) {
@@ -127,12 +128,24 @@ onGridAccountClick(params: any) {
       if (confirmed) {
         this._masterSecondService.deleteExchangeAccount(params.data.id).subscribe((res) => {
           this.getExchangeAccountList();
+          this.showToaster(res.message, !res.isSuccess);
         });
       }
     });
 
 
   }
+}
+
+showToaster(message, isError = false) {
+  const panelClass = isError ? ['red-text'] : undefined;
+  const label = isError ? "Error" : "Success";
+  const time = isError? 6000 : 3000;
+
+  this.snackBar.open(message, label, {
+    duration: time,
+    panelClass: panelClass,
+  });
 }
 
 onGridClick(params: any) {

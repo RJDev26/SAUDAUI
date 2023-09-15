@@ -8,6 +8,7 @@ import { MasterService } from "../master.service";
 import { ConfirmationDialog } from "../../Dialog/confirmation-dialog/confirmation-dialog.component";
 import { MasterSecondService } from "../master-second.service";
 import { AddExchangeComponent } from "./add-exchange/add-exchange.component";
+import { MatSnackBar } from "@angular/material/snack-bar";
 
 @Component({
   selector: 'app-exchange',
@@ -25,7 +26,7 @@ export class ExchangeComponent implements OnInit {
  
   public settings: Settings;
   exchangeList: any;
-constructor(public appSettings: AppSettings,
+constructor(public appSettings: AppSettings, public snackBar: MatSnackBar,
   public dialog: MatDialog, private _masterService: MasterService, private _masterSecondService: MasterSecondService) {
       this.settings = this.appSettings.settings;
     }
@@ -97,12 +98,24 @@ getExchangeList() {
         if (confirmed) {
           this._masterSecondService.deleteExchange(params.data.id).subscribe((res) => {
             this.getExchangeList();
+            this.showToaster(res.message, !res.isSuccess);
           });
         }
       });
 
 
     }
+  }
+
+  showToaster(message, isError = false) {
+    const panelClass = isError ? ['red-text'] : undefined;
+    const label = isError ? "Error" : "Success";
+    const time = isError? 6000 : 3000;
+  
+    this.snackBar.open(message, label, {
+      duration: time,
+      panelClass: panelClass,
+    });
   }
 
   public openExchangeDialog(user) {
