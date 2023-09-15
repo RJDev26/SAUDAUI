@@ -18,6 +18,10 @@ export class AppService {
     return this.httpClient.post<any>(environment.apiBaseUrl + 'saveAccounts' , data, { headers: this.headers });
   }
 
+  changePassword(data:any): Observable<any> {
+    return this.httpClient.post<any>(environment.apiBaseUrl + 'User/change-password' , data, { headers: this.headers });
+  }
+
   getAccounts():Observable<any>{
     return this.httpClient.get<any>(environment.apiBaseUrl + 'Customer/getCustomer',{headers:this.headers});
   }

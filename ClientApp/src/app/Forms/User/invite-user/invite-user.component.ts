@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit } from "@angular/core";
-import { UntypedFormBuilder, UntypedFormGroup, Validators } from "@angular/forms";
+import { FormGroup, UntypedFormBuilder, UntypedFormGroup, Validators } from "@angular/forms";
 import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
 import { MasterService } from "../../Master/master.service";
 import { forkJoin } from "rxjs";
@@ -25,9 +25,21 @@ export class InviteUserComponent implements OnInit {
           'email': ['', Validators.required],
           'Password': ['', Validators.required],
           'ConfirmPassword': ['', Validators.required],
-          'isActive': ['', Validators.required],
+          'isActive': [''],
           'id': []
+        }, {
+          validator: this.passwordMatchValidator // Add custom validator here
         });
+    }
+
+    passwordMatchValidator(formGroup: FormGroup): { [key: string]: boolean } | null {
+      const password = formGroup.get('Password')?.value;
+      const confirmPassword = formGroup.get('ConfirmPassword')?.value;
+  
+      if (password !== confirmPassword) {
+        return { 'passwordMismatch': true };
+      }
+      return null;
     }
 
     public onSubmit(values: Object): void {    
