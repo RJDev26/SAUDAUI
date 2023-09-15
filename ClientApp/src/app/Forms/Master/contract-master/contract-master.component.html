@@ -1,5 +1,15 @@
 <div class="row">
   <div fxLayout="row" class="mt-2 flex-end">
+    <div fxFlex="100" fxFlex.gt-sm="20" fxFlex.sm="50">
+      <mat-form-field class="example-full-width" appearance="outline">
+          <mat-label>Exchange</mat-label>
+          <mat-select placeholder="" [(ngModel)]="selectedExId" (selectionChange)="onBranchChange($event)">
+              <mat-option *ngFor="let exchange of exchangeList" [value]="exchange.id">
+                {{exchange.name}}
+              </mat-option>
+          </mat-select>
+      </mat-form-field>
+  </div>
     <button mat-raised-button color="primary" class="delete-slab icon-btn" >
       <mat-icon>
         <span class="material-icons-outlined">        

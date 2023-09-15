@@ -1,10 +1,24 @@
-<ngx-dropzone (change)="onSelect($event)">
-  <ngx-dropzone-label>Drop File here </ngx-dropzone-label>
-  <ngx-dropzone-preview *ngFor="let f of files" [multiple]='true' [removable]="true" (removed)="onRemove(f)">
-    <ngx-dropzone-label>{{ f.name }} ({{ f.type }})</ngx-dropzone-label>
-  </ngx-dropzone-preview>
-</ngx-dropzone>
+<div class="script-main">
+  <div fxFlex="100" fxFlex.gt-sm="20" fxFlex.sm="50">
+    <mat-form-field class="example-full-width" appearance="outline">
+        <mat-label>Exchange</mat-label>
+        <mat-select placeholder="" [(ngModel)]="selectedExId">
+            <mat-option *ngFor="let exchange of exchangeList" [value]="exchange.id">
+              {{exchange.name}}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+  </div>
+  <div class="drop-box">
+    <ngx-dropzone (change)="onSelect($event)">
+      <ngx-dropzone-label>Drop File here </ngx-dropzone-label>
+      <ngx-dropzone-preview *ngFor="let f of files" [multiple]='true' [removable]="true" (removed)="onRemove(f)">
+        <ngx-dropzone-label>{{ f.name }} ({{ f.type }})</ngx-dropzone-label>
+      </ngx-dropzone-preview>
+    </ngx-dropzone>
+  </div>
+  
+</div>
 
-<button mat-raised-button color="primary" type="button" (click)="submit()">
-  <mat-icon>add</mat-icon>
+<button mat-raised-button color="primary" type="button" (click)="submit()">Save
 </button>
