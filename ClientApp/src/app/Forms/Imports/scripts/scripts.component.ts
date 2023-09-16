@@ -14,6 +14,7 @@ export class ScriptsComponent implements OnInit {
   exchangeList: any;
   selectedExId: any;
   showError: boolean;
+  lotFile: boolean = false;
 
   isExcelFile(file: File): boolean {
     const allowedExtensions = ['.csv', '.xlsx', '.xls'];
@@ -62,6 +63,7 @@ export class ScriptsComponent implements OnInit {
           const formData: FormData = new FormData();
           formData.append("files", this.files[0], file.name);
           formData.append("exCode", this.selectedExId);
+          formData.append("lotFile", String(this.lotFile));
           //formData.append('listid' this.listid);
           //formData.append('userId', this.userId);
 

@@ -51,7 +51,7 @@ export class InviteUserComponent implements OnInit {
         this.inviteUserForm.controls['ConfirmPassword'].setValue(String(this.inviteUserForm.get('ConfirmPassword').value));
         this.inviteUserForm.controls['isActive'].setValue(Boolean(this.inviteUserForm.get('isActive').value));
         var body = this.inviteUserForm.value;
-    
+        body.isActive = body.isActive?'Active':'inActive';
         if (this.inviteUserForm.valid) {
           //const body = JSON.stringify(addFormData);
           this._appService.createUser(body).subscribe(result => {
