@@ -7,7 +7,7 @@ export const verticalMenuItems = [
   new Menu(3, 'Item', '/master/item', null, 'widgets', null, false, 2),
   new Menu(3, 'Company', '/master/company', null, 'business', null, false, 2),
   new Menu(3, 'Sauda', '/master/sauda', null, 'web_stories', null, false, 2),
-  new Menu(3, 'Product', '/master/product', null, 'category', null, false, 2),
+  //new Menu(3, 'Product', '/master/product', null, 'category', null, false, 2),
   new Menu(3, 'Contract Master', '/master/contract-master', null, 'assignment', null, false, 2),
   // new Menu(3, 'Brokerage Slab', '/master/brokerage-slab', null, 'segment', null, false, 2),
   new Menu(3, 'Brokerage Setup', '/master/brokerage-setup', null, 'manage_accounts', null, false, 2),

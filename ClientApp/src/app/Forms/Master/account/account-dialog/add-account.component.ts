@@ -152,8 +152,8 @@ export class AddAccountComponent implements OnInit, AfterViewInit {
       'brokerId': [0],
       'DrCr': ['1', Validators.required],
       'ApplyTax': [false],
-      'ApplyFutureCutBrok': [false],
-      'ApplyOptionCutBrok': [false],
+      'ApplyFutureCutBrok': [true],
+      'ApplyOptionCutBrok': [true],
     });
   }
 
