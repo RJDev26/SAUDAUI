@@ -7,10 +7,12 @@ import { AgGridModule } from 'ag-grid-angular';
 import { MAT_DATE_LOCALE } from '@angular/material/core';
 import { ScriptsComponent } from './scripts/scripts.component';
 import { NgxDropzoneModule } from 'ngx-dropzone';
+import { TradeComponent } from './trade/trade.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'scripts', pathMatch: 'full' },
   { path: 'scripts', component: ScriptsComponent, data: { breadcrumb: 'Scripts' } },
+  { path: 'trade', component: TradeComponent, data: { breadcrumb: 'Trade' } },
   
 ];
 
@@ -25,7 +27,8 @@ export const routes: Routes = [
     NgxDropzoneModule 
   ],
   declarations: [
-    ScriptsComponent
+    ScriptsComponent,
+    TradeComponent
   ],
   providers: [
     DatePipe,
