@@ -142,7 +142,7 @@ export class AddAccountComponent implements OnInit, AfterViewInit {
       'Email': ['', Validators.compose([emailValidator])],
       'PanNo': [''],
       'Gstinno': [''],
-      'Phone': ['', Validators.required],
+      'Phone': [''],
       'AcGroup': ['', Validators.required],
       'AcHead': ['', Validators.required],
       'Address': [''],

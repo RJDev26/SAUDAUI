@@ -17,5 +17,8 @@ export class ScriptsService {
   ImportScript(formData): Observable<any> {
     return this.httpClient.post<any>(environment.apiBaseUrl + 'Import/importScript', formData);
   }
+  ImportTrade(formData): Observable<any> {
+    return this.httpClient.post<any>(environment.apiBaseUrl + 'Import/tradeScript', formData);
+  }
 
 }
