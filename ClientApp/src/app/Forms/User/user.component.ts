@@ -62,7 +62,9 @@ export class UserRoleComponent {
         { headerName: 'Last Name', field: 'lastName', filter: true, sorting: true, resizable: true },
         { headerName: 'User Name', field: 'userName', filter: true, sorting: true, resizable: true },
         { headerName: 'Email', field: 'email', filter: true, sorting: true, resizable: true },
-        { headerName: 'Status', field: 'isActive', filter: true, sorting: true, resizable: true },
+        { headerName: 'Status', field: 'isActive', filter: true, sorting: true, resizable: true, cellRenderer: (params) => {
+            return params.value ? 'Active' : 'Inactive';
+        } },
         { 
             headerName: '', 
             cellRenderer: () => 'Change Password',  
