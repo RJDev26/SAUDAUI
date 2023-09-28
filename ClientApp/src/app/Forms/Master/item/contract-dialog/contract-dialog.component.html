@@ -1,0 +1,31 @@
+<div style="padding: 20px;" class="row paret-form">
+    <div fxLayout="row" fxLayoutAlign="space-between" class="mt-2">
+      <div fxFlex="100" fxFlex.gt-sm="20" fxFlex.sm="50">
+        <mat-form-field class="example-full-width" appearance="outline">
+            <mat-label>Exchange</mat-label>
+            <mat-select placeholder="" [(ngModel)]="selectedExId" (selectionChange)="onBranchChange($event)">
+                <mat-option *ngFor="let exchange of exchangeList" [value]="exchange.id">
+                  {{exchange.name}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+      </div>
+        <button mat-raised-button color="primary" class="delete-slab icon-btn" (click)="importContractItems()">
+            Save
+        </button>
+    </div>
+    <div class="col-xl-12 mt-2">
+      <ag-grid-angular style="width: 990px; height: 535px;"
+                       class="ag-theme-material"
+                       [rowData]="contractList"
+                       [pagination]="true"
+                        [rowHeight]="31"
+                        [rowSelection]="'multiple'"
+                       [columnDefs]="columnDefs"
+                       (gridReady)="onGridReady($event)"
+                       [defaultColDef]="agGridOptions.defaultColDef"
+                       headerHeight="34">
+      </ag-grid-angular>
+    </div>
+  </div>  
+  

@@ -99,6 +99,15 @@ export class AddItemComponent implements OnInit {
     }
   }
 
+  populateFields() {
+    if(!this.selectedId){
+      const itemCodeValue = this.itemForm.get('itemCode').value;
+      this.itemForm.get('itemName').setValue(itemCodeValue);
+      this.itemForm.get('exchangeSymbol').setValue(itemCodeValue);
+    }
+  }
+  
+
   ngOnInit() {
     this.bindFormControls();
     if (this.selectedId != 0) {

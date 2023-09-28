@@ -50,6 +50,7 @@ constructor(public appSettings: AppSettings, public snackBar: MatSnackBar,
         headerName: 'Action', field: 'fileIcon', cellRenderer: this.actionCellRenderer, minWidth: 80,
         maxWidth: 110, resizable: true, filter: false
       },
+      { headerName: 'ExCode', field: 'exCode', filter: true, sorting: true, resizable: true },
       { headerName: 'Name', field: 'name', filter: true, sorting: true, resizable: true },
     { headerName: 'FMCCode', field: 'fmccode', filter: true, sorting: true, resizable: true },  
     { headerName: 'Future', field: 'future', filter: true, sorting: true, resizable: true },  

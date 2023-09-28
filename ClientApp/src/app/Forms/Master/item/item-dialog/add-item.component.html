@@ -21,7 +21,7 @@
             <div fxFlex="100" fxFlex.gt-sm="20" fxFlex.sm="50">
                 <mat-form-field appearance="outline">
                     <mat-label>Item Code</mat-label>
-                    <input matInput autocomplete="off" placeholder="item Code" formControlName="itemCode" type="text">
+                    <input matInput autocomplete="off" placeholder="item Code" formControlName="itemCode" type="text" (blur)="populateFields()">
                     <mat-error *ngIf="itemForm.controls.itemCode.errors?.required">Item Code is required</mat-error>                
                 </mat-form-field> 
             </div>
@@ -42,7 +42,7 @@
             <div fxFlex="100" fxFlex.gt-sm="20" fxFlex.sm="50">
                 <mat-form-field appearance="outline">
                     <mat-label>lot size value multiplier</mat-label>
-                    <input matInput autocomplete="off" placeholder="lot size value multiplier" formControlName="lotSizeValueMultiplier" type="number">
+                    <input matInput autocomplete="off" placeholder="lot size value multiplier" formControlName="lotSizeValueMultiplier" type="number" appCurrencyFormatter>
                     <mat-error *ngIf="itemForm.controls.lotSizeValueMultiplier.errors?.required">lot size value multiplier is required</mat-error>                
                 </mat-form-field> 
             </div>

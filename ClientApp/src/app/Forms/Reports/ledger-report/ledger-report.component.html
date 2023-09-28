@@ -110,7 +110,7 @@
                 <mat-form-field class="select-slab-mat" appearance="outline">
                   <mat-label>Vou Type</mat-label>  
                   <mat-select #selectVouType  [(ngModel)]="vouTypeIds" multiple placeholder="Select VouType" panelClass="custom-select-panel">
-                    <input class="milti-search-box" #multiUserSearch type="text" autocomplete="off" matInput placeholder="Search Account" (input)="onInputVouTypeListChange($event)"/>
+                    <input class="milti-search-box" #multiUserSearch type="text" autocomplete="off" matInput placeholder="Search Voutype" (input)="onInputVouTypeListChange($event)"/>
                     <mat-option value=-1 (click)="vouTypeAllSelection()">Select All</mat-option>
                     <mat-option *ngFor="let option of filteredVouTypeList" [value]="option.id">
                       {{ option.name }}

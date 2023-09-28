@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ReportsService } from '../reports.service';
+import jsPDF from 'jspdf';
+import html2canvas from 'html2canvas';
 
 @Component({
   selector: 'app-sub-ledger-report',
@@ -10,6 +12,7 @@ import { ReportsService } from '../reports.service';
 export class SubLedgerReportComponent implements OnInit {
   searchedData:any;
   brokeragesetupList: any;
+  paginationPageSize = 5;
   agGridOptions: any = {
     defaultColDef: {
       filter: true,
@@ -116,6 +119,25 @@ export class SubLedgerReportComponent implements OnInit {
         totalCredit += item.credit;
     }
     return totalCredit;
+  }
+
+  downloadAsPDF() {
+    // Create a new jsPDF instance
+  const doc = new jsPDF();
+
+  // Get the DOM element containing your ag-Grid Angular table
+  const element = document.getElementById('brokerSetupGridId');
+
+    // Use html2canvas to convert the DOM element to an image
+    html2canvas(element).then((canvas) => {
+      const imgData = canvas.toDataURL('image/png');
+
+      // Add the image to the PDF
+      doc.addImage(imgData, 'PNG', 10, 10, 180, 0);
+
+      // Save or open the PDF
+      doc.save('ag-grid-data.pdf');
+    });
   }
 
 }

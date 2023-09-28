@@ -1,5 +1,17 @@
+<div class="row">
+  <div fxLayout="row" class="mt-2 flex-end">
+    <button mat-raised-button color="primary" (click)="downloadAsPDF()" class="delete-slab icon-btn" >
+      <mat-icon>
+        <span class="material-icons-outlined">        
+          file_download
+        </span>
+      </mat-icon> 
+      PDF
+    </button>
+</div>
 <div class="col-xl-12 mt-2 sub-ledger-report">
-    <ag-grid-angular style=" height: 535px;"
+    <ag-grid-angular #agGrid style=" height: 535px;"
+                    id="brokerSetupGridId"
                      class="ag-theme-material"
                      [rowData]="brokeragesetupList"
                      [pagination]="true"
@@ -7,7 +19,9 @@
                      [columnDefs]="columnDefs"
                      [defaultColDef]="agGridOptions.defaultColDef"
                      (gridReady)="onGridReady($event)"
+                     [paginationPageSize]="paginationPageSize"
                       headerHeight="34"
                       domLayout="autoHeight">
     </ag-grid-angular>
+  </div>
   </div>

@@ -9,6 +9,7 @@ import { CommonUtility } from '../../../shared/common-utility';
 import { ConfirmationDialog } from '../../Dialog/confirmation-dialog/confirmation-dialog.component';
 import { MasterService } from '../master.service';
 import { AddItemComponent } from './item-dialog/add-item.component';
+import { ContractDialogComponent } from './contract-dialog/contract-dialog.component';
 
 @Component({
   selector: 'app-blank',
@@ -119,6 +120,14 @@ export class ItemComponent implements OnInit {
 
 
     }
+  }
+
+  public importContractMaster(){
+    let dialogRef = this.dialog.open(ContractDialogComponent);
+
+    dialogRef.afterClosed().subscribe(user => {
+      this.getitemList();
+    });
   }
 
   public openUserDialog(user) {

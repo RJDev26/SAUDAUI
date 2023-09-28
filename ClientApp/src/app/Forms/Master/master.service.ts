@@ -172,6 +172,10 @@ export class MasterService {
     return this.httpClient.post<any>(environment.apiBaseUrl + 'Master/SaveContract', data, { headers: this.headers });
   }
 
+  importItem(data): Observable<any> {
+    return this.httpClient.post<any>(environment.apiBaseUrl + 'Master/importItem', data, { headers: this.headers });
+  }
+
   getContractById(id: number): Observable<any> {
     return this.httpClient.get<any>(environment.apiBaseUrl + 'master/getContractId/' + id, { headers: this.headers })
   }
