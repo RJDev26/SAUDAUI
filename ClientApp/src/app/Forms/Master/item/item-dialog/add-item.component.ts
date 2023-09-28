@@ -60,7 +60,7 @@ export class AddItemComponent implements OnInit {
       this.itemForm.get('ExId').setValue(res.exId);
       this.itemForm.get('IsinCode').setValue(res.isinCode);
 
-      this.itemForm.get('lotSizeValueMultiplier').setValue(res.lotSizeValueMultiplier);
+      this.itemForm.get('lotSizeValueMultiplier').setValue(res.lotSizeValueMultiplier.toFixed(2));
       this.itemForm.get('ApplyCtt').setValue(res.applyCtt);
       this.itemForm.get('applyRiskManagementFees').setValue(res.applyRiskManagementFees);
       this.itemForm.get('id').setValue(res.id);
