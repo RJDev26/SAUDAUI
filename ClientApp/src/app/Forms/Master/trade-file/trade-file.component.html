@@ -61,10 +61,10 @@
                           </mat-form-field>
                         </div>
                       </div>
-                      <div fxLayout="row" class="mt-2 flex-end">
+                      <div fxFlex="100" fxFlex.gt-sm="15" space-between fxFlex.sm="50">
                         <button mat-raised-button color="primary" class="uppercase save-btn" [disabled]="!itemForm.valid" type="submit">Save</button> 
                         <button type="button" mat-raised-button color="warn" (click)="close()">Cancel</button>            
-                        </div>
+                    </div>
                 </div>
             </div>
         </form>
