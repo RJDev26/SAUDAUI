@@ -58,20 +58,13 @@ export class ContractDialogComponent implements OnInit {
     {
       headerName: '', editable: false, minwidth: 45, width: 45, maxwidth: 45, resizable: false, sortable: false, filter: false, checkboxSelection: true, headerCheckboxSelection: true,
     },
-    { headerName: 'Exchange', field: 'exName', filter: true, sorting: true, resizable: true },
-    { headerName: 'InstrumentType', field: 'insName', filter: true, sorting: true, resizable: true },
     { headerName: 'Symbol', field: 'symbol', filter: true, sorting: true, resizable: true },
     { headerName: 'Item Name', field: 'itemName', filter: true, sorting: true, resizable: true },
-    { headerName: 'Maturity', field: 'maturityDate', filter: true, sorting: true, resizable: true },
-    { headerName: 'OptionType', field: 'optionType', filter: true, sorting: true, resizable: true },  
-    { headerName: 'StrikePrice', field: 'strikePrice', filter: true, sorting: true, resizable: true, valueFormatter: params => CommonUtility.formatNumber(params.data.strikePrice), type: 'rightAligned' },
-    { headerName: 'TradeableLot', field: 'tradeableLot', filter: true, sorting: true, resizable: true, valueFormatter: params => CommonUtility.formatNumber(params.data.tradeableLot), type: 'rightAligned' },
-
   
   ];
 
   getcontractList(id: any) {
-    this._appService.getContract(id).subscribe((results) => {
+    this._appService.getContractListItemImport(id).subscribe((results) => {
      this.contractList = results;       
     });
   }
@@ -97,6 +90,10 @@ export class ContractDialogComponent implements OnInit {
 
   onGridClick(params: any) {
     
+  }
+
+  close(): void {
+    this.dialogRef.close();
   }
 
   importContractItems()

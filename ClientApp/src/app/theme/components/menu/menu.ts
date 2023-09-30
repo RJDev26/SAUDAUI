@@ -15,6 +15,7 @@ export const verticalMenuItems = [
   new Menu(3, 'Sharing Setup', '/master/sharing-setup', null, 'manage_accounts', null, false, 2),
   new Menu(3, 'Branch', '/master/branch', null, 'schema', null, false, 2),
   new Menu(3, 'Tax', '/master/tax', null, 'payments', null, false, 2),
+  new Menu(3, 'Trade File', '/master/trade-file', null, 'payments', null, false, 2),
   new Menu(3, 'Exchange', '/master/exchange', null, 'change_circle', null, false, 2),
   new Menu(3, 'Interest Master', '/master/interest-master', null, 'paid', null, false, 2),
   new Menu(3, 'Account Head', '/master/account-head', null, 'manage_accounts', null, false, 2),

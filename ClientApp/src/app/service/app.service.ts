@@ -30,6 +30,10 @@ export class AppService {
     return this.httpClient.get<any>(environment.apiBaseUrl + 'Master/getitemlist',{headers:this.headers});
   }
 
+  tradeFileType():Observable<any>{
+    return this.httpClient.get<any>(environment.apiBaseUrl + 'Common/tradeFileType',{headers:this.headers});
+  }
+
   deleteAccount(id:Number):Observable<any>{
     return this.httpClient.get<any>(environment.apiBaseUrl + 'deleteAccount/' + id,{headers:this.headers});
   }
@@ -48,6 +52,10 @@ export class AppService {
 
   getContract(id: any):Observable<any>{
     return this.httpClient.get<any>(environment.apiBaseUrl + 'Master/getContractList/' + id,{headers:this.headers});
+  }
+
+  getContractListItemImport(id: any):Observable<any>{
+    return this.httpClient.get<any>(environment.apiBaseUrl + 'Master/getContractListItemImport/' + id,{headers:this.headers});
   }
 
   getCompany():Observable<any>{

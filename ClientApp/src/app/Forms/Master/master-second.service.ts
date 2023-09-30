@@ -32,6 +32,10 @@ export class MasterSecondService {
     return this.httpClient.get<any>(environment.apiBaseUrl + 'MasterSecond/deleteSymbolMapping/' + id, { headers: this.headers })
   }
 
+  deleteTradeFileType(id: number): Observable<any> {
+    return this.httpClient.delete<any>(environment.apiBaseUrl + 'MasterSecond/deleteTradeFileType/' + id, { headers: this.headers })
+  }
+
   deleteInterest(id: number): Observable<any> {
     return this.httpClient.delete<any>(environment.apiBaseUrl + 'MasterSecond/deleteInterest/' + id, { headers: this.headers })
   }
@@ -67,6 +71,10 @@ export class MasterSecondService {
     return this.httpClient.post<any>(environment.apiBaseUrl + 'MasterSecond/saveSymbolMapping', data, { headers: this.headers });
   }
 
+  saveTradeFileType(data): Observable<any> {
+    return this.httpClient.post<any>(environment.apiBaseUrl + 'MasterSecond/SaveTradeFileType', data, { headers: this.headers });
+  }
+
   saveExchangeTax(data): Observable<any> {
     return this.httpClient.post<any>(environment.apiBaseUrl + 'MasterSecond/SaveExchangeTax', data, { headers: this.headers });
   }
@@ -92,6 +100,11 @@ export class MasterSecondService {
   getSymbolMappingId(id: number): Observable<any> {
     return this.httpClient.get<any>(environment.apiBaseUrl + 'MasterSecond/getSymbolMappingId/' + id, { headers: this.headers })
   }
+
+  getTradeFileId(id: number): Observable<any> {
+    return this.httpClient.get<any>(environment.apiBaseUrl + 'MasterSecond/getTradeFileId/' + id, { headers: this.headers })
+  }
+
   getExchangeId(id: number): Observable<any> {
     return this.httpClient.get<any>(environment.apiBaseUrl + 'MasterSecond/getExchangeId/' + id, { headers: this.headers })
   }
@@ -109,6 +122,10 @@ export class MasterSecondService {
 
   getSymbolMappingList(): Observable<any> {
     return this.httpClient.get<any>(environment.apiBaseUrl + 'MasterSecond/getSymbolMappingList', { headers: this.headers });
+  }
+
+  getTradeFileList(): Observable<any> {
+    return this.httpClient.get<any>(environment.apiBaseUrl + 'MasterSecond/getTradeFileList', { headers: this.headers });
   }
 
   getInterestList(): Observable<any> {

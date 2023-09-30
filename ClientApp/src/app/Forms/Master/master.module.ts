@@ -56,6 +56,7 @@ import { InviteUserComponent } from '../User/invite-user/invite-user.component';
 import { changePasswordComponent } from '../User/change-password/change-password.component';
 import { CurrencyFormatterDirective } from '../common/directive/currency-formatter.directive';
 import { ContractDialogComponent } from './item/contract-dialog/contract-dialog.component';
+import { TradeFileComponent } from './trade-file/trade-file.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'account', pathMatch: 'full' },
@@ -72,6 +73,7 @@ export const routes: Routes = [
   { path: 'sharing-setup', component: SharingSetupComponent, data: { breadcrumb: 'Sharing Setup' } },
   { path: 'branch', component: BranchComponent, data: { breadcrumb: 'Branch' } },
   { path: 'tax', component: TaxComponent, data: { breadcrumb: 'Tax' } },
+  { path: 'trade-file', component: TradeFileComponent, data: { breadcrumb: 'Trade File' } },
   { path: 'exchange', component: ExchangeComponent, data: { breadcrumb: 'Exchange' } },
   { path: 'interest-master', component: InterestMasterComponent, data: { breadcrumb: 'Interest Master' } },
   { path: 'account-head', component: AccountHeadComponent, data: { breadcrumb: 'Account Head' } },
@@ -139,7 +141,8 @@ export const routes: Routes = [
      InviteUserComponent,
      changePasswordComponent,
      CurrencyFormatterDirective,
-     ContractDialogComponent
+     ContractDialogComponent,
+     TradeFileComponent
   ],
   providers: [
     DatePipe,

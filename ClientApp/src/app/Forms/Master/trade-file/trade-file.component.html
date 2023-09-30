@@ -1,0 +1,84 @@
+<div class="row">
+    <div fxLayout="row" class="mt-2 flex-end symbol-mapping">
+        <form [formGroup]="itemForm" (ngSubmit)="onSubmit(itemForm.value)" fxLayout="row wrap" class="user-form">
+            <div class="white-block pb-5">
+                <div class="tab-party-details-parent">
+                    <div fxFlex="100" fxFlex.gt-sm="15" fxFlex.sm="30">
+                        <mat-form-field appearance="outline">
+                          <mat-label>Name</mat-label>
+                          <input matInput autocomplete="off" placeholder="Name" formControlName="name" type="text">
+                          <mat-error *ngIf="itemForm.controls.name.errors?.required">Name is required</mat-error>
+                        </mat-form-field>
+                      </div>
+                    <div fxFlex="100" fxFlex.gt-sm="15" fxFlex.sm="50">
+                        <div class="dropdown-wrapper">
+                            <mat-form-field class="select-slab-mat" appearance="outline">
+                              <mat-label>Select Type</mat-label>
+                              <mat-select #selectType placeholder="Select Type" panelClass="custom-select-panel" formControlName="type">
+                                <input class="milti-search-box" #multiUserSearch type="text" autocomplete="off" matInput placeholder="Search Type" (input)="onInputChange($event)" />
+                                <mat-option *ngFor="let option of filteredTypeList" [value]="option.id">
+                                  {{ option.name }}
+                                </mat-option>
+                              </mat-select>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div fxFlex="100" fxFlex.gt-sm="20" fxFlex.sm="50">
+                        <div class="dropdown-wrapper">
+                          <mat-form-field class="select-slab-mat" appearance="outline">
+                            <mat-label>Select Broker</mat-label>
+                            <mat-select #select placeholder="Select Broker" panelClass="custom-select-panel" formControlName="broker">
+                              <input class="milti-search-box" #multiUserSearch type="text" autocomplete="off" matInput placeholder="Search Broker" (input)="onInputBrokerChange($event)" />
+                              <mat-option *ngFor="let option of filterBrokerList" [value]="option.id">
+                                {{ option.name }}
+                              </mat-option>
+                            </mat-select>
+                          </mat-form-field>
+                        </div>
+                      </div>
+                      <div fxFlex="100" fxFlex.gt-sm="12" fxFlex.sm="50">
+                        <div class="dropdown-wrapper">
+                          <mat-form-field class="select-slab-mat" appearance="outline">
+                            <mat-label>Select PartyAs</mat-label>
+                            <mat-select #selectPartyAs placeholder="Select PartyAs" panelClass="custom-select-panel" formControlName="partyAs">
+                            <mat-option *ngFor="let option of partyAs" [value]="option.id">
+                                {{ option.name }}
+                                </mat-option> 
+                            </mat-select>
+                          </mat-form-field>
+                        </div>
+                      </div>
+                      <div fxFlex="100" fxFlex.gt-sm="20" fxFlex.sm="50">
+                        <div class="dropdown-wrapper">
+                          <mat-form-field class="select-slab-mat" appearance="outline">
+                            <mat-label>Select Client</mat-label>
+                            <mat-select #selectClientAs placeholder="Select Client" panelClass="custom-select-panel" formControlName="clientAc">
+                              <input class="milti-search-box" #multiUserSearch type="text" autocomplete="off" matInput placeholder="Search Client" (input)="onInputClientChange($event)" />
+                              <mat-option *ngFor="let option of filterClientList" [value]="option.id">
+                                {{ option.name }}
+                              </mat-option>
+                            </mat-select>
+                          </mat-form-field>
+                        </div>
+                      </div>
+                      <div fxLayout="row" class="mt-2 flex-end">
+                        <button mat-raised-button color="primary" class="uppercase save-btn" [disabled]="!itemForm.valid" type="submit">Save</button> 
+                        <button type="button" mat-raised-button color="warn" (click)="close()">Cancel</button>            
+                        </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="col-xl-12 mt-2">
+        <ag-grid-angular style=" height: 535px;"
+                         class="ag-theme-material"
+                           [rowHeight]="31"
+                         [rowData]="symbolMappingList"
+                         [pagination]="true"
+                         [columnDefs]="columnDefs"
+                         [defaultColDef]="agGridOptions.defaultColDef"
+                         (cellClicked)="onGridClick($event)"
+                         headerHeight="34">
+        </ag-grid-angular>
+      </div>
+  </div>
