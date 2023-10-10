@@ -62,8 +62,8 @@ export class TradeComponent implements OnInit {
 
           const formData: FormData = new FormData();
           formData.append("files", this.files[0], file.name);
-          formData.append("exCode", this.selectedExId);
-          formData.append("lotFile", String(this.lotFile));
+          formData.append("fileTypeId", this.selectedExId);
+         // formData.append("lotFile", String(this.lotFile));
          
 
           if (idx == array.length - 1) {

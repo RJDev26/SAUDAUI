@@ -2,7 +2,7 @@
   <div fxLayout="row" class="mt-2">
     <div fxFlex="100" fxFlex.gt-sm="20" fxFlex.sm="50">
       <mat-form-field class="example-full-width" appearance="outline">
-        <mat-label>Exchange</mat-label>
+        <mat-label>FileType</mat-label>
         <mat-select placeholder="" [(ngModel)]="selectedExId">
           <mat-option *ngFor="let exchange of exchangeList" [value]="exchange.id">
             {{exchange.name}}
@@ -10,9 +10,7 @@
         </mat-select>
       </mat-form-field>
     </div>
-    <div fxFlex="100" fxFlex.gt-sm="15" fxFlex.sm="15">
-      <mat-slide-toggle [(ngModel)]="lotFile" color="primary">Lot File</mat-slide-toggle>
-    </div>
+    
   </div>
 </div>
 <div class="script-main">
