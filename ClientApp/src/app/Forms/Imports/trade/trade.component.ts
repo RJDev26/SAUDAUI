@@ -3,6 +3,7 @@ import { ScriptsService } from '../imports.service';
 import { forkJoin, map } from 'rxjs';
 import { MasterService } from '../../Master/master.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { MasterSecondService } from '../../Master/master-second.service';
 
 @Component({
   selector: 'app-trade',
@@ -41,14 +42,14 @@ export class TradeComponent implements OnInit {
     this.files.splice(this.files.indexOf(event), 1);
   }
 
-  constructor(public snackBar: MatSnackBar, private _scriptsService: ScriptsService, private _masterService: MasterService) { }
+  constructor(public snackBar: MatSnackBar, private _scriptsService: ScriptsService, private _masterService: MasterService, private _masterSeconedService: MasterSecondService) { }
 
   ngOnInit(): void {
     this.getExchangeList();
   }
 
   getExchangeList() {
-    forkJoin([this._masterService.getExchangeName()]).pipe(map(response => {
+    forkJoin([this._masterSeconedService.getTradeFileList()]).pipe(map(response => {
       this.exchangeList = response[0];
     })).subscribe(res => {
     });

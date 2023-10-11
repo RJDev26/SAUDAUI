@@ -1,0 +1,257 @@
+import { Component, OnInit, ViewChild } from "@angular/core";
+import { MatDialog } from "@angular/material/dialog";
+import { DatatableComponent } from "@swimlane/ngx-datatable";
+import { AppSettings } from "src/app/app.settings";
+import { Settings } from "src/app/app.settings.model";
+import { ConfirmationDialog } from "../../Dialog/confirmation-dialog/confirmation-dialog.component";
+import { AppService } from "src/app/service/app.service";
+import { forkJoin, Observable } from 'rxjs';
+import { map, startWith } from 'rxjs/operators';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from "@angular/forms";
+import { MasterService } from "../../Master/master.service";
+import { MasterSecondService } from "../../Master/master-second.service";
+import { EntryService } from "../entry.service";
+import { DatePipe, DecimalPipe } from "@angular/common";
+
+@Component({
+  selector: 'app-trade-contract',
+  templateUrl: './trade-contract.component.html',
+  styleUrls: ['./trade-contract.component.scss']
+})
+export class TradeContractComponent implements OnInit {
+  @ViewChild(DatatableComponent) table: DatatableComponent;
+  public itemForm: UntypedFormGroup;
+  editing = {};
+  rows = [];
+  temp = [];
+  accountList: any[];
+  filteredAccountList: any[];
+  brokerList: any;
+  filterBrokerList: any[]= [];
+  clientList: any;
+  filterClientList: any[]= [];
+  selected = [];
+  loadingIndicator: boolean = true;
+  reorderable: boolean = true;
+  partyAs = [{'id':'B', 'name':'Buy'}, {'id':'S', 'name':'Sell'}]
+  saudaList: any;
+  filterSaudaList: any;
+  contractDateVal: any;
+  decimalPipe: any = new DecimalPipe('en-US');
+ 
+  public settings: Settings;
+  symbolMappingList: any[]=[];
+constructor(private datePipe: DatePipe, public appSettings: AppSettings, private formBuilder: UntypedFormBuilder, private _entryServices: EntryService,
+  public dialog: MatDialog, private _appService: AppService, private _masterService: MasterService, private _masterSecondService: MasterSecondService) {
+      this.settings = this.appSettings.settings;
+    }
+
+  ngOnInit() {
+      this.bindFormControls();
+  }
+
+  bindFormControls() {
+    this.itemForm = this.formBuilder.group({
+      'condate': ['', Validators.required],
+      'accountId': ['', Validators.required],
+      'saudaId': ['', Validators.required],
+      'qty': ['', Validators.required],
+      'rate': ['', Validators.required],
+      'contype': ['', Validators.required],
+      'brokerId': ['', Validators.required],
+      'id': [0]
+    });
+   this.initialApiCalls();
+}
+
+  agGridOptions: any = {
+      defaultColDef: {
+        filter: true,
+        flex: 1,
+        sortable: true,
+        wraptext: true,
+        resizable: true
+      }
+  }
+
+  columnDefs = [
+      {
+        headerName: 'Action', field: 'fileIcon', cellRenderer: this.actionCellRenderer, minWidth: 80, filter: false,
+        maxWidth: 110, resizable: true
+      },
+      { headerName: 'Contract Date', field: 'condate', filter: true, sorting: true, resizable: true, cellRenderer:(params) => {
+        return this.datePipe.transform(params.value, 'YYYY-MM-dd')
+      } },
+      { headerName: 'Account', field: 'account', filter: true, sorting: true, resizable: true },
+    { headerName: 'Broker', field: 'brokerName', filter: true, sorting: true, resizable: true },  
+    { headerName: 'Contype', field: 'contype', filter: true, sorting: true, resizable: true, cellRenderer: (params) => {
+      return params.value === 'B' ? 'Buy' : (params.value === 'S' ? 'Sell' : params.value);
+    } },  
+    { headerName: 'QTY', field: 'qty', filter: true, sorting: true, resizable: true, cellRenderer: (params) => {
+      return this.decimalPipe.transform(params.value, '1.2-2');
+    }, type: 'rightAligned'},  
+    { headerName: 'Rate', field: 'rate', type: 'rightAligned', filter: true, sorting: true, resizable: true, cellRenderer: (params) => {
+      return this.decimalPipe.transform(params.value, '1.2-2');
+    }, },  
+    { headerName: 'Created Date', field: 'createdDate', filter: true, sorting: true, resizable: true , cellRenderer:(params) => {
+      return this.datePipe.transform(params.value, 'YYYY-MM-dd')
+    }},  
+    { headerName: 'Trade No', field: 'tradeNo', filter: true, sorting: true, resizable: true },  
+  ];
+
+  initialApiCalls() {
+    forkJoin([this._masterService.getAccounts(), this._masterService.getSaudaListDDL()]).pipe(map(response => {
+      this.filteredAccountList = response[0];
+      this.accountList = response[0];
+      this.brokerList = response[0];
+      this.filterBrokerList = response[0];
+      this.saudaList = response[1];
+      this.filterSaudaList = response[1];
+    })).subscribe(res => {
+    });
+  }
+
+  onInputSaudaChange(event: any) {
+    const searchInput = event.target.value.toLowerCase();
+
+    this.filterSaudaList = this.saudaList.filter((data) => {
+      const prov = data.itemCode.toLowerCase();
+      return prov.includes(searchInput);
+    });
+
+    if (searchInput === '') {
+      this.filterSaudaList = [...this.saudaList];
+    }
+  }
+
+  onInputChange(event: any) {
+    const searchInput = event.target.value.toLowerCase();
+
+    this.filteredAccountList = this.accountList.filter((data) => {
+      const prov = data.itemCode.toLowerCase();
+      return prov.includes(searchInput);
+    });
+
+    if (searchInput === '') {
+      this.filteredAccountList = [...this.accountList];
+    }
+  }
+
+  onInputBrokerChange(event: any) {
+    const searchInput = event.target.value.toLowerCase();
+  
+    this.filterBrokerList = this.brokerList.filter((data) => {
+      const prov = data.name.toLowerCase();
+      return prov.includes(searchInput);
+    });
+  
+    if (searchInput === '') {
+      this.filterBrokerList = [...this.brokerList];
+    }
+  }
+
+  onInputClientChange(event: any) {
+    const searchInput = event.target.value.toLowerCase();
+  
+    this.filterClientList = this.clientList.filter((data) => {
+      const prov = data.name.toLowerCase();
+      return prov.includes(searchInput);
+    });
+  
+    if (searchInput === '') {
+      this.filterClientList = [...this.clientList];
+    }
+  }
+
+  public onSubmit(values: Object): void {
+    var body = this.itemForm.value;
+    if (this.itemForm.valid) {
+      body.condate = this.datePipe.transform(body.condate, 'yyyy-MM-dd')
+      //const body = JSON.stringify(addFormData);
+      this._entryServices.saveCtrD(body).subscribe(result => {
+        console.log("result", result);
+        this.getTradeFileListData();
+        this.resetForm(this.itemForm);
+      }, err => {
+        console.log(err);
+      });
+    }
+  }
+  getTradeFileListData(){
+    if(this.contractDateVal){
+      this._entryServices.getTradeFileList(this.contractDateVal).subscribe((results) => {
+        this.symbolMappingList = results;       
+       });
+    }
+  }
+
+  onCondateChange(newValue: Date) {
+    this.contractDateVal = this.datePipe.transform(newValue, 'yyyy-MM-dd');
+    this.getTradeFileListData();
+    }
+
+  public actionCellRenderer(params: any) {
+      let eGui = document.createElement("div");
+      let editingCells = params.api.getEditingCells();
+      let isCurrentRowEditing = editingCells.some((cell: any) => {
+        return cell.rowIndex === params.node.rowIndex;
+      });
+      eGui.innerHTML = `<button class="material-icons action-button-edit" data-action="edit">edit </button>
+                        <button class="material-icons action-button-red" delete data-action="delete">delete</button>`;    
+      return eGui;
+  }
+
+  onGridClick(params: any) {
+    if (params.event.target.dataset.action == "edit")
+    {
+      this.openExchangeDialog(params.data.id);
+    }
+    if (params.event.target.dataset.action == "delete")
+    {
+      const dialogRef = this.dialog.open(ConfirmationDialog, {
+        data: {
+          message: 'Do you really want to delete this record?',
+          buttonText: {
+            ok: 'Yes',
+            cancel: 'No'
+          }
+        }
+      });
+
+      dialogRef.afterClosed().subscribe((confirmed: boolean) => {
+        if (confirmed) {
+          this._entryServices.deleteContract(params.data.tradeNo, this.datePipe.transform(params.data.condate, 'yyyy-MM-dd')).subscribe((res) => {
+            this.getTradeFileListData();
+          });
+        }
+      });
+
+
+    }
+  }
+
+  public openExchangeDialog(id) {
+    this._entryServices.editContract(id).subscribe((response) => {
+      var res = response;
+      this.itemForm.get('id').setValue(res.id);
+      this.itemForm.get('condate').setValue(res.condate);
+      this.itemForm.get('accountId').setValue(res.accountId);
+      this.itemForm.get('qty').setValue(res.qty);
+      this.itemForm.get('rate').setValue(res.rate);
+      this.itemForm.get('contype').setValue(res.contype);
+      this.itemForm.get('brokerId').setValue(res.brokerId);      
+    });
+  } 
+
+  resetForm(myForm) {
+    myForm.reset();
+    myForm.get('id').setValue(0);
+    Object.keys(myForm.controls).forEach(key => {
+      myForm.get(key).setErrors(null);
+    });
+  }
+
+  close() {
+    this.resetForm(this.itemForm);
+  }
+}

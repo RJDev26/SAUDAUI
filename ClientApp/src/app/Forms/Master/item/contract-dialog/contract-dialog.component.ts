@@ -58,7 +58,6 @@ export class ContractDialogComponent implements OnInit {
     {
       headerName: '', editable: false, minwidth: 45, width: 45, maxwidth: 45, resizable: false, sortable: false, filter: false, checkboxSelection: true, headerCheckboxSelection: true,
     },
-    { headerName: 'Symbol', field: 'symbol', filter: true, sorting: true, resizable: true },
     { headerName: 'Item Name', field: 'itemName', filter: true, sorting: true, resizable: true },
   
   ];

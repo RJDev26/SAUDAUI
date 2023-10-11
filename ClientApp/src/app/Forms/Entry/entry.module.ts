@@ -6,10 +6,12 @@ import { SharedModule } from '../../shared/shared.module';
 import { AgGridModule } from 'ag-grid-angular';
 import { VoucherComponent } from './Voucher/voucher.component';
 import { MAT_DATE_LOCALE } from '@angular/material/core';
+import { TradeContractComponent } from './trade-contract/trade-contract.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'voucher', pathMatch: 'full' },
   { path: 'voucher', component: VoucherComponent, data: { breadcrumb: 'Voucher' } },
+  { path: 'trade-contract', component: TradeContractComponent, data: { breadcrumb: 'Trade' } },
   
 ];
 
@@ -24,7 +26,8 @@ export const routes: Routes = [
   ],
   declarations: [
     
-    VoucherComponent
+    VoucherComponent,
+          TradeContractComponent
   ],
   providers: [
     DatePipe,

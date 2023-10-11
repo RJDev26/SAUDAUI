@@ -29,5 +29,20 @@ export class EntryService {
   deleteVoucher(vouMasterId: number): Observable<any> {
     return this.httpClient.delete<any>(environment.apiBaseUrl + `Voucher/deleteVoucher/${vouMasterId}`, { headers: this.headers })
   }
+  saveCtrD(data): Observable<any> {
+    return this.httpClient.post<any>(environment.apiBaseUrl + 'Trade/SaveCtrD', data, { headers: this.headers });
+  }
+
+  getTradeFileList(conDate: any): Observable<any> {
+    return this.httpClient.get<any>(environment.apiBaseUrl + 'Trade/getContractDate/' +conDate, { headers: this.headers });
+  }
+
+  deleteContract(tradeNo: any, conDate: any): Observable<any> {
+    return this.httpClient.delete<any>(environment.apiBaseUrl + `Trade/deleteContract/${tradeNo}/${conDate}`, { headers: this.headers })
+  }
+
+  editContract(id: number): Observable<any> {
+    return this.httpClient.post<any>(environment.apiBaseUrl + `Trade/editContract/${id}`, { headers: this.headers })
+  }
 
 }
