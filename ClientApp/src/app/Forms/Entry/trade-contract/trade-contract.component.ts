@@ -12,6 +12,7 @@ import { MasterService } from "../../Master/master.service";
 import { MasterSecondService } from "../../Master/master-second.service";
 import { EntryService } from "../entry.service";
 import { DatePipe, DecimalPipe } from "@angular/common";
+import { ErrorDialog } from "../../Dialog/confirmation-dialog/error-dialog.component";
 
 @Component({
   selector: 'app-trade-contract',
@@ -33,11 +34,15 @@ export class TradeContractComponent implements OnInit {
   selected = [];
   loadingIndicator: boolean = true;
   reorderable: boolean = true;
-  partyAs = [{'id':'B', 'name':'Buy'}, {'id':'S', 'name':'Sell'}]
-  saudaList: any;
-  filterSaudaList: any;
+  conTypeList = [{'id':'B', 'name':'Buy'}, {'id':'S', 'name':'Sell'}]
+  saudaList: any[] = [];
+  filterSaudaList: any[] = [];
   contractDateVal: any;
   decimalPipe: any = new DecimalPipe('en-US');
+  exchangeList: any[];
+  conDate: any;
+  exId: any;
+  gridApi: any;
  
   public settings: Settings;
   symbolMappingList: any[]=[];
@@ -52,12 +57,11 @@ constructor(private datePipe: DatePipe, public appSettings: AppSettings, private
 
   bindFormControls() {
     this.itemForm = this.formBuilder.group({
-      'condate': ['', Validators.required],
       'accountId': ['', Validators.required],
       'saudaId': ['', Validators.required],
       'qty': ['', Validators.required],
       'rate': ['', Validators.required],
-      'contype': ['', Validators.required],
+      'contype': ['B', Validators.required],
       'brokerId': ['', Validators.required],
       'id': [0]
     });
@@ -74,40 +78,52 @@ constructor(private datePipe: DatePipe, public appSettings: AppSettings, private
       }
   }
 
-  columnDefs = [
+  columnDefs = [{
+    headerName: 'Contract Trades',
+    children:[
       {
-        headerName: 'Action', field: 'fileIcon', cellRenderer: this.actionCellRenderer, minWidth: 80, filter: false,
-        maxWidth: 110, resizable: true
+        headerName: '', editable: false, minwidth: 45, width: 45, maxwidth: 45, resizable: false, sortable: false, filter: false, checkboxSelection: true, headerCheckboxSelection: true,
       },
-      { headerName: 'Contract Date', field: 'condate', filter: true, sorting: true, resizable: true, cellRenderer:(params) => {
+        {
+          headerName: 'Action', field: 'fileIcon', cellRenderer: this.actionCellRenderer, minWidth: 80, filter: false,
+          maxWidth: 110, resizable: true
+        },
+        { headerName: 'ConDate', field: 'condate', filter: true, sorting: true, resizable: true, cellRenderer:(params) => {
+          return this.datePipe.transform(params.value, 'YYYY-MM-dd')
+        } },
+        { headerName: 'Account', field: 'account', filter: true, sorting: true, resizable: true },
+      { headerName: 'Broker', field: 'brokerName', filter: true, sorting: true, resizable: true },  
+      { headerName: 'Contype', field: 'contype', filter: true, sorting: true, resizable: true, cellRenderer: (params) => {
+        return params.value === 'B' ? 'Buy' : (params.value === 'S' ? 'Sell' : params.value);
+      } },  
+      { headerName: 'QTY', field: 'qty', filter: true, sorting: true, resizable: true, cellRenderer: (params) => {
+        return this.decimalPipe.transform(params.value, '1.2-2');
+      }, type: 'rightAligned'},  
+      { headerName: 'Rate', field: 'rate', type: 'rightAligned', filter: true, sorting: true, resizable: true, cellRenderer: (params) => {
+        return this.decimalPipe.transform(params.value, '1.2-2');
+      }, },  
+      { headerName: 'Created Date', field: 'createdDate', filter: true, sorting: true, resizable: true , cellRenderer:(params) => {
         return this.datePipe.transform(params.value, 'YYYY-MM-dd')
-      } },
-      { headerName: 'Account', field: 'account', filter: true, sorting: true, resizable: true },
-    { headerName: 'Broker', field: 'brokerName', filter: true, sorting: true, resizable: true },  
-    { headerName: 'Contype', field: 'contype', filter: true, sorting: true, resizable: true, cellRenderer: (params) => {
-      return params.value === 'B' ? 'Buy' : (params.value === 'S' ? 'Sell' : params.value);
-    } },  
-    { headerName: 'QTY', field: 'qty', filter: true, sorting: true, resizable: true, cellRenderer: (params) => {
-      return this.decimalPipe.transform(params.value, '1.2-2');
-    }, type: 'rightAligned'},  
-    { headerName: 'Rate', field: 'rate', type: 'rightAligned', filter: true, sorting: true, resizable: true, cellRenderer: (params) => {
-      return this.decimalPipe.transform(params.value, '1.2-2');
-    }, },  
-    { headerName: 'Created Date', field: 'createdDate', filter: true, sorting: true, resizable: true , cellRenderer:(params) => {
-      return this.datePipe.transform(params.value, 'YYYY-MM-dd')
-    }},  
-    { headerName: 'Trade No', field: 'tradeNo', filter: true, sorting: true, resizable: true },  
+      }},  
+      { headerName: 'Trade No', field: 'tradeNo', filter: true, sorting: true, resizable: true },  ]
+  }
   ];
 
   initialApiCalls() {
-    forkJoin([this._masterService.getAccounts(), this._masterService.getSaudaListDDL()]).pipe(map(response => {
+    forkJoin([this._masterService.getAccounts(), this._masterService.getExchangeName()]).pipe(map(response => {
       this.filteredAccountList = response[0];
       this.accountList = response[0];
       this.brokerList = response[0];
       this.filterBrokerList = response[0];
-      this.saudaList = response[1];
-      this.filterSaudaList = response[1];
+      this.exchangeList = response[1];
     })).subscribe(res => {
+    });
+  }
+
+  onExchangeInputChange(event: any) {
+    this._masterService.getExchangeSaudaListDDL(this.exId).subscribe(res=>{
+      this.saudaList = res;
+      this.filterSaudaList = res;
     });
   }
 
@@ -165,6 +181,7 @@ constructor(private datePipe: DatePipe, public appSettings: AppSettings, private
 
   public onSubmit(values: Object): void {
     var body = this.itemForm.value;
+    body.condate= this.conDate;
     if (this.itemForm.valid) {
       body.condate = this.datePipe.transform(body.condate, 'yyyy-MM-dd')
       //const body = JSON.stringify(addFormData);
@@ -232,16 +249,48 @@ constructor(private datePipe: DatePipe, public appSettings: AppSettings, private
 
   public openExchangeDialog(id) {
     this._entryServices.editContract(id).subscribe((response) => {
-      var res = response;
-      this.itemForm.get('id').setValue(res.id);
-      this.itemForm.get('condate').setValue(res.condate);
-      this.itemForm.get('accountId').setValue(res.accountId);
-      this.itemForm.get('qty').setValue(res.qty);
-      this.itemForm.get('rate').setValue(res.rate);
-      this.itemForm.get('contype').setValue(res.contype);
-      this.itemForm.get('brokerId').setValue(res.brokerId);      
+      this.exId = response.exId;
+      this._masterService.getExchangeSaudaListDDL(response.exId).subscribe(result=>{
+        this.saudaList = result;
+        this.filterSaudaList = result;
+        var res = response;
+        this.itemForm.get('id').setValue(res.id);
+        this.itemForm.get('accountId').setValue(res.accountId);
+        this.itemForm.get('saudaId').setValue(res.saudaId);
+        this.itemForm.get('qty').setValue(res.qty);
+        this.itemForm.get('rate').setValue(res.rate);
+        this.itemForm.get('contype').setValue(res.contype);
+        this.itemForm.get('brokerId').setValue(res.brokerId);      
+      });
+      
+      
     });
   } 
+  onGridReady(event) { this.gridApi = event.api; }
+
+  deleteContractTrades()
+  {
+    var selectedRecord = this.gridApi.getSelectedRows();
+    if (selectedRecord.length == 0) {
+      const dialogRef = this.dialog.open(ErrorDialog, {
+        data: {
+          message: 'Please select record to delete',
+          buttonText: {
+            ok: 'OK',
+
+          }
+        }
+
+      });
+
+    }
+    else
+    {
+      this._masterSecondService.deleteAccountTax(selectedRecord).subscribe(result => {
+        this.getTradeFileListData();
+      });
+    }
+  }
 
   resetForm(myForm) {
     myForm.reset();

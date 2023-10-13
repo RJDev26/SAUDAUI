@@ -29,7 +29,7 @@
   </div>
 </div>
 <div class="text-end">
-  <button mat-raised-button color="primary" type="button" (click)="submit()">
+  <button mat-raised-button [disabled]="!selectedExId" color="primary" type="button" (click)="submit()">
     Save
   </button>
 </div>

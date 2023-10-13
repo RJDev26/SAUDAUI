@@ -92,7 +92,11 @@ export class MasterService {
   }
 
   getExchangeName(): Observable<any> {
-    return this.httpClient.get<any>(environment.apiBaseUrl + 'Master/getExchangeName', { headers: this.headers });
+    return this.httpClient.get<any>(environment.apiBaseUrl + 'MasterSecond/getExchangeNameDLL', { headers: this.headers });
+  }
+
+  getExchangeSaudaListDDL(id: any): Observable<any> {
+    return this.httpClient.get<any>(environment.apiBaseUrl + 'Master/getExchangeSaudaListDDL/' + id, {headers: this.headers})
   }
 
   getSaudaListDDL(): Observable<any> {

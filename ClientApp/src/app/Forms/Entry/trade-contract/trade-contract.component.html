@@ -1,20 +1,36 @@
 <div class="row">
+    <div fxLayout="row" class="mt-2 symbol-mapping">
+        <div fxFlex="100" fxFlex.gt-sm="15" fxFlex.sm="15">
+            <div class="dropdown-container">
+              <div class="dropdown-wrapper">
+                <mat-form-field appearance="outline" class="calendar">
+                  <mat-label>Contract Date</mat-label>
+                  <input matInput [matDatepicker]="picker1" [(ngModel)]="conDate" (ngModelChange)="onCondateChange($event)">
+                  <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                  <mat-datepicker #picker1></mat-datepicker>
+                </mat-form-field>
+              </div>
+            </div>
+          </div>
+          <div fxFlex="100" fxFlex.gt-sm="15" fxFlex.sm="50">
+            <div class="dropdown-container">
+                <div class="dropdown-wrapper">
+            <mat-form-field class="example-full-width" appearance="outline">
+              <mat-label>Exchange </mat-label>
+              <mat-select placeholder="Select Exchange" [(ngModel)]="exId" (ngModelChange)="onExchangeInputChange($event)">
+                <mat-option *ngFor="let exchange of exchangeList" [value]="exchange.id">
+                  {{exchange.name}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+            </div>
+            </div>
+          </div>
+    </div>
     <div fxLayout="row" class="mt-2 flex-end symbol-mapping">
         <form [formGroup]="itemForm" (ngSubmit)="onSubmit(itemForm.value)" fxLayout="row wrap" class="user-form">
             <div class="white-block pb-5">
                 <div class="tab-party-details-parent">
-                    <div fxFlex="100" fxFlex.gt-sm="15" fxFlex.sm="15">
-                        <div class="dropdown-container">
-                          <div class="dropdown-wrapper">
-                            <mat-form-field appearance="outline" class="calendar">
-                              <mat-label>Contract Date</mat-label>
-                              <input matInput [matDatepicker]="picker1" formControlName="condate" (ngModelChange)="onCondateChange($event)">
-                              <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
-                              <mat-datepicker #picker1></mat-datepicker>
-                            </mat-form-field>
-                          </div>
-                        </div>
-                      </div>
                       <div fxFlex="100" fxFlex.gt-sm="15" fxFlex.sm="50">
                         <div class="dropdown-wrapper">
                             <mat-form-field class="select-slab-mat" appearance="outline">
@@ -41,7 +57,19 @@
                             </mat-form-field>
                         </div>
                     </div>
-                    <div fxFlex="100" fxFlex.gt-sm="15" fxFlex.sm="30">
+                      <div fxFlex="100" fxFlex.gt-sm="12" fxFlex.sm="50">
+                        <div class="dropdown-wrapper">
+                          <mat-form-field class="select-slab-mat" appearance="outline">
+                            <mat-label>Select ConType</mat-label>
+                            <mat-select #selectPartyAs placeholder="Select ConType" panelClass="custom-select-panel" formControlName="contype">
+                            <mat-option *ngFor="let option of conTypeList" [value]="option.id">
+                                {{ option.name }}
+                                </mat-option> 
+                            </mat-select>
+                          </mat-form-field>
+                        </div>
+                      </div>
+                      <div fxFlex="100" fxFlex.gt-sm="15" fxFlex.sm="30">
                         <mat-form-field appearance="outline">
                           <mat-label>Qty</mat-label>
                           <input matInput autocomplete="off" placeholder="Qty" formControlName="qty" type="number" appCurrencyFormatter>
@@ -55,19 +83,7 @@
                           <mat-error *ngIf="itemForm.controls.rate.errors?.required">rate is required</mat-error>
                         </mat-form-field>
                       </div>
-                      <div fxFlex="100" fxFlex.gt-sm="12" fxFlex.sm="50">
-                        <div class="dropdown-wrapper">
-                          <mat-form-field class="select-slab-mat" appearance="outline">
-                            <mat-label>Select ConType</mat-label>
-                            <mat-select #selectPartyAs placeholder="Select ConType" panelClass="custom-select-panel" formControlName="contype">
-                            <mat-option *ngFor="let option of partyAs" [value]="option.id">
-                                {{ option.name }}
-                                </mat-option> 
-                            </mat-select>
-                          </mat-form-field>
-                        </div>
-                      </div>
-                      <div fxFlex="100" fxFlex.gt-sm="20" fxFlex.sm="50">
+                      <div fxFlex="100" fxFlex.gt-sm="15" fxFlex.sm="50">
                         <div class="dropdown-wrapper">
                           <mat-form-field class="select-slab-mat" appearance="outline">
                             <mat-label>Select Broker</mat-label>
@@ -80,21 +96,25 @@
                           </mat-form-field>
                         </div>
                       </div>
-                      <div fxFlex="100" fxFlex.gt-sm="15" space-between fxFlex.sm="50">
-                        <button mat-raised-button color="primary" class="uppercase save-btn" [disabled]="!itemForm.valid" type="submit">Save</button> 
+                      <div fxFlex="100" fxFlex.gt-sm="13" space-between fxFlex.sm="50">
+                        <button mat-raised-button color="primary" class="uppercase save-btn" [disabled]="!itemForm.valid || !conDate" type="submit">Save</button> 
                         <button type="button" mat-raised-button color="warn" (click)="close()">Cancel</button>            
                     </div>
                 </div>
             </div>
         </form>
     </div>
-    <div class="col-xl-12 mt-2">
+    <div class="col-xl-12 mt-2 position-relative">
+        <span class="material-symbols-outlined delete-icon" (click)="deleteContractTrades()">
+            <mat-icon>delete_sweep</mat-icon>
+          </span>
         <ag-grid-angular style=" height: 535px;"
                          class="ag-theme-material"
                            [rowHeight]="31"
                          [rowData]="symbolMappingList"
                          [pagination]="true"
                          [columnDefs]="columnDefs"
+                         (gridReady)="onGridReady($event)"
                          [defaultColDef]="agGridOptions.defaultColDef"
                          (cellClicked)="onGridClick($event)"
                          headerHeight="34">
