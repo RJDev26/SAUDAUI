@@ -114,6 +114,7 @@
                          [rowData]="symbolMappingList"
                          [pagination]="true"
                          [columnDefs]="columnDefs"
+                         [rowSelection]="'multiple'"
                          (gridReady)="onGridReady($event)"
                          [defaultColDef]="agGridOptions.defaultColDef"
                          (cellClicked)="onGridClick($event)"

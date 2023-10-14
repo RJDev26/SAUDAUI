@@ -286,7 +286,8 @@ constructor(private datePipe: DatePipe, public appSettings: AppSettings, private
     }
     else
     {
-      this._masterSecondService.deleteAccountTax(selectedRecord).subscribe(result => {
+      const idList = selectedRecord.map(record => record.tradeNo).join(', ');
+      this._entryServices.deleteContract(idList, this.datePipe.transform(this.conDate, 'yyyy-MM-dd')).subscribe((res) => {
         this.getTradeFileListData();
       });
     }
