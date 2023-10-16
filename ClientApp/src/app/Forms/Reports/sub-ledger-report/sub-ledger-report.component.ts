@@ -139,7 +139,11 @@ export class SubLedgerReportComponent implements OnInit {
     for (var i = 0; i < this.brokeragesetupList.length; i++) {
       var temp = [];
       for(var j = 0; j < colFields.length; j++){
-        temp.push(this.brokeragesetupList[i][colFields[j]])
+        if(this.brokeragesetupList[i][colFields[j]]){
+          temp.push(this.brokeragesetupList[i][colFields[j]])
+        } else {
+          temp.push('');
+        }
       }
       rows.push(temp);
     }

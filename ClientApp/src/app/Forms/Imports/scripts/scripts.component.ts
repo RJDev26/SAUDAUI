@@ -3,6 +3,8 @@ import { ScriptsService } from '../imports.service';
 import { forkJoin, map } from 'rxjs';
 import { MasterService } from '../../Master/master.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { AppSettings } from 'src/app/app.settings';
+import { Settings } from 'src/app/app.settings.model';
 
 @Component({
   selector: 'app-scripts',
@@ -15,6 +17,7 @@ export class ScriptsComponent implements OnInit {
   selectedExId: any;
   showError: boolean;
   lotFile: boolean = false;
+  public settings: Settings;
 
   isExcelFile(file: File): boolean {
     const allowedExtensions = ['.csv', '.xlsx', '.xls'];
@@ -41,7 +44,9 @@ export class ScriptsComponent implements OnInit {
     this.files.splice(this.files.indexOf(event), 1);
   }
 
-  constructor(public snackBar: MatSnackBar, private _scriptsService: ScriptsService, private _masterService: MasterService) { }
+  constructor(public snackBar: MatSnackBar, private _scriptsService: ScriptsService, private _masterService: MasterService, public appSettings:AppSettings) { 
+    this.settings = this.appSettings.settings;
+  }
 
   ngOnInit(): void {
     this.getExchangeList();
@@ -68,12 +73,15 @@ export class ScriptsComponent implements OnInit {
           //formData.append('userId', this.userId);
 
           if (idx == array.length - 1) {
+            this.settings.loadingSpinner = true;
             this._scriptsService.ImportScript(formData).subscribe(res => {
               console.log("result", res);
               this.resetForm();
+              this.settings.loadingSpinner = false;
               this.showToaster(res.message, !res.isSuccess);
             }, err => {
               console.log(err);
+              this.settings.loadingSpinner = false;
             });
           }
         }
