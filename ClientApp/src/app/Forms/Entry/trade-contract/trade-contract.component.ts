@@ -71,7 +71,6 @@ constructor(private datePipe: DatePipe, public appSettings: AppSettings, private
   agGridOptions: any = {
       defaultColDef: {
         filter: true,
-        flex: 1,
         sortable: true,
         wraptext: true,
         resizable: true
@@ -85,8 +84,8 @@ constructor(private datePipe: DatePipe, public appSettings: AppSettings, private
         headerName: '', editable: false, minwidth: 45, width: 45, maxwidth: 45, resizable: false, sortable: false, filter: false, checkboxSelection: true, headerCheckboxSelection: true,
       },
         {
-          headerName: 'Action', field: 'fileIcon', cellRenderer: this.actionCellRenderer, minWidth: 80, filter: false,
-          maxWidth: 110, resizable: true
+          headerName: 'Action', field: 'fileIcon', cellRenderer: this.actionCellRenderer, minWidth: 60, filter: false,
+          maxWidth: 90, resizable: true
         },
         { headerName: 'ConDate', field: 'condate', filter: true, sorting: true, resizable: true, cellRenderer:(params) => {
           return this.datePipe.transform(params.value, 'YYYY-MM-dd')
@@ -213,8 +212,7 @@ constructor(private datePipe: DatePipe, public appSettings: AppSettings, private
       let isCurrentRowEditing = editingCells.some((cell: any) => {
         return cell.rowIndex === params.node.rowIndex;
       });
-      eGui.innerHTML = `<button class="material-icons action-button-edit" data-action="edit">edit </button>
-                        <button class="material-icons action-button-red" delete data-action="delete">delete</button>`;    
+      eGui.innerHTML = `<button class="material-icons action-button-edit" data-action="edit">edit </button>`;    
       return eGui;
   }
 
@@ -257,8 +255,8 @@ constructor(private datePipe: DatePipe, public appSettings: AppSettings, private
         this.itemForm.get('id').setValue(res.id);
         this.itemForm.get('accountId').setValue(res.accountId);
         this.itemForm.get('saudaId').setValue(res.saudaId);
-        this.itemForm.get('qty').setValue(res.qty);
-        this.itemForm.get('rate').setValue(res.rate);
+        this.itemForm.get('qty').setValue(Number(res.qty).toFixed(2));
+        this.itemForm.get('rate').setValue(Number(res.rate).toFixed(2));
         this.itemForm.get('contype').setValue(res.contype);
         this.itemForm.get('brokerId').setValue(res.brokerId);      
       });
@@ -301,7 +299,16 @@ constructor(private datePipe: DatePipe, public appSettings: AppSettings, private
     });
   }
 
+  isSaveButtonDisabled() {
+    return this.itemForm.invalid;
+  }
+
   close() {
     this.resetForm(this.itemForm);
+    this.itemForm.markAsPristine();
+    this.itemForm.markAsUntouched();
+    console.log('Form Value:', this.itemForm.value);
+    console.log('Form Valid:', this.itemForm.valid);
+    console.log('Form Touched:', this.itemForm.touched);
   }
 }

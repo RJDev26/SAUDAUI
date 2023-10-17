@@ -23,6 +23,7 @@ export const verticalMenuItems = [
   new Menu(3, 'Item Group', '/master/item-group', null, 'group_work', null, false, 2),
   new Menu(4, 'Users & Roles', '/user-roles', null, 'supervisor_account', null, false, 0),
   new Menu(4, 'Users', '/users', null, 'supervisor_account', null, false, 0),
+  new Menu(4, 'Logs', '/logs', null, 'folder_closed', null, false, 0),
   new Menu(5, 'Entries', null, null, 'card_membership', null, true, 0),
 
   new Menu(6, 'Voucher', '/entry/voucher', null, 'confirmation_number', null, false, 5),

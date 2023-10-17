@@ -816,4 +816,15 @@ input {
     100% { transform: rotate(360deg); }
   }
 
+  .action-missing-trade {
+        background: transparent;
+        border: none;
+        margin-right: 7px;
+        color: #ffb80a;
+        font-size: 12px;
+        line-height: 30px;
+        cursor: pointer;
+        text-decoration: underline;
+    }
+
 //ag-row-no-focus ag-row ag-row-level-0 ag-row-position-absolute ag-row-last

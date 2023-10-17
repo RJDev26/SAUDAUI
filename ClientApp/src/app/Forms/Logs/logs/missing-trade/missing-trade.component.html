@@ -1,0 +1,20 @@
+<div class="brokerage-setup-item">
+    <h2 class="heading">symbol</h2>
+    <a (click)="close()" class="close-btn">
+      <span class="material-symbols-outlined">
+        <mat-icon>close</mat-icon>
+      </span>
+    </a>
+    <div class="col-xl-12 position-relative">
+              <ag-grid-angular style=" height: 500px;"
+                            class="ag-theme-material"
+                            [rowData]="itemGroupList"
+                            [pagination]="true"
+                            [rowHeight]="31"
+                            [columnDefs]="columnDefs"
+                            [defaultColDef]="agGridOptions.defaultColDef"
+                            (gridReady)="onGridReady($event)"
+                            headerHeight="34">
+              </ag-grid-angular>
+      </div>
+  </div>
