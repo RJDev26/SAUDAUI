@@ -21,7 +21,7 @@ export class AuthenticationService {
   constructor(private httpClient: HttpClient) { }
 
   Login(formData): Observable<any> {
-    return this.httpClient.post<any>(environment.apiBaseUrl + '/Accounts/Login', formData);
+    return this.httpClient.post<any>(environment.apiBaseUrl + 'Accounts/Login', formData);
   }
 
   public sendAuthStateChangeNotification = (isAuthenticated: boolean) => {

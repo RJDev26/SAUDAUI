@@ -20,7 +20,7 @@ export class LoginComponent {
     , private authService: AuthenticationService, private route: ActivatedRoute) {
     this.settings = this.appSettings.settings; 
     this.form = this.fb.group({
-      'UserId': [null, Validators.compose([Validators.required])],
+      'name': [null, Validators.compose([Validators.required])],
       'password': [null, Validators.compose([Validators.required, Validators.minLength(6)])] 
     });
     this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
@@ -30,7 +30,7 @@ export class LoginComponent {
     debugger
     if (this.form.valid)
     {
-      const login = { ...this.form };
+      const login = { ...this.form.value };
       this.authService.Login(login)
         .subscribe({
           next: (res: any) => {

@@ -13,8 +13,8 @@
                     <mat-card fxLayout="column" fxLayoutAlign="center center" class="mat-elevation-z12 box-content-inner">
                         <span class="box-content-header">member login</span>  
                         <mat-form-field class="w-100">
-                            <input matInput placeholder="User ID" formControlName="UserId">
-                            <mat-error *ngIf="form.controls.UserId.errors?.required">User Id is required</mat-error>
+                            <input matInput placeholder="User ID" formControlName="name">
+                            <mat-error *ngIf="form.controls.name.errors?.required">User Id is required</mat-error>
                             <!--<mat-error *ngIf="form.controls.UserId.hasError('invalidEmail')">Invalid UserId address</mat-error>-->
                         </mat-form-field>
                         <mat-form-field class="w-100">
