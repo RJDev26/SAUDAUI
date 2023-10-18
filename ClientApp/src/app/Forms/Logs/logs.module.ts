@@ -11,6 +11,7 @@ import { AgGridModule } from 'ag-grid-angular';
 import { LogsComponent } from './logs/logs.component';
 import { NewAccountLogComponent } from './logs/new-account-log/new-account-log.component';
 import { MissingTradeComponent } from './logs/missing-trade/missing-trade.component';
+import { MAT_DATE_LOCALE } from '@angular/material/core';
 
 export const routes: Routes = [
   { path: '', component: LogsComponent, pathMatch: 'full' }
@@ -33,6 +34,9 @@ export const routes: Routes = [
     NewAccountLogComponent,
     MissingTradeComponent,
   ],
-  providers: [DatePipe]
+  providers: [
+    DatePipe,
+    { provide: MAT_DATE_LOCALE, useValue: 'en-GB' }
+  ],
 })
 export class LogsModule { }
