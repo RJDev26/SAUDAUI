@@ -40,8 +40,9 @@ import { MessagesComponent } from './theme/components/messages/messages.componen
 import { UserMenuComponent } from './theme/components/user-menu/user-menu.component';
 
 import { AgGridModule } from 'ag-grid-angular';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { ExchangeComponent } from './Forms/Master/exchange/exchange.component';
+import { AuthInterceptor } from './service/auth-interceptor.service';
 
 @NgModule({
   imports: [
@@ -86,7 +87,12 @@ import { ExchangeComponent } from './Forms/Master/exchange/exchange.component';
   providers: [
     AppSettings,
     { provide: PERFECT_SCROLLBAR_CONFIG, useValue: DEFAULT_PERFECT_SCROLLBAR_CONFIG },
-    { provide: OverlayContainer, useClass: CustomOverlayContainer }
+    { provide: OverlayContainer, useClass: CustomOverlayContainer },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true,
+    },
   ],
   bootstrap: [AppComponent]
 })
