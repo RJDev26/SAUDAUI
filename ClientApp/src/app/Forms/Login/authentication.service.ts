@@ -3,15 +3,17 @@ import { Injectable } from '@angular/core';
 
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
-import { Observable, Subject } from 'rxjs';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthenticationService {
-  private authChangeSub = new Subject<boolean>()
-  public authChanged = this.authChangeSub.asObservable();
+  private authChangeSub = new BehaviorSubject<boolean>(false)
+  authChanged$ = this.authChangeSub.asObservable();
+  private userDataSubject = new BehaviorSubject<any>(null);
+  userData$ = this.userDataSubject.asObservable();
 
   headers = new HttpHeaders()
     .set('content-type', 'application/json')
@@ -24,7 +26,11 @@ export class AuthenticationService {
     return this.httpClient.post<any>(environment.apiBaseUrl + 'Accounts/Login', formData);
   }
 
-  public sendAuthStateChangeNotification = (isAuthenticated: boolean) => {
+  saveUserData(data: any){
+    this.userDataSubject.next(data);
+  }
+
+  sendAuthStateChangeNotification(isAuthenticated: boolean) {
     this.authChangeSub.next(isAuthenticated);
   }
 

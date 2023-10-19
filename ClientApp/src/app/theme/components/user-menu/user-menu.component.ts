@@ -1,4 +1,6 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Router } from '@angular/router';
+import { AuthenticationService } from 'src/app/Forms/Login/authentication.service';
 
 @Component({
   selector: 'app-user-menu',
@@ -8,9 +10,19 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 })
 export class UserMenuComponent implements OnInit {
   public userImage = '../assets/img/users/user.jpg';
-  constructor() { }
+  userData: any = {};
+  constructor(private _authService: AuthenticationService, public router: Router) { }
 
   ngOnInit() {
+    this._authService.userData$.subscribe(res=>{
+      console.log('first', res);
+      this.userData = res || {};
+    });
+  }
+
+  onLogout() {
+    this._authService.logout();
+    this.router.navigate(['/login'])
   }
 
 }

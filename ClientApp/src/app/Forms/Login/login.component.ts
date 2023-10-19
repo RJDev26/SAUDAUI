@@ -35,9 +35,9 @@ export class LoginComponent {
       this.authService.Login(login)
         .subscribe({
           next: (res: any) => {
-            debugger
             localStorage.setItem("token", res.token);
             this.authService.sendAuthStateChangeNotification(res.isAuthSuccessful);
+            this.authService.saveUserData(res);
             this.router.navigate([this.returnUrl]);
           },
           error: (err: any) => {

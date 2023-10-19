@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject, ViewChild } from '@angular/core';
+import { Component, OnInit, OnDestroy, Inject, ViewChild, ChangeDetectorRef } from '@angular/core';
 import { AppSettings } from "src/app/app.settings";
 import { Settings } from "src/app/app.settings.model";
 import { MatDialog } from '@angular/material/dialog';
@@ -7,7 +7,7 @@ import { MatOption } from '@angular/material/core';
 import { AppService } from 'src/app/service/app.service';
 import { ConfirmationDialog } from '../../Dialog/confirmation-dialog/confirmation-dialog.component';
 import { CommonUtility } from 'src/app/shared/common-utility';
-import { forkJoin, map } from 'rxjs';
+import { Subscription, forkJoin, map } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { DatePipe } from '@angular/common';
 import { MasterService } from '../../Master/master.service';
@@ -15,13 +15,14 @@ import { MasterSecondService } from '../../Master/master-second.service';
 import { LogsService } from '../logs.service';
 import { MissingTradeComponent } from './missing-trade/missing-trade.component';
 import { NewAccountLogComponent } from './new-account-log/new-account-log.component';
+import { AuthenticationService } from '../../Login/authentication.service';
 
 @Component({
   selector: 'app-logs',
   templateUrl: './logs.component.html',
   styleUrls: ['./logs.component.scss']
 })
-export class LogsComponent implements OnInit {
+export class LogsComponent implements OnInit, OnDestroy {
   @ViewChild('select') select: MatSelect;
   @ViewChild('selectAccount') selectAccount: MatSelect;
   public settings: Settings;
@@ -44,14 +45,24 @@ export class LogsComponent implements OnInit {
   filteredAccountList: any[];
   brokeragesetupList: any = [];
   branchAllSellected: boolean = false;
+  userData: boolean;
+  userDataSubscription$: Subscription;
 
-  constructor(private datePipe: DatePipe, public snackBar: MatSnackBar, public appSettings: AppSettings, private _appService: AppService, public dialog: MatDialog, private _masterService: MasterService, private _masterSecondService: MasterSecondService, private _logSerice: LogsService) {
+
+  constructor(private cdr: ChangeDetectorRef, private authService: AuthenticationService, private datePipe: DatePipe, public snackBar: MatSnackBar, public appSettings: AppSettings, private _appService: AppService, public dialog: MatDialog, private _masterService: MasterService, private _masterSecondService: MasterSecondService, private _logSerice: LogsService) {
     this.settings = this.appSettings.settings;
   }
 
   ngOnInit() {
     this.fetchDropdownData();
     this.getBrokerageSetupList();
+    this.userDataSubscription$ = this.authService.authChanged$.subscribe((res) => {
+      this.userData = res;
+      console.log(res);
+    }, (err)=>{ console.log('err', err);});
+  }
+  ngOnDestroy() {
+    this.userDataSubscription$.unsubscribe();
   }
 
   agGridOptions: any = {
@@ -87,6 +98,7 @@ export class LogsComponent implements OnInit {
 
   getBrokerageSetupList() {
     if(this.areRequiredValuesSelected()){
+      console.log(this.userData);
       var req = {
         "logType": this.branchIds,
         "fromDt": this.datePipe.transform(this.fromDt, 'yyyy-MM-dd'),

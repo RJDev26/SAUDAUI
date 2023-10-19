@@ -6,24 +6,16 @@ import { BlankComponent } from './pages/blank/blank.component';
 import { SearchComponent } from './pages/search/search.component';
 import { NotFoundComponent } from './pages/errors/not-found/not-found.component';
 import { ErrorComponent } from './pages/errors/error/error.component';
-import { AccountComponent } from './Forms/Master/account/account.component';
-import { ItemComponent } from './Forms/Master/item/item.component';
-import { TransporterComponent } from './Forms/Master/transporter/transporter.component';
-import { CompanyComponent } from './Forms/Master/company/company.component';
-import { SaudaComponent } from './Forms/Master/sauda/sauda.component';
-import { ProductComponent } from './Forms/Master/product/product.component';
-import { ContractMasterComponent } from './Forms/Master/contract-master/contract-master.component';
-import { BrokerageSlabComponent } from './Forms/Master/brokerage-slab/brokerage-slab.component';
-import { BrokerageSetupComponent } from './Forms/Master/brokerage-setup/brokerage-setup.component';
-import { TaxComponent } from './Forms/Master/tax-master/tax-master.component';
-import { AccountHeadComponent } from './Forms/Master/account-head/account-head.component';
-import { SymbolMappingComponent } from './Forms/Master/symbol-mapping/symbol-mapping.component';
-import { ItemGroupComponent } from './Forms/Master/item-group/item-group.component';
+import { AuthGuard } from './guards/auth.guard';
+import { AuthChildGuard } from './guards/auth-child.guard';
 
 export const routes: Routes = [
     { 
         path: '', 
-        component: PagesComponent, children: [
+        canActivate: [AuthGuard],
+        canActivateChild: [AuthChildGuard],
+        component: PagesComponent,
+        children: [
             { path: '', loadChildren: () => import('./pages/dashboard/dashboard.module').then(m => m.DashboardModule), data: { breadcrumb: 'Dashboard' } },
             { path: 'users', loadChildren: () => import('./pages/users/users.module').then(m => m.UsersModule), data: { breadcrumb: 'Users' } },
             { path: 'logs', loadChildren: () => import('./Forms/Logs/logs.module').then(m => m.LogsModule), data: { breadcrumb: 'Logs' } },
@@ -66,6 +58,7 @@ export const routes: Routes = [
     ],
     exports: [
         RouterModule
-    ]
+    ],
+    providers:[AuthGuard, AuthChildGuard],
 })
 export class AppRoutingModule { }
