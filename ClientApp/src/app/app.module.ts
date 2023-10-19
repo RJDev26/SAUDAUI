@@ -43,6 +43,7 @@ import { AgGridModule } from 'ag-grid-angular';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { ExchangeComponent } from './Forms/Master/exchange/exchange.component';
 import { AuthInterceptor } from './service/auth-interceptor.service';
+import { LoadingInterceptor } from './service/loading-interceptor.service';
 
 @NgModule({
   imports: [
@@ -91,6 +92,11 @@ import { AuthInterceptor } from './service/auth-interceptor.service';
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,
+      multi: true,
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: LoadingInterceptor,
       multi: true,
     },
   ],
