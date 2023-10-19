@@ -4,12 +4,15 @@ import {
   HttpRequest,
   HttpHandler,
   HttpEvent,
+  HttpErrorResponse,
 } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, catchError, throwError } from 'rxjs';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
-  constructor() {}
+  constructor(public snackBar: MatSnackBar,  public router: Router) {}
 
   intercept(
     req: HttpRequest<any>,
@@ -28,7 +31,23 @@ export class AuthInterceptor implements HttpInterceptor {
 
     });
 
-    // Pass the cloned request to the next handler
-    return next.handle(authReq);
+    return next.handle(authReq).pipe(catchError((error: HttpErrorResponse) => {
+      console.log('error', error);
+      this.showToaster('Login session got expired.', true)
+      localStorage.clear();
+      this.router.navigate(['login']);
+      return throwError(error);
+    }));
+  }
+
+  showToaster(message, isError = false) {
+    const panelClass = isError ? ['red-text'] : undefined;
+    const label = isError ? "Error" : "Success";
+    const time = isError? 6000 : 3000;
+  
+    this.snackBar.open(message, label, {
+      duration: time,
+      panelClass: panelClass,
+    });
   }
 }
