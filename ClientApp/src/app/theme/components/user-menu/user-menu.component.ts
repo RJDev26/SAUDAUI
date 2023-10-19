@@ -14,7 +14,7 @@ export class UserMenuComponent implements OnInit {
   constructor(private _authService: AuthenticationService, public router: Router) { }
 
   ngOnInit() {
-    this._authService.userData$.subscribe(res=>{
+    this._authService.getUserData().subscribe(res=>{
       console.log('first', res);
       this.userData = res || {};
     });

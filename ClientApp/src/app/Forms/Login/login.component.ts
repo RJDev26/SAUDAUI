@@ -36,6 +36,7 @@ export class LoginComponent {
         .subscribe({
           next: (res: any) => {
             localStorage.setItem("token", res.token);
+            localStorage.setItem("userData", JSON.stringify(res));
             this.authService.sendAuthStateChangeNotification(res.isAuthSuccessful);
             this.authService.saveUserData(res);
             this.router.navigate([this.returnUrl]);

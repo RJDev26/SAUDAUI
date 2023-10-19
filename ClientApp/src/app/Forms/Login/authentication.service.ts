@@ -26,6 +26,16 @@ export class AuthenticationService {
     return this.httpClient.post<any>(environment.apiBaseUrl + 'Accounts/Login', formData);
   }
 
+  getUserData():Observable<any>{
+    if(!this.userDataSubject.value){
+      const userData = localStorage.getItem('userData');
+      if(userData){
+        this.userDataSubject.next(JSON.parse(userData));
+      }
+    }
+    return this.userData$;
+  }
+
   saveUserData(data: any){
     this.userDataSubject.next(data);
   }
