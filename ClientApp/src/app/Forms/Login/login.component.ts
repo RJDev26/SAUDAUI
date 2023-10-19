@@ -5,6 +5,7 @@ import { emailValidator } from '../../theme/utils/app-validators';
 import { AppSettings } from '../../app.settings';
 import { Settings } from '../../app.settings.model';
 import { AuthenticationService } from './authentication.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-login',
@@ -16,7 +17,7 @@ export class LoginComponent {
   public settings: Settings;
   returnUrl: any;
 
-  constructor(public appSettings: AppSettings, public fb: UntypedFormBuilder, public router: Router
+  constructor(public snackBar: MatSnackBar, public appSettings: AppSettings, public fb: UntypedFormBuilder, public router: Router
     , private authService: AuthenticationService, private route: ActivatedRoute) {
     this.settings = this.appSettings.settings; 
     this.form = this.fb.group({
@@ -40,6 +41,10 @@ export class LoginComponent {
             this.router.navigate([this.returnUrl]);
           },
           error: (err: any) => {
+            console.log('err', err);
+            if(!err.error.isAuthSuccessful){
+              this.showToaster(err.error.errorMessage, true);
+            }
             //this.errorMessage = err.message;
             //this.showError = true;
           }
@@ -48,6 +53,17 @@ export class LoginComponent {
 
     //  this.router.navigate(['/']);
     }
+  }
+
+  showToaster(message, isError = false) {
+    const panelClass = isError ? ['red-text'] : undefined;
+    const label = isError ? "Error" : "Success";
+    const time = isError? 6000 : 3000;
+  
+    this.snackBar.open(message, label, {
+      duration: time,
+      panelClass: panelClass,
+    });
   }
 
   ngAfterViewInit(){
