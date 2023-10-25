@@ -89,5 +89,8 @@ export class UserRoleComponent {
         let dialogRef = this.dialog.open(InviteUserComponent, {
           data: { id:user }
         });
+        dialogRef.afterClosed().subscribe(user => {
+            this.getUserList();
+        });
     }
 }
