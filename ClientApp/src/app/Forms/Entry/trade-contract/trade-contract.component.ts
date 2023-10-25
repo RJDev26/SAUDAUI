@@ -81,30 +81,35 @@ constructor(private datePipe: DatePipe, public appSettings: AppSettings, private
     headerName: 'Contract Trades',
     children:[
       {
-        headerName: '', editable: false, minwidth: 45, width: 45, maxwidth: 45, resizable: false, sortable: false, filter: false, checkboxSelection: true, headerCheckboxSelection: true,
+        headerName: '', editable: false, minwidth: 25, width: 25, maxwidth: 25, resizable: false, sortable: false, filter: false, checkboxSelection: true, headerCheckboxSelection: true,
       },
         {
-          headerName: 'Action', field: 'fileIcon', cellRenderer: this.actionCellRenderer, minWidth: 60, filter: false,
-          maxWidth: 90, resizable: true
+          headerName: 'Action', field: 'fileIcon', cellRenderer: this.actionCellRenderer, minWidth: 30, filter: false,
+          maxWidth: 35, resizable: true
         },
-        { headerName: 'ConDate', field: 'condate', filter: true, sorting: true, resizable: true, cellRenderer:(params) => {
+      {
+        headerName: 'ConDate', field: 'condate', minwidth: 110, width: 110, maxwidth: 120, filter: true, sorting: true, resizable: true, cellRenderer:(params) => {
           return this.datePipe.transform(params.value, 'YYYY-MM-dd')
         } },
         { headerName: 'Account', field: 'account', filter: true, sorting: true, resizable: true },
       { headerName: 'Broker', field: 'brokerName', filter: true, sorting: true, resizable: true },  
-      { headerName: 'Contype', field: 'contype', filter: true, sorting: true, resizable: true, cellRenderer: (params) => {
+      {
+        headerName: 'B/S', field: 'contype', minwidth: 80, width: 80, maxwidth: 80, filter: true, sorting: true, resizable: true, cellRenderer: (params) => {
         return params.value === 'B' ? 'Buy' : (params.value === 'S' ? 'Sell' : params.value);
       } },  
-      { headerName: 'QTY', field: 'qty', filter: true, sorting: true, resizable: true, cellRenderer: (params) => {
+      {
+        headerName: 'QTY', field: 'qty', filter: true, minwidth: 100, width: 100, maxwidth: 100, sorting: true, resizable: true, cellRenderer: (params) => {
         return this.decimalPipe.transform(params.value, '1.2-2');
       }, type: 'rightAligned'},  
-      { headerName: 'Rate', field: 'rate', type: 'rightAligned', filter: true, sorting: true, resizable: true, cellRenderer: (params) => {
+      {
+        headerName: 'Rate', field: 'rate', minwidth: 100, width: 100, maxwidth: 100,type: 'rightAligned', filter: true, sorting: true, resizable: true, cellRenderer: (params) => {
         return this.decimalPipe.transform(params.value, '1.2-2');
       }, },  
-      { headerName: 'Created Date', field: 'createdDate', filter: true, sorting: true, resizable: true , cellRenderer:(params) => {
+      {
+        headerName: 'Created Date', field: 'createdDate', minwidth: 110, width: 110, maxwidth: 110,filter: true, sorting: true, resizable: true , cellRenderer:(params) => {
         return this.datePipe.transform(params.value, 'YYYY-MM-dd')
       }},  
-      { headerName: 'Trade No', field: 'tradeNo', filter: true, sorting: true, resizable: true },  ]
+      { headerName: 'Trade No', field: 'tradeNo', minwidth: 100, width: 100, maxwidth: 100, filter: true, sorting: true, resizable: true },  ]
   }
   ];
 
