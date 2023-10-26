@@ -5,6 +5,7 @@ import { User, UserContacts, UserProfile, UserSettings, UserSocial, UserWork } f
 import { MasterService } from '../../master.service';
 import { Item } from '../item.model';
 import { forkJoin, map } from 'rxjs';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 
 @Component({
@@ -17,7 +18,7 @@ export class AddItemComponent implements OnInit {
   exchangeList: any;
   selectedId: any;
 
-  constructor(private formBuilder: UntypedFormBuilder, public dialogRef: MatDialogRef<AddItemComponent>, @Inject(MAT_DIALOG_DATA) public data: any, private _appService: MasterService) {
+  constructor(public snackBar: MatSnackBar, private formBuilder: UntypedFormBuilder, public dialogRef: MatDialogRef<AddItemComponent>, @Inject(MAT_DIALOG_DATA) public data: any, private _appService: MasterService) {
    
     this.selectedId = data.id;
     if (data.id == null) { this.selectedId = 0; }
@@ -91,12 +92,27 @@ export class AddItemComponent implements OnInit {
     if (this.itemForm.valid) {
       //const body = JSON.stringify(addFormData);
       this._appService.saveItem(body).subscribe(result => {
-        console.log("result", result);
-        this.dialogRef.close();
+        if(result.isSuccess){
+          console.log("result", result);
+          this.dialogRef.close();
+        } else {
+          this.showToaster(result.message, true);
+        }
       }, err => {
         console.log(err);
       });
     }
+  }
+
+  showToaster(message, isError = false) {
+    const panelClass = isError ? ['red-text'] : undefined;
+    const label = isError ? "Error" : "Success";
+    const time = isError? 600000 : 300000;
+  
+    this.snackBar.open(message, label, {
+      duration: time,
+      panelClass: panelClass,
+    });
   }
 
   populateFields() {

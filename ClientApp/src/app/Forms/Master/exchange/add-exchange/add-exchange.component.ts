@@ -270,7 +270,11 @@ onGridClick(params: any) {
     var body = this.exchangeMasterForm.value;
     if (this.exchangeMasterForm.valid) {
       this._masterSecondService.saveExchange(body).subscribe(result => {
-        this.dialogRef.close();
+        if(result.isSuccess){
+          this.dialogRef.close();
+        } else {
+          this.showToaster(result.message, true)
+        }
       }, err => {
         console.log(err);
       });

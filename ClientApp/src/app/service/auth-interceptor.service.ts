@@ -33,9 +33,11 @@ export class AuthInterceptor implements HttpInterceptor {
 
     return next.handle(authReq).pipe(catchError((error: HttpErrorResponse) => {
       console.log('error', error);
-      this.showToaster('Login session got expired.', true)
-      localStorage.clear();
-      this.router.navigate(['login']);
+      if(error.status === 401){
+        this.showToaster('Login session got expired.', true)
+        localStorage.clear();
+        this.router.navigate(['login']);
+      }
       return throwError(error);
     }));
   }

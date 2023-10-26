@@ -10,6 +10,7 @@ import { AppService } from "src/app/service/app.service";
 import { forkJoin, Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 import { UntypedFormBuilder, UntypedFormGroup, Validators } from "@angular/forms";
+import { MatSnackBar } from "@angular/material/snack-bar";
 
 @Component({
   selector: 'app-trade-file',
@@ -35,7 +36,7 @@ export class TradeFileComponent implements OnInit {
  
   public settings: Settings;
   symbolMappingList: any[]=[];
-constructor(public appSettings: AppSettings, private formBuilder: UntypedFormBuilder,
+constructor(public snackBar: MatSnackBar, public appSettings: AppSettings, private formBuilder: UntypedFormBuilder,
   public dialog: MatDialog, private _appService: AppService, private _masterService: MasterService, private _masterSecondService: MasterSecondService) {
       this.settings = this.appSettings.settings;
     }
@@ -149,14 +150,30 @@ constructor(public appSettings: AppSettings, private formBuilder: UntypedFormBui
     if (this.itemForm.valid) {
       //const body = JSON.stringify(addFormData);
       this._masterSecondService.saveTradeFileType(body).subscribe(result => {
-        console.log("result", result);
-        this.getSymbolMappingList();
-        this.resetForm(this.itemForm);
+        if(result.isSuccess){
+          console.log("result", result);
+          this.getSymbolMappingList();
+          this.resetForm(this.itemForm);
+        } else {
+          this.showToaster(result.message, true);
+        }
       }, err => {
         console.log(err);
       });
     }
   }
+
+  showToaster(message, isError = false) {
+    const panelClass = isError ? ['red-text'] : undefined;
+    const label = isError ? "Error" : "Success";
+    const time = isError? 600000 : 300000;
+  
+    this.snackBar.open(message, label, {
+      duration: time,
+      panelClass: panelClass,
+    });
+  }
+
 getSymbolMappingList() {
   this._masterSecondService.getTradeFileList().subscribe((results) => {
        this.symbolMappingList = results;       

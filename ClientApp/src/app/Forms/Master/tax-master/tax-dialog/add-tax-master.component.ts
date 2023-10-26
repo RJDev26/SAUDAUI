@@ -9,6 +9,7 @@ import { MatSelect } from '@angular/material/select';
 import { MatOption } from '@angular/material/core';
 import { MasterSecondService } from '../../master-second.service';
 import { ErrorDialog } from '../../../Dialog/confirmation-dialog/error-dialog.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 
 export interface Tax {
@@ -61,7 +62,7 @@ export class AddTaxComponent implements OnInit {
     ]
   }];
 
-  constructor(public appSettings: AppSettings,
+  constructor(public snackBar: MatSnackBar, public appSettings: AppSettings,
     private formBuilder: UntypedFormBuilder, public dialogRef: MatDialogRef<AddTaxComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any, private _masterService: MasterService,
     private _masterSecondService: MasterSecondService, public dialog: MatDialog) {
@@ -166,11 +167,27 @@ export class AddTaxComponent implements OnInit {
     var body = this.taxMasterForm.value;
     if (this.taxMasterForm.valid) {
       this._masterSecondService.saveTax(body).subscribe(result => {
-        this.dialogRef.close();
+        if(result.isSuccess){
+          console.log("result", result);
+          this.dialogRef.close();
+        } else {
+          this.showToaster(result.message, true);
+        }
       }, err => {
         console.log(err);
       });
     }
+  }
+
+  showToaster(message, isError = false) {
+    const panelClass = isError ? ['red-text'] : undefined;
+    const label = isError ? "Error" : "Success";
+    const time = isError? 600000 : 300000;
+  
+    this.snackBar.open(message, label, {
+      duration: time,
+      panelClass: panelClass,
+    });
   }
 
   deleteAccountTax()

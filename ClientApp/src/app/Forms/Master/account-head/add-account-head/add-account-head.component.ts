@@ -170,7 +170,11 @@ export class AddAccountHeadComponent implements OnInit {
         var body = this.nameForm.value;
         if (this.nameForm.valid) {
           this._masterService.saveAccountHead(body).subscribe(result => {
+            if(result.isSuccess){
             this.dialogRef.close();
+            } else {
+              this.showToaster(result.message, true);
+            }
           }, err => {
             console.log(err);
           });
