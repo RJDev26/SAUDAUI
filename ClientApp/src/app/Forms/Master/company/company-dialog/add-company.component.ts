@@ -5,6 +5,7 @@ import { MasterService } from "../../master.service";
 import { Company } from "../company.model";
 import { Observable, forkJoin } from "rxjs";
 import {map, startWith} from 'rxjs/operators';
+import { MatSnackBar } from "@angular/material/snack-bar";
 
 
 export interface City {
@@ -36,7 +37,7 @@ export class AddCompanyComponent implements OnInit {
     cityList: City[];
     stateList: State[];
 
-    constructor(private formBuilder: UntypedFormBuilder, public dialogRef: MatDialogRef<AddCompanyComponent>, @Inject(MAT_DIALOG_DATA) public data: any, private _appService: MasterService) {
+    constructor(public snackBar: MatSnackBar, private formBuilder: UntypedFormBuilder, public dialogRef: MatDialogRef<AddCompanyComponent>, @Inject(MAT_DIALOG_DATA) public data: any, private _appService: MasterService) {
       this.selectedId = data.id;
       if (data.id == null) { this.selectedId = 0; }
     }
@@ -53,19 +54,19 @@ export class AddCompanyComponent implements OnInit {
           'email' : [''],
           'pin' : [''],
           'uniqcusomerId' : [''],
-          'ApplyOptionsMTM' : [''],
-          'ApplyCashMTM' : [''],
-          'ApplyInvoice' : [''],
-          'ApplyOnlyBrokerage' : [''],
-          'ApplySubBrokerage' : [''],
-          'CheckRates' : [''],
-          'ShowLots' : [''],
-          'ApplySharing' : [''],
-          'ApplyDecimalQty' : [''],
-          'ApplyMargin' : [''],
-          'ApplyContractNote' : [''],
-          'RoundingOff' : [''],
-          'RateRangeEnable' : [''],
+          'ApplyOptionsMTM' : [false],
+          'ApplyCashMTM' : [false],
+          'ApplyInvoice' : [false],
+          'ApplyOnlyBrokerage' : [false],
+          'ApplySubBrokerage' : [false],
+          'CheckRates' : [false],
+          'ShowLots' : [false],
+          'ApplySharing' : [false],
+          'ApplyDecimalQty' : [false],
+          'ApplyMargin' : [false],
+          'ApplyContractNote' : [false],
+          'RoundingOff' : [false],
+          'RateRangeEnable' : [false],
           'settlementPostingInPercentage' : [''],
           'id': [0]
         });
@@ -130,7 +131,34 @@ export class AddCompanyComponent implements OnInit {
             this.companyForm.get('id').setValue(0);
         }  
   }
-  onSubmit(event: any) { }
+  onSubmit(event: any) { 
+
+    var body = this.companyForm.value;
+    body.CityId = this.getCityId(this.cityCtrl.value);
+
+    if (this.companyForm.valid) {
+      //const body = JSON.stringify(addFormData);
+      this._appService.saveCompany(body).subscribe(result => {
+        console.log("result", result);
+        // this.formSubmitted = true;
+        this.dialogRef.close();
+      }, err => {
+        this.showToaster(err.message, true);
+        console.log(err);
+      });
+    }
+  }
+
+  showToaster(message, isError = false) {
+    const panelClass = isError ? ['red-text'] : undefined;
+    const label = isError ? "Error" : "Success";
+    const time = isError? 6000 : 3000;
+  
+    this.snackBar.open(message, label, {
+      duration: time,
+      panelClass: panelClass,
+    });
+  }
 
     private _filterCity(value: string): City[] {
         const filterValue = value.toLowerCase();

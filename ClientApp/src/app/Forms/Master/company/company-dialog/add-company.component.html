@@ -127,7 +127,7 @@
             <div fxFlex="100" fxFlex.gt-sm="20" fxFlex.sm="50" class="pt-10">
                 <mat-form-field appearance="outline">
                     <mat-label>Settlement Positing in %</mat-label>
-                    <input matInput autocomplete="off" placeholder="" formControlName="settlementPostingInPercentage" type="text">
+                    <input matInput autocomplete="off" placeholder="" formControlName="settlementPostingInPercentage" type="number">
                     <mat-error *ngIf="companyForm.controls.settlementPostingInPercentage.errors?.required">Settlement Positing in % id is required</mat-error>                
                 </mat-form-field>
             </div>

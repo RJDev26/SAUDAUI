@@ -49,16 +49,16 @@ export class CompanyComponent implements OnInit {
       headerName: 'Action', field: 'fileIcon', cellRenderer: this.actionCellRenderer, minWidth: 60,
       maxWidth: 80, resizable: false, filter: false
     },
-    { headerName: 'Name', field: 'name', filter: true, sorting: true, resizable: true },
-    { headerName: 'Address', field: 'address', filter: true, sorting: true, resizable: true },
-    { headerName: 'City', field: 'city', filter: true, sorting: true, resizable: true },
-    { headerName: 'Pin', field: 'pin', filter: true, sorting: true, resizable: true },    
-    { headerName: 'State', field: 'state', filter: true, sorting: true, resizable: true },
-    { headerName: 'Phone', field: 'phone', filter: true, sorting: true, resizable: true },
-    { headerName: 'Email', field: 'email', filter: true, sorting: true, resizable: true },
-    { headerName: 'FinBegin Date', field: 'finBeginDtString', filter: true, sorting: true, resizable: true },
-    { headerName: 'FinEnd Date', field: 'finEndDtString', filter: true, sorting: true, resizable: true },
-    { headerName: 'UniqueCusId', field: 'uniqcusomerId', filter: true, sorting: true, resizable: true }
+    { headerName: 'Name', field: 'name', flex: 2},
+    { headerName: 'Address', field: 'address', flex: 1},
+    { headerName: 'City', field: 'city', flex: 1},
+    { headerName: 'Pin', field: 'pin', flex: 1},    
+    { headerName: 'State', field: 'state',flex: 1 },
+    { headerName: 'Phone', field: 'phone', flex: 1},
+    { headerName: 'Email', field: 'email', flex: 1},
+    { headerName: 'FinBegin Date', field: 'finBeginDtString', flex: 1},
+    { headerName: 'FinEnd Date', field: 'finEndDtString', flex: 1},
+    { headerName: 'UniqueCusId', field: 'uniqcusomerId', flex: 1}
   ];
 
   getcompanyList() {

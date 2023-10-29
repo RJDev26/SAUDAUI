@@ -86,15 +86,12 @@ export class TradeContractComponent implements OnInit {
         headerName: '', editable: false, minwidth: 25, width: 25, maxwidth: 25, resizable: false, sortable: false, filter: false, checkboxSelection: true, headerCheckboxSelection: true,
       },
       {
-        headerName: 'Action', field: 'fileIcon', cellRenderer: this.actionCellRenderer, minWidth: 30, filter: false,
-        maxWidth: 35, resizable: true
-      },
-      {
         headerName: 'ConDate', field: 'condate', minwidth: 110, width: 110, maxwidth: 120, suppressSizeToFit: true, cellRenderer: (params) => {
           return this.datePipe.transform(params.value, 'YYYY-MM-dd')
         }
       },
       { headerName: 'Account', field: 'account',  suppressSizeToFit: true,flex:2 },
+      { headerName: 'Sauda Code', field: 'saudaCode',  suppressSizeToFit: true,flex:2 },
 
       {
         headerName: 'B/S', field: 'contype', minwidth: 80, width: 80, maxwidth: 80,cellRenderer: (params) => {
@@ -134,9 +131,9 @@ export class TradeContractComponent implements OnInit {
     });
   }
 
-  onGridDoubleClick(event)
+  onGridDoubleClick(params: any)
   {
-    alert('a');
+    this.openExchangeDialog(params.data.id);
   }
 
   onExchangeInputChange(event: any) {
@@ -237,30 +234,7 @@ export class TradeContractComponent implements OnInit {
   }
 
   onGridClick(params: any) {
-    if (params.event.target.dataset.action == "edit") {
-      this.openExchangeDialog(params.data.id);
-    }
-    if (params.event.target.dataset.action == "delete") {
-      const dialogRef = this.dialog.open(ConfirmationDialog, {
-        data: {
-          message: 'Do you really want to delete this record?',
-          buttonText: {
-            ok: 'Yes',
-            cancel: 'No'
-          }
-        }
-      });
-
-      dialogRef.afterClosed().subscribe((confirmed: boolean) => {
-        if (confirmed) {
-          this._entryServices.deleteContract(params.data.tradeNo, this.datePipe.transform(params.data.condate, 'yyyy-MM-dd')).subscribe((res) => {
-            this.getTradeFileListData();
-          });
-        }
-      });
-
-
-    }
+    
   }
 
   public openExchangeDialog(id) {
