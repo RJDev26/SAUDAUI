@@ -188,8 +188,8 @@ onGridClick(params: any) {
     this.exchangeMasterForm = this.formBuilder.group({
       'exCode': ['', Validators.required],
       'name': ['', Validators.required],
-      'fmccode': ['', Validators.required],
-      'memberId': ['', Validators.required],
+      'fmccode': [''],
+      'memberId': [''],
       'future': [false],
       'convertCurrency': [false],
       'lotwise': [false],
