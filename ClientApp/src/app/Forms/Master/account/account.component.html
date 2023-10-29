@@ -22,6 +22,7 @@
                      [columnDefs]="columnDefs"
                      [defaultColDef]="agGridOptions.defaultColDef"
                      (cellClicked)="onGridClick($event)"
+                     (gridReady)="onGridReady($event)"
                       headerHeight="34">
     </ag-grid-angular>
   </div>

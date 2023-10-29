@@ -41,25 +41,29 @@ export class AccountComponent implements OnInit {
       flex: 1,
       sortable: true,
       wraptext: true,
-      resizable: true
+      resizable: true,
+     
     }
+     
+   
   }
-
+  onGridReady(params) {
+  /*  params.api.sizeColumnsToFit();*/
+  }
 
   columnDefs = [
     {
       headerName: 'Action', field: 'fileIcon', cellRenderer: this.actionCellRenderer, minWidth: 60,
-      maxWidth: 80, resizable: false, filter: false
+      maxWidth: 90, resizable: false, filter: false
     },
-    { headerName: 'Code', field: 'shortCode', filter: true, sorting: true, resizable: true },
-    { headerName: 'Name', field: 'name', filter: true, sorting: true, resizable: true },
-    { headerName: 'Opbal', field: 'openingBal', filter: true, sorting: true, resizable: true, valueFormatter: params => CommonUtility.formatNumber(params.data.openingBal), type: 'rightAligned' },
-    { headerName: 'PhoneNo', field: 'PhoneNo', filter: true, sorting: true, resizable: true },
-    { headerName: 'Head', field: 'acHead', filter: true, sorting: true, resizable: true },
-    { headerName: 'Group', field: 'acGroup', filter: true, sorting: true, resizable: true },
-    { headerName: 'Email', field: 'email', filter: true, sorting: true, resizable: true },
-    { headerName: 'City', field: 'city', filter: true, sorting: true, resizable: true },
-    { headerName: 'Address', field: 'address', filter: true, sorting: true, resizable: true }
+    { headerName: 'Code', field: 'shortCode', },
+    { headerName: 'Name', field: 'name', flex: 2 },
+    { headerName: 'Opbal', field: 'openingBal', flex:1, valueFormatter: params => CommonUtility.formatNumber(params.data.openingBal), type: 'rightAligned' },
+    { headerName: 'PhoneNo', field: 'PhoneNo', flex:1 },
+    { headerName: 'Head', field: 'acHead', flex:1 },
+    { headerName: 'Group', field: 'acGroup' },
+    { headerName: 'CreatedDate', field: 'createdDateString' },
+    
   ];
 
   onActivate(event) {
