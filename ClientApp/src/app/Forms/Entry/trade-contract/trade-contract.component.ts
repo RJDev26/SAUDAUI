@@ -134,6 +134,11 @@ export class TradeContractComponent implements OnInit {
     });
   }
 
+  onGridDoubleClick(event)
+  {
+    alert('a');
+  }
+
   onExchangeInputChange(event: any) {
     this._masterService.getExchangeSaudaListDDL(this.exId).subscribe(res => {
       this.saudaList = res;
