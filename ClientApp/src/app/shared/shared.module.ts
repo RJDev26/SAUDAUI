@@ -31,6 +31,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { CurrencyFormatterDirective } from '../Forms/common/directive/currency-formatter.directive';
 
 @NgModule({
   imports: [
@@ -100,8 +101,9 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     MatTabsModule,
     MatToolbarModule,
     MatTooltipModule,
-    MatStepperModule
+    MatStepperModule,
+    CurrencyFormatterDirective,
   ],
-  declarations: []
+  declarations: [CurrencyFormatterDirective]
 })
 export class SharedModule { }

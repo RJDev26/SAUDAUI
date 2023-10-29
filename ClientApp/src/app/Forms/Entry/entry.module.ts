@@ -7,7 +7,6 @@ import { AgGridModule } from 'ag-grid-angular';
 import { VoucherComponent } from './Voucher/voucher.component';
 import { MAT_DATE_LOCALE } from '@angular/material/core';
 import { TradeContractComponent } from './trade-contract/trade-contract.component';
-import { CurrencyFormatterDirective } from '../common/directive/currency-formatter.directive';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'voucher', pathMatch: 'full' },
@@ -23,13 +22,13 @@ export const routes: Routes = [
     FormsModule,
     ReactiveFormsModule,
     SharedModule,
-    AgGridModule
+    AgGridModule,
+    SharedModule,
   ],
   declarations: [
     
     VoucherComponent,
           TradeContractComponent,
-          CurrencyFormatterDirective,
   ],
   providers: [
     DatePipe,

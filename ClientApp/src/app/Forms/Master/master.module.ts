@@ -54,7 +54,6 @@ import { AddSharingSetupComponent } from './sharing-setup/add-sharing-setup/add-
 import { LockSharingSetupComponent } from './sharing-setup/lock-sharing-setup/lock-sharing-setup.component';
 import { InviteUserComponent } from '../User/invite-user/invite-user.component';
 import { changePasswordComponent } from '../User/change-password/change-password.component';
-import { CurrencyFormatterDirective } from '../common/directive/currency-formatter.directive';
 import { ContractDialogComponent } from './item/contract-dialog/contract-dialog.component';
 import { TradeFileComponent } from './trade-file/trade-file.component';
 
@@ -88,7 +87,7 @@ export const routes: Routes = [
     FormsModule,
     ReactiveFormsModule,
     SharedModule,
-    AgGridModule
+    AgGridModule,
   ],
   declarations: [
     AccountComponent,
@@ -140,7 +139,6 @@ export const routes: Routes = [
      LockSharingSetupComponent,
      InviteUserComponent,
      changePasswordComponent,
-     CurrencyFormatterDirective,
      ContractDialogComponent,
      TradeFileComponent
   ],
