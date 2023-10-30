@@ -325,7 +325,7 @@ export class VoucherComponent implements OnInit {
   showToaster(message, isError = false) {
     const panelClass = isError ? ['red-text'] : undefined;
     const label = isError ? "Error" : "Success";
-    const time = isError? 600000 : 300000;
+    const time = isError? 6000 : 3000;
   
     this.snackBar.open(message, label, {
       duration: time,

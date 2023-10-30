@@ -14,7 +14,7 @@ export class AddAccountHeadComponent implements OnInit {
 
     accountList: any[] = [];  
     public nameForm: UntypedFormGroup;
-    selectedAccountHeadID: any
+    selectedAccountHeadID: any = 0;
     gridApi: any;
     gridApiSelectAc: any;    
     AcHeadAccountList: any[] = [];
@@ -54,6 +54,7 @@ export class AddAccountHeadComponent implements OnInit {
 
     constructor(public snackBar: MatSnackBar, private formBuilder: UntypedFormBuilder, public dialog: MatDialog,  @Inject(MAT_DIALOG_DATA) public data: any, private _masterService: MasterService, public dialogRef: MatDialogRef<AddAccountHeadComponent>) { 
       this.selectedAccountHeadID = data.branchID;
+      console.log(data);
     }
 
     ngOnInit(): void {
@@ -169,6 +170,7 @@ export class AddAccountHeadComponent implements OnInit {
         var h = this.gridApi.getSelectedRows();
         var body = this.nameForm.value;
         if (this.nameForm.valid) {
+          body.id = this.selectedAccountHeadID;
           this._masterService.saveAccountHead(body).subscribe(result => {
             if(result.isSuccess){
             this.dialogRef.close();

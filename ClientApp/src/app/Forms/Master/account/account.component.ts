@@ -58,7 +58,7 @@ export class AccountComponent implements OnInit {
     },
     { headerName: 'Code', field: 'shortCode', },
     { headerName: 'Name', field: 'name', flex: 2 },
-    { headerName: 'Opbal', field: 'openingBal', flex:1, valueFormatter: params => CommonUtility.formatNumber(params.data.openingBal), type: 'rightAligned' },
+    { headerName: 'Opbal', field: 'openingBal', flex:1, valueFormatter: params => Number(CommonUtility.formatNumber(params.data.openingBal)).toFixed(2), type: 'rightAligned' },
     { headerName: 'PhoneNo', field: 'PhoneNo', flex:1 },
     { headerName: 'Head', field: 'acHead', flex:1 },
     { headerName: 'Group', field: 'acGroup' },

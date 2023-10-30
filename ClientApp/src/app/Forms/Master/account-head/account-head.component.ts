@@ -6,6 +6,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { Settings } from 'src/app/app.settings.model';
 import { AddAccountHeadComponent } from './add-account-head/add-account-head.component';
 import { ConfirmationDialog } from '../../Dialog/confirmation-dialog/confirmation-dialog.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
     selector: 'app-branch',
@@ -38,7 +39,7 @@ export class AccountHeadComponent implements OnInit {
         { headerName: 'Name',  field: 'name', filter: true, sorting: true, resizable: true },
     ];
 
-    constructor(public appSettings: AppSettings, private _masterService: MasterService, public dialog: MatDialog) {
+    constructor(public snackBar: MatSnackBar, public appSettings: AppSettings, private _masterService: MasterService, public dialog: MatDialog) {
       this.settings = this.appSettings.settings;
     }
 
@@ -98,11 +99,23 @@ export class AccountHeadComponent implements OnInit {
           if (confirmed) {
             this._masterService.deleteAcHead(params.data.id).subscribe((res) => {
               this.getAccountHeadList();
+              this.showToaster(res.message, !res.isSuccess)
             });
           }
         });
     
     
       }
+    }
+
+    showToaster(message, isError = false) {
+      const panelClass = isError ? ['red-text'] : undefined;
+      const label = isError ? "Error" : "Success";
+      const time = isError? 6000 : 3000;
+    
+      this.snackBar.open(message, label, {
+        duration: time,
+        panelClass: panelClass,
+      });
     }
 }

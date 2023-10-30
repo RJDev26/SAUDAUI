@@ -105,7 +105,7 @@ export class TradeContractComponent implements OnInit {
       },
       {
           headerName: 'Rate', field: 'rate', minwidth: 100, width: 100, maxwidth: 100, type: 'rightAligned', cellRenderer: (params) => {
-          return this.decimalPipe.transform(params.value, '1.2-2');
+          return params.value.toFixed(2);
         },
       },
       {

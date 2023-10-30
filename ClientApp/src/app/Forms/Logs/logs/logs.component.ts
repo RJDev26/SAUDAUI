@@ -28,8 +28,8 @@ export class LogsComponent implements OnInit, OnDestroy {
   public settings: Settings;
   slabId: number;
   slabList: any[];
-  fromDt: any;
-  toDt: any;
+  fromDt: any = new Date();
+  toDt: any = new Date();
   accountList: any[];
   branchList: any[];
   instrumentList: any[];
@@ -83,14 +83,16 @@ export class LogsComponent implements OnInit, OnDestroy {
   onGridReady(event) { }
 
   columnDefs = [
-    { headerName: 'TotalRows',  field: 'totalRows', filter: true, sorting: true, resizable: true },
-    { headerName: 'ValidatedRows',  field: 'validatedRows', filter: true, sorting: true, resizable: true },
-    { field: 'status',   headerName: 'Status', filter: true, sorting: true, resizable: true, valueFormatter: params => CommonUtility.formatNumber(params.data.intradayBrokRate) },
-    { headerName: 'Filename', field: 'fileName', filter: true, sorting: true, resizable: true, valueFormatter: params => CommonUtility.formatNumber(params.data.deliveryBrokRate)},    
-    /*{ headerName: 'HigherSide Only', minWidth: 120, maxWidth: 120, field: 'higherSideOnly', filter: true, sorting: true, resizable: true },*/
-    { headerName: 'CreatedBy',   field: 'createdBy', filter: true, sorting: true, resizable: true },
-/*    { headerName: 'IntradaySingleSideOnly', field: 'intradaySingleSideOnly', filter: true, sorting: true, resizable: true },*/
-    { headerName: 'CreatedDate', field: 'createdDate',   filter: true, sorting: true, resizable: true },
+    { headerName: 'TotalRows',  field: 'totalRows',  },
+    { headerName: 'ValidatedRows',  field: 'validatedRows',  },
+    { field: 'status',   headerName: 'Status',  valueFormatter: params => CommonUtility.formatNumber(params.data.intradayBrokRate) },
+    { headerName: 'Filename', field: 'fileName', valueFormatter: params => CommonUtility.formatNumber(params.data.deliveryBrokRate)},    
+    /*{ headerName: 'HigherSide Only', minWidth: 120, maxWidth: 120, field: 'higherSideOnly',  },*/
+    { headerName: 'CreatedBy',   field: 'createdBy',  },
+/*    { headerName: 'IntradaySingleSideOnly', field: 'intradaySingleSideOnly',  },*/
+    { headerName: 'CreatedDate', field: 'createdDate',   valueFormatter: params => {
+      return this.datePipe.transform(params.value, 'dd/MM/yyyy HH:mm:ss');
+    } },
     {headerName: 'Show Missing Symbol', field: 'fileIcon', cellRenderer: this.actionCellRenderer, resizable: true, filter: false, minWidth: 200,
     maxWidth: 250},
     {headerName: 'New Account', field: 'fileIcon', cellRenderer: this.actionNewCellRenderer, resizable: true, filter: false}
