@@ -25,7 +25,7 @@ export class TrailBalanceComponent implements OnInit {
   public settings: Settings;
   slabId: number;
   slabList: any[];
-  fromDt: any;
+  fromDt: any = new Date();
   toDt: any;
   accountList: any[];
   branchList: any[];

@@ -13,6 +13,7 @@ import { MasterSecondService } from "../../Master/master-second.service";
 import { EntryService } from "../entry.service";
 import { DatePipe, DecimalPipe } from "@angular/common";
 import { ErrorDialog } from "../../Dialog/confirmation-dialog/error-dialog.component";
+import { MatSnackBar } from "@angular/material/snack-bar";
 
 @Component({
   selector: 'app-trade-contract',
@@ -46,7 +47,7 @@ export class TradeContractComponent implements OnInit {
 
   public settings: Settings;
   symbolMappingList: any[] = [];
-  constructor(private datePipe: DatePipe, public appSettings: AppSettings, private formBuilder: UntypedFormBuilder, private _entryServices: EntryService,
+  constructor(public snackBar: MatSnackBar, private datePipe: DatePipe, public appSettings: AppSettings, private formBuilder: UntypedFormBuilder, private _entryServices: EntryService,
     public dialog: MatDialog, private _appService: AppService, private _masterService: MasterService, private _masterSecondService: MasterSecondService) {
     this.settings = this.appSettings.settings;
   }
@@ -277,8 +278,20 @@ export class TradeContractComponent implements OnInit {
       const idList = selectedRecord.map(record => record.tradeNo).join(', ');
       this._entryServices.deleteContract(idList, this.datePipe.transform(this.conDate, 'yyyy-MM-dd')).subscribe((res) => {
         this.getTradeFileListData();
+        this.showToaster(res.message, !res.isSuccess);
       });
     }
+  }
+
+  showToaster(message, isError = false) {
+    const panelClass = isError ? ['red-text'] : undefined;
+    const label = isError ? "Error" : "Success";
+    const time = isError? 6000 : 3000;
+  
+    this.snackBar.open(message, label, {
+      duration: time,
+      panelClass: panelClass,
+    });
   }
 
   resetForm(myForm) {
