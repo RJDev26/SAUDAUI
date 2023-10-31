@@ -67,7 +67,7 @@ export class AddCompanyComponent implements OnInit {
           'ApplyContractNote' : [false],
           'RoundingOff' : [false],
           'RateRangeEnable' : [false],
-          'settlementPostingInPercentage' : [''],
+          'settlementPostingInPercentage' : [0],
           'id': [0]
         });
     }

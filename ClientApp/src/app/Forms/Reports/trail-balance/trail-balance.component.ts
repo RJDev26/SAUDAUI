@@ -148,7 +148,7 @@ export class TrailBalanceComponent implements OnInit {
   }
 
   areRequiredValuesSelected(): boolean {
-    return this.branchIds && this.fromDt;
+    return this.fromDt;
   }
 
   fetchDropdownData() {
