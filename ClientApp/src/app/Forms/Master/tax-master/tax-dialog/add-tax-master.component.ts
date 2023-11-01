@@ -134,7 +134,7 @@ export class AddTaxComponent implements OnInit {
   }
 
   initialApiCalls() {
-    forkJoin([this._masterService.getApplyOn(), this._masterService.getApplyOnTaxAccountDDL(), this._masterService.getAccounts()]).pipe(map(response => {
+    forkJoin([this._masterService.getApplyOn(), this._masterService.getApplyOnTaxAccountDDL(), this._masterService.getAccount()]).pipe(map(response => {
       this.applyOnList = response[0];
 
       this.accountApplyOnList = response[1];

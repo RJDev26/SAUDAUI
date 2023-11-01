@@ -230,7 +230,7 @@ onInputBrokerChange(event: any) {
       
       this.acList = response[4];
       this.applyOnFileShare = response[5];
-      this.itemList = response[6];
+      this.brokerList = response[6];
     this.filterBrokerList = response[6];
       this.bindFilterFntoList();
     })).subscribe(res => {

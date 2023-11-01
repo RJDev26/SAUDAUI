@@ -37,7 +37,7 @@
             <mat-form-field class="select-slab-mat" appearance="outline">
               <mat-label>Select Exchange *</mat-label>          
               <mat-select #selectExchange [(ngModel)]="exchangeIds" multiple placeholder="Select Exchange" panelClass="custom-select-panel">
-                <input class="milti-search-box" #multiUserSearch type="text" autocomplete="off" matInput placeholder="Search Account" (input)="onInputExchangeChange($event)"/>
+                <input class="milti-search-box" #multiUserSearch type="text" autocomplete="off" matInput placeholder="Search Exchange" (input)="onInputExchangeChange($event)"/>
                 <mat-option value=-1 (click)="exchangeAllSelection()">Select All</mat-option>
                 <mat-option *ngFor="let option of filteredExchangeList" [value]="option.id">
                   {{ option.name }}

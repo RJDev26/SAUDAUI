@@ -94,7 +94,7 @@ constructor(public snackBar: MatSnackBar, public appSettings: AppSettings, priva
   ];
 
   initialApiCalls() {
-    forkJoin([this._appService.tradeFileType(), this._masterService.getAccounts()]).pipe(map(response => {
+    forkJoin([this._appService.tradeFileType(), this._masterService.getAccount()]).pipe(map(response => {
       this.typeList = response[0];
      this.filteredTypeList = response[0];
       this.brokerList = response[1];

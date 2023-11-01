@@ -142,7 +142,7 @@ export class TradeRegisterComponent implements OnInit {
     const searchInput = event.target.value.toLowerCase();
 
     this.filterSaudaList = this.saudaList.filter((data) => {
-      const prov = data.itemCode.toLowerCase();
+      const prov = data.name.toLowerCase();
       return prov.includes(searchInput);
     });
 
