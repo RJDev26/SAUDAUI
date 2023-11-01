@@ -22,8 +22,17 @@ export class ReportsService {
     return this.httpClient.post<any>(environment.apiBaseUrl + 'Report/getLedger', data, {headers:this.headers});
   }
 
+  getTradeRegister(data):Observable<any>{
+    return this.httpClient.post<any>(environment.apiBaseUrl + 'Trade/getTradeRegister', data, {headers:this.headers});
+  }
+
   getLedgerSummary(data):Observable<any>{
     return this.httpClient.post<any>(environment.apiBaseUrl + 'Report/getLedgerSummary', data, {headers:this.headers});
+  }
+
+  deleteContract(tradeNo: string): Observable<any> {
+    const url = `${environment.apiBaseUrl}Trade/deleteContractById`;
+    return this.httpClient.delete(url, { headers: this.headers, body: {tradeNo:tradeNo} });
   }
 
 }
