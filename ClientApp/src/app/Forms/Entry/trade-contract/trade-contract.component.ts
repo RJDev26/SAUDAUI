@@ -122,7 +122,7 @@ export class TradeContractComponent implements OnInit {
   ];
 
   initialApiCalls() {
-    forkJoin([this._masterService.getAccounts(), this._masterService.getExchangeName()]).pipe(map(response => {
+    forkJoin([this._masterService.getAccount(), this._masterService.getExchangeName()]).pipe(map(response => {
       this.filteredAccountList = response[0];
       this.accountList = response[0];
       this.brokerList = response[0];

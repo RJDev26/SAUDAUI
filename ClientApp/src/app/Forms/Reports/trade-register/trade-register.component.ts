@@ -117,7 +117,7 @@ export class TradeRegisterComponent implements OnInit {
   ];
 
   initialApiCalls() {
-    forkJoin([this._masterService.getAccounts(), this._masterService.getExchangeName()]).pipe(map(response => {
+    forkJoin([this._masterService.getAccount(), this._masterService.getExchangeName()]).pipe(map(response => {
       this.filteredAccountList = response[0];
       this.accountList = response[0];
       this.brokerList = response[0];
@@ -162,6 +162,15 @@ export class TradeRegisterComponent implements OnInit {
     if (searchInput === '') {
       this.filteredAccountList = [...this.accountList];
     }
+  }
+
+  onInputAccountListChange(event: any) {
+    const searchInput = event.target.value.toLowerCase();
+
+    this.filteredAccountList = this.accountList.filter((data) => {
+      const prov = data.name.toLowerCase();
+      return prov.includes(searchInput);
+    });
   }
 
   onInputBrokerChange(event: any) {

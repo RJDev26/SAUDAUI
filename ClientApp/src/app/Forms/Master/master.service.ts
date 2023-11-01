@@ -245,7 +245,7 @@ export class MasterService {
   }
 
   getAccount(): Observable<any> {
-    return this.httpClient.get<any>(environment.apiBaseUrl + 'Master/getAccount', { headers: this.headers });
+    return this.httpClient.get<any>(environment.apiBaseUrl + 'Master/getAccountDDL', { headers: this.headers });
   }
 
   saveBrokerageSetup(data): Observable<any> {
