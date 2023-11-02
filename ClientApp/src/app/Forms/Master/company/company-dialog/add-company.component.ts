@@ -36,6 +36,9 @@ export class AddCompanyComponent implements OnInit {
 
     cityList: City[];
     stateList: State[];
+    cityNameList: any;
+    filteredCityNameList: any;
+    
 
     constructor(public snackBar: MatSnackBar, private formBuilder: UntypedFormBuilder, public dialogRef: MatDialogRef<AddCompanyComponent>, @Inject(MAT_DIALOG_DATA) public data: any, private _appService: MasterService) {
       this.selectedId = data.id;
@@ -123,6 +126,9 @@ export class AddCompanyComponent implements OnInit {
     }
 
     ngOnInit() {
+      this._appService.getCityList().subscribe(res=>{
+        this.filteredCityNameList = res;
+        this.cityNameList = res;
         this.bindFormControls(); 
         if (this.selectedId != 0) {
           this.getCompanyInfo();
@@ -130,9 +136,9 @@ export class AddCompanyComponent implements OnInit {
         else {
             this.companyForm.get('id').setValue(0);
         }  
+      })
   }
   onSubmit(event: any) { 
-
     var body = this.companyForm.value;
     body.CityId = this.getCityId(this.cityCtrl.value);
 
@@ -146,6 +152,19 @@ export class AddCompanyComponent implements OnInit {
         this.showToaster(err.message, true);
         console.log(err);
       });
+    }
+  }
+
+  onInputCityChange(event: any) {
+    const searchInput = event.target.value.toLowerCase();
+
+    this.filteredCityNameList = this.cityNameList.filter((data) => {
+      const prov = data.itemCode.toLowerCase();
+      return prov.includes(searchInput);
+    });
+
+    if (searchInput === '') {
+      this.filteredCityNameList = [...this.cityNameList];
     }
   }
 
