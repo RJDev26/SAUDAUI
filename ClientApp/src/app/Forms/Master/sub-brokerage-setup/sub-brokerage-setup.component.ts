@@ -44,6 +44,7 @@ export class SubBrokerageSetupComponent implements OnInit {
   filteredAccountList: any[];
   brokeragesetupList: any = [];
   branchAllSellected: boolean = false;
+  companydetails: any;
 
   constructor(private datePipe: DatePipe, public snackBar: MatSnackBar, public appSettings: AppSettings, private _appService: AppService, public dialog: MatDialog, private _masterService: MasterService, private _masterSecondService: MasterSecondService) {
     this.settings = this.appSettings.settings;
@@ -154,7 +155,8 @@ export class SubBrokerageSetupComponent implements OnInit {
       this._masterService.getBranchDDLList(), 
       this._masterService.getInstrumentList(),
       this._masterService.getAccount(),
-      this._masterSecondService.getItemGroupNameList()
+      this._masterSecondService.getItemGroupNameList(),
+      this._appService.getCompany(),
     ]).pipe(map(response => {
       this.branchList = response[0];
       this.filteredProviders = response[0];
@@ -164,6 +166,9 @@ export class SubBrokerageSetupComponent implements OnInit {
       // this.filteredAccountList = response[2];
       this.itemGroupIdList = response[3];
       this.filteredItemGroup = response[3];
+      this.companydetails = response[4];
+      this.fromDt = new Date(this.companydetails[0].finBeginDt);
+      this.toDt = new Date(this.companydetails[0].finEndDt);
     })).subscribe(res => {
       
     });

@@ -46,7 +46,7 @@ export class SharingSetupComponent implements OnInit {
   filteredAccountList: any[];
   brokeragesetupList: any = [];
   branchAllSellected: boolean = false;
-
+  companydetails: any;
   constructor(private datePipe: DatePipe, public snackBar: MatSnackBar, public appSettings: AppSettings, private _appService: AppService, public dialog: MatDialog, private _masterService: MasterService, private _masterSecondService: MasterSecondService) {
     this.settings = this.appSettings.settings;
   }
@@ -154,6 +154,7 @@ export class SharingSetupComponent implements OnInit {
       this._masterService.getBranchDDLList(), 
       this._masterService.getAccount(),
       this._masterService.getExchangeName(),
+      this._appService.getCompany(),
     ]).pipe(map(response => {
       this.branchList = response[0];
       this.filteredProviders = response[0];
@@ -161,6 +162,9 @@ export class SharingSetupComponent implements OnInit {
       // this.filteredAccountList = response[2];
       this.exchangeList = response[2];
       this.filteredExchangeList = response[2];
+      this.companydetails = response[3];
+      this.fromDt = new Date(this.companydetails[0].finBeginDt);
+      this.toDt = new Date(this.companydetails[0].finEndDt);
     })).subscribe(res => {
       
     });
