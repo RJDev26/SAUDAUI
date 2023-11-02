@@ -34,7 +34,7 @@ export class AddItemComponent implements OnInit {
       'exchangeSymbol': [],
       'lotSizeValueMultiplier': [],
       'IsinCode': [],
-      'ApplyCtt': [],
+      'ApplyCtt': [true],
       'applyRiskManagementFees': [],
       'id': []
     });
