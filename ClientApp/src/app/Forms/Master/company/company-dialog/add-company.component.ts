@@ -43,11 +43,12 @@ export class AddCompanyComponent implements OnInit {
     constructor(public snackBar: MatSnackBar, private formBuilder: UntypedFormBuilder, public dialogRef: MatDialogRef<AddCompanyComponent>, @Inject(MAT_DIALOG_DATA) public data: any, private _appService: MasterService) {
       this.selectedId = data.id;
       if (data.id == null) { this.selectedId = 0; }
+      this.bindFormControls(); 
     }
 
     bindFormControls() {
         this.companyForm = this.formBuilder.group({
-          'name': [],
+          'name': [''],
           'address': [],
           'city' : [''],
           'finBeginDt': [''],
@@ -57,19 +58,19 @@ export class AddCompanyComponent implements OnInit {
           'email' : [''],
           'pin' : [''],
           'uniqcusomerId' : [''],
-          'ApplyOptionsMTM' : [false],
-          'ApplyCashMTM' : [false],
-          'ApplyInvoice' : [false],
-          'ApplyOnlyBrokerage' : [false],
-          'ApplySubBrokerage' : [false],
-          'CheckRates' : [false],
-          'ShowLots' : [false],
-          'ApplySharing' : [false],
-          'ApplyDecimalQty' : [false],
-          'ApplyMargin' : [false],
-          'ApplyContractNote' : [false],
-          'RoundingOff' : [false],
-          'RateRangeEnable' : [false],
+          'applyOptionsMTM' : [false],
+          'applyCashMTM' : [false],
+          'applyInvoice' : [false],
+          'applyOnlyBrokerage' : [false],
+          'applySubBrokerage' : [false],
+          'checkRates' : [false],
+          'showLots' : [false],
+          'applySharing' : [false],
+          'applyDecimalQty' : [false],
+          'applyMargin' : [false],
+          'applyContractNote' : [false],
+          'roundingOff' : [false],
+          'isRateRangeEnable' : [false],
           'settlementPostingInPercentage' : [0],
           'id': [0]
         });
@@ -87,32 +88,38 @@ export class AddCompanyComponent implements OnInit {
     getCompanyInfo() {
       this._appService.getCompanyById(this.selectedId).subscribe((res) => {
           debugger
-        this.companyForm.get('name').setValue(res.name);
-        this.companyForm.get('address').setValue(res.address);
-        this.companyForm.get('city').setValue(res.city);
-        this.companyForm.get('pin').setValue(res.pin);
-        this.companyForm.get('state').setValue(res.state);
-        this.companyForm.get('phone').setValue(res.phone);
-        this.companyForm.get('email').setValue(res.email);
-        this.companyForm.get('id').setValue(res.id);  
-        this.companyForm.get('finBeginDt').setValue(res.finBeginDt);  
-        this.companyForm.get('finEndDt').setValue(res.finEndDt);
-        this.companyForm.get('uniqcusomerId').setValue(res.uniqcusomerId);        
-        this.companyForm.get('compId').setValue(res.compId);
-        this.companyForm.get('applyOptionsMtm').setValue(res.applyOptionsMtm);
-        this.companyForm.get('applyCashMtm').setValue(res.applyCashMtm);
-        this.companyForm.get('applyInvoice').setValue(res.applyInvoice);
-        this.companyForm.get('applyOnlyBrokerage').setValue(res.applyOnlyBrokerage);
-        this.companyForm.get('checkRates').setValue(res.checkRates);
-        this.companyForm.get('showLots').setValue(res.showLots);
-        this.companyForm.get('applySubBrokerage').setValue(res.applySubBrokerage);
-        this.companyForm.get('applyDecimalQty').setValue(res.applyDecimalQty);
-        this.companyForm.get('applyMargin').setValue(res.applyMargin);
-        this.companyForm.get('roundingOff').setValue(res.roundingOff);
-        this.companyForm.get('settlementPostingInPercentage').setValue(res.settlementPostingInPercentage);
-        this.companyForm.get('applyContractNote').setValue(res.applyContractNote);
-        this.companyForm.get('isRateRangeEnable').setValue(res.isRateRangeEnable);
-        this.companyForm.get('cityName').setValue(res.cityName);
+          try{
+            this.companyForm.get('name').setValue(res.name);
+            this.companyForm.get('address').setValue(res.address);
+            this.companyForm.get('city').setValue(res.city);
+            this.companyForm.get('pin').setValue(res.pin);
+            this.companyForm.get('state').setValue(res.state);
+            this.companyForm.get('phone').setValue(res.phone);
+            this.companyForm.get('email').setValue(res.email);
+            this.companyForm.get('id').setValue(res.id);  
+            this.companyForm.get('finBeginDt').setValue(res.finBeginDt);  
+            this.companyForm.get('finEndDt').setValue(res.finEndDt);
+            this.companyForm.get('uniqcusomerId').setValue(res.uniqcusomerId);        
+            // this.companyForm.get('compId').setValue(res.compId);
+            this.companyForm.get('applyOptionsMTM').setValue(res.applyOptionsMtm);
+            this.companyForm.get('applyCashMTM').setValue(res.applyCashMtm);
+            this.companyForm.get('applyInvoice').setValue(res.applyInvoice);
+            this.companyForm.get('applyOnlyBrokerage').setValue(res.applyOnlyBrokerage);
+            this.companyForm.get('checkRates').setValue(res.checkRates);
+            this.companyForm.get('showLots').setValue(res.showLots);
+            this.companyForm.get('applySharing').setValue(res.applySharing);
+            this.companyForm.get('applySubBrokerage').setValue(res.applySubBrokerage);
+            this.companyForm.get('applyDecimalQty').setValue(res.applyDecimalQty);
+            this.companyForm.get('applyMargin').setValue(res.applyMargin);
+            this.companyForm.get('roundingOff').setValue(res.roundingOff);
+            this.companyForm.get('isRateRangeEnable').setValue(res.isRateRangeEnable);
+            this.companyForm.get('settlementPostingInPercentage').setValue(res.settlementPostingInPercentage);
+            this.companyForm.get('applyContractNote').setValue(res.applyContractNote);
+          } catch(e) {
+            console.log('eee', e)
+          }
+        // this.companyForm.get('isRateRangeEnable').setValue(res.isRateRangeEnable);
+        // this.companyForm.get('cityName').setValue(res.cityName);
       });
     }
 
