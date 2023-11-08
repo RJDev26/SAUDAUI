@@ -5155,10 +5155,11 @@ class AddCompanyComponent {
         if (data.id == null) {
             this.selectedId = 0;
         }
+        this.bindFormControls();
     }
     bindFormControls() {
         this.companyForm = this.formBuilder.group({
-            'name': [],
+            'name': [''],
             'address': [],
             'city': [''],
             'finBeginDt': [''],
@@ -5168,19 +5169,19 @@ class AddCompanyComponent {
             'email': [''],
             'pin': [''],
             'uniqcusomerId': [''],
-            'ApplyOptionsMTM': [false],
-            'ApplyCashMTM': [false],
-            'ApplyInvoice': [false],
-            'ApplyOnlyBrokerage': [false],
-            'ApplySubBrokerage': [false],
-            'CheckRates': [false],
-            'ShowLots': [false],
-            'ApplySharing': [false],
-            'ApplyDecimalQty': [false],
-            'ApplyMargin': [false],
-            'ApplyContractNote': [false],
-            'RoundingOff': [false],
-            'RateRangeEnable': [false],
+            'applyOptionsMTM': [false],
+            'applyCashMTM': [false],
+            'applyInvoice': [false],
+            'applyOnlyBrokerage': [false],
+            'applySubBrokerage': [false],
+            'checkRates': [false],
+            'showLots': [false],
+            'applySharing': [false],
+            'applyDecimalQty': [false],
+            'applyMargin': [false],
+            'applyContractNote': [false],
+            'roundingOff': [false],
+            'isRateRangeEnable': [false],
             'settlementPostingInPercentage': [0],
             'id': [0]
         });
@@ -5193,32 +5194,39 @@ class AddCompanyComponent {
     getCompanyInfo() {
         this._appService.getCompanyById(this.selectedId).subscribe((res) => {
             debugger;
-            this.companyForm.get('name').setValue(res.name);
-            this.companyForm.get('address').setValue(res.address);
-            this.companyForm.get('city').setValue(res.city);
-            this.companyForm.get('pin').setValue(res.pin);
-            this.companyForm.get('state').setValue(res.state);
-            this.companyForm.get('phone').setValue(res.phone);
-            this.companyForm.get('email').setValue(res.email);
-            this.companyForm.get('id').setValue(res.id);
-            this.companyForm.get('finBeginDt').setValue(res.finBeginDt);
-            this.companyForm.get('finEndDt').setValue(res.finEndDt);
-            this.companyForm.get('uniqcusomerId').setValue(res.uniqcusomerId);
-            this.companyForm.get('compId').setValue(res.compId);
-            this.companyForm.get('applyOptionsMtm').setValue(res.applyOptionsMtm);
-            this.companyForm.get('applyCashMtm').setValue(res.applyCashMtm);
-            this.companyForm.get('applyInvoice').setValue(res.applyInvoice);
-            this.companyForm.get('applyOnlyBrokerage').setValue(res.applyOnlyBrokerage);
-            this.companyForm.get('checkRates').setValue(res.checkRates);
-            this.companyForm.get('showLots').setValue(res.showLots);
-            this.companyForm.get('applySubBrokerage').setValue(res.applySubBrokerage);
-            this.companyForm.get('applyDecimalQty').setValue(res.applyDecimalQty);
-            this.companyForm.get('applyMargin').setValue(res.applyMargin);
-            this.companyForm.get('roundingOff').setValue(res.roundingOff);
-            this.companyForm.get('settlementPostingInPercentage').setValue(res.settlementPostingInPercentage);
-            this.companyForm.get('applyContractNote').setValue(res.applyContractNote);
-            this.companyForm.get('isRateRangeEnable').setValue(res.isRateRangeEnable);
-            this.companyForm.get('cityName').setValue(res.cityName);
+            try {
+                this.companyForm.get('name').setValue(res.name);
+                this.companyForm.get('address').setValue(res.address);
+                this.companyForm.get('city').setValue(res.city);
+                this.companyForm.get('pin').setValue(res.pin);
+                this.companyForm.get('state').setValue(res.state);
+                this.companyForm.get('phone').setValue(res.phone);
+                this.companyForm.get('email').setValue(res.email);
+                this.companyForm.get('id').setValue(res.id);
+                this.companyForm.get('finBeginDt').setValue(res.finBeginDt);
+                this.companyForm.get('finEndDt').setValue(res.finEndDt);
+                this.companyForm.get('uniqcusomerId').setValue(res.uniqcusomerId);
+                // this.companyForm.get('compId').setValue(res.compId);
+                this.companyForm.get('applyOptionsMTM').setValue(res.applyOptionsMTM);
+                this.companyForm.get('applyCashMTM').setValue(res.applyCashMTM);
+                this.companyForm.get('applyInvoice').setValue(res.applyInvoice);
+                this.companyForm.get('applyOnlyBrokerage').setValue(res.applyOnlyBrokerage);
+                this.companyForm.get('checkRates').setValue(res.checkRates);
+                this.companyForm.get('showLots').setValue(res.showLots);
+                this.companyForm.get('applySharing').setValue(res.applySharing);
+                this.companyForm.get('applySubBrokerage').setValue(res.applySubBrokerage);
+                this.companyForm.get('applyDecimalQty').setValue(res.applyDecimalQty);
+                this.companyForm.get('applyMargin').setValue(res.applyMargin);
+                this.companyForm.get('roundingOff').setValue(res.roundingOff);
+                this.companyForm.get('isRateRangeEnable').setValue(res.isRateRangeEnable);
+                this.companyForm.get('settlementPostingInPercentage').setValue(res.settlementPostingInPercentage);
+                this.companyForm.get('applyContractNote').setValue(res.applyContractNote);
+            }
+            catch (e) {
+                console.log('eee', e);
+            }
+            // this.companyForm.get('isRateRangeEnable').setValue(res.isRateRangeEnable);
+            // this.companyForm.get('cityName').setValue(res.cityName);
         });
     }
     initialApiCalls() {
@@ -5293,7 +5301,7 @@ class AddCompanyComponent {
     }
 }
 AddCompanyComponent.ɵfac = function AddCompanyComponent_Factory(t) { return new (t || AddCompanyComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdirectiveInject"](_angular_material_snack_bar__WEBPACK_IMPORTED_MODULE_6__.MatSnackBar), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdirectiveInject"](_angular_forms__WEBPACK_IMPORTED_MODULE_2__.UntypedFormBuilder), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdirectiveInject"](_angular_material_dialog__WEBPACK_IMPORTED_MODULE_7__.MatDialogRef), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdirectiveInject"](_angular_material_dialog__WEBPACK_IMPORTED_MODULE_7__.MAT_DIALOG_DATA), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdirectiveInject"](_master_service__WEBPACK_IMPORTED_MODULE_0__.MasterService)); };
-AddCompanyComponent.ɵcmp = /*@__PURE__*/ _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdefineComponent"]({ type: AddCompanyComponent, selectors: [["app-company-dialog"]], decls: 135, vars: 14, consts: [[1, "heading"], [1, "close-btn", 3, "click"], [1, "material-symbols-outlined"], ["fxLayout", "row wrap", 1, "user-form", 3, "formGroup", "ngSubmit"], [1, "white-block", "pb-5"], [1, "tab-party-details-parent"], ["fxFlex", "100", "fxFlex.gt-sm", "20", "fxFlex.sm", "50"], ["appearance", "outline"], ["matInput", "", "autocomplete", "off", "placeholder", "Name", "formControlName", "name", "type", "text"], [4, "ngIf"], ["matInput", "", "autocomplete", "off", "placeholder", "address", "formControlName", "address", "type", "text"], ["fxFlex", "100", "fxFlex.gt-sm", "15", "fxFlex.sm", "50"], [1, "dropdown-wrapper"], ["appearance", "outline", 1, "select-slab-mat"], ["placeholder", "Select City", "panelClass", "custom-select-panel", "formControlName", "city"], ["selectType", ""], ["type", "text", "autocomplete", "off", "matInput", "", "placeholder", "Search City", 1, "milti-search-box", 3, "input"], ["multiUserSearch", ""], [3, "value", 4, "ngFor", "ngForOf"], ["matInput", "", "formControlName", "finBeginDt", 3, "matDatepicker"], ["matSuffix", "", 3, "for"], ["picker1", ""], ["matInput", "", "formControlName", "finEndDt", 3, "matDatepicker"], ["picker2", ""], ["matInput", "", "autocomplete", "off", "placeholder", "state", "formControlName", "state", "type", "text"], ["matInput", "", "autocomplete", "off", "placeholder", "Phone", "formControlName", "phone", "type", "text"], ["matInput", "", "autocomplete", "off", "placeholder", "Email", "formControlName", "email", "type", "text"], ["matInput", "", "autocomplete", "off", "placeholder", "Pin", "formControlName", "pin", "type", "text"], ["matInput", "", "autocomplete", "off", "placeholder", "Unique customer id", "formControlName", "uniqcusomerId", "type", "text"], [1, "white-block"], [1, "tab-party-details-parent", "align-center"], ["fxFlex", "100", "fxFlex.gt-sm", "20", "fxFlex.sm", "50", 1, "pt-5", "pb-5", "pl-10"], ["formControlName", "ApplyOptionsMTM"], ["formControlName", "ApplyCashMTM"], ["formControlName", "ApplyInvoice"], ["formControlName", "ApplyOnlyBrokerage"], ["formControlName", "ApplySubBrokerage"], ["formControlName", "CheckRates"], ["formControlName", "ShowLots"], ["formControlName", "ApplySharing"], ["formControlName", "ApplyDecimalQty"], ["formControlName", "ApplyMargin"], ["formControlName", "ApplyContractNote"], ["formControlName", "RoundingOff"], ["formControlName", "RateRangeEnable"], ["fxFlex", "100", "fxFlex.gt-sm", "20", "fxFlex.sm", "50", 1, "pt-10"], ["matInput", "", "autocomplete", "off", "placeholder", "", "formControlName", "settlementPostingInPercentage", "type", "number"], ["fxFlex", "100", 1, "mt-2", "text-center", "space-between-btns"], ["mat-raised-button", "", "color", "warn", "type", "button", 3, "click"], ["mat-raised-button", "", "color", "primary", "type", "submit", 1, "uppercase"], [3, "value"]], template: function AddCompanyComponent_Template(rf, ctx) { if (rf & 1) {
+AddCompanyComponent.ɵcmp = /*@__PURE__*/ _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdefineComponent"]({ type: AddCompanyComponent, selectors: [["app-company-dialog"]], decls: 135, vars: 14, consts: [[1, "heading"], [1, "close-btn", 3, "click"], [1, "material-symbols-outlined"], ["fxLayout", "row wrap", 1, "user-form", 3, "formGroup", "ngSubmit"], [1, "white-block", "pb-5"], [1, "tab-party-details-parent"], ["fxFlex", "100", "fxFlex.gt-sm", "20", "fxFlex.sm", "50"], ["appearance", "outline"], ["matInput", "", "autocomplete", "off", "placeholder", "Name", "formControlName", "name", "type", "text"], [4, "ngIf"], ["matInput", "", "autocomplete", "off", "placeholder", "address", "formControlName", "address", "type", "text"], ["fxFlex", "100", "fxFlex.gt-sm", "15", "fxFlex.sm", "50"], [1, "dropdown-wrapper"], ["appearance", "outline", 1, "select-slab-mat"], ["placeholder", "Select City", "panelClass", "custom-select-panel", "formControlName", "city"], ["selectType", ""], ["type", "text", "autocomplete", "off", "matInput", "", "placeholder", "Search City", 1, "milti-search-box", 3, "input"], ["multiUserSearch", ""], [3, "value", 4, "ngFor", "ngForOf"], ["matInput", "", "formControlName", "finBeginDt", 3, "matDatepicker"], ["matSuffix", "", 3, "for"], ["picker1", ""], ["matInput", "", "formControlName", "finEndDt", 3, "matDatepicker"], ["picker2", ""], ["matInput", "", "autocomplete", "off", "placeholder", "state", "formControlName", "state", "type", "text"], ["matInput", "", "autocomplete", "off", "placeholder", "Phone", "formControlName", "phone", "type", "text"], ["matInput", "", "autocomplete", "off", "placeholder", "Email", "formControlName", "email", "type", "text"], ["matInput", "", "autocomplete", "off", "placeholder", "Pin", "formControlName", "pin", "type", "text"], ["matInput", "", "autocomplete", "off", "placeholder", "Unique customer id", "formControlName", "uniqcusomerId", "type", "text"], [1, "white-block"], [1, "tab-party-details-parent", "align-center"], ["fxFlex", "100", "fxFlex.gt-sm", "20", "fxFlex.sm", "50", 1, "pt-5", "pb-5", "pl-10"], ["formControlName", "applyOptionsMTM"], ["formControlName", "applyCashMTM"], ["formControlName", "applyInvoice"], ["formControlName", "applyOnlyBrokerage"], ["formControlName", "applySubBrokerage"], ["formControlName", "checkRates"], ["formControlName", "showLots"], ["formControlName", "applySharing"], ["formControlName", "applyDecimalQty"], ["formControlName", "applyMargin"], ["formControlName", "applyContractNote"], ["formControlName", "roundingOff"], ["formControlName", "isRateRangeEnable"], ["fxFlex", "100", "fxFlex.gt-sm", "20", "fxFlex.sm", "50", 1, "pt-10"], ["matInput", "", "autocomplete", "off", "placeholder", "", "formControlName", "settlementPostingInPercentage", "type", "number"], ["fxFlex", "100", 1, "mt-2", "text-center", "space-between-btns"], ["mat-raised-button", "", "color", "warn", "type", "button", 3, "click"], ["mat-raised-button", "", "color", "primary", "type", "submit", 1, "uppercase"], [3, "value"]], template: function AddCompanyComponent_Template(rf, ctx) { if (rf & 1) {
         _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementStart"](0, "h2", 0);
         _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵtext"](1, "Add Company");
         _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementEnd"]();

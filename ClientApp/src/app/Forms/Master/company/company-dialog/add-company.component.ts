@@ -101,8 +101,8 @@ export class AddCompanyComponent implements OnInit {
             this.companyForm.get('finEndDt').setValue(res.finEndDt);
             this.companyForm.get('uniqcusomerId').setValue(res.uniqcusomerId);        
             // this.companyForm.get('compId').setValue(res.compId);
-            this.companyForm.get('applyOptionsMTM').setValue(res.applyOptionsMtm);
-            this.companyForm.get('applyCashMTM').setValue(res.applyCashMtm);
+            this.companyForm.get('applyOptionsMTM').setValue(res.applyOptionsMTM);
+            this.companyForm.get('applyCashMTM').setValue(res.applyCashMTM);
             this.companyForm.get('applyInvoice').setValue(res.applyInvoice);
             this.companyForm.get('applyOnlyBrokerage').setValue(res.applyOnlyBrokerage);
             this.companyForm.get('checkRates').setValue(res.checkRates);
