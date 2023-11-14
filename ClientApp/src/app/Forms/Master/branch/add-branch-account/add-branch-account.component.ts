@@ -202,7 +202,7 @@ export class AddBranchAccountComponent implements OnInit {
       'name': ['', Validators.required],
       'headId': ['', Validators.required],
       'contraAcId': ['', Validators.required],
-      'chatid': ['', Validators.required],
+      'chatid': [''],
       // 'id': [this.selectedBranchID]
       'id': [0]
     });

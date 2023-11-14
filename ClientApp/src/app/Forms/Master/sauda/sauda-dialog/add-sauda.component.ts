@@ -34,7 +34,7 @@ export class AddSaudaComponent implements OnInit {
       'maturity': ['', Validators.required],
       'instrumentType': ['', Validators.required],
       'optionType': ['', Validators.required],
-      'strikePrice': [],
+      'strikePrice': [0],
       'firstTradingDate': [],
       'lastTradingDate': [],
       'id': [],
