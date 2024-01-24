@@ -61,6 +61,10 @@ export class TradeRegisterComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.fromDt = new Date();
+    this.toDt = new Date();
+    this.settings.sidenavIsPinned = false;
+    this.settings.sidenavIsOpened = false;
     this.initialApiCalls();
   }
 
