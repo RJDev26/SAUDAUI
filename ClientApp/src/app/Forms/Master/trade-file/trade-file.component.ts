@@ -87,10 +87,10 @@ constructor(public snackBar: MatSnackBar, public appSettings: AppSettings, priva
         maxWidth: 110, resizable: true
       },
       { headerName: 'Name', field: 'name', filter: true, sorting: true, resizable: true },
-      { headerName: 'Broker', field: 'broker', filter: true, sorting: true, resizable: true },
-    { headerName: 'Type', field: 'type', filter: true, sorting: true, resizable: true },  
+      { headerName: 'Broker', field: 'brokerName', filter: true, sorting: true, resizable: true },
+    { headerName: 'Type', field: 'fileType', filter: true, sorting: true, resizable: true },  
     { headerName: 'PartyAs', field: 'partyAs', filter: true, sorting: true, resizable: true },  
-    { headerName: 'ClientAc', field: 'clientAc', filter: true, sorting: true, resizable: true },  
+    { headerName: 'ClientAc', field: 'clientName', filter: true, sorting: true, resizable: true },  
   ];
 
   initialApiCalls() {
@@ -166,7 +166,7 @@ constructor(public snackBar: MatSnackBar, public appSettings: AppSettings, priva
   showToaster(message, isError = false) {
     const panelClass = isError ? ['red-text'] : undefined;
     const label = isError ? "Error" : "Success";
-    const time = isError? 600000 : 300000;
+    const time = isError? 6000 : 3000;
   
     this.snackBar.open(message, label, {
       duration: time,
@@ -212,6 +212,11 @@ getSymbolMappingList() {
         if (confirmed) {
           this._masterSecondService.deleteTradeFileType(params.data.id).subscribe((res) => {
             this.getSymbolMappingList();
+            if(res.isSuccess){
+              this.showToaster(res.message);
+            } else {
+              this.showToaster(res.message, true);
+            }
           });
         }
       });

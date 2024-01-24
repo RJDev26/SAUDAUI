@@ -204,8 +204,8 @@ export class TradeRegisterComponent implements OnInit {
   }
 
   getTradeFileListData() {
-    var accountIds = this.accountIds.filter((val)=> val != -1);
-    var saudaIds = this.saudaIds.filter((val)=> val != -1);
+    var accountIds = this.accountIds ? this.accountIds.filter((val)=> val != -1): [];
+    var saudaIds = this.saudaIds? this.saudaIds.filter((val)=> val != -1): [];
     const req = {
       "fromDate": this.datePipe.transform(this.fromDt, 'yyyy-MM-dd'),
         "toDate": this.datePipe.transform(this.toDt, 'yyyy-MM-dd'),
