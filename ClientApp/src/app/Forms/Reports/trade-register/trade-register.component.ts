@@ -87,7 +87,7 @@ export class TradeRegisterComponent implements OnInit {
       },
       {
         headerName: 'ConDate', field: 'condate', minwidth: 110, width: 110, maxwidth: 120, suppressSizeToFit: true, cellRenderer: (params) => {
-          return this.datePipe.transform(params.value, 'YYYY-MM-dd')
+          return this.datePipe.transform(params.value, 'dd-MM-YYYY')
         }
       },
       { headerName: 'Account', field: 'account',  suppressSizeToFit: true,flex:2 },
@@ -110,7 +110,7 @@ export class TradeRegisterComponent implements OnInit {
       },
       {
           headerName: 'Created Date', field: 'createdDate', minwidth: 110, width: 110, maxwidth: 110, cellRenderer: (params) => {
-          return this.datePipe.transform(params.value, 'YYYY-MM-dd')
+          return this.datePipe.transform(params.value, 'dd-MM-YYYY')
         }
       },
       { headerName: 'Trade No', field: 'tradeNo', minwidth: 100, width: 100, maxwidth: 100, suppressSizeToFit: true },
