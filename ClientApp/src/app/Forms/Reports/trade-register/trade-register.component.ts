@@ -109,8 +109,9 @@ export class TradeRegisterComponent implements OnInit {
         },
       },
       {
-          headerName: 'Created Date', field: 'createdDate', minwidth: 110, width: 110, maxwidth: 110, cellRenderer: (params) => {
-          return this.datePipe.transform(params.value, 'dd-MM-YYYY')
+          headerName: 'Created Date', field: 'createdDate', minwidth: 110, width: 200, maxwidth: 200, cellRenderer: (params) => {
+            const dateValue = params.value instanceof Date ? params.value : new Date(params.value);
+            return this.formatDateTime(dateValue);
         }
       },
       { headerName: 'Trade No', field: 'tradeNo', minwidth: 100, width: 100, maxwidth: 100, suppressSizeToFit: true },
@@ -119,6 +120,23 @@ export class TradeRegisterComponent implements OnInit {
 
   }
   ];
+
+  formatDateTime(date: Date): string {
+    const options: Intl.DateTimeFormatOptions = {
+      day: '2-digit',
+      month: '2-digit',
+      year: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit',
+      second: '2-digit'
+    };
+  
+    // Use 'en-GB' locale for the desired "dd-MM-yyyy" format
+    const formattedDate = new Intl.DateTimeFormat('en-GB', options).format(date);
+  
+    // Extract date part (dd-MM-yyyy) and ignore the time part
+    return this.datePipe.transform(date, 'dd-MM-YYYY') + formattedDate.split(',')[1];
+  }
 
   initialApiCalls() {
     forkJoin([this._masterService.getAccount(), this._masterService.getExchangeName()]).pipe(map(response => {
