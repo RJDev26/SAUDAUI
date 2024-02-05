@@ -21,7 +21,7 @@
             <div fxFlex="100" fxFlex.gt-sm="20" fxFlex.sm="50">
                 <mat-form-field appearance="outline">
                     <mat-label>Item Code</mat-label>
-                    <input matInput autocomplete="off" placeholder="item Code" formControlName="itemCode" type="text" (blur)="populateFields()">
+                    <input matInput autocomplete="off" placeholder="item Code" (input)="onItemCodeChange($event)" formControlName="itemCode" type="text" (blur)="populateFields()">
                     <mat-error *ngIf="itemForm.controls.itemCode.errors?.required">Item Code is required</mat-error>                
                 </mat-form-field> 
             </div>

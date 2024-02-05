@@ -26,10 +26,11 @@
             </div>
             </div>
           </div>
+          <label class="trade-number" *ngIf="editTradeNo">Trade# {{editTradeNo}}</label>
     </div>
     <div fxLayout="row" class="mt-2 flex-end symbol-mapping">
-        <form [formGroup]="itemForm" (ngSubmit)="onSubmit(itemForm.value)" fxLayout="row wrap" class="user-form">
-            <div class="white-block pb-5">
+        <form [formGroup]="itemForm" (ngSubmit)="onSubmit(itemForm.value)" fxLayout="row wrap" class="user-form trade-form">
+            <div class="white-block pb-5 trade-form-div">
                 <div class="tab-party-details-parent">
                       <div fxFlex="100" fxFlex.gt-sm="15" fxFlex.sm="50">
                         <div class="dropdown-wrapper">
@@ -111,6 +112,7 @@
         <ag-grid-angular style=" height: 535px;"
                          class="ag-theme-material"
                            [rowHeight]="31"
+                           [gridOptions]="gridOptions"
                          [rowData]="symbolMappingList"
                          [pagination]="true"
                          [columnDefs]="columnDefs"

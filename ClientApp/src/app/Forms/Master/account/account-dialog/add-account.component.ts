@@ -345,7 +345,7 @@ onInputBrokerChange(event: any) {
         console.log("result", result);
         this.showToaster(result.message, "Success");
         this.formSubmitted = true;
-        // this.dialogRef.close();
+        this.dialogRef.close();
       }, err => {
         this.showToaster(err.message, "Error");
         console.log(err);

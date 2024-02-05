@@ -14,6 +14,7 @@ import { EntryService } from "../entry.service";
 import { DatePipe, DecimalPipe } from "@angular/common";
 import { ErrorDialog } from "../../Dialog/confirmation-dialog/error-dialog.component";
 import { MatSnackBar } from "@angular/material/snack-bar";
+import { GridOptions } from "ag-grid-community";
 
 @Component({
   selector: 'app-trade-contract',
@@ -23,6 +24,10 @@ import { MatSnackBar } from "@angular/material/snack-bar";
 export class TradeContractComponent implements OnInit {
   @ViewChild(DatatableComponent) table: DatatableComponent;
   public itemForm: UntypedFormGroup;
+  editTradeNo: string;
+  gridOptions: GridOptions = {
+    getRowStyle: this.getRowStyle.bind(this),
+  };
   editing = {};
   rows = [];
   temp = [];
@@ -120,6 +125,15 @@ export class TradeContractComponent implements OnInit {
 
   }
   ];
+
+  getRowStyle(params: any) {
+    if (params.data.contype === "B") {
+      return { background: "lightblue" };
+    } else if (params.data.contype === "S") {
+      return { background: "lightcoral" };
+    }
+    return {}; // No specific style for other values
+  }
 
   initialApiCalls() {
     forkJoin([this._masterService.getAccount(), this._masterService.getExchangeName()]).pipe(map(response => {
@@ -245,6 +259,7 @@ export class TradeContractComponent implements OnInit {
         this.saudaList = result;
         this.filterSaudaList = result;
         var res = response;
+        this.editTradeNo = res.tradeNo;
         this.itemForm.get('id').setValue(res.id);
         this.itemForm.get('accountId').setValue(res.accountId);
         this.itemForm.get('saudaId').setValue(res.saudaId);
@@ -295,6 +310,7 @@ export class TradeContractComponent implements OnInit {
   }
 
   resetForm(myForm) {
+    this.editTradeNo = '';
     myForm.reset();
     myForm.get('id').setValue(0);
     Object.keys(myForm.controls).forEach(key => {

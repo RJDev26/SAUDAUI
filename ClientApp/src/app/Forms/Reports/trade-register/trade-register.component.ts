@@ -5,9 +5,13 @@ import { AppSettings } from "src/app/app.settings";
 import { Settings } from "src/app/app.settings.model";
 import { ConfirmationDialog } from "../../Dialog/confirmation-dialog/confirmation-dialog.component";
 import { AppService } from "src/app/service/app.service";
-import { forkJoin, Observable } from 'rxjs';
-import { map, startWith } from 'rxjs/operators';
-import { UntypedFormBuilder, UntypedFormGroup, Validators } from "@angular/forms";
+import { forkJoin, Observable } from "rxjs";
+import { map, startWith } from "rxjs/operators";
+import {
+  UntypedFormBuilder,
+  UntypedFormGroup,
+  Validators,
+} from "@angular/forms";
 import { MasterService } from "../../Master/master.service";
 import { MasterSecondService } from "../../Master/master-second.service";
 import { DatePipe, DecimalPipe } from "@angular/common";
@@ -16,17 +20,21 @@ import { MatSnackBar } from "@angular/material/snack-bar";
 import { ReportsService } from "../reports.service";
 import { MatSelect } from "@angular/material/select";
 import { MatOption } from "@angular/material/core";
+import { GridOptions } from "ag-grid-community";
 
 @Component({
-  selector: 'app-trade-register',
-  templateUrl: './trade-register.component.html',
-  styleUrls: ['./trade-register.component.scss']
+  selector: "app-trade-register",
+  templateUrl: "./trade-register.component.html",
+  styleUrls: ["./trade-register.component.scss"],
 })
 export class TradeRegisterComponent implements OnInit {
   @ViewChild(DatatableComponent) table: DatatableComponent;
-  @ViewChild('selectAccount') selectAccount: MatSelect;
-  @ViewChild('selectSauda') selectSauda: MatSelect;
+  @ViewChild("selectAccount") selectAccount: MatSelect;
+  @ViewChild("selectSauda") selectSauda: MatSelect;
   public itemForm: UntypedFormGroup;
+  gridOptions: GridOptions = {
+    getRowStyle: this.getRowStyle.bind(this),
+  };
   editing = {};
   rows = [];
   temp = [];
@@ -39,11 +47,14 @@ export class TradeRegisterComponent implements OnInit {
   selected = [];
   loadingIndicator: boolean = true;
   reorderable: boolean = true;
-  conTypeList = [{ 'id': 'B', 'name': 'Buy' }, { 'id': 'S', 'name': 'Sell' }]
+  conTypeList = [
+    { id: "B", name: "Buy" },
+    { id: "S", name: "Sell" },
+  ];
   saudaList: any[] = [];
   filterSaudaList: any[] = [];
   contractDateVal: any;
-  decimalPipe: any = new DecimalPipe('en-US');
+  decimalPipe: any = new DecimalPipe("en-US");
   exchangeList: any[];
   conDate: any;
   exId: any;
@@ -55,8 +66,16 @@ export class TradeRegisterComponent implements OnInit {
 
   public settings: Settings;
   symbolMappingList: any[] = [];
-  constructor(public snackBar: MatSnackBar, private datePipe: DatePipe, public appSettings: AppSettings, private formBuilder: UntypedFormBuilder, private _reportServices: ReportsService,
-    public dialog: MatDialog, private _appService: AppService, private _masterService: MasterService) {
+  constructor(
+    public snackBar: MatSnackBar,
+    private datePipe: DatePipe,
+    public appSettings: AppSettings,
+    private formBuilder: UntypedFormBuilder,
+    private _reportServices: ReportsService,
+    public dialog: MatDialog,
+    private _appService: AppService,
+    private _masterService: MasterService
+  ) {
     this.settings = this.appSettings.settings;
   }
 
@@ -75,86 +94,191 @@ export class TradeRegisterComponent implements OnInit {
       wraptext: true,
       resizable: true,
       columnSize: "sizeToFit",
-    }
+    },
+  };
 
-  }
-
-  columnDefs = [{
-    headerName: 'Contract Trades',
-    children: [
-      {
-        headerName: '', editable: false, minwidth: 25, width: 25, maxwidth: 25, resizable: false, sortable: false, filter: false, checkboxSelection: true, headerCheckboxSelection: true,
-      },
-      {
-        headerName: 'ConDate', field: 'condate', minwidth: 110, width: 110, maxwidth: 120, suppressSizeToFit: true, cellRenderer: (params) => {
-          return this.datePipe.transform(params.value, 'dd-MM-YYYY')
-        }
-      },
-      { headerName: 'Account', field: 'account',  suppressSizeToFit: true,flex:2 },
-      { headerName: 'Sauda Code', field: 'saudaCode',  suppressSizeToFit: true,flex:2 },
-
-      {
-        headerName: 'B/S', field: 'contype', minwidth: 80, width: 80, maxwidth: 80,cellRenderer: (params) => {
-        return params.value === 'B' ? 'Buy' : (params.value === 'S' ? 'Sell' : params.value);
-        }
-      },
-      {
-          headerName: 'QTY', field: 'qty',  minwidth: 100, width: 100, maxwidth: 100, sorting: true, resizable: true, cellRenderer: (params) => {
-          return this.decimalPipe.transform(params.value, '1.2-2');
-        },type: 'rightAligned'
-      },
-      {
-          headerName: 'Rate', field: 'rate', minwidth: 100, width: 100, maxwidth: 100, type: 'rightAligned', cellRenderer: (params) => {
-          return params.value.toFixed(2);
+  columnDefs = [
+    {
+      headerName: "Contract Trades",
+      children: [
+        {
+          headerName: "",
+          editable: false,
+          minwidth: 25,
+          width: 25,
+          maxwidth: 25,
+          resizable: false,
+          sortable: false,
+          filter: false,
+          checkboxSelection: true,
+          headerCheckboxSelection: true,
         },
-      },
-      {
-          headerName: 'Created Date', field: 'createdDate', minwidth: 110, width: 200, maxwidth: 200, cellRenderer: (params) => {
-            const dateValue = params.value instanceof Date ? params.value : new Date(params.value);
-            return this.formatDateTime(dateValue);
-        }
-      },
-      { headerName: 'Trade No', field: 'tradeNo', minwidth: 100, width: 100, maxwidth: 100, suppressSizeToFit: true },
-      { headerName: 'Broker', field: 'brokerName', suppressSizeToFit: true, flex: 1 },
-    ]
+        {
+          headerName: "ConDate",
+          field: "condate",
+          minwidth: 110,
+          width: 110,
+          maxwidth: 120,
+          suppressSizeToFit: true,
+          cellRenderer: (params) => {
+            return this.datePipe.transform(params.value, "dd-MM-YYYY");
+          },
+        },
+        {
+          headerName: "Account",
+          field: "account",
+          suppressSizeToFit: true,
+          flex: 2,
+        },
+        {
+          headerName: "Sauda Code",
+          field: "saudaCode",
+          suppressSizeToFit: true,
+          flex: 2,
+        },
 
-  }
+        {
+          headerName: "B/S",
+          field: "contype",
+          minwidth: 80,
+          width: 80,
+          maxwidth: 80,
+          cellRenderer: (params) => {
+            return params.value === "B"
+              ? "Buy"
+              : params.value === "S"
+              ? "Sell"
+              : params.value;
+          },
+        },
+        {
+          headerName: "QTY",
+          field: "qty",
+          minwidth: 100,
+          width: 100,
+          maxwidth: 100,
+          sorting: true,
+          resizable: true,
+          cellRenderer: (params) => {
+            return this.decimalPipe.transform(params.value, "1.2-2");
+          },
+          type: "rightAligned",
+        },
+        {
+          headerName: "Rate",
+          field: "rate",
+          minwidth: 100,
+          width: 100,
+          maxwidth: 100,
+          type: "rightAligned",
+          cellRenderer: (params) => {
+            return params.value.toFixed(2);
+          },
+        },
+        {
+          headerName: "Created Date",
+          field: "createdDate",
+          minwidth: 110,
+          width: 200,
+          maxwidth: 200,
+          cellRenderer: (params) => {
+            const dateValue =
+              params.value instanceof Date
+                ? params.value
+                : new Date(params.value);
+            return this.formatDateTime(dateValue);
+          },
+        },
+        {
+          headerName: "Trade Time",
+          field: "contime",
+          minwidth: 110,
+          width: 150,
+          maxwidth: 150,
+          cellRenderer: (params) => {
+            return this.formatConTime(params.value);
+          },
+        },
+        {
+          headerName: "Trade No",
+          field: "tradeNo",
+          minwidth: 100,
+          width: 100,
+          maxwidth: 100,
+          suppressSizeToFit: true,
+        },
+        {
+          headerName: "Broker",
+          field: "brokerName",
+          suppressSizeToFit: true,
+          flex: 1,
+        },
+      ],
+    },
   ];
+
+  formatConTime(contime): string {
+    const hours = contime.hours.toString().padStart(2, '0');
+    const minutes = contime.minutes.toString().padStart(2, '0');
+    const seconds = contime.seconds.toString().padStart(2, '0');
+  
+    return `${hours}:${minutes}:${seconds}`;
+  }
+
+  rowData = [{ contype: "B" }, { contype: "S" }, { contype: "Other" }];
+
+  // Define row style function
+  getRowStyle(params: any) {
+    if (params.data.contype === "B") {
+      return { background: "lightblue" };
+    } else if (params.data.contype === "S") {
+      return { background: "lightcoral" };
+    }
+    return {}; // No specific style for other values
+  }
 
   formatDateTime(date: Date): string {
     const options: Intl.DateTimeFormatOptions = {
-      day: '2-digit',
-      month: '2-digit',
-      year: 'numeric',
-      hour: '2-digit',
-      minute: '2-digit',
-      second: '2-digit'
+      day: "2-digit",
+      month: "2-digit",
+      year: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
+      second: "2-digit",
     };
-  
+
     // Use 'en-GB' locale for the desired "dd-MM-yyyy" format
-    const formattedDate = new Intl.DateTimeFormat('en-GB', options).format(date);
-  
+    const formattedDate = new Intl.DateTimeFormat("en-GB", options).format(
+      date
+    );
+
     // Extract date part (dd-MM-yyyy) and ignore the time part
-    return this.datePipe.transform(date, 'dd-MM-YYYY') + formattedDate.split(',')[1];
+    return (
+      this.datePipe.transform(date, "dd-MM-YYYY") + formattedDate.split(",")[1]
+    );
   }
 
   initialApiCalls() {
-    forkJoin([this._masterService.getAccount(), this._masterService.getExchangeName()]).pipe(map(response => {
-      this.filteredAccountList = response[0];
-      this.accountList = response[0];
-      this.brokerList = response[0];
-      this.filterBrokerList = response[0];
-      this.exchangeList = response[1];
-    })).subscribe(res => {
-    });
+    forkJoin([
+      this._masterService.getAccount(),
+      this._masterService.getExchangeName(),
+    ])
+      .pipe(
+        map((response) => {
+          this.filteredAccountList = response[0];
+          this.accountList = response[0];
+          this.brokerList = response[0];
+          this.filterBrokerList = response[0];
+          this.exchangeList = response[1];
+        })
+      )
+      .subscribe((res) => {});
   }
 
-  onGridDoubleClick(params: any)
-  {
-  }
+  onGridDoubleClick(params: any) {}
 
   onExchangeInputChange(event: any) {
-    this._masterService.getExchangeSaudaListDDL(this.exId).subscribe(res => {
+    this._masterService.getExchangeSaudaListDDL(this.exId).subscribe((res) => {
       this.saudaList = res;
       this.filterSaudaList = res;
     });
@@ -168,7 +292,7 @@ export class TradeRegisterComponent implements OnInit {
       return prov.includes(searchInput);
     });
 
-    if (searchInput === '') {
+    if (searchInput === "") {
       this.filterSaudaList = [...this.saudaList];
     }
   }
@@ -181,7 +305,7 @@ export class TradeRegisterComponent implements OnInit {
       return prov.includes(searchInput);
     });
 
-    if (searchInput === '') {
+    if (searchInput === "") {
       this.filteredAccountList = [...this.accountList];
     }
   }
@@ -203,7 +327,7 @@ export class TradeRegisterComponent implements OnInit {
       return prov.includes(searchInput);
     });
 
-    if (searchInput === '') {
+    if (searchInput === "") {
       this.filterBrokerList = [...this.brokerList];
     }
   }
@@ -216,51 +340,50 @@ export class TradeRegisterComponent implements OnInit {
       return prov.includes(searchInput);
     });
 
-    if (searchInput === '') {
+    if (searchInput === "") {
       this.filterClientList = [...this.clientList];
     }
   }
 
   getTradeFileListData() {
-    var accountIds = this.accountIds ? this.accountIds.filter((val)=> val != -1): [];
-    var saudaIds = this.saudaIds? this.saudaIds.filter((val)=> val != -1): [];
+    var accountIds = this.accountIds
+      ? this.accountIds.filter((val) => val != -1)
+      : [];
+    var saudaIds = this.saudaIds
+      ? this.saudaIds.filter((val) => val != -1)
+      : [];
     const req = {
-      "fromDate": this.datePipe.transform(this.fromDt, 'yyyy-MM-dd'),
-        "toDate": this.datePipe.transform(this.toDt, 'yyyy-MM-dd'),
-      "account":accountIds.join(','),
-      "sauda": saudaIds.join(','),
+      fromDate: this.datePipe.transform(this.fromDt, "yyyy-MM-dd"),
+      toDate: this.datePipe.transform(this.toDt, "yyyy-MM-dd"),
+      exId: this.exId,
+      account: accountIds.join(","),
+      sauda: saudaIds.join(","),
     };
-      this._reportServices.getTradeRegister(req).subscribe((results) => {
-        this.symbolMappingList = results.data;
-      });
+    this._reportServices.getTradeRegister(req).subscribe((results) => {
+      this.symbolMappingList = results.data;
+    });
   }
 
-  accountAllSelection()
-  {
+  accountAllSelection() {
     var isAllChecked = this.selectAccount.options.first.selected;
-    this.selectAccount.options.forEach(
-      (item: MatOption) => {
-
-        if (isAllChecked) { item.select(); }
-        else { item.deselect() }
+    this.selectAccount.options.forEach((item: MatOption) => {
+      if (isAllChecked) {
+        item.select();
+      } else {
+        item.deselect();
       }
-
-    );
-
+    });
   }
 
-  saudaAllSelection()
-  {
+  saudaAllSelection() {
     var isAllChecked = this.selectSauda.options.first.selected;
-    this.selectSauda.options.forEach(
-      (item: MatOption) => {
-
-        if (isAllChecked) { item.select(); }
-        else { item.deselect() }
+    this.selectSauda.options.forEach((item: MatOption) => {
+      if (isAllChecked) {
+        item.select();
+      } else {
+        item.deselect();
       }
-
-    );
-
+    });
   }
 
   public actionCellRenderer(params: any) {
@@ -273,29 +396,25 @@ export class TradeRegisterComponent implements OnInit {
     return eGui;
   }
 
-  onGridClick(params: any) {
-    
-  }
+  onGridClick(params: any) {}
 
-  onGridReady(event) { this.gridApi = event.api; }
+  onGridReady(event) {
+    this.gridApi = event.api;
+  }
 
   deleteContractTrades() {
     var selectedRecord = this.gridApi.getSelectedRows();
     if (selectedRecord.length == 0) {
       const dialogRef = this.dialog.open(ErrorDialog, {
         data: {
-          message: 'Please select record to delete',
+          message: "Please select record to delete",
           buttonText: {
-            ok: 'OK',
-
-          }
-        }
-
+            ok: "OK",
+          },
+        },
       });
-
-    }
-    else {
-      const idList = selectedRecord.map(record => record.id).join(', ');
+    } else {
+      const idList = selectedRecord.map((record) => record.id).join(", ");
       this._reportServices.deleteContract(idList).subscribe((res) => {
         this.getTradeFileListData();
         this.showToaster(res.message, !res.isSuccess);
@@ -304,10 +423,10 @@ export class TradeRegisterComponent implements OnInit {
   }
 
   showToaster(message, isError = false) {
-    const panelClass = isError ? ['red-text'] : undefined;
+    const panelClass = isError ? ["red-text"] : undefined;
     const label = isError ? "Error" : "Success";
-    const time = isError? 6000 : 3000;
-  
+    const time = isError ? 6000 : 3000;
+
     this.snackBar.open(message, label, {
       duration: time,
       panelClass: panelClass,
