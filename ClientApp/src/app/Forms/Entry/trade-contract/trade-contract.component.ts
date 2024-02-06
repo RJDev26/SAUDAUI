@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from "@angular/core";
+import { Component, OnInit, TemplateRef, ViewChild } from "@angular/core";
 import { MatDialog } from "@angular/material/dialog";
 import { DatatableComponent } from "@swimlane/ngx-datatable";
 import { AppSettings } from "src/app/app.settings";
@@ -22,9 +22,11 @@ import { GridOptions } from "ag-grid-community";
   styleUrls: ['./trade-contract.component.scss']
 })
 export class TradeContractComponent implements OnInit {
+  @ViewChild('myTemplate', { static: true }) myTemplate: TemplateRef<any>;
   @ViewChild(DatatableComponent) table: DatatableComponent;
   public itemForm: UntypedFormGroup;
   editTradeNo: string;
+  lotNo: string;
   gridOptions: GridOptions = {
     getRowStyle: this.getRowStyle.bind(this),
   };
@@ -260,6 +262,7 @@ export class TradeContractComponent implements OnInit {
         this.filterSaudaList = result;
         var res = response;
         this.editTradeNo = res.tradeNo;
+        this.lotNo = res.lotNo;
         this.itemForm.get('id').setValue(res.id);
         this.itemForm.get('accountId').setValue(res.accountId);
         this.itemForm.get('saudaId').setValue(res.saudaId);
@@ -311,6 +314,7 @@ export class TradeContractComponent implements OnInit {
 
   resetForm(myForm) {
     this.editTradeNo = '';
+    this.lotNo = '';
     myForm.reset();
     myForm.get('id').setValue(0);
     Object.keys(myForm.controls).forEach(key => {
