@@ -30,6 +30,9 @@ import { GridOptions } from "ag-grid-community";
 export class TradeRegisterComponent implements OnInit {
   @ViewChild(DatatableComponent) table: DatatableComponent;
   @ViewChild("selectAccount") selectAccount: MatSelect;
+  @ViewChild("selectMaturity") selectMaturity: MatSelect;
+  @ViewChild("selectBroker") selectBroker: MatSelect;
+  @ViewChild("selectInstrument") selectInstrument: MatSelect;
   @ViewChild("selectSauda") selectSauda: MatSelect;
   public itemForm: UntypedFormGroup;
   gridOptions: GridOptions = {
@@ -40,6 +43,10 @@ export class TradeRegisterComponent implements OnInit {
   temp = [];
   accountList: any[];
   filteredAccountList: any[];
+  maturityList: any[];
+  filteredMaturityList: any[];
+  instrumentList: any[];
+  filteredInstrumentList: any[];
   brokerList: any;
   filterBrokerList: any[] = [];
   clientList: any;
@@ -61,6 +68,9 @@ export class TradeRegisterComponent implements OnInit {
   gridApi: any;
   saudaIds: any;
   accountIds: any;
+  maturityIds: any;
+  instrumentIds: any;
+  brokerIds: any;
   fromDt: any;
   toDt: any;
 
@@ -74,7 +84,8 @@ export class TradeRegisterComponent implements OnInit {
     private _reportServices: ReportsService,
     public dialog: MatDialog,
     private _appService: AppService,
-    private _masterService: MasterService
+    private _masterService: MasterService,
+    private _masterSecondServices: MasterSecondService
   ) {
     this.settings = this.appSettings.settings;
   }
@@ -85,6 +96,7 @@ export class TradeRegisterComponent implements OnInit {
     this.settings.sidenavIsPinned = false;
     this.settings.sidenavIsOpened = false;
     this.initialApiCalls();
+    this.onFromDtChange();
   }
 
   agGridOptions: any = {
@@ -237,6 +249,13 @@ export class TradeRegisterComponent implements OnInit {
     return {}; // No specific style for other values
   }
 
+  onFromDtChange() {
+    this._masterSecondServices.getMaturityListDDL(this.datePipe.transform(this.fromDt, "yyyy-MM-dd")).subscribe((res)=>{
+      this.maturityList = res;
+      this.filteredMaturityList = res;
+    });
+  }
+
   formatDateTime(date: Date): string {
     const options: Intl.DateTimeFormatOptions = {
       day: "2-digit",
@@ -262,6 +281,7 @@ export class TradeRegisterComponent implements OnInit {
     forkJoin([
       this._masterService.getAccount(),
       this._masterService.getExchangeName(),
+      this._masterService.getInstrumentList(),
     ])
       .pipe(
         map((response) => {
@@ -270,6 +290,8 @@ export class TradeRegisterComponent implements OnInit {
           this.brokerList = response[0];
           this.filterBrokerList = response[0];
           this.exchangeList = response[1];
+          this.filteredInstrumentList = response[2];
+          this.instrumentList = response[2];
         })
       )
       .subscribe((res) => {});
@@ -319,7 +341,25 @@ export class TradeRegisterComponent implements OnInit {
     });
   }
 
-  onInputBrokerChange(event: any) {
+  onInputMaturityListChange(event: any) {
+    const searchInput = event.target.value.toLowerCase();
+
+    this.filteredMaturityList = this.maturityList.filter((data) => {
+      const prov = data.maturity.toLowerCase();
+      return prov.includes(searchInput);
+    });
+  }
+
+  onInputInstrumentListChange(event: any) {
+    const searchInput = event.target.value.toLowerCase();
+
+    this.filteredInstrumentList = this.instrumentList.filter((data) => {
+      const prov = data.name.toLowerCase();
+      return prov.includes(searchInput);
+    });
+  }
+
+  onInputBrokerListChange(event: any) {
     const searchInput = event.target.value.toLowerCase();
 
     this.filterBrokerList = this.brokerList.filter((data) => {
@@ -349,6 +389,15 @@ export class TradeRegisterComponent implements OnInit {
     var accountIds = this.accountIds
       ? this.accountIds.filter((val) => val != -1)
       : [];
+      var maturity = this.maturityIds
+      ? this.maturityIds.filter((val) => val != -1)
+      : [];
+      var broker = this.brokerIds
+      ? this.brokerIds.filter((val) => val != -1)
+      : [];
+      var instrument = this.instrumentIds
+      ? this.instrumentIds.filter((val) => val != -1)
+      : [];
     var saudaIds = this.saudaIds
       ? this.saudaIds.filter((val) => val != -1)
       : [];
@@ -358,6 +407,9 @@ export class TradeRegisterComponent implements OnInit {
       exId: this.exId,
       account: accountIds.join(","),
       sauda: saudaIds.join(","),
+      instrument: instrument.join(","),
+      broker: broker.join(","),
+      maturity: maturity.join(",")
     };
     this._reportServices.getTradeRegister(req).subscribe((results) => {
       this.symbolMappingList = results.data;
@@ -367,6 +419,39 @@ export class TradeRegisterComponent implements OnInit {
   accountAllSelection() {
     var isAllChecked = this.selectAccount.options.first.selected;
     this.selectAccount.options.forEach((item: MatOption) => {
+      if (isAllChecked) {
+        item.select();
+      } else {
+        item.deselect();
+      }
+    });
+  }
+
+  maturityAllSelection() {
+    var isAllChecked = this.selectMaturity.options.first.selected;
+    this.selectMaturity.options.forEach((item: MatOption) => {
+      if (isAllChecked) {
+        item.select();
+      } else {
+        item.deselect();
+      }
+    });
+  }
+
+  brokerAllSelection() {
+    var isAllChecked = this.selectBroker.options.first.selected;
+    this.selectBroker.options.forEach((item: MatOption) => {
+      if (isAllChecked) {
+        item.select();
+      } else {
+        item.deselect();
+      }
+    });
+  }
+
+  instrumentAllSelection() {
+    var isAllChecked = this.selectInstrument.options.first.selected;
+    this.selectInstrument.options.forEach((item: MatOption) => {
       if (isAllChecked) {
         item.select();
       } else {

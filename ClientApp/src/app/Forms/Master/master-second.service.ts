@@ -161,6 +161,11 @@ export class MasterSecondService {
   getTaxAccountId(id: number): Observable<any> {
     return this.httpClient.get<any>(environment.apiBaseUrl + 'MasterSecond/getAccountTaxId/' + id, { headers: this.headers })
   }
+
+  getMaturityListDDL(maturity: string): Observable<any> {
+    return this.httpClient.get<any>(environment.apiBaseUrl + 'MasterSecond/getMaturityListDDL/' + maturity, { headers: this.headers })
+  }
+  
   deleteAccountTax(data): Observable<any> {
     return this.httpClient.post<any>(environment.apiBaseUrl + 'MasterSecond/deleteAccountTax', data, { headers: this.headers });
   }
