@@ -282,13 +282,14 @@ export class TradeRegisterComponent implements OnInit {
       this._masterService.getAccount(),
       this._masterService.getExchangeName(),
       this._masterService.getInstrumentList(),
+      this._masterSecondServices.getBrokerDDL(),
     ])
       .pipe(
         map((response) => {
           this.filteredAccountList = response[0];
           this.accountList = response[0];
-          this.brokerList = response[0];
-          this.filterBrokerList = response[0];
+          this.brokerList = response[3];
+          this.filterBrokerList = response[3];
           this.exchangeList = response[1];
           this.filteredInstrumentList = response[2];
           this.instrumentList = response[2];

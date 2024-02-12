@@ -150,6 +150,10 @@ export class MasterSecondService {
     return this.httpClient.get<any>(environment.apiBaseUrl + 'MasterSecond/getExchangeTaxList/' + id, { headers: this.headers })
   }
 
+  getBrokerDDL(): Observable<any> {
+    return this.httpClient.get<any>(environment.apiBaseUrl + 'MasterSecond/getBrokerDDL/', { headers: this.headers })
+  }
+
   getSharingSetupList(data):Observable<any>{
     return this.httpClient.post<any>(environment.apiBaseUrl + 'MasterSecond/getSharingSetupList', data, {headers:this.headers});
   }
