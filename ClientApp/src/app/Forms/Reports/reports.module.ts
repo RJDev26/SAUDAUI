@@ -9,12 +9,14 @@ import { TrailBalanceComponent } from './trail-balance/trail-balance.component';
 import { LedgerReportComponent } from './ledger-report/ledger-report.component';
 import { SubLedgerReportComponent } from './sub-ledger-report/sub-ledger-report.component';
 import { TradeRegisterComponent } from './trade-register/trade-register.component';
+import { StandingReportComponent } from './standing-report/standing-report.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'reports', pathMatch: 'full' },
   { path: 'trail-balance', component: TrailBalanceComponent, data: { breadcrumb: 'Trail Balance' } },
   { path: 'ledger-report', component: LedgerReportComponent, data: { breadcrumb: 'Ledger Report' } },
   { path: 'trade-register', component: TradeRegisterComponent, data: { breadcrumb: 'Trade Register' } },
+  { path: 'standing-report', component: StandingReportComponent, data: { breadcrumb: 'Standing Report' } },
   { path: 'single-ledger-report',pathMatch: 'prefix', component: SubLedgerReportComponent, data: { breadcrumb: 'Single Ledger Report' } },
 ];
 
@@ -32,7 +34,8 @@ export const routes: Routes = [
     TrailBalanceComponent,
         LedgerReportComponent,
         SubLedgerReportComponent,
-        TradeRegisterComponent
+        TradeRegisterComponent,
+        StandingReportComponent
   ],
   providers: [
     DatePipe,

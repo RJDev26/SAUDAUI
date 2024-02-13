@@ -26,6 +26,10 @@ export class ReportsService {
     return this.httpClient.post<any>(environment.apiBaseUrl + 'Trade/getTradeRegister', data, {headers:this.headers});
   }
 
+  getStanding(data):Observable<any>{
+    return this.httpClient.post<any>(environment.apiBaseUrl + 'Trade/getStanding', data, {headers:this.headers});
+  }
+
   getLedgerSummary(data):Observable<any>{
     return this.httpClient.post<any>(environment.apiBaseUrl + 'Report/getLedgerSummary', data, {headers:this.headers});
   }

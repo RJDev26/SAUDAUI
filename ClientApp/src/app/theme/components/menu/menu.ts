@@ -43,6 +43,7 @@ export const verticalMenuItems = [
   new Menu(7, 'Trail Balance', '/reports/trail-balance', null, 'outbox', null, false, 6),
   new Menu(8, 'Ledger Report', '/reports/ledger-report', null, 'outbox', null, false, 6),
   new Menu(8, 'Trade Register', '/reports/trade-register', null, 'outbox', null, false, 6),
+  new Menu(8, 'Standing Report', '/reports/standing-report', null, 'outbox', null, false, 6),
 
   //new Menu(5, 'UI Features', null, null, 'computer', null, true, 0),
   //new Menu(6, 'Buttons', '/ui/buttons', null, 'keyboard', null, false, 5),
