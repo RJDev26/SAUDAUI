@@ -139,6 +139,9 @@ export class TradeRegisterComponent implements OnInit {
         {
           headerName: "Account",
           field: "account",
+          minwidth: 110,
+          width: 130,
+          maxwidth: 130,
           suppressSizeToFit: true,
           flex: 2,
         },
@@ -188,17 +191,13 @@ export class TradeRegisterComponent implements OnInit {
           },
         },
         {
-          headerName: "Created Date",
-          field: "createdDate",
+          headerName: "Trade Date",
+          field: "condate",
           minwidth: 110,
-          width: 200,
-          maxwidth: 200,
+          width: 150,
+          maxwidth: 150,
           cellRenderer: (params) => {
-            const dateValue =
-              params.value instanceof Date
-                ? params.value
-                : new Date(params.value);
-            return this.formatDateTime(dateValue);
+            return this.datePipe.transform(params.value, "dd-MM-YYYY");
           },
         },
         {
@@ -222,8 +221,25 @@ export class TradeRegisterComponent implements OnInit {
         {
           headerName: "Broker",
           field: "brokerName",
+          minwidth: 100,
+          width: 100,
+          maxwidth: 100,
           suppressSizeToFit: true,
           flex: 1,
+        },
+        {
+          headerName: "Created Date",
+          field: "createdDate",
+          minwidth: 110,
+          width: 200,
+          maxwidth: 200,
+          cellRenderer: (params) => {
+            const dateValue =
+              params.value instanceof Date
+                ? params.value
+                : new Date(params.value);
+            return this.formatDateTime(dateValue);
+          },
         },
       ],
     },
