@@ -110,44 +110,57 @@ export class StandingReportComponent implements OnInit {
 
   columnDefs = [
     {
-      headerName: "Contract Trades",
-      children: [
-        {
-          headerName: "",
-          editable: false,
-          minwidth: 25,
-          width: 25,
-          maxwidth: 25,
-          resizable: false,
-          sortable: false,
-          filter: false,
-          checkboxSelection: true,
-          headerCheckboxSelection: true,
-        },
-        {
-          headerName: "Sauda Code",
-          field: "saudaCode",
-          suppressSizeToFit: true,
-          flex: 2,
-        },
-        {
-          headerName: "Short Code",
-          field: "shortCode",
-          suppressSizeToFit: true,
-          flex: 2,
-        },
+      headerName: "Script",
+      field: "saudaCode",
+      suppressSizeToFit: true,
+      flex: 2,
+    },
+    {
+      headerName: "Account",
+      field: "shortCode",
+      suppressSizeToFit: true,
+      flex: 2,
+    },
 
-        {
-          headerName: "B/S",
-          field: "buyOrsell",
-          minwidth: 180,
-          width: 180,
-          maxwidth: 180,
-          cellRenderer: (params) => {
-            return params.data.buy ? params.data.buy :params.data.sell;
-          },
-        },
-      ],
+    {
+      headerName: "Buy",
+      field: "buy",
+      minwidth: 180,
+      width: 180,
+      maxwidth: 180,
+      cellRenderer: (params) => {
+        return params.data.buy;
+      },
+    },
+    {
+      headerName: "Buy Avg Rate",
+      field: "avgBuyRate",
+      minwidth: 180,
+      width: 180,
+      maxwidth: 180,
+      cellRenderer: (params) => {
+        return params.value;
+      },
+    },
+    {
+      headerName: "Sell",
+      field: "sell",
+      minwidth: 180,
+      width: 180,
+      maxwidth: 180,
+      cellRenderer: (params) => {
+        return params.value;
+      },
+    },
+    {
+      headerName: "Sell Avg Rate",
+      field: "avgSellRate",
+      minwidth: 180,
+      width: 180,
+      maxwidth: 180,
+      cellRenderer: (params) => {
+        return params.value;
+      },
     },
   ];
 
@@ -163,7 +176,7 @@ export class StandingReportComponent implements OnInit {
 
   // Define row style function
   getRowStyle(params: any) {
-    if (params.data.buy) {
+    if (params.data.sumOfQty > 0 ) {
       return { background: "lightblue" };
     } else if (params.data.sell) {
       return { background: "lightcoral" };

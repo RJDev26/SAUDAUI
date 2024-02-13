@@ -27,7 +27,7 @@
             </div>
           </div>
           <label class="trade-number" *ngIf="editTradeNo">Trade# {{editTradeNo}}</label>
-          <label class="trade-number" *ngIf="lotNo">Lot# {{lotNo}}</label>
+          <label class="trade-number lot-size" *ngIf="lotNo">Lot# {{lotNo}}</label>
     </div>
     <div fxLayout="row" class="mt-2 flex-end symbol-mapping">
         <form [formGroup]="itemForm" (ngSubmit)="onSubmit(itemForm.value)" fxLayout="row wrap" class="user-form trade-form">

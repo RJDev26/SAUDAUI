@@ -139,17 +139,15 @@ export class TradeRegisterComponent implements OnInit {
         {
           headerName: "Account",
           field: "account",
-          minwidth: 110,
+          minwidth: 100,
           width: 130,
           maxwidth: 130,
           suppressSizeToFit: true,
-          flex: 2,
         },
         {
           headerName: "Sauda Code",
           field: "saudaCode",
           suppressSizeToFit: true,
-          flex: 2,
         },
 
         {
@@ -193,9 +191,9 @@ export class TradeRegisterComponent implements OnInit {
         {
           headerName: "Trade Date",
           field: "condate",
-          minwidth: 110,
-          width: 150,
-          maxwidth: 150,
+          minwidth: 100,
+          width: 130,
+          maxwidth: 130,
           cellRenderer: (params) => {
             return this.datePipe.transform(params.value, "dd-MM-YYYY");
           },
@@ -203,9 +201,9 @@ export class TradeRegisterComponent implements OnInit {
         {
           headerName: "Trade Time",
           field: "contime",
-          minwidth: 110,
-          width: 150,
-          maxwidth: 150,
+          minwidth: 100,
+          width: 130,
+          maxwidth: 130,
           cellRenderer: (params) => {
             return this.formatConTime(params.value);
           },
@@ -213,9 +211,9 @@ export class TradeRegisterComponent implements OnInit {
         {
           headerName: "Trade No",
           field: "tradeNo",
-          minwidth: 100,
-          width: 100,
-          maxwidth: 100,
+          minwidth: 120,
+          width: 120,
+          maxwidth: 120,
           suppressSizeToFit: true,
         },
         {
@@ -225,7 +223,6 @@ export class TradeRegisterComponent implements OnInit {
           width: 100,
           maxwidth: 100,
           suppressSizeToFit: true,
-          flex: 1,
         },
         {
           headerName: "Created Date",
@@ -233,6 +230,7 @@ export class TradeRegisterComponent implements OnInit {
           minwidth: 110,
           width: 200,
           maxwidth: 200,
+          flex: 1,
           cellRenderer: (params) => {
             const dateValue =
               params.value instanceof Date

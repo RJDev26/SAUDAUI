@@ -262,7 +262,7 @@ export class TradeContractComponent implements OnInit {
         this.filterSaudaList = result;
         var res = response;
         this.editTradeNo = res.tradeNo;
-        this.lotNo = res.lotNo;
+        this.lotNo = res.lotSize;
         this.itemForm.get('id').setValue(res.id);
         this.itemForm.get('accountId').setValue(res.accountId);
         this.itemForm.get('saudaId').setValue(res.saudaId);
