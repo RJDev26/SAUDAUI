@@ -61,6 +61,8 @@ export class TradeContractComponent implements OnInit {
 
   ngOnInit() {
     this.bindFormControls();
+    this.settings.sidenavIsPinned = false;
+    this.settings.sidenavIsOpened = false;
   }
 
   bindFormControls() {
@@ -87,46 +89,170 @@ export class TradeContractComponent implements OnInit {
 
   }
 
-  columnDefs = [{
-    headerName: 'Contract Trades',
-    children: [
-      {
-        headerName: '', editable: false, minwidth: 25, width: 25, maxwidth: 25, resizable: false, sortable: false, filter: false, checkboxSelection: true, headerCheckboxSelection: true,
-      },
-      {
-        headerName: 'ConDate', field: 'condate', minwidth: 110, width: 110, maxwidth: 120, suppressSizeToFit: true, cellRenderer: (params) => {
-          return this.datePipe.transform(params.value, 'YYYY-MM-dd')
-        }
-      },
-      { headerName: 'Account', field: 'account',  suppressSizeToFit: true,flex:2 },
-      { headerName: 'Sauda Code', field: 'saudaCode',  suppressSizeToFit: true,flex:2 },
-
-      {
-        headerName: 'B/S', field: 'contype', minwidth: 80, width: 80, maxwidth: 80,cellRenderer: (params) => {
-        return params.value === 'B' ? 'Buy' : (params.value === 'S' ? 'Sell' : params.value);
-        }
-      },
-      {
-          headerName: 'QTY', field: 'qty',  minwidth: 100, width: 100, maxwidth: 100, sorting: true, resizable: true, cellRenderer: (params) => {
-          return this.decimalPipe.transform(params.value, '1.2-2');
-        },type: 'rightAligned'
-      },
-      {
-          headerName: 'Rate', field: 'rate', minwidth: 100, width: 100, maxwidth: 100, type: 'rightAligned', cellRenderer: (params) => {
-          return params.value.toFixed(2);
+  columnDefs = [
+    {
+      headerName: "Contract Trades",
+      children: [
+        {
+          headerName: "",
+          editable: false,
+          minwidth: 25,
+          width: 25,
+          maxwidth: 25,
+          resizable: false,
+          sortable: false,
+          filter: false,
+          checkboxSelection: true,
+          headerCheckboxSelection: true,
         },
-      },
-      {
-          headerName: 'Created Date', field: 'createdDate', minwidth: 110, width: 110, maxwidth: 110, cellRenderer: (params) => {
-          return this.datePipe.transform(params.value, 'YYYY-MM-dd')
-        }
-      },
-      { headerName: 'Trade No', field: 'tradeNo', minwidth: 100, width: 100, maxwidth: 100, suppressSizeToFit: true },
-      { headerName: 'Broker', field: 'brokerName', suppressSizeToFit: true, flex: 1 },
-    ]
+        {
+          headerName: "ConDate",
+          field: "condate",
+          minwidth: 110,
+          width: 110,
+          maxwidth: 120,
+          suppressSizeToFit: true,
+          cellRenderer: (params) => {
+            return this.datePipe.transform(params.value, "dd-MM-YYYY");
+          },
+        },
+        {
+          headerName: "Account",
+          field: "account",
+          minwidth: 100,
+          width: 130,
+          maxwidth: 130,
+          suppressSizeToFit: true,
+        },
+        {
+          headerName: "Sauda Code",
+          field: "saudaCode",
+          suppressSizeToFit: true,
+        },
 
-  }
+        {
+          headerName: "B/S",
+          field: "contype",
+          minwidth: 80,
+          width: 80,
+          maxwidth: 80,
+          cellRenderer: (params) => {
+            return params.value === "B"
+              ? "Buy"
+              : params.value === "S"
+              ? "Sell"
+              : params.value;
+          },
+        },
+        {
+          headerName: "QTY",
+          field: "qty",
+          minwidth: 100,
+          width: 100,
+          maxwidth: 100,
+          sorting: true,
+          resizable: true,
+          cellRenderer: (params) => {
+            return this.decimalPipe.transform(params.value, "1.2-2");
+          },
+          type: "rightAligned",
+        },
+        {
+          headerName: "Rate",
+          field: "rate",
+          minwidth: 100,
+          width: 100,
+          maxwidth: 100,
+          type: "rightAligned",
+          cellRenderer: (params) => {
+            return params.value.toFixed(2);
+          },
+        },
+        {
+          headerName: "Trade Date",
+          field: "condate",
+          minwidth: 100,
+          width: 130,
+          maxwidth: 130,
+          cellRenderer: (params) => {
+            return this.datePipe.transform(params.value, "dd-MM-YYYY");
+          },
+        },
+        {
+          headerName: "Trade Time",
+          field: "contime",
+          minwidth: 100,
+          width: 130,
+          maxwidth: 130,
+          cellRenderer: (params) => {
+            return this.formatConTime(params.value);
+          },
+        },
+        {
+          headerName: "Trade No",
+          field: "tradeNo",
+          minwidth: 120,
+          width: 120,
+          maxwidth: 120,
+          suppressSizeToFit: true,
+        },
+        {
+          headerName: "Broker",
+          field: "brokerName",
+          minwidth: 100,
+          width: 100,
+          maxwidth: 100,
+          suppressSizeToFit: true,
+        },
+        {
+          headerName: "Created Date",
+          field: "createdDate",
+          minwidth: 110,
+          width: 200,
+          maxwidth: 200,
+          flex: 1,
+          cellRenderer: (params) => {
+            const dateValue =
+              params.value instanceof Date
+                ? params.value
+                : new Date(params.value);
+            return this.formatDateTime(dateValue);
+          },
+        },
+      ],
+    },
   ];
+
+
+  formatConTime(contime): string {
+    const hours = contime.hours.toString().padStart(2, '0');
+    const minutes = contime.minutes.toString().padStart(2, '0');
+    const seconds = contime.seconds.toString().padStart(2, '0');
+  
+    return `${hours}:${minutes}:${seconds}`;
+  }
+
+
+  formatDateTime(date: Date): string {
+    const options: Intl.DateTimeFormatOptions = {
+      day: "2-digit",
+      month: "2-digit",
+      year: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
+      second: "2-digit",
+    };
+
+    // Use 'en-GB' locale for the desired "dd-MM-yyyy" format
+    const formattedDate = new Intl.DateTimeFormat("en-GB", options).format(
+      date
+    );
+
+    // Extract date part (dd-MM-yyyy) and ignore the time part
+    return (
+      this.datePipe.transform(date, "dd-MM-YYYY") + formattedDate.split(",")[1]
+    );
+  }
 
   getRowStyle(params: any) {
     if (params.data.contype === "B") {

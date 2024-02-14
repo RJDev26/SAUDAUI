@@ -27,7 +27,16 @@
             </div>
           </div>
           <label class="trade-number" *ngIf="editTradeNo">Trade# {{editTradeNo}}</label>
-          <label class="trade-number lot-size" *ngIf="lotNo">Lot# {{lotNo}}</label>
+          <div *ngIf="lotNo" fxFlex="100" fxFlex.gt-sm="15" fxFlex.sm="50">
+            <div class="dropdown-container">
+              <div class="dropdown-wrapper">
+                <mat-form-field appearance="outline">
+                  <mat-label>Lot No</mat-label>
+                  <input matInput autocomplete="off" placeholder="Lot No" [(ngModel)]="lotNo" type="text">
+                </mat-form-field>
+              </div>
+            </div>
+          </div>
     </div>
     <div fxLayout="row" class="mt-2 flex-end symbol-mapping">
         <form [formGroup]="itemForm" (ngSubmit)="onSubmit(itemForm.value)" fxLayout="row wrap" class="user-form trade-form">

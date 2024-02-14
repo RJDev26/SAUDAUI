@@ -110,6 +110,12 @@ export class StandingReportComponent implements OnInit {
 
   columnDefs = [
     {
+      headerName: "Excode",
+      field: "exCode",
+      suppressSizeToFit: true,
+      flex: 2,
+    },
+    {
       headerName: "Script",
       field: "saudaCode",
       suppressSizeToFit: true,
