@@ -1,0 +1,131 @@
+<div class="row">
+    <div fxLayout="row" class="mt-2 symbol-mapping">
+        <div fxFlex="100" fxFlex.gt-sm="15" fxFlex.sm="15">
+            <div class="dropdown-container">
+              <div class="dropdown-wrapper">
+                <mat-form-field appearance="outline" class="calendar remove-bottom">
+                  <mat-label>Contract Date</mat-label>
+                  <input matInput [matDatepicker]="picker1" [(ngModel)]="conDate" (ngModelChange)="onCondateChange($event)">
+                  <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                  <mat-datepicker #picker1></mat-datepicker>
+                </mat-form-field>
+              </div>
+            </div>
+          </div>
+          <div fxFlex="100" fxFlex.gt-sm="15" fxFlex.sm="50">
+            <div class="dropdown-container">
+                <div class="dropdown-wrapper">
+            <mat-form-field class="example-full-width remove-bottom" appearance="outline">
+              <mat-label>Exchange </mat-label>
+              <mat-select placeholder="Select Exchange" [(ngModel)]="exId">
+                <mat-option *ngFor="let exchange of exchangeList" [value]="exchange.id">
+                  {{exchange.name}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+            </div>
+            </div>
+          </div>
+          <div fxFlex="100" fxFlex.gt-sm="15" fxFlex.sm="15">
+            <div class="dropdown-container">
+              <div class="dropdown-wrapper">
+                <mat-form-field class="select-slab-mat" appearance="outline">
+                  <mat-label>Select Maturity</mat-label>          
+                  <mat-select #selectMaturity [(ngModel)]="maturityIds" placeholder="Select Maturity" panelClass="custom-select-panel">
+                    <input class="milti-search-box" #multiUserSearch type="text" autocomplete="off" matInput placeholder="Search Maturity" (input)="onInputMaturityListChange($event)"/>
+                    <mat-option *ngFor="let option of filteredMaturityList" [value]="option.maturity">
+                      {{ option.maturity }}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+            </div>
+          </div>
+          <div fxFlex="100" class="checkbox-closing-rate" fxFlex.gt-sm="30" fxFlex.sm="50">
+            <mat-checkbox class="pl-10" [(ngModel)]="contractwithstanding">Contract With Standing</mat-checkbox>
+            <mat-checkbox class="pl-10 ml-7" [(ngModel)]="filterZeroRates">Filter Zero Closing Rates</mat-checkbox>
+          </div>
+          <div fxFlex="100" fxFlex.gt-sm="13" space-between fxFlex.sm="50">
+            <button mat-raised-button color="primary" (click)="getTradeFileListData()" class="uppercase save-btn" [disabled]="!exId || !conDate" type="submit">Show</button> 
+        </div>
+    </div>
+    <div fxLayout="row" class="mt-2 flex-end symbol-mapping">
+        <form [formGroup]="itemForm" (ngSubmit)="onSubmit(itemForm.value)" fxLayout="row wrap" class="user-form trade-form">
+            <div class="white-block pb-5 trade-form-div">
+                <div class="tab-party-details-parent">
+                    <div fxFlex="100" fxFlex.gt-sm="13" fxFlex.sm="50">
+                        <div class="dropdown-wrapper">
+                            <mat-form-field class="select-slab-mat" appearance="outline">
+                              <mat-label>Select Sauda</mat-label>
+                              <mat-select #selectType placeholder="Select Sauda" panelClass="custom-select-panel" formControlName="saudaId">
+                                <input class="milti-search-box" #multiUserSearch type="text" autocomplete="off" matInput placeholder="Search Sauda" (input)="onInputSaudaChange($event)" />
+                                <mat-option *ngFor="let option of filterSaudaList" [value]="option.id">
+                                  {{ option.name }}
+                                </mat-option>
+                              </mat-select>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                      <div fxFlex="100" fxFlex.gt-sm="13" fxFlex.sm="30">
+                        <mat-form-field appearance="outline">
+                          <mat-label>Open</mat-label>
+                          <input matInput autocomplete="off" placeholder="Open" formControlName="oprate" type="number" appCurrencyFormatter>
+                          <mat-error *ngIf="itemForm.controls.oprate.errors?.required">rate is required</mat-error>
+                        </mat-form-field>
+                      </div>
+                      <div fxFlex="100" fxFlex.gt-sm="13" fxFlex.sm="30">
+                        <mat-form-field appearance="outline">
+                          <mat-label>High</mat-label>
+                          <input matInput autocomplete="off" placeholder="High" formControlName="hgrate" type="number" appCurrencyFormatter>
+                          <mat-error *ngIf="itemForm.controls.hgrate.errors?.required">rate is required</mat-error>
+                        </mat-form-field>
+                      </div>
+                      <div fxFlex="100" fxFlex.gt-sm="13" fxFlex.sm="30">
+                        <mat-form-field appearance="outline">
+                          <mat-label>Low</mat-label>
+                          <input matInput autocomplete="off" placeholder="Low" formControlName="lowrate" type="number" appCurrencyFormatter>
+                          <mat-error *ngIf="itemForm.controls.lowrate.errors?.required">rate is required</mat-error>
+                        </mat-form-field>
+                      </div>
+                      <div fxFlex="100" fxFlex.gt-sm="13" fxFlex.sm="30">
+                        <mat-form-field appearance="outline">
+                          <mat-label>Close</mat-label>
+                          <input matInput autocomplete="off" placeholder="Low" formControlName="closerate" type="number" appCurrencyFormatter>
+                          <mat-error *ngIf="itemForm.controls.closerate.errors?.required">rate is required</mat-error>
+                        </mat-form-field>
+                      </div>
+                      <div fxFlex="100" fxFlex.gt-sm="13" fxFlex.sm="30">
+                        <mat-form-field appearance="outline">
+                          <mat-label>Last Trade</mat-label>
+                          <input matInput autocomplete="off" placeholder="Last Trade" formControlName="lastTradeRate" type="number" appCurrencyFormatter>
+                          <mat-error *ngIf="itemForm.controls.lastTradeRate.errors?.required">rate is required</mat-error>
+                        </mat-form-field>
+                      </div>
+                      <div fxFlex="100" fxFlex.gt-sm="13" space-between fxFlex.sm="50">
+                        <button mat-raised-button color="primary" class="uppercase save-btn" [disabled]="!itemForm.valid || !conDate || isSaveButtonDisabled()" type="submit">Save</button> 
+                        <button type="button" mat-raised-button color="warn" (click)="close()">Cancel</button>            
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="col-xl-12 mt-2 position-relative">
+        <span class="material-symbols-outlined delete-icon" (click)="deleteContractTrades()">
+            <mat-icon>delete_sweep</mat-icon>
+          </span>
+        <ag-grid-angular style=" height: 535px;"
+                         class="ag-theme-material"
+                           [rowHeight]="31"
+                           [gridOptions]="gridOptions"
+                         [rowData]="symbolMappingList"
+                         [pagination]="true"
+                         [columnDefs]="columnDefs"
+                         [rowMultiSelectWithClick]="true"
+                         [rowSelection]="'multiple'"
+                         (gridReady)="onGridReady($event)"
+                         [defaultColDef]="agGridOptions.defaultColDef"
+                         (cellClicked)="onGridClick($event)"
+                         headerHeight="34">
+        </ag-grid-angular>
+      </div>
+  </div>

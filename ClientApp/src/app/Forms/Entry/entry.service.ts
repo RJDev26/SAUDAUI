@@ -33,6 +33,18 @@ export class EntryService {
     return this.httpClient.post<any>(environment.apiBaseUrl + 'Trade/SaveCtrD', data, { headers: this.headers });
   }
 
+  saveClosing(data): Observable<any> {
+    return this.httpClient.post<any>(environment.apiBaseUrl + 'Entry/SaveClosing', data, { headers: this.headers });
+  }
+
+  getClosing(data): Observable<any> {
+    return this.httpClient.post<any>(environment.apiBaseUrl + 'Entry/getClosing', data, { headers: this.headers });
+  }
+
+  editClosing(data): Observable<any> {
+    return this.httpClient.post<any>(environment.apiBaseUrl + `Entry/editClosing/${data}`, { headers: this.headers });
+  }
+
   getTradeFileList(conDate: any): Observable<any> {
     return this.httpClient.get<any>(environment.apiBaseUrl + 'Trade/getContractDate/' +conDate, { headers: this.headers });
   }
@@ -40,6 +52,11 @@ export class EntryService {
   deleteContract(tradeNo: string, condate: string): Observable<any> {
     const url = `${environment.apiBaseUrl}Trade/deleteContract`;
     return this.httpClient.delete(url, { headers: this.headers, body: {tradeNo:tradeNo, condate:condate} });
+  }
+
+  deleteClosingMultiple(ids): Observable<any> {
+    const url = `${environment.apiBaseUrl}Entry/deleteClosingMultiple/${ids}`;
+    return this.httpClient.delete(url, { headers: this.headers});
   }
 
   editContract(id: number): Observable<any> {

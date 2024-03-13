@@ -7,11 +7,13 @@ import { AgGridModule } from 'ag-grid-angular';
 import { VoucherComponent } from './Voucher/voucher.component';
 import { MAT_DATE_LOCALE } from '@angular/material/core';
 import { TradeContractComponent } from './trade-contract/trade-contract.component';
+import { ClosingRateComponent } from './closing-rate/closing-rate.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'voucher', pathMatch: 'full' },
   { path: 'voucher', component: VoucherComponent, data: { breadcrumb: 'Voucher' } },
   { path: 'trade-contract', component: TradeContractComponent, data: { breadcrumb: 'Trade' } },
+  { path: 'closing-rate', component: ClosingRateComponent, data: { breadcrumb: 'Closing Rate' } },
   
 ];
 
@@ -29,6 +31,7 @@ export const routes: Routes = [
     
     VoucherComponent,
           TradeContractComponent,
+          ClosingRateComponent,
   ],
   providers: [
     DatePipe,
