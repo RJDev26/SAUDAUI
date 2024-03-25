@@ -6,6 +6,7 @@ import { Settings } from "src/app/app.settings.model";
 import { MasterService } from '../master.service';
 import { ConfirmationDialog } from '../../Dialog/confirmation-dialog/confirmation-dialog.component';
 import { CommonUtility } from '../../../shared/common-utility';
+import { ImportDialogComponent } from './import-dialog/import-dialog.component';
 
 @Component({
     selector: 'app-blank',
@@ -72,6 +73,14 @@ export class SaudaComponent implements OnInit {
     this._masterService.getSaudaList().subscribe((results) => {
       this.itemList = results;
 
+    });
+  }
+
+  public importContractMaster(){
+    let dialogRef = this.dialog.open(ImportDialogComponent);
+
+    dialogRef.afterClosed().subscribe(user => {
+      this.getList();
     });
   }
 

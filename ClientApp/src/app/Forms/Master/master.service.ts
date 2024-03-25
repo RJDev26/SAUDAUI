@@ -184,6 +184,10 @@ export class MasterService {
     return this.httpClient.post<any>(environment.apiBaseUrl + 'Master/importItem', data, { headers: this.headers });
   }
 
+  importsauda(data): Observable<any> {
+    return this.httpClient.post<any>(environment.apiBaseUrl + 'Master/importsauda', data, { headers: this.headers });
+  }
+
   getContractById(id: number): Observable<any> {
     return this.httpClient.get<any>(environment.apiBaseUrl + 'master/getContractId/' + id, { headers: this.headers })
   }
@@ -378,6 +382,14 @@ export class MasterService {
 
   createUser(data): Observable<any> {
     return this.httpClient.post<any>(environment.apiBaseUrl + 'User/createUser', data, { headers: this.headers });
+  }
+
+  getContractMaturity(exCode: string): Observable<any> {
+    return this.httpClient.get<any>(environment.apiBaseUrl + 'Master/getContractMaturity/' + exCode, { headers: this.headers })
+  }
+
+  getContractSaudaImport(exCode: string, maturity: string): Observable<any> {
+    return this.httpClient.get<any>(environment.apiBaseUrl + 'Master/getContractSaudaImport/' + exCode + '/'+ maturity, { headers: this.headers })
   }
 
 }

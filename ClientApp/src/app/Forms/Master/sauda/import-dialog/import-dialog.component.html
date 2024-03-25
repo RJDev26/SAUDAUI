@@ -1,0 +1,59 @@
+<h2 class="heading">Import</h2>
+<a (click)="close()" class="close-btn">
+    <span class="material-symbols-outlined">
+      <mat-icon>close</mat-icon>
+    </span>
+</a>
+<div style="padding: 20px;" class="row paret-form">
+    <div fxLayout="row" class="mt-2 parent-row-import">
+        <div class="parent-child">
+      <div fxFlex="100" class="left-align">
+        <mat-form-field class="example-full-width" appearance="outline">
+            <mat-label>Exchange</mat-label>
+            <mat-select placeholder="" [(ngModel)]="selectedExId" (selectionChange)="onBranchChange($event)">
+                <mat-option *ngFor="let exchange of exchangeList" [value]="exchange.exCode">
+                  {{exchange.name}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+      </div>
+      <div fxFlex="100">
+        <div class="dropdown-container">
+          <div class="dropdown-wrapper">
+            <mat-form-field class="select-slab-mat" appearance="outline">
+              <mat-label>Select Maturity</mat-label>          
+              <mat-select #selectMaturity [(ngModel)]="maturityIds" placeholder="Select Maturity" panelClass="custom-select-panel">
+                <input class="milti-search-box" #multiUserSearch type="text" autocomplete="off" matInput placeholder="Search Maturity" (input)="onInputMaturityListChange($event)"/>
+                <mat-option *ngFor="let option of filteredMaturityList" [value]="option.maturity">
+                  {{ option.maturity }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+    </div>
+      <div fxFlex="100" fxFlex.gt-sm="20" fxFlex.sm="20">
+        <button mat-raised-button color="primary" class="import-btn-item delete-slab icon-btn" [disabled]="!maturityIds || !selectedExId" (click)="showContractSaudaImport()">
+            Show
+        </button>
+            <button mat-raised-button color="primary" class="delete-slab icon-btn" (click)="importContractItems()">
+                Save
+            </button>
+        </div>
+    </div>
+    <div class="col-xl-12 mt-2">
+      <ag-grid-angular style="width: 990px; height: 535px;"
+                       class="ag-theme-material"
+                       [rowData]="contractList"
+                       [pagination]="true"
+                        [rowHeight]="31"
+                        [rowSelection]="'multiple'"
+                       [columnDefs]="columnDefs"
+                       (gridReady)="onGridReady($event)"
+                       [defaultColDef]="agGridOptions.defaultColDef"
+                       headerHeight="34">
+      </ag-grid-angular>
+    </div>
+  </div>  
+  

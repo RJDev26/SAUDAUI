@@ -56,6 +56,7 @@ import { InviteUserComponent } from '../User/invite-user/invite-user.component';
 import { changePasswordComponent } from '../User/change-password/change-password.component';
 import { ContractDialogComponent } from './item/contract-dialog/contract-dialog.component';
 import { TradeFileComponent } from './trade-file/trade-file.component';
+import { ImportDialogComponent } from './sauda/import-dialog/import-dialog.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'account', pathMatch: 'full' },
@@ -140,7 +141,8 @@ export const routes: Routes = [
      InviteUserComponent,
      changePasswordComponent,
      ContractDialogComponent,
-     TradeFileComponent
+     TradeFileComponent,
+     ImportDialogComponent
   ],
   providers: [
     DatePipe,
