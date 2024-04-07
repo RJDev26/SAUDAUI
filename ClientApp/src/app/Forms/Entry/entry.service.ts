@@ -49,6 +49,10 @@ export class EntryService {
     return this.httpClient.get<any>(environment.apiBaseUrl + 'Trade/getContractDate/' +conDate, { headers: this.headers });
   }
 
+  importClosing(payload: string): Observable<any> {
+    return this.httpClient.get<any>(environment.apiBaseUrl + 'Entry/importClosing/' +payload, { headers: this.headers });
+  }
+
   deleteContract(tradeNo: string, condate: string): Observable<any> {
     const url = `${environment.apiBaseUrl}Trade/deleteContract`;
     return this.httpClient.delete(url, { headers: this.headers, body: {tradeNo:tradeNo, condate:condate} });

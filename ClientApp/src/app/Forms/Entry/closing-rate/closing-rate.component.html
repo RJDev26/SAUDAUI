@@ -18,7 +18,7 @@
             <mat-form-field class="example-full-width remove-bottom" appearance="outline">
               <mat-label>Exchange </mat-label>
               <mat-select placeholder="Select Exchange" [(ngModel)]="exId">
-                <mat-option *ngFor="let exchange of exchangeList" [value]="exchange.id">
+                <mat-option *ngFor="let exchange of exchangeList" [value]="exchange.exCode">
                   {{exchange.name}}
                 </mat-option>
               </mat-select>
@@ -46,6 +46,7 @@
             <mat-checkbox class="pl-10 ml-7" [(ngModel)]="filterZeroRates">Filter Zero Closing Rates</mat-checkbox>
           </div>
           <div fxFlex="100" fxFlex.gt-sm="13" space-between fxFlex.sm="50">
+            <button mat-raised-button color="primary" (click)="getImportFileListData()" class="uppercase save-btn" [disabled]="!exId || !conDate" type="submit">Import</button> 
             <button mat-raised-button color="primary" (click)="getTradeFileListData()" class="uppercase save-btn" [disabled]="!exId || !conDate" type="submit">Show</button> 
         </div>
     </div>

@@ -81,6 +81,14 @@ export class ClosingRateComponent implements OnInit {
     this.initialApiCalls();
   }
 
+  getImportFileListData(){
+    if (this.contractDateVal && this.exId) {
+      this._entryServices.importClosing(`${this.exId}/${this.contractDateVal}`).subscribe((results) => {
+        this.symbolMappingList = results;
+      });
+    }
+  }
+
   onInputMaturityListChange(event: any) {
     const searchInput = event.target.value.toLowerCase();
 
