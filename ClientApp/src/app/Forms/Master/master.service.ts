@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
-import { Observable } from 'rxjs';
+import { Observable, of, shareReplay, tap } from 'rxjs';
 import { id } from '@swimlane/ngx-datatable';
 
 @Injectable({
@@ -12,6 +12,8 @@ export class MasterService {
   .set('content-type', 'application/json')
   .set('Access-Control-Allow-Origin', '*')
   .set('Access-Control-Allow-Methods', 'GET,POST,OPTIONS,DELETE,PUT');
+
+  private cacheAcHeadAccountList = new Map<number, Observable<any>>();
   
   constructor(private httpClient: HttpClient) { }
 
@@ -345,8 +347,21 @@ export class MasterService {
     return this.httpClient.get<any>(environment.apiBaseUrl + 'master/getBranchAccountList/' + id, { headers: this.headers })
   }
 
-  getAccountsAddedinAcHead(headId): Observable<any> {
-    return this.httpClient.get<any>(environment.apiBaseUrl + 'Master/getHeadAccountList/' + headId, { headers: this.headers })
+  getAccountsAddedinAcHead(headId: number): Observable<any> {
+    if(this.cacheAcHeadAccountList.has(headId)){
+      return this.cacheAcHeadAccountList.get(headId);
+    } else {
+      const request =  this.httpClient.get<any>(environment.apiBaseUrl + 'Master/getHeadAccountList/' + headId, { headers: this.headers })
+      .pipe(
+        tap(response => {
+          this.cacheAcHeadAccountList.set(headId, of(response));
+        }), shareReplay(1)
+      );
+
+      this.cacheAcHeadAccountList.set(headId, request);
+
+      return request;
+    }
   }
 
   getAcHeadId(id: number): Observable<any> {

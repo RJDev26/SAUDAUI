@@ -53,7 +53,6 @@ export class TrailBalanceComponent implements OnInit {
   }
 
   calculateTotalDebit(): number {
-    // Replace this logic with your actual calculation logic
     let totalDebit = 0;
     for (const item of this.brokeragesetupList) {
         totalDebit += item.drAmt;
