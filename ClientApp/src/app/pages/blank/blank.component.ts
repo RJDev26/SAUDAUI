@@ -59,7 +59,7 @@ export class BlankComponent implements OnInit {
 
   getAccountList() {
     this._appService.getAccounts().subscribe((results) => {
-      debugger
+      
       this.accountList = results;
       console.log(this.accountList);
     });
@@ -79,7 +79,7 @@ export class BlankComponent implements OnInit {
 
   onGridClick(params:any)
   {
-    debugger
+    
     if (params.event.target.dataset.action == "edit") { alert('edit clicked'); }
     if (params.event.target.dataset.action == "delete") { alert('delete clicked'); }
   }

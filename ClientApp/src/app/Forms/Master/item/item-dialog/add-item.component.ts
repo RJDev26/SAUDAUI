@@ -76,7 +76,6 @@ export class AddItemComponent implements OnInit {
 
   getItemInfo() {
     this._appService.getItemById(this.selectedId).subscribe((res) => {
-      debugger;
       this.itemForm.get("itemCode").setValue(res.itemCode);
       this.itemForm.get("itemName").setValue(res.itemName);
       this.itemForm.get("exchangeSymbol").setValue(res.exchangeSymbol);
@@ -107,7 +106,6 @@ export class AddItemComponent implements OnInit {
     );
 
     var body = this.itemForm.value;
-    debugger;
     //body.accountGroupId = this.getAcGroupId(this.acGroupCtrl.value);
     //body.accountHeadId = this.getAcHeadId(this.acHeadCtrl.value);
     //body.CityId = this.getCityId(this.cityCtrl.value);

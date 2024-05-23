@@ -36,7 +36,6 @@ export class SubLockBrokerageComponent implements OnInit {
 
   public onSubmit(values: object) {
     console.log(values);
-    debugger;
     var body = this.itemForm.value;
     console.log(body);
     body.lockBrokDate = this.datePipe.transform(body.lockBrokDate, 'yyyy-MM-dd');

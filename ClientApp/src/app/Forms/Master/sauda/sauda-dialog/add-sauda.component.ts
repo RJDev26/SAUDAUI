@@ -22,7 +22,7 @@ export class AddSaudaComponent implements OnInit {
 
 
   constructor(public snackBar: MatSnackBar, private formBuilder: UntypedFormBuilder, public dialogRef: MatDialogRef<AddSaudaComponent>, @Inject(MAT_DIALOG_DATA) public data: any, private _appService: MasterService) {
-    debugger
+    
     this.selectedId = data.id;
     if (data.id == null) { this.selectedId = 0; }
   }
@@ -55,7 +55,7 @@ export class AddSaudaComponent implements OnInit {
 
   getInfo() {
     this._appService.getSaudaById(this.selectedId).subscribe((res) => {
-      debugger
+      
       this.saudaForm.get('itemId').setValue(res.itemId);
       this.saudaForm.get('saudaCode').setValue(res.saudaCode);
       this.saudaForm.get('maturity').setValue(res.maturity);
@@ -76,7 +76,7 @@ export class AddSaudaComponent implements OnInit {
   initialApiCalls() {
     forkJoin([this._appService.getInstrumentList(), this._appService.getOptionList(),
     this._appService.getItemListDrp()]).pipe(map(response => {
-      debugger
+      
       this.instrumentList = response[0];
       this.optionType = response[1];
       this.itemList = response[2]
@@ -106,7 +106,7 @@ export class AddSaudaComponent implements OnInit {
     this.saudaForm.controls['strikePrice'].setValue(Number(this.saudaForm.get('strikePrice').value));
 
     var body = this.saudaForm.value;
-    debugger;
+    
     //body.accountGroupId = this.getAcGroupId(this.acGroupCtrl.value);
     //body.accountHeadId = this.getAcHeadId(this.acHeadCtrl.value);
     //body.CityId = this.getCityId(this.cityCtrl.value);

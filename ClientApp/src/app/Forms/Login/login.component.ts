@@ -28,7 +28,6 @@ export class LoginComponent {
   }
 
   public onSubmit(values: Object): void {
-    debugger
     if (this.form.valid)
     {
       const login = { ...this.form.value };

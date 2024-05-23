@@ -79,7 +79,7 @@ export class ProductComponent implements OnInit {
     }
 
     onGridClick(params: any) {
-      debugger
+      
       if (params.event.target.dataset.action == "edit")
       {
         this.openSaudaDialog(params.data.id);

@@ -97,7 +97,7 @@ export class SaudaComponent implements OnInit {
   }
 
   onGridClick(params: any) {
-    debugger
+    
     if (params.event.target.dataset.action == "edit") {
       this.openDialog(params.data.id);
 

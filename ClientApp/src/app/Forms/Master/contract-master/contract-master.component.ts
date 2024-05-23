@@ -91,7 +91,7 @@ export class ContractMasterComponent implements OnInit {
     }
 
     onGridClick(params: any) {
-      debugger
+      
       if (params.event.target.dataset.action == "edit")
       {
         this.openCompanyDialog(params.data.id);

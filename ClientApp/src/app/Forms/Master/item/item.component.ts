@@ -92,7 +92,7 @@ export class ItemComponent implements OnInit {
   }
 
   onGridClick(params: any) {
-    debugger
+    
     if (params.event.target.dataset.action == "edit")
     {
       this.openUserDialog(params.data.id);

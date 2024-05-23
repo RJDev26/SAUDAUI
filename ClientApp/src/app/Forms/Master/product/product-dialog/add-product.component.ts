@@ -70,7 +70,7 @@ export class AddProductComponent implements OnInit {
         this.productForm.controls['securityGroup'].setValue(String(this.productForm.get('securityGroup').value));
     
         var body = this.productForm.value;
-        debugger;
+        
         //body.accountGroupId = this.getAcGroupId(this.acGroupCtrl.value);
         //body.accountHeadId = this.getAcHeadId(this.acHeadCtrl.value);
         //body.CityId = this.getCityId(this.cityCtrl.value);
