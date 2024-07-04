@@ -100,4 +100,8 @@ export class AppService {
   getUserList():Observable<any>{
     return this.httpClient.get<any>(environment.apiBaseUrl + 'User/getUserList',{headers:this.headers});
   }
+
+  getuserpermission():Observable<any>{
+    return this.httpClient.get<any>(environment.apiBaseUrl + 'User/getuserpermission',{headers:this.headers});
+  }
 }

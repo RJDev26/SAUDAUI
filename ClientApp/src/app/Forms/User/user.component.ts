@@ -15,6 +15,7 @@ import { changePasswordComponent } from "./change-password/change-password.compo
 
 export class UserRoleComponent {
     userList: any=[];
+    rolesList: any=[];
     public settings: Settings;
     constructor(public appSettings: AppSettings, private _appService: AppService, public dialog: MatDialog, private _masterService: MasterService) {
         this.settings = this.appSettings.settings;    
@@ -91,6 +92,12 @@ export class UserRoleComponent {
         });
         dialogRef.afterClosed().subscribe(user => {
             this.getUserList();
+        });
+    }
+
+    getUserrolesList(){
+        this._appService.getuserpermission().subscribe(res=>{
+            this.rolesList = res.data;
         });
     }
 }
