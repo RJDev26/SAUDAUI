@@ -1,0 +1,13 @@
+<mat-form-field class="select-slab-mat" appearance="outline">
+    <mat-label>{{ labelName }}</mat-label>
+    <mat-select [disabled]="isDisabled" [(value)]="contraAcId" (selectionChange)="onSelect($event.value)" [placeholder]="placeHolderName" panelClass="custom-select-panel">
+      <input class="milti-search-box" #multiUserSearch type="text" autocomplete="off" matInput placeholder="Search" (keydown)="$event.stopPropagation()" (input)="onInputContraAccountIdListChange($event)"/>
+      <cdk-virtual-scroll-viewport itemSize="20" class="select-virtual-viewport">
+        <mat-option>Select</mat-option>
+        <mat-option *cdkVirtualFor="let option of filteredContraAccountIdList; trackBy: trackByFn" [value]="option.id">
+          {{ option.name }}
+        </mat-option>
+      </cdk-virtual-scroll-viewport>
+    </mat-select>
+  </mat-form-field>
+  

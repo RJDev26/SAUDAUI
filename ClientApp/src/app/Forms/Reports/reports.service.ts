@@ -18,6 +18,10 @@ export class ReportsService {
     return this.httpClient.post<any>(environment.apiBaseUrl + 'Report/getTrialBalance', data, {headers:this.headers});
   }
 
+  getVoucherLogFile({auditId, vouMasterId, fileName}) {
+    return this.httpClient.get<any>(environment.apiBaseUrl + `Report/getVoucherLogFile/${auditId}/${vouMasterId}/${fileName}`, { headers: this.headers })
+  }
+
   getLedger(data):Observable<any>{
     return this.httpClient.post<any>(environment.apiBaseUrl + 'Report/getLedger', data, {headers:this.headers});
   }

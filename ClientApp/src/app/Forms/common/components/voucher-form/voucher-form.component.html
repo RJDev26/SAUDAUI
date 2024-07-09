@@ -1,0 +1,113 @@
+<form [formGroup]="voucherForm" #formDirective="ngForm"  (ngSubmit)="onSubmit(formDirective)" class="pt-10"> 
+    <div class="dropdown-container">
+        <div fxFlex="100" fxFlex.gt-sm="15" fxFlex.sm="15">
+            <div class="dropdown-wrapper">
+                <mat-form-field class="select-slab-mat" appearance="outline">
+                <mat-label>Vou Type</mat-label>  
+                <mat-select [disabled]="isVouMasterIdEditable()" #select formControlName="vouType" placeholder="Select VouType" (selectionChange)="getVoucherList()" panelClass="custom-select-panel">
+                    <input class="milti-search-box" #multiUserSearch type="text" (keydown)="$event.stopPropagation()" autocomplete="off" matInput placeholder="Search Account" (input)="onInputVouTypeListChange($event)"/>
+                    <mat-option *ngFor="let option of filteredVouTypeList" [value]="option.id">
+                    {{ option.name }}
+                    </mat-option>
+                </mat-select>
+                </mat-form-field>
+            </div>
+        </div>
+        <div fxFlex="100" fxFlex.gt-sm="15" fxFlex.sm="15">
+            <div class="dropdown-wrapper">
+                <mat-form-field appearance="outline" class="calendar">
+                <mat-label>VouDate</mat-label>
+                <input matInput [matDatepicker]="picker2" placeholder="Date" formControlName="vouDate" (ngModelChange)="getVoucherList()">
+                <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                <mat-datepicker #picker2></mat-datepicker>
+                </mat-form-field>
+            </div>
+        </div>
+        <div fxFlex="100" fxFlex.gt-sm="35" fxFlex.sm="35">
+            <div class="dropdown-wrapper" *ngIf="voucherForm.get('vouType').value !== 'JV'">
+                <app-contra-account
+                    formControlName="contraAc"
+                    [labelName] = "'Contra Account'"
+                    [filteredContraAccountIdList]="filteredContraAccountList">
+                </app-contra-account>
+            </div>
+        </div> 
+        <div fxFlex="100" fxFlex.gt-sm="35" fxFlex.sm="35">
+            <div class="dropdown-wrapper voucher-drop-file">
+                <ngx-dropzone *ngIf="!(uploadedFiles && uploadedFiles.downloadLink)" class="select-slab-mat" appearance="outline" (change)="onSelect($event)">
+                    <ngx-dropzone-label>Drop File here </ngx-dropzone-label>
+                    <ngx-dropzone-preview *ngFor="let f of files" [multiple]='true' [removable]="true" (removed)="onRemove(f)">
+                        <ngx-dropzone-label>{{ f.name }} ({{ f.type }})</ngx-dropzone-label>
+                    </ngx-dropzone-preview>
+                </ngx-dropzone>
+                <div *ngIf="showError" class="error-message">
+                    Only CSV files are allowed.
+                </div>
+                <div *ngIf="uploadedFiles && uploadedFiles.downloadLink">
+                    <a [href]="uploadedFiles.downloadLink" [download]="uploadedFiles.name">{{ uploadedFiles.name }}</a>
+                    <span class="material-symbols-outlined delete-icon" (click)="deleteExistingFile()">
+                        <mat-icon>delete_sweep</mat-icon>
+                    </span>
+                </div>
+            </div>
+        </div> 
+        <div fxFlex="100" fxFlex.gt-sm="10" fxFlex.sm="10" class="pt-5 text-end">
+            <div *ngIf="totalAmount != 0 && voucherForm.get('vouType').value !== 'JV'">
+                <label [ngClass]="{ 'red-text': amountLabel === 'CR', 'green-text': amountLabel !== 'CR' }">{{ totalAmount }} {{ amountLabel }}</label>
+            </div>
+        </div>          
+        <div fxFlex="100" fxFlex.gt-sm="15" fxFlex.sm="15" class="text-end">
+            <button mat-raised-button color="warn" class="uppercase" type="button" (click)="resetForm(voucherForm, formDirective)">
+                <mat-icon>clear</mat-icon>
+            </button>
+            <button mat-raised-button color="primary" class="uppercase ml-7" [disabled]="!voucherForm.valid" type="submit">
+                <mat-icon>save</mat-icon>
+            </button>
+        </div>        
+    </div>
+    <div formArrayName="vouDetails">
+        <div *ngFor="let detail of vouDetails().controls; let detailIndex=index">
+            <div [formGroupName]="detailIndex">
+                <div class="dropdown-container">
+                    <div fxFlex="100" fxFlex.gt-sm="30" fxFlex.sm="30" class="dropdown-arrow dropdown-wrapper">
+                        <app-contra-account
+                            formControlName="account"
+                            [labelName] = "'Account'"
+                            [filteredContraAccountIdList]="filteredAccountList">
+                        </app-contra-account>
+                    </div>      
+                    <div fxFlex="100" fxFlex.gt-sm="10" fxFlex.sm="10">
+                        <mat-form-field appearance="outline" class="form-control">
+                            <mat-label>Amount</mat-label>
+                            <input matInput autocomplete="off" placeholder="Amount" formControlName="amount" type="number" appCurrencyFormatter>      
+                        </mat-form-field>
+                    </div>      
+                    <div fxFlex="100" fxFlex.gt-sm="10" fxFlex.sm="10" class="dropdown-arrow dropdown-wrapper">
+                        <mat-form-field class="select-slab-mat mb-0" appearance="outline">
+                            <mat-label>DR/CR</mat-label>
+                            <mat-select #select formControlName="drcr" placeholder="Select DRCR" panelClass="custom-select-panel">
+                                <mat-option [value]="DR">DR</mat-option>
+                                <mat-option [value]="CR">CR</mat-option>      
+                            </mat-select>
+                        </mat-form-field>
+                    </div>      
+                    <div fxFlex="100" fxFlex.gt-sm="35" fxFlex.sm="35">
+                        <mat-form-field appearance="outline" class="wider-width">
+                            <mat-label>Narration</mat-label>
+                            <input matInput autocomplete="off" placeholder="Narration" formControlName="narration" type="text">      
+                        </mat-form-field>
+                    </div>   
+                    <div fxFlex="100" fxFlex.gt-sm="15" fxFlex.sm="15" class="text-end">                      
+                        <button mat-raised-button color="primary" type="button" (click)="addVouDetail()">
+                            <mat-icon>add</mat-icon>
+                        </button>  
+                        <span *ngIf="detailIndex<1" class="empty-div"></span>
+                        <button *ngIf="detailIndex>0" mat-raised-button color="warn" (click)="removeVouDetail(detailIndex)" class="ml-7">
+                            <mat-icon>delete</mat-icon>
+                        </button>
+                    </div>                 
+                </div>              
+            </div>
+        </div>          
+    </div>
+  </form>

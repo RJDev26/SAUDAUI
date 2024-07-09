@@ -1,0 +1,39 @@
+.save-btn {
+    width: 135px;
+}
+.empty-div {
+    width: 64px;
+    margin-left: 7px;
+    display: inline-block;
+}
+
+.red-text {
+    color: red;
+  }
+  
+  .green-text {
+    color: green;
+  }
+
+  .select-virtual-viewport{
+    height: 210px;
+  }
+
+  mat-option {
+    height: 20px;
+  }
+
+  .voucher-drop-file{
+    ngx-dropzone{
+      height: 2.0625rem;
+      overflow: hidden;
+      ngx-dropzone-preview{
+        height: inherit !important;
+        width: 100% !important;
+        min-height: inherit !important;
+        margin: 0px !important;
+        max-width: inherit !important;
+      }
+    }
+  }
+  

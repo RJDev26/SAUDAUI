@@ -32,6 +32,13 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { CurrencyFormatterDirective } from '../Forms/common/directive/currency-formatter.directive';
+import { VoucherFormComponent } from '../Forms/common/components/voucher-form/voucher-form.component';
+import { UpdateVoucherComponent } from '../Forms/common/components/update-voucher/update-voucher.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { NgxDropzoneModule } from 'ngx-dropzone';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { ContraAccountComponent } from '../Forms/common/components/contra-account/contra-account.component';
+import { ScrollingModule } from '@angular/cdk/scrolling';
 
 @NgModule({
   imports: [
@@ -67,7 +74,12 @@ import { CurrencyFormatterDirective } from '../Forms/common/directive/currency-f
     MatTabsModule,
     MatToolbarModule,
     MatTooltipModule,
-    MatStepperModule
+    MatStepperModule,
+    FormsModule,
+    ReactiveFormsModule,
+    NgxDropzoneModule,
+    MatFormFieldModule,
+    ScrollingModule
   ],
   exports: [
     FlexLayoutModule,
@@ -103,7 +115,11 @@ import { CurrencyFormatterDirective } from '../Forms/common/directive/currency-f
     MatTooltipModule,
     MatStepperModule,
     CurrencyFormatterDirective,
+    VoucherFormComponent,
+    UpdateVoucherComponent,
+    ContraAccountComponent,
+    ScrollingModule,
   ],
-  declarations: [CurrencyFormatterDirective]
+  declarations: [CurrencyFormatterDirective, VoucherFormComponent, UpdateVoucherComponent, ContraAccountComponent]
 })
 export class SharedModule { }

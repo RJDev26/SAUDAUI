@@ -1,0 +1,21 @@
+<h2 class="heading">Audit Log {{ voucherMasterId }}</h2>
+<a (click)="close()" class="close-btn">
+  <span class="material-symbols-outlined">
+    <mat-icon>close</mat-icon>
+  </span>
+</a>
+<div class="row created-section">
+  <span> <b>Created By:</b> {{createdBy}}</span>
+  <span> <b> Created Date:</b> {{createdDateString}}</span>
+</div>
+<ag-grid-angular
+  style="height: 480px; margin: 20px;"
+  class="ag-theme-material mt-2 entry-voucher"
+  [rowData]="vocherAuditData"
+  [pagination]="true"
+  [rowHeight]="31"
+  [columnDefs]="columnDefs"
+  [defaultColDef]="agGridOptions.defaultColDef"
+  headerHeight="34"
+>
+</ag-grid-angular>

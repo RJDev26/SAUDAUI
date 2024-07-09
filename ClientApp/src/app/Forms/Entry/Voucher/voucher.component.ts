@@ -29,6 +29,7 @@ export class VoucherComponent implements OnInit {
   filteredAccountList: any;
   accountList: any;
   filteredVouTypeList: any;
+  selectedVoucherDetails:any;
   vocherGridData: any=[];
   vouTypeList:any = [];
   DR: string = "DR";
@@ -79,7 +80,7 @@ export class VoucherComponent implements OnInit {
      
     });
     this.addVouDetail();
-    this.initApiCalls();
+    // this.initApiCalls();
     this.watchVouTypeChanges();
     this.watchVouDetailsChanges();
 
@@ -194,11 +195,13 @@ export class VoucherComponent implements OnInit {
   removeVouDetail(empIndex: number) {
     this.vouDetails().removeAt(empIndex);
   }
-  getVoucherList() {
-    const {VouType, VouDate} = this.voucherForm.value;
-    if(VouType && VouDate){
+  getVoucherList(event) {
+    console.log(event);
+    const { vouType, vouDate } = event;
+    this.selectedVoucherDetails = event;
+    if(vouType && vouDate){
       
-      this._entryService.getVoucher(VouType, this.datePipe.transform(VouDate, 'yyyy-MM-dd')).subscribe((result)=>{
+      this._entryService.getVoucher(vouType, this.datePipe.transform(vouDate, 'yyyy-MM-dd')).subscribe((result)=>{
         this.vocherGridData = result;
       });
     }
@@ -246,7 +249,7 @@ export class VoucherComponent implements OnInit {
       body.VouDate = this.datePipe.transform(body.VouDate, 'yyyy-MM-dd')
       this._entryService.saveVoucher(body).subscribe(result => {
         console.log("result", result);
-        this.getVoucherList();
+        // this.getVoucherList(this.selectedVoucherDetails);
         this.resetForm(this.voucherForm);
         
       }, err => {
@@ -312,7 +315,7 @@ export class VoucherComponent implements OnInit {
         if (confirmed) {
           const vouMasterIds = selectedRecord.map(item => item.vouMasterId).join(',');
           this._entryService.deleteVoucher(vouMasterIds).subscribe(result => {
-            this.getVoucherList();
+            this.getVoucherList(this.selectedVoucherDetails);
             this.showToaster(result);
           });
         }

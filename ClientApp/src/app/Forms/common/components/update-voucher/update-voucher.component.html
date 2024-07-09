@@ -1,0 +1,18 @@
+
+    <div class="flex-p mt-2">
+      <mat-card-content class="voucher-form">
+        <mat-expansion-panel>
+          <mat-expansion-panel-header>
+            <mat-panel-title>{{headerName}} Entry <ng-container *ngIf="editMasterId">
+              - {{editMasterId}}
+            </ng-container></mat-panel-title>
+          </mat-expansion-panel-header> 
+          <ng-container *ngIf="vouType=='voucher'">
+              <app-voucher-form (getGridVouList)="getVoucherListFn($event)" [editMasterId]="editMasterId" (onSaveAndClearFnCall)="onSaveAndClearFnCallFn()"></app-voucher-form>
+          </ng-container>  
+          <ng-container *ngIf="vouType=='currency'">
+            <app-currency-voucher-form (getGridVouList)="getVoucherListFn($event)" [editMasterId]="editMasterId" (onSaveAndClearFnCall)="onSaveAndClearFnCallFn()"></app-currency-voucher-form>
+        </ng-container>                   
+        </mat-expansion-panel>
+      </mat-card-content>
+    </div>
