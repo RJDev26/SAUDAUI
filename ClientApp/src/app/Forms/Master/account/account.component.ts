@@ -85,8 +85,12 @@ export class AccountComponent implements OnInit {
 
   getAccountList() {
     this._masterService.getAccounts().subscribe((results) => {
-      this.accountList = results;
-      console.log(this.accountList);
+      debugger
+      if (results.isSuccess) {
+        this.accountList = results.accounts;
+      }
+      else { this.showToaster(results.message, true); }
+
     });
   }
 

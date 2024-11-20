@@ -1,7 +1,12 @@
 {
   "ExpandedNodes": [
     "",
-    "\\src"
+    "\\src",
+    "\\src\\app",
+    "\\src\\app\\Forms",
+    "\\src\\app\\Forms\\Master",
+    "\\src\\app\\Forms\\Master\\account",
+    "\\src\\environments"
   ],
   "PreviewInSolutionExplorer": false
 }
