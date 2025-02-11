@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject, ViewChild } from '@angular/core';
+import { Component, OnInit, Inject, ViewChild, Input } from '@angular/core';
 import { AppSettings } from "src/app/app.settings";
 import { Settings } from "src/app/app.settings.model";
 
@@ -35,6 +35,7 @@ export class VoucherComponent implements OnInit {
   DR: string = "DR";
   CR: string = "CR";
   amountLabel: any;
+  @Input() editMasterId: any;
   vouNo: any;
   totalAmount: any;
   gridApi: any;
@@ -85,6 +86,10 @@ export class VoucherComponent implements OnInit {
     this.watchVouDetailsChanges();
 
   }
+  onSaveAndClearFnCall() {
+    this.editMasterId = "";
+  }
+
 
   watchVouTypeChanges() {
     this.voucherForm.get('VouType').valueChanges.subscribe((value) => {

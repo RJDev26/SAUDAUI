@@ -39,6 +39,8 @@ import { NgxDropzoneModule } from 'ngx-dropzone';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { ContraAccountComponent } from '../Forms/common/components/contra-account/contra-account.component';
 import { ScrollingModule } from '@angular/cdk/scrolling';
+import { AuditLogsComponent } from '../Forms/common/components/audit-logs/audit-logs.component';
+import { AgGridModule } from "ag-grid-angular";
 
 @NgModule({
   imports: [
@@ -79,7 +81,9 @@ import { ScrollingModule } from '@angular/cdk/scrolling';
     ReactiveFormsModule,
     NgxDropzoneModule,
     MatFormFieldModule,
-    ScrollingModule
+    ScrollingModule,
+    AgGridModule
+    
   ],
   exports: [
     FlexLayoutModule,
@@ -120,6 +124,6 @@ import { ScrollingModule } from '@angular/cdk/scrolling';
     ContraAccountComponent,
     ScrollingModule,
   ],
-  declarations: [CurrencyFormatterDirective, VoucherFormComponent, UpdateVoucherComponent, ContraAccountComponent]
+  declarations: [CurrencyFormatterDirective, VoucherFormComponent, UpdateVoucherComponent, ContraAccountComponent, AuditLogsComponent]
 })
 export class SharedModule { }

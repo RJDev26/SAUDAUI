@@ -31,13 +31,14 @@
               <div class="dropdown-wrapper">
                 <mat-form-field class="select-slab-mat" appearance="outline">
                   <mat-label>Select Maturity</mat-label>          
-                  <mat-select #selectMaturity [(ngModel)]="maturityIds" placeholder="Select Maturity" panelClass="custom-select-panel">
-                    <input class="milti-search-box" #multiUserSearch type="text" autocomplete="off" matInput placeholder="Search Maturity" (input)="onInputMaturityListChange($event)"/>
-                    <mat-option *ngFor="let option of filteredMaturityList" [value]="option.maturity">
-                      {{ option.maturity }}
-                    </mat-option>
-                  </mat-select>
-                </mat-form-field>
+                  <!--<mat-select #selectMaturity [(ngModel)]="maturityIds" placeholder="Select Maturity" panelClass="custom-select-panel">-->
+                    <mat-select #selectMaturity  placeholder="Select Maturity" panelClass="custom-select-panel">
+                      <input class="milti-search-box" #multiUserSearch type="text" autocomplete="off" matInput placeholder="Search Maturity" (input)="onInputMaturityListChange($event)" />
+                      <mat-option *ngFor="let option of filteredMaturityList" [value]="option.maturity">
+                        {{ option.maturity }}
+                      </mat-option>
+                    </mat-select>
+</mat-form-field>
               </div>
             </div>
           </div>
