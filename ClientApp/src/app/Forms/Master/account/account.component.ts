@@ -58,12 +58,11 @@ export class AccountComponent implements OnInit {
       headerName: 'Action', field: 'fileIcon', cellRenderer: this.actionCellRenderer, minWidth: 60,
       maxWidth: 90, resizable: false, filter: false
     },
-    { headerName: 'Code', field: 'shortCode', },
+    { headerName: 'Code', field: 'acCode', },
     { headerName: 'Name', field: 'name', flex: 2 },
-    { headerName: 'Opbal', field: 'openingBal', flex:1, valueFormatter: params => Number(CommonUtility.formatNumber(params.data.openingBal)).toFixed(2), type: 'rightAligned' },
-    { headerName: 'PhoneNo', field: 'phoneNo', flex:1 },
-    { headerName: 'Head', field: 'acHead', flex:1 },
-    { headerName: 'Group', field: 'acGroup' },
+    { headerName: 'Opbal', field: 'opBal', flex: 1, valueFormatter: params => Number(CommonUtility.formatNumber(params.data.opBal)).toFixed(2), type: 'rightAligned' },
+    { headerName: 'GroupName', field: 'groupName', flex:1 },
+    { headerName: 'Head', field: 'headName', flex:1 },
     { headerName: 'CreatedDate', field: 'createdDateString' },
     
   ];

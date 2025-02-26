@@ -10,6 +10,7 @@ export class CommonUtility {
 
   public static formatNumber(numberToBeFormatted: any): string
   {
+    debugger
     if (numberToBeFormatted) {
       return numberToBeFormatted.toFixed(2).toString().replace(/(\d)(?=(\d{3])+(?!\d))/g, "1,");
     }
