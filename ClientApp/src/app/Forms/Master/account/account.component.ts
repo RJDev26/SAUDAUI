@@ -1,7 +1,9 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { DatatableComponent } from '@swimlane/ngx-datatable';
-
+import jsPDF from "jspdf";
+import autoTable from "jspdf-autotable";
+import Papa from "papaparse";
 import { AppSettings } from '../../../app.settings';
 import { Settings } from '../../../app.settings.model';
 import { CommonUtility } from '../../../shared/common-utility';
@@ -70,17 +72,16 @@ export class AccountComponent implements OnInit {
   onActivate(event) {
     console.log('Activate Event', event);
   }
-  onBtnExport(): void
-  {
+
+  onBtnExport(): void {
     const params =
     {
       fileName:'Account List',
-      columnKeys: ['shortCode', 'name', 'openingBal', 'phoneNo', 'acHead', 'acGroup','createdDateString']
+      columnKeys: ['acCode', 'name', 'opBal', 'groupName', 'headName', 'createdDateString']
      , customHeader:'Account List'
     }
     this.gridAPI.exportDataAsCsv(params);
   }
-
 
   getAccountList() {
     this._masterService.getAccounts().subscribe((results) => {
@@ -91,6 +92,107 @@ export class AccountComponent implements OnInit {
       else { this.showToaster(results.message, true); }
 
     });
+  }
+
+  downloadAsPDF() {
+    const csvData = this.gridAPI.getDataAsCsv({
+      columnKeys: [
+        'acCode', 'name', 'opBal', 'groupName', 'headName', 'createdDateString'
+      ],
+      suppressQuotes: false,
+      suppressHeader: true,
+    });
+
+    const parsedData = Papa.parse(csvData, {
+      header: false,
+      skipEmptyLines: true,
+    });
+    const dataRows = parsedData.data.slice(1);
+    const doc = new jsPDF("l", "pt", "a4");
+
+    const mainHeader = "Accounts List";
+
+    const addHeader = (doc, pageNumber) => {
+      const pageWidth = doc.internal.pageSize.getWidth();
+
+      doc.setFontSize(16);
+      doc.setFont("helvetica", "bold");
+      let xOffset = pageWidth / 2 - doc.getTextWidth(mainHeader) / 2;
+      doc.text(mainHeader, xOffset, 20);
+
+      doc.setDrawColor(0, 0, 0);
+      doc.setLineWidth(0.5);
+      doc.setLineCap(2);
+      doc.line(40, 30, pageWidth - 40, 30);
+
+      // Subheader
+      doc.setFontSize(12);
+      doc.setFont("helvetica", "bold");
+
+      doc.setDrawColor(0, 0, 0);
+      doc.setLineWidth(0.5);
+      doc.setLineCap(2);
+      doc.line(40, 60, pageWidth - 40, 60);
+    };
+
+    const totalPagesExp = "{total_pages_count_string}";
+
+    addHeader(doc, 1);
+
+    autoTable(doc, {
+      head: [["Code", "Name", "Opbal", "GroupName", "Head", "CreditDate"]],
+      body: dataRows as string[][],
+      startY: 70,
+      theme: "grid",
+      headStyles: { fillColor: [40, 53, 147] },
+      columnStyles: {
+        2: { halign: "right", textColor: "#ff4848" },
+        5: { halign: "right", textColor: "green" },
+      },
+      didDrawCell: (data) => {
+        const { row, column, section, cell } = data;
+        if (section === "body" && row.index === dataRows.length - 1) {
+          doc.setFillColor(221, 221, 221);
+          const { x, y, width, height } = cell;
+          doc.rect(x, y, width, height, "F");
+
+          let textX = x + cell.padding("left");
+          if (column.index === 2 || column.index === 5) {
+            const textWidth = doc.getTextWidth(cell.text[0]);
+            textX = x + width - cell.padding("right") - textWidth;
+          }
+
+          const textY = y + cell.height / 2 + 3;
+          doc.text(cell.text, textX, textY);
+        }
+      },
+      didDrawPage: (data) => {
+        addHeader(doc, data.pageNumber);
+
+        if (data.pageNumber >= 1) {
+          data.settings.margin.top = 70;
+        }
+
+        const tableWidth = doc.internal.pageSize.getWidth();
+        const tableStartX = data.settings.margin.left;
+        const tableStartY = data.settings.startY;
+        const tableHeight = data.cursor.y - tableStartY;
+
+        const footerText = `Page ${data.pageNumber} of ${totalPagesExp}`;
+        const xOffset = 40;
+        doc.text(footerText, xOffset, doc.internal.pageSize.height - 20);
+
+        doc.setDrawColor(0, 0, 0);
+        doc.setLineWidth(1);
+        doc.rect(tableStartX, tableStartY, tableWidth - 80, tableHeight);
+      },
+    });
+
+    if (typeof doc.putTotalPages === "function") {
+      doc.putTotalPages(totalPagesExp);
+    }
+
+    doc.save("Account.pdf");
   }
 
   public actionCellRenderer(params: any) {
@@ -138,13 +240,14 @@ export class AccountComponent implements OnInit {
             });
           }
         });
+      }  
+  }
 
-
-      }
-      
-
-  
-   
+  onFilteredChanged() {
+    this.gridAPI.setGridOption(
+      'quickFilterText',
+      (document.getElementById('filter-text-box') as HTMLInputElement).value
+    );
   }
 
   showToaster(message, isError = false) {

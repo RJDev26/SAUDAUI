@@ -4,8 +4,8 @@
 
 export const environment = {
   production: false,
-  // apiBaseUrl: "https://backofficeapi.saralaccount.com/"
-  apiBaseUrl: "http://localhost:5190/"
+  apiBaseUrl: "https://backofficeapi.saralaccount.com/"
+  // apiBaseUrl: "http://localhost:5190/"
 };
 
 /*

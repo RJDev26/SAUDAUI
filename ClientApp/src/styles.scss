@@ -378,7 +378,7 @@ input {
                 .ag-header-cell {
                     .ag-header-cell-resize {
                         background: #ddd;
-                        width: 6px;
+                        width: 0.0625rem;
                         height: 50%;
                         bottom: 0;
                         margin: auto;
@@ -828,3 +828,15 @@ input {
     }
 
 //ag-row-no-focus ag-row ag-row-level-0 ag-row-position-absolute ag-row-last
+
+.filter-control {
+    .mat-form-field-infix {
+        width: 13.75rem;
+    }
+    .mat-form-field-appearance-outline {
+        .mat-form-field-wrapper {
+            margin: 0;
+            padding: 0;
+        }
+    }
+}

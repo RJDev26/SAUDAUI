@@ -1,27 +1,36 @@
 <div class="row">
-    <div fxLayout="row" fxLayoutAlign="space-between center" class="mt-2">
-      <div class="dropdown-container">
-        <div class="dropdown-wrapper">
-        </div>
-        </div>
-        <div>
-          <button mat-raised-button color="accent" (click)="openAccountDialog(null)" class="icon-btn ml-15">
-            <mat-icon>add</mat-icon> Add Branch
-          </button>
-        </div>
-      </div>
-      <div class="col-xl-12 mt-2">
-        <ag-grid-angular style=" height: 535px;"
-                         class="ag-theme-material"
-                         [rowData]="slabList"
-                         [pagination]="true"
-                         [rowHeight]="31"
-                         [columnDefs]="columnDefs"
-                         [defaultColDef]="agGridOptions.defaultColDef"
-                         (cellClicked)="onGridClick($event)"
-                         (gridReady)="onGridReady($event)"
-                          headerHeight="34">
-        </ag-grid-angular>
-      </div>
-    </div>  
+  <div fxLayout="row" fxLayoutAlign="space-between center" class="mt-2 flex-end">
+    <div class="filter-control">
+      <mat-form-field appearance="outline">
+        <mat-label>Filter Search Result</mat-label>
+        <input matInput id="filter-text-box" placeholder="Filter Search Result" (input)="onFilteredChanged()"> 
+        <mat-icon class="search-ico">search</mat-icon>    
+      </mat-form-field>   
+    </div>
+    <div class="btn-block">
+      <button class="export-btn" (click)="downloadAsPDF()">
+        <img src="../../../../assets/img/pdf.png" alt="" />
+      </button>
+      <button class="export-btn ml-15" (click)="onBtnExport()">
+        <img src="../../../../assets/img/csv.png" alt="" />
+      </button>
+      <button mat-raised-button color="accent" (click)="openAccountDialog(null)" class="icon-btn ml-15">
+        <mat-icon>add</mat-icon> Add Branch
+      </button>
+    </div>
+  </div>
+  <div class="col-xl-12 mt-2">
+    <ag-grid-angular style=" height: 535px;"
+      class="ag-theme-material"
+      [rowData]="slabList"
+      [pagination]="true"
+      [rowHeight]="31"
+      [columnDefs]="columnDefs"
+      [defaultColDef]="agGridOptions.defaultColDef"
+      (cellClicked)="onGridClick($event)"
+      (gridReady)="onGridReady($event)"
+      headerHeight="34">
+    </ag-grid-angular>
+  </div>
+</div>  
   
