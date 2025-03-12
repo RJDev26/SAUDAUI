@@ -63,13 +63,9 @@ export class BrokerageSetupComponent implements OnInit {
       sortable: true,
       wraptext: true,
       resizable: true,
-      minWidth: 100,
-    
+      minWidth: 150,    
     },
-    suppressRowHoverHighlight: true,
-   
-    //suppressSizeToFit: true,
-    
+    suppressRowHoverHighlight: true,    
   }
   onGridReady(event) { }
 
@@ -77,33 +73,43 @@ export class BrokerageSetupComponent implements OnInit {
     {
       headerName: 'Action', field: 'fileIcon', cellRenderer: this.actionCellRenderer, resizable: true, filter: false
     },
-    { headerName: 'ApplyOn',  field: 'applyOnName', filter: true, sorting: true, resizable: true },
-    { headerName: 'Apply OnQty',  field: 'applyOnQtyName', filter: true, sorting: true, resizable: true },
-    { field: 'Intraday BrokRate',   headerName: 'IntradayBrokRate', filter: true, sorting: true, resizable: true, valueFormatter: params => CommonUtility.formatNumber(params.data.intradayBrokRate) },
-    { headerName: 'Delivery BrokRate', field: 'deliveryBrokRate', filter: true, sorting: true, resizable: true, valueFormatter: params => CommonUtility.formatNumber(params.data.deliveryBrokRate)},    
-    /*{ headerName: 'HigherSide Only', minWidth: 120, maxWidth: 120, field: 'higherSideOnly', filter: true, sorting: true, resizable: true },*/
-    { headerName: 'Instrument',   field: 'instrumentType', filter: true, sorting: true, resizable: true },
-/*    { headerName: 'IntradaySingleSideOnly', field: 'intradaySingleSideOnly', filter: true, sorting: true, resizable: true },*/
-    { headerName: 'FromDT', field: 'fromDT',   filter: true, sorting: true, resizable: true },
-    { headerName: 'ToDT', field: 'toDT',  filter: true, sorting: true, resizable: true },
-    
+    { headerName: 'acCode',  field: 'acCode', filter: true, sorting: true, resizable: true },
+    { field: 'excode',   headerName: 'excode', filter: true, sorting: true, resizable: true, valueFormatter: params => CommonUtility.formatNumber(params.data.intradayBrokRate) },
+    { headerName: 'Item Code', field: 'itemcode', filter: true, sorting: true, resizable: true, valueFormatter: params => CommonUtility.formatNumber(params.data.deliveryBrokRate)},    
+    { headerName: 'Brokerage Type',   field: 'broktype', filter: true, sorting: true, resizable: true },
+    { headerName: 'Brokerage Rate', field: 'brokrate',   filter: true, sorting: true, resizable: true },
+    { headerName: 'uptostdt', field: 'uptostdt',  filter: true, sorting: true, resizable: true },
+    { headerName: 'From Date', field: 'fromdate',  filter: true, sorting: true, resizable: true },
+    { headerName: 'pitBrokId', field: 'pitBrokId',  filter: true, sorting: true, resizable: true },
+    { headerName: 'bbrokrate', field: 'bbrokrate',  filter: true, sorting: true, resizable: true },
+    { headerName: 'insttype', field: 'insttype',  filter: true, sorting: true, resizable: true },
+    { headerName: 'pexBrokId', field: 'pexBrokId',  filter: true, sorting: true, resizable: true }
   ];
 
+  // getBrokerageSetupList() {
+  //   if(this.areRequiredValuesSelected()){
+  //     var accountIds = this.accountIds.filter((val)=> val != -1);
+  //     var req = {
+  //       "itemGroupId": this.itemGroupIds,
+  //       "accounts": accountIds,
+  //       "fromDate": this.datePipe.transform(this.fromDt, 'yyyy-MM-dd'),
+  //       "toDate": this.datePipe.transform(this.toDt, 'yyyy-MM-dd'),
+  //       "instrumentType": this.instrumentType
+  //     };
+  //     this._appService.getBrokerageSetupList(req).subscribe((results) => {
+  //       this.searchedData = req;
+  //      this.brokeragesetupList = results.data;       
+  //     });
+  //   }
+  // }
+
   getBrokerageSetupList() {
-    if(this.areRequiredValuesSelected()){
-      var accountIds = this.accountIds.filter((val)=> val != -1);
-      var req = {
-        "itemGroupId": this.itemGroupIds,
-        "accounts": accountIds,
-        "fromDate": this.datePipe.transform(this.fromDt, 'yyyy-MM-dd'),
-        "toDate": this.datePipe.transform(this.toDt, 'yyyy-MM-dd'),
-        "instrumentType": this.instrumentType
-      };
-      this._appService.getBrokerageSetupList(req).subscribe((results) => {
-        this.searchedData = req;
-       this.brokeragesetupList = results.data;       
-      });
-    }
+    this._masterService.getBrokeageSetupList().subscribe((results) => {
+      if (results.isSuccess) {
+        this.brokeragesetupList = results.data;
+      }
+      else { this.showToaster(results.message, true); }
+    });
   }
 
   async getBrokerageAddValidation(): Promise<string> {
@@ -170,9 +176,7 @@ export class BrokerageSetupComponent implements OnInit {
       this.toDt = new Date(this.companydetails[0].finEndDt);
     })).subscribe(res => {
       
-    });
-
-    
+    });    
   }
 
   public actionCellRenderer(params: any) {
@@ -183,13 +187,11 @@ export class BrokerageSetupComponent implements OnInit {
     });
     eGui.innerHTML = `<button class="material-icons action-button-edit" data-action="edit">edit </button>
                       <button class="material-icons action-button-red" delete data-action="delete">delete</button>`;
-
     return eGui;
-}
+  }
 
   onInputChange(event: any) {
     const searchInput = event.target.value.toLowerCase();
-
     this.filteredProviders = this.branchList.filter((data) => {
       const prov = data.name.toLowerCase();
       return prov.includes(searchInput);
@@ -198,7 +200,6 @@ export class BrokerageSetupComponent implements OnInit {
 
   onInputItemGroupChange(event: any) {
     const searchInput = event.target.value.toLowerCase();
-
     this.filteredItemGroup = this.itemGroupIdList.filter((data) => {
       const prov = data.name.toLowerCase();
       return prov.includes(searchInput);
@@ -207,57 +208,44 @@ export class BrokerageSetupComponent implements OnInit {
 
   onInputAccountListChange(event: any) {
     const searchInput = event.target.value.toLowerCase();
-
     this.filteredAccountList = this.accountList.filter((data) => {
       const prov = data.name.toLowerCase();
       return prov.includes(searchInput);
     });
   }
 
-  branchAllSelection()
-  {
+  branchAllSelection() {
     this.branchAllSellected = true;
     var isAllChecked = this.select.options.first.selected;
     this.select.options.forEach(
-      (item: MatOption, index) =>
-      {
-      
+      (item: MatOption, index) => {      
         if (isAllChecked) { item.select(); }
-          else { item.deselect() }
-          if(index === this.select.options.length -1){
-            this.onBranchChange([], true);
-          }
+        else { item.deselect() }
+        if(index === this.select.options.length -1) {
+          this.onBranchChange([], true);
+        }
       }
-     
-    );
-   
+    )
   }
 
-
-  accountAllSelection()
-  {
+  accountAllSelection() {
     var isAllChecked = this.selectAccount.options.first.selected;
     this.selectAccount.options.forEach(
       (item: MatOption) => {
-
         if (isAllChecked) { item.select(); }
         else { item.deselect() }
       }
-
-    );
-
+    )
   }
-
 
   onKey(value) {
     this.branchList = this.search(value);
-}
-
+  }
 
   search(value: string) {
-  let filter = value.toLowerCase();
-  return this.branchList.filter(option => option.toLowerCase().startsWith(filter));
-}
+    let filter = value.toLowerCase();
+    return this.branchList.filter(option => option.toLowerCase().startsWith(filter));
+  }
 
   onBranchChange(event: any, isLastIndex?: boolean) {
     if(this.branchAllSellected && !isLastIndex){
@@ -330,7 +318,6 @@ export class BrokerageSetupComponent implements OnInit {
         isEditMode: 1
       },
     });
-
     dialogRef.afterClosed().subscribe((user) => {
       this.getBrokerageSetupList();
     });
@@ -360,49 +347,41 @@ export class BrokerageSetupComponent implements OnInit {
     });
   }
 
-onGridClick(params: any) {
-  if (params.event.target.dataset.action == "edit")
-  {
-    this.openEditBrokerageDetails(params.data);
-
-  }
-  if (params.event.target.dataset.action == "delete")
-  {
-    const dialogRef = this.dialog.open(ConfirmationDialog, {
-      data: {
-        message: 'Do you really want to delete this record?',
-        buttonText: {
-          ok: 'Yes',
-          cancel: 'No'
-        }
-      }
-    });
-
-    dialogRef.afterClosed().subscribe((confirmed: boolean) => {
-      if (confirmed) {
-        this._masterService.deleteBrokerageSetup(params.data.id).subscribe((res) => {
-          if(res.isSuccess){
-            this.showToaster(res.message);
-            this.getBrokerageSetupList();
-          } else {
-            this.showToaster(res.message, true);
+  onGridClick(params: any) {
+    if (params.event.target.dataset.action == "edit") {
+      this.openEditBrokerageDetails(params.data);
+    }
+    if (params.event.target.dataset.action == "delete") {
+      const dialogRef = this.dialog.open(ConfirmationDialog, {
+        data: {
+          message: 'Do you really want to delete this record?',
+          buttonText: {
+            ok: 'Yes',
+            cancel: 'No'
           }
-        });
-      }
+        }
+      });
+      dialogRef.afterClosed().subscribe((confirmed: boolean) => {
+        if (confirmed) {
+          this._masterService.deleteBrokerageSetup(params.data.id).subscribe((res) => {
+            if(res.isSuccess){
+              this.showToaster(res.message);
+              this.getBrokerageSetupList();
+            } else {
+              this.showToaster(res.message, true);
+            }
+          });
+        }
+      });
+    } 
+  }
+
+  viewAllItemGroups(){
+    let dialogRef = this.dialog.open(ViewItemGroupComponent, {
+      data: { id:this.itemGroupIds }
     });
 
-
+    dialogRef.afterClosed().subscribe(user => {});
   }
-}
-
-viewAllItemGroups(){
-  let dialogRef = this.dialog.open(ViewItemGroupComponent, {
-    data: { id:this.itemGroupIds }
-  });
-
-  dialogRef.afterClosed().subscribe(user => {
-   
-  });
-}
 
 }

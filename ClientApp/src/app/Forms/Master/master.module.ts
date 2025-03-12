@@ -17,6 +17,7 @@ import { AddSaudaComponent } from './sauda/sauda-dialog/add-sauda.component';
 import { ProductComponent } from './product/product.component';
 import { AddProductComponent } from './product/product-dialog/add-product.component';
 import { ContractMasterComponent } from './contract-master/contract-master.component';
+import { ExchangeTaxListComponent } from './exchange-tax-list/exchange-tax-list.component';
 import { AddContractMasterComponent } from './contract-master/contract-master-dialog/add-contract-master.component';
 import { BrokerageSlabComponent } from './brokerage-slab/brokerage-slab.component';
 import { ConfirmationDialog } from '../Dialog/confirmation-dialog/confirmation-dialog.component';
@@ -69,6 +70,7 @@ export const routes: Routes = [
   { path: 'contract-master', component: ContractMasterComponent, data: { breadcrumb: 'Contract Master' } },
   { path: 'brokerage-slab', component: BrokerageSlabComponent, data: { breadcrumb: 'Brokerage Slab' } },
   { path: 'brokerage-setup', component: BrokerageSetupComponent, data: { breadcrumb: 'Brokerage Setup' } },
+  { path: 'exchange-tax-list', component: ExchangeTaxListComponent, data: { breadcrumb: 'Exchange Tax List' } },
   { path: 'sub-brokerage-setup', component: SubBrokerageSetupComponent, data: { breadcrumb: 'Sub Brokerage Setup' } },
   { path: 'sharing-setup', component: SharingSetupComponent, data: { breadcrumb: 'Sharing Setup' } },
   { path: 'branch', component: BranchComponent, data: { breadcrumb: 'Branch' } },
@@ -142,7 +144,8 @@ export const routes: Routes = [
      changePasswordComponent,
      ContractDialogComponent,
      TradeFileComponent,
-     ImportDialogComponent
+     ImportDialogComponent,
+     ExchangeTaxListComponent
   ],
   providers: [
     DatePipe,

@@ -279,7 +279,11 @@ export class MasterService {
   }
 
   getBrokeageSetupList(): Observable<any> {
-    return this.httpClient.get<any>(environment.apiBaseUrl + 'master/getBrokeageSetupList/', { headers: this.headers })
+    return this.httpClient.post<any>(environment.apiBaseUrl + 'Master/getBrokeageSetupList/', { headers: this.headers })
+  }
+
+  getExchangeTaxList(): Observable<any> {
+    return this.httpClient.get<any>(environment.apiBaseUrl + 'MasterSecond/getExchangeTaxList', { headers: this.headers })
   }
 
   getBrokerageSetupId(id: number): Observable<any> {
