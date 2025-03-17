@@ -4,6 +4,7 @@ export const verticalMenuItems = [
   new Menu(1, 'Dashboard', '/', null, 'dashboard', null, false, 0),
   new Menu(2, 'Master', null, null, 'computer', null, true, 0),
   new Menu(3, 'Account', '/master/account', null, 'account_circle', null, false, 2),
+  new Menu(3, 'Account Tax List', '/master/account-tax-list', null, 'account_circle', null, false, 2),
   new Menu(3, 'Item', '/master/item', null, 'widgets', null, false, 2),
   new Menu(3, 'Company', '/master/company', null, 'business', null, false, 2),
   new Menu(3, 'Sauda', '/master/sauda', null, 'web_stories', null, false, 2),

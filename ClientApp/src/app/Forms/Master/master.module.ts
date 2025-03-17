@@ -18,6 +18,7 @@ import { ProductComponent } from './product/product.component';
 import { AddProductComponent } from './product/product-dialog/add-product.component';
 import { ContractMasterComponent } from './contract-master/contract-master.component';
 import { ExchangeTaxListComponent } from './exchange-tax-list/exchange-tax-list.component';
+import { AccountTaxListComponent } from './account-tax-list/account-tax-list.component';
 import { AddContractMasterComponent } from './contract-master/contract-master-dialog/add-contract-master.component';
 import { BrokerageSlabComponent } from './brokerage-slab/brokerage-slab.component';
 import { ConfirmationDialog } from '../Dialog/confirmation-dialog/confirmation-dialog.component';
@@ -62,6 +63,7 @@ import { ImportDialogComponent } from './sauda/import-dialog/import-dialog.compo
 export const routes: Routes = [
   { path: '', redirectTo: 'account', pathMatch: 'full' },
   { path: 'account', component: AccountComponent, data: { breadcrumb: 'Account' } },
+  { path: 'account-tax-list', component: AccountTaxListComponent, data: { breadcrumb: 'Account Tax List' } },
   { path: 'item', component: ItemComponent, data: { breadcrumb: 'Item' } },
   { path: 'transporter', component: TransporterComponent, data: { breadcrumb: 'Transporter' } },
   { path: 'company', component: CompanyComponent, data: { breadcrumb: 'Company' } },
@@ -96,6 +98,7 @@ export const routes: Routes = [
     AccountComponent,
     AddAccountComponent,
     AddTransporterComponent,
+    AccountTaxListComponent,
     ItemComponent,
     AddItemComponent,
     TransporterComponent,

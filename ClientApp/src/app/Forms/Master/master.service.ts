@@ -162,10 +162,6 @@ export class MasterService {
     return this.httpClient.post<any>(environment.apiBaseUrl + 'Master/SaveProduct', data, { headers: this.headers });
   }
 
-  getAccountTaxList(id: number): Observable<any> {
-    return this.httpClient.get<any>(environment.apiBaseUrl + 'Master/getAccountTaxList/' + id, { headers: this.headers });
-  }
-
   saveAccountTax(data): Observable<any> {
     return this.httpClient.post<any>(environment.apiBaseUrl + 'Master/saveAccountTax', data, { headers: this.headers });
   }
@@ -280,6 +276,10 @@ export class MasterService {
 
   getBrokeageSetupList(): Observable<any> {
     return this.httpClient.post<any>(environment.apiBaseUrl + 'Master/getBrokeageSetupList/', { headers: this.headers })
+  }
+
+  getAccountTaxList(): Observable<any> {
+    return this.httpClient.get<any>(environment.apiBaseUrl + 'MasterSecond/getAccountTaxList', { headers: this.headers })
   }
 
   getExchangeTaxList(): Observable<any> {

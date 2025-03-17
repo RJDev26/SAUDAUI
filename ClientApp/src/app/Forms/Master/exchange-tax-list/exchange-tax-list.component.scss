@@ -1,0 +1,35 @@
+
+.filter-control {
+    gap: 1rem;
+    align-items: center;
+    display: flex;
+    margin-right: 1rem;
+}
+.filter-control .search-ico {
+    position: absolute;
+    top: 0.5rem;
+    right: -0.15rem;
+}
+  
+.filter-control .export-btn {
+    background: transparent;
+    border: none;
+} 
+  
+.filter-control .export-btn img {
+    width: 1.5rem;
+}
+.btn-block {
+    align-items: center;
+    display: flex;
+}
+  
+.export-btn {
+    background: transparent;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    img {
+      height: 2rem;
+    }
+}
