@@ -5,6 +5,7 @@ import { Settings } from '../../../app.settings.model';
 import { MasterService } from '../master.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog } from '@angular/material/dialog';
+import { formatDate } from '../../common/utils/numberformate';
 import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
 import Papa from "papaparse";
@@ -31,32 +32,32 @@ export class ExchangeTaxListComponent implements OnInit {
   }
 
   columnDefs = [
-      {
-        headerName: 'Action', field: 'fileIcon', cellRenderer: this.actionCellRenderer, minWidth: 110,
-        maxWidth: 110, resizable: false, filter: false
-      },
-      { headerName: 'Ex Name', field: 'exname', filter: true, sorting: true, resizable: true },
-      { headerName: 'Exchange Code', field: 'exchangecode', filter: true, sorting: true, resizable: true },
-      { headerName: 'From Date', field: 'fromdt', filter: true, sorting: true, resizable: true },
-      { headerName: 'To Date', field: 'todt', filter: true, sorting: true, resizable: true },
-      { headerName: 'Service Tax', field: 'servicetax', filter: true, sorting: true, resizable: true },
-      { headerName: 'Turnover Tax', field: 'turnovertax', filter: true, sorting: true, resizable: true },           
-      { headerName: 'Stamp Tax', field: 'stampdtax', filter: true, sorting: true, resizable: true },
-      { headerName: 'Stamp Rate', field: 'stmprate', filter: true, sorting: true, resizable: true },
-      { headerName: 'CGST Rate', field: 'cgstrate', filter: true, sorting: true, resizable: true },
-      { headerName: 'SGST Rate', field: 'sgstrate', filter: true, sorting: true, resizable: true },
-      { headerName: 'IGST Rate', field: 'igstrate', filter: true, sorting: true, resizable: true },
-      { headerName: 'Utt Rate', field: 'uttrate', filter: true, sorting: true, resizable: true },
-      { headerName: 'Sebi Tax Opt', field: 'sebitaxopt', filter: true, sorting: true, resizable: true },
-      { headerName: 'STC Tax', field: 'stctax', filter: true, sorting: true, resizable: true },
-      { headerName: 'Ex Id', field: 'exid', filter: true, sorting: true, resizable: true },
-      { headerName: 'Comp Code', field: 'compcode', filter: true, sorting: true, resizable: true },
-      { headerName: 'Opt Turnover Tax', field: 'optTurnovertax', filter: true, sorting: true, resizable: true },
-      { headerName: 'SBC Tax', field: 'sbcTax', filter: true, sorting: true, resizable: true },
-      { headerName: 'Cigrate', field: 'clgrate', filter: true, sorting: true, resizable: true },
-      { headerName: 'Opt Stamp Tax', field: 'optStampdtax', filter: true, sorting: true, resizable: true },
-      { headerName: 'Eq Stamp Tax', field: 'eqStampdtax', filter: true, sorting: true, resizable: true },
-      { headerName: 'Eq STT', field: 'eqStt', filter: true, sorting: true, resizable: true },
+    {
+      headerName: 'Action', field: 'fileIcon', cellRenderer: this.actionCellRenderer, minWidth: 110,
+      maxWidth: 110, resizable: false, filter: false
+    },
+    { headerName: 'Ex Name', field: 'exname', filter: true, sorting: true, resizable: true },
+    { headerName: 'Exchange Code', field: 'exchangecode', filter: true, sorting: true, resizable: true },
+    { headerName: 'From Date', field: 'fromdt', filter: true, sorting: true, resizable: true, valueFormatter: formatDate },
+    { headerName: 'To Date', field: 'todt', filter: true, sorting: true, resizable: true, valueFormatter: formatDate },
+    { headerName: 'Service Tax', field: 'servicetax', filter: true, sorting: true, resizable: true },
+    { headerName: 'Turnover Tax', field: 'turnovertax', filter: true, sorting: true, resizable: true },           
+    { headerName: 'Stamp Tax', field: 'stampdtax', filter: true, sorting: true, resizable: true },
+    { headerName: 'Stamp Rate', field: 'stmprate', filter: true, sorting: true, resizable: true },
+    { headerName: 'CGST Rate', field: 'cgstrate', filter: true, sorting: true, resizable: true },
+    { headerName: 'SGST Rate', field: 'sgstrate', filter: true, sorting: true, resizable: true },
+    { headerName: 'IGST Rate', field: 'igstrate', filter: true, sorting: true, resizable: true },
+    { headerName: 'Utt Rate', field: 'uttrate', filter: true, sorting: true, resizable: true },
+    { headerName: 'Sebi Tax Opt', field: 'sebitaxopt', filter: true, sorting: true, resizable: true },
+    { headerName: 'STC Tax', field: 'stctax', filter: true, sorting: true, resizable: true },
+    { headerName: 'Ex Id', field: 'exid', filter: true, sorting: true, resizable: true },
+    { headerName: 'Comp Code', field: 'compcode', filter: true, sorting: true, resizable: true },
+    { headerName: 'Opt Turnover Tax', field: 'optTurnovertax', filter: true, sorting: true, resizable: true },
+    { headerName: 'SBC Tax', field: 'sbcTax', filter: true, sorting: true, resizable: true },
+    { headerName: 'Cigrate', field: 'clgrate', filter: true, sorting: true, resizable: true },
+    { headerName: 'Opt Stamp Tax', field: 'optStampdtax', filter: true, sorting: true, resizable: true },
+    { headerName: 'Eq Stamp Tax', field: 'eqStampdtax', filter: true, sorting: true, resizable: true },
+    { headerName: 'Eq STT', field: 'eqStt', filter: true, sorting: true, resizable: true },
   ];
 
   agGridOptions: any = {

@@ -13,6 +13,7 @@ import { forkJoin, map } from 'rxjs';
 import { MasterSecondService } from '../master-second.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { DatePipe } from '@angular/common';
+import { formatDate } from '../../common/utils/numberformate';
 import { LockBrokerageComponent } from './lock-brokerage/lock-brokerage.component';
 import { ViewItemGroupComponent } from './view-item-group/view-item-group.component';
 
@@ -73,17 +74,17 @@ export class BrokerageSetupComponent implements OnInit {
     {
       headerName: 'Action', field: 'fileIcon', cellRenderer: this.actionCellRenderer, resizable: true, filter: false
     },
-    { headerName: 'acCode',  field: 'acCode', filter: true, sorting: true, resizable: true },
-    { field: 'excode',   headerName: 'excode', filter: true, sorting: true, resizable: true, valueFormatter: params => CommonUtility.formatNumber(params.data.intradayBrokRate) },
+    { headerName: 'Ac Code',  field: 'acCode', filter: true, sorting: true, resizable: true },
+    { headerName: 'Ex code', field: 'excode',  filter: true, sorting: true, resizable: true, valueFormatter: params => CommonUtility.formatNumber(params.data.intradayBrokRate) },
     { headerName: 'Item Code', field: 'itemcode', filter: true, sorting: true, resizable: true, valueFormatter: params => CommonUtility.formatNumber(params.data.deliveryBrokRate)},    
     { headerName: 'Brokerage Type',   field: 'broktype', filter: true, sorting: true, resizable: true },
-    { headerName: 'Brokerage Rate', field: 'brokrate',   filter: true, sorting: true, resizable: true },
-    { headerName: 'uptostdt', field: 'uptostdt',  filter: true, sorting: true, resizable: true },
-    { headerName: 'From Date', field: 'fromdate',  filter: true, sorting: true, resizable: true },
-    { headerName: 'pitBrokId', field: 'pitBrokId',  filter: true, sorting: true, resizable: true },
-    { headerName: 'bbrokrate', field: 'bbrokrate',  filter: true, sorting: true, resizable: true },
-    { headerName: 'insttype', field: 'insttype',  filter: true, sorting: true, resizable: true },
-    { headerName: 'pexBrokId', field: 'pexBrokId',  filter: true, sorting: true, resizable: true }
+    { headerName: 'Brokerage Rate', field: 'brokrate',   filter: true, sorting: true, resizable: true, type: 'rightAligned' },
+    { headerName: 'Upto Stdt', field: 'uptostdt',  filter: true, sorting: true, resizable: true, valueFormatter: formatDate },
+    { headerName: 'From Date', field: 'fromdate',  filter: true, sorting: true, resizable: true, valueFormatter: formatDate },
+    { headerName: 'Pit BrokId', field: 'pitBrokId',  filter: true, sorting: true, resizable: true },
+    { headerName: 'B Brokerage rate', field: 'bbrokrate',  filter: true, sorting: true, resizable: true },
+    { headerName: 'Inst Type', field: 'insttype',  filter: true, sorting: true, resizable: true },
+    { headerName: 'P Ex Brokerage Id', field: 'pexBrokId',  filter: true, sorting: true, resizable: true }
   ];
 
   // getBrokerageSetupList() {
